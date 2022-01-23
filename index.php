@@ -6,7 +6,7 @@ $twig = new \Twig\Environment($loader, [
     'cache' => 'cache',
 ]);
 
-echo $twig->render('index.html', ['name' => 'Fabien']);
+echo $twig->render('index.html.twig', ['name' => 'Fabien']);
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
