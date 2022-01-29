@@ -1,0 +1,88 @@
+/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+.small-gutters {
+    margin-right: -5px!important;
+    margin-left: -5px!important;
+}
+
+.categories_grid a img {
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+.categories_grid a {
+    display: block;
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.categories_grid a .wrapper {
+    width: 100%;
+    background: 0 0;
+    background: -webkit-linear-gradient(top,transparent,#000);
+    background: linear-gradient(to bottom,transparent,#000);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    line-height: 1;
+    padding: 100px 20px 20px 20px;
+}
+
+.categories_grid a .wrapper h2 {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 21px;
+    font-size: 1.3125rem;
+    margin: 0;
+    -webkit-transform: translateY(20px) translateZ(0);
+    -moz-transform: translateY(20px) translateZ(0);
+    -ms-transform: translateY(20px) translateZ(0);
+    -o-transform: translateY(20px) translateZ(0);
+    transform: translateY(20px) translateZ(0);
+    -webkit-transition: all .3s cubic-bezier(.77,0,.175,1);
+    -moz-transition: all .3s cubic-bezier(.77,0,.175,1);
+    -ms-transition: all .3s cubic-bezier(.77,0,.175,1);
+    -o-transition: all .3s cubic-bezier(.77,0,.175,1);
+    transition: all .3s cubic-bezier(.77,0,.175,1);
+}
+
+.categories_grid a .wrapper p {
+    color: #fff;
+    opacity: 0;
+    margin: 0;
+    font-size: 14px;
+    font-size: .875rem;
+    font-weight: 500;
+    -webkit-transform: translateY(20px) translateZ(0);
+    -moz-transform: translateY(20px) translateZ(0);
+    -ms-transform: translateY(20px) translateZ(0);
+    -o-transform: translateY(20px) translateZ(0);
+    transform: translateY(20px) translateZ(0);
+    -webkit-transition: all .3s cubic-bezier(.77,0,.175,1);
+    -moz-transition: all .3s cubic-bezier(.77,0,.175,1);
+    -ms-transition: all .3s cubic-bezier(.77,0,.175,1);
+    -o-transition: all .3s cubic-bezier(.77,0,.175,1);
+    transition: all .3s cubic-bezier(.77,0,.175,1);
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
