@@ -10,6 +10,7 @@
     padding-right: 5px !important;
     padding-left: 5px !important
 }
+
 .categories_grid a {
     display: block;
     position: relative;
@@ -117,4 +118,217 @@
     -ms-transform: translateY(0) translateZ(0);
     -o-transform: translateY(0) translateZ(0);
     transform: translateY(0) translateZ(0)
+}
+
+a.grid_item figure em {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    font-size: .75rem;
+    text-transform: uppercase;
+}
+
+a.grid_item figure .price {
+    position: absolute;
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;
+    top: 0;
+    right: 0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    background: transparent;
+    z-index: 9;
+}
+
+a.grid_item figure .price::before {
+    position: absolute;
+    content: '';
+    bottom: 0;
+    left: 14px;
+    width: 400%;
+    height: 100%;
+    background: #0054a6;
+    transform: skew(45deg);
+    transform-origin: 50% 100%;
+    will-change: transform;
+    pointer-events: none;
+    z-index: -1;
+}
+
+a.grid_item figure .price_discount {
+    position: absolute;
+    text-align: center;
+    padding: 10px;
+    top: 30px;
+    right: 0;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: line-through;
+    line-height: 1;
+    color: #eee;
+    background: transparent;
+    z-index: 9;
+}
+
+a.grid_item figure .price_discount_tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    background: #FFD540;
+    border-radius: 50%;
+    z-index: 9;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+
+.box_news ul li span {
+    width: 25px;
+    font-size: 12px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    background: #EDF5FC;
+    color: #0054a6;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+@property --years {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+}
+
+.counter_number.years {
+    transition: --years 3s;
+    counter-set: years var(--years);
+}
+
+.counter_number.years::after {
+    content: counter(years);
+}
+
+.animated .counter_number.years {
+    --years: 32;
+}
+
+@property --tours {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+}
+
+.counter_number.tours {
+    transition: --tours 3s;
+    counter-set: tours var(--tours);
+}
+
+.counter_number.tours::after {
+    content: counter(tours);
+}
+
+.animated .counter_number.tours {
+    --tours: 5340;
+}
+
+@property --clients {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+}
+
+.counter_number.clients {
+    transition: --clients 3s;
+    counter-set: clients var(--clients);
+}
+
+.counter_number.clients::after {
+    content: counter(clients) "tis";
+}
+
+.animated .counter_number.clients {
+    --clients: 32;
+}
+
+@property --employees {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+}
+
+.counter_number.employees {
+    transition: --employees 3s;
+    counter-set: employees var(--employees);
+}
+
+.counter_number.employees::after {
+    content: counter(employees);
+}
+
+.animated .counter_number.employees {
+    --employees: 15;
+}
+
+.counter_item .counter_item_figure {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    width: 91%;
+    height: 91%;
+    transform: translate(-50%, -50%);
+    padding: 10px 10px;
+    background-color: #ffffff;
+    align-items: center;
+    text-align: center;
+}
+
+.counter_item {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.counter_item .counter_number {
+    font-size: 50px;
+    line-height: 0.8;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #151515;
+}
+
+@media (min-width: 576px) {
+	.counter_item .counter_number {
+		font-size: 80px;
+	}
+}
+
+.counter_item .counter_title {
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
+@media (min-width: 576px) {
+    .counter_item .counter_title {
+        max-width: 80%;
+        font-size: 24px;
+    }
 }

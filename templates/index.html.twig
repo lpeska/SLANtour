@@ -1,13 +1,13 @@
 {% extends "_base.html.twig" %}
- 
+
 {% block main %}
 
 <!-- Background YouTube Parallax -->
 <div class="hero_single jarallax" data-jarallax-video="https://youtu.be/mru3Q5m4lkY">
 	<div class="wrapper" style="background-color: rgba(0, 0, 0, 0.5);">
 		<div class="container">
-			<h3>Chceš-li poznat svět se SLANtourem jeť</h3>
-			<p>zni to trochu jak z 90. let, napada te neco jineho?</p>
+			<h3>S námi máte svět na dosah</h3>
+			<p>vyberte si z více než 90? destinací</p>
 			<form>
 				<div class="row no-gutters custom-search-input-2">
 					<div class="col-lg-4">
@@ -58,40 +58,53 @@
 	</div>
 	<div class="row small-gutters categories_grid add_bottom_45">
 		<div class="col-sm-12 col-md-6">
-			<a href="all_tours_list.html">
-				<img src="img/img_cat_home_1.jpeg" alt="" class="img-fluid">
-				<div class="wrapper">
-					<h2>Eurovíkendy</h2>
-					<p>1150 Zájezdů</p>
+			<div class="row small-gutters mt-md-0 mt-sm-2">
+				<div class="col-sm-12">
+					<a href="all_tours_list.html">
+						<img src="{{ typesOfTours[0].image }}" alt="" class="img-fluid">
+						<div class="wrapper">
+							<h2>{{ typesOfTours[0].name }}</h2>
+							<p>{{ typesOfTours[0].numberOfTours }} Zájezdů</p>
+						</div>
+					</a>
 				</div>
-			</a>
+				<div class="col-sm-12 mt-sm-2">
+					<a href="all_tours_list.html">
+						<img src="{{ typesOfTours[1].image }}" alt="" class="img-fluid">
+						<div class="wrapper">
+							<h2>{{ typesOfTours[1].name }}</h2>
+							<p>{{ typesOfTours[1].numberOfTours }} Zájezdů</p>
+						</div>
+					</a>
+				</div>
+			</div>
 		</div>
 		<div class="col-sm-12 col-md-6">
 			<div class="row small-gutters mt-md-0 mt-sm-2">
 				<div class="col-sm-6">
 					<a href="all_tours_list.html">
-						<img src="img/img_cat_home_1.jpeg" alt="" class="img-fluid">
+						<img src="{{ typesOfTours[2].image }}" alt="" class="img-fluid">
 						<div class="wrapper">
-							<h2>Poznávací</h2>
-							<p>800 Zájezdů</p>
+							<h2>{{ typesOfTours[2].name }}</h2>
+							<p>{{ typesOfTours[2].numberOfTours }} Zájezdů</p>
 						</div>
 					</a>
 				</div>
 				<div class="col-sm-6">
 					<a href="all_hotels_list.html">
-						<img src="img/img_cat_home_1.jpeg" alt="" class="img-fluid">
+						<img src="{{ typesOfTours[3].image }}" alt="" class="img-fluid">
 						<div class="wrapper">
-							<h2>Lázně</h2>
-							<p>650 Zájezdů</p>
+							<h2>{{ typesOfTours[3].name }}</h2>
+							<p>{{ typesOfTours[3].numberOfTours }} Zájezdů</p>
 						</div>
 					</a>
 				</div>
 				<div class="col-sm-12 mt-sm-2">
 					<a href="all_restaurants_list.html">
-						<img src="img/img_cat_home_1.jpeg" alt="" class="img-fluid">
+						<img src="{{ typesOfTours[4].image }}" alt="" class="img-fluid">
 						<div class="wrapper">
-							<h2>Za Sportem</h2>
-							<p>1132 Zájezdů</p>
+							<h2>{{ typesOfTours[4].name }}</h2>
+							<p>{{ typesOfTours[4].numberOfTours }} Zájezdů</p>
 						</div>
 					</a>
 				</div>
@@ -106,7 +119,7 @@
 	<hr class="large">
 </div>
 
-<div class="container container-custom margin_30_95">
+<div class="container container-custom margin_30">
 	<section class="add_bottom_45">
 		<div class="main_title_3">
 			<span><em></em></span>
@@ -114,62 +127,35 @@
 			<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
 		</div>
 		<div class="row">
+			{% for tour in popularTours %}
 			<div class="col-xl-3 col-lg-6 col-md-6">
 				<a href="hotel-detail.html" class="grid_item">
 					<figure>
-						<div class="score"><strong>8.9</strong></div>
-						<img src="html-template/img/hotel_1.jpg" class="img-fluid" alt="">
+						<div class="price">
+							od {{tour.price}} Kč
+						</div>
+
+						{% if tour.priceDiscount > 0 %}
+						<div class="price_discount">{{tour.priceOriginal}} Kč</div>
+						<div class="price_discount_tag">
+							-{{tour.priceDiscount}}%
+						</div>
+
+						{% endif %}
+
+						<img src="{{ tour.image }}" class="img-fluid" alt="">
 						<div class="info">
-							<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i
-									class="icon_star"></i><i class="icon_star"></i></div>
-							<h3>Zájezd 1</h3>
+							<h3>{{tour.name}}</h3>
+							<em>{{tour.nights}} nocí - {{tour.meals}}</em>
+						</div>
+						<div class="info-right">
+							<em>{{tour.destination}}</em>
 						</div>
 					</figure>
 				</a>
 			</div>
 			<!-- /grid_item -->
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="hotel-detail.html" class="grid_item">
-					<figure>
-						<div class="score"><strong>7.9</strong></div>
-						<img src="html-template/img/hotel_2.jpg" class="img-fluid" alt="">
-						<div class="info">
-							<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i
-									class="icon_star"></i><i class="icon_star"></i></div>
-							<h3>Zájezd 2</h3>
-						</div>
-					</figure>
-				</a>
-			</div>
-			<!-- /grid_item -->
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="hotel-detail.html" class="grid_item">
-					<figure>
-						<div class="score"><strong>7.0</strong></div>
-						<img src="html-template/img/hotel_3.jpg" class="img-fluid" alt="">
-						<div class="info">
-							<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i
-									class="icon_star"></i><i class="icon_star"></i></div>
-							<h3>Zájezd 3</h3>
-						</div>
-					</figure>
-				</a>
-			</div>
-			<!-- /grid_item -->
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="hotel-detail.html" class="grid_item">
-					<figure>
-						<div class="score"><strong>8.9</strong></div>
-						<img src="html-template/img/hotel_4.jpg" class="img-fluid" alt="">
-						<div class="info">
-							<div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i
-									class="icon_star"></i><i class="icon_star"></i></div>
-							<h3>Zájezd 4</h3>
-						</div>
-					</figure>
-				</a>
-			</div>
-			<!-- /grid_item -->
+			{% endfor %}
 		</div>
 		<!-- /row -->
 		<a href="hotels-grid-isotope.html"><strong>Zobrazit Více (157) <i class="arrow_carrot-right"></i></strong></a>
@@ -183,157 +169,128 @@
 			<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
 		</div>
 		<div class="row">
+			{% for tour in discountTours %}
 			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="restaurant-detail.html" class="grid_item">
+				<a href="hotel-detail.html" class="grid_item">
 					<figure>
-						<div class="score"><strong>8.5</strong></div>
-						<img src="html-template/img/restaurant_1.jpg" class="img-fluid" alt="">
+						<div class="price">
+							od {{tour.price}} Kč
+						</div>
+
+						{% if tour.priceDiscount > 0 %}
+						<div class="price_discount">{{tour.priceOriginal}} Kč</div>
+						<div class="price_discount_tag">
+							-{{tour.priceDiscount}}%
+						</div>
+
+						{% endif %}
+
+						<img src="{{ tour.image }}" class="img-fluid" alt="">
 						<div class="info">
-							<h3>Da Alfredo</h3>
+							<h3>{{tour.name}}</h3>
+							<em>{{tour.nights}} nocí - {{tour.meals}}</em>
+						</div>
+						<div class="info-right">
+							<em>{{tour.destination}}</em>
 						</div>
 					</figure>
 				</a>
 			</div>
 			<!-- /grid_item -->
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="restaurant-detail.html" class="grid_item">
-					<figure>
-						<div class="score"><strong>7.9</strong></div>
-						<img src="html-template/img/restaurant_2.jpg" class="img-fluid" alt="">
-						<div class="info">
-							<h3>Slow Food</h3>
-						</div>
-					</figure>
-				</a>
-			</div>
-			<!-- /grid_item -->
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="restaurant-detail.html" class="grid_item">
-					<figure>
-						<div class="score"><strong>7.5</strong></div>
-						<img src="html-template/img/restaurant_3.jpg" class="img-fluid" alt="">
-						<div class="info">
-							<h3>Bella Napoli</h3>
-						</div>
-					</figure>
-				</a>
-			</div>
-			<!-- /grid_item -->
-			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="restaurant-detail.html" class="grid_item">
-					<figure>
-						<div class="score"><strong>9.0</strong></div>
-						<img src="html-template/img/restaurant_4.jpg" class="img-fluid" alt="">
-						<div class="info">
-							<h3>Marcus</h3>
-						</div>
-					</figure>
-				</a>
-			</div>
-			<!-- /grid_item -->
+			{% endfor %}
 		</div>
 		<!-- /row -->
-		<a href="restaurants-grid-isotope.html"><strong>Zobrazit Více (157) <i class="arrow_carrot-right"></i></strong></a>
+		<a href="restaurants-grid-isotope.html"><strong>Zobrazit Více (157) <i
+					class="arrow_carrot-right"></i></strong></a>
 	</section>
 	<!-- /section -->
-
-	<div class="banner mb-0">
-		<div class="wrapper d-flex align-items-center opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.3)">
-			<div>
-				<small>Adventure</small>
-				<h3>Tohle asi vyhodim, pokud by se ti to nehodilo na propagaci nejake konkretni veci</h3>
-				<p>Activities and accommodations</p>
-				<a href="adventure.html" class="btn_1">Read more</a>
-			</div>
-		</div>
-		<!-- /wrapper -->
-	</div>
-	<!-- /banner -->
 
 </div>
 <!-- /container -->
 
 <div class="bg_color_1">
-
-	<div class="container margin_80_55">
-		<div class="main_title_2">
-			<span><em></em></span>
-			<h3>30 let s námi poznáváte svět</h3>
-			<p>sem pridou cisla klientu, zajezdu, atd. jeste dodelam</p>
-			
-		</div>
-	</div>
-	<div class="container margin_80_55">
+	<div class="container margin_80_0">
 		<div class="main_title_2">
 			<span><em></em></span>
 			<h3>Novinky a Akce</h3>
 			<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
 		</div>
 		<div class="row">
+			{% for newsItem in news %}
 			<div class="col-lg-6">
 				<a class="box_news" href="#0">
-					<figure><img src="html-template/img/news_home_1.jpg" alt="">
-						<figcaption><strong>28</strong>Dec</figcaption>
-					</figure>
+					<figure><img src="{{ newsItem.image }}" alt=""></figure>
 					<ul>
-						<li>Mark Twain</li>
-						<li>20.11.2017</li>
+						<li>
+							<span>
+								<i class="fas fa-user"></i>
+							</span>
+							Mark Twain
+						</li>
+						<li>
+							<span>
+								<i class="fas fa-calendar-alt"></i>
+							</span>
+							20.11.2017
+						</li>
 					</ul>
-					<h4>Pri oportere scribentur eu</h4>
-					<p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum
-						vidisse....</p>
+					<h4>{{ newsItem.title }}</h4>
+					<p>{{ newsItem.description }}</p>
 				</a>
 			</div>
 			<!-- /box_news -->
-			<div class="col-lg-6">
-				<a class="box_news" href="#0">
-					<figure><img src="html-template/img/news_home_2.jpg" alt="">
-						<figcaption><strong>28</strong>Dec</figcaption>
-					</figure>
-					<ul>
-						<li>Jhon Doe</li>
-						<li>20.11.2017</li>
-					</ul>
-					<h4>Duo eius postea suscipit ad</h4>
-					<p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum
-						vidisse....</p>
-				</a>
-			</div>
-			<!-- /box_news -->
-			<div class="col-lg-6">
-				<a class="box_news" href="#0">
-					<figure><img src="html-template/img/news_home_3.jpg" alt="">
-						<figcaption><strong>28</strong>Dec</figcaption>
-					</figure>
-					<ul>
-						<li>Luca Robinson</li>
-						<li>20.11.2017</li>
-					</ul>
-					<h4>Elitr mandamus cu has</h4>
-					<p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum
-						vidisse....</p>
-				</a>
-			</div>
-			<!-- /box_news -->
-			<div class="col-lg-6">
-				<a class="box_news" href="#0">
-					<figure><img src="html-template/img/news_home_4.jpg" alt="">
-						<figcaption><strong>28</strong>Dec</figcaption>
-					</figure>
-					<ul>
-						<li>Paula Rodrigez</li>
-						<li>20.11.2017</li>
-					</ul>
-					<h4>Id est adhuc ignota delenit</h4>
-					<p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum
-						vidisse....</p>
-				</a>
-			</div>
-			<!-- /box_news -->
+			{% endfor %}
 		</div>
 		<!-- /row -->
-		<p class="btn_home_align"><a href="blog.html" class="btn_1 rounded">View all news</a></p>
+		<p class="btn_home_align"><a href="blog.html" class="btn_1 rounded">Zobrazit Více</a></p>
 	</div>
+
+	<div class="container margin_80_55">
+		<div class="main_title_2">
+			<span><em></em></span>
+			<h3>Poznáváte s námi svět již od roku 1990</h3>
+			<p>sem pridou cisla klientu, zajezdu, atd. jeste dodelam</p>
+
+		</div>
+
+		<div class="row row-30 justify-content-center" data-lightgallery="group">
+
+			<div class="col-md-6 col-lg-5 col-xl-4 col-8 wow">
+				<!-- Thumbnail-info-->
+				<article class="counter_item"><img src="/img/poznavaci.png" alt="" width="370" height="303">
+					<div class="counter_item_figure">
+						<div class="counter">
+							<div class="counter_number years"></div>
+							<h5 class="counter_title">Let Zkušeností</h5>
+						</div>
+					</div>
+				</article>
+			</div>
+			<div class="col-md-6 col-lg-5 col-xl-4 col-8 wow">
+				<!-- Thumbnail-info-->
+				<article class="counter_item"><img src="/img/poznavaci.png" alt="" width="370" height="303">
+					<div class="counter_item_figure">
+						<div class="counter">
+							<div class="counter_number tours"></div>
+							<h5 class="counter_title">Úžasných Zájezdů</h5>
+						</div>
+					</div>
+				</article>
+			</div>
+			<div class="col-md-6 col-lg-5 col-xl-4 col-8 wow">
+				<!-- Thumbnail-info-->
+				<article class="counter_item"><img src="/img/poznavaci.png" alt="" width="370" height="303">
+					<div class="counter_item_figure">
+						<div class="counter">
+							<div class="counter_number clients"></div>
+							<h5 class="counter_title">Spokojených Klientů</h5>
+						</div>
+					</div>
+				</article>
+			</div>
+		</div>
+	</div>
+
 	<!-- /container -->
 </div>
 <!-- /bg_color_1 -->

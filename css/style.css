@@ -2945,7 +2945,7 @@ a.box_news:hover h4 {
 }
 a.box_news ul {
   margin: 0;
-  padding: 10px 0 0 0;
+  padding: 10px 0 10px 0;
 }
 @media (max-width: 767px) {
   a.box_news ul {
@@ -2959,7 +2959,7 @@ a.box_news ul li {
   color: #999;
   font-size: 12px;
   font-size: 0.75rem;
-  margin-right: 5px;
+  margin-right: 15px;
 }
 a.box_news ul li:last-child {
   margin-right: 0;
@@ -2969,7 +2969,6 @@ a.box_news ul li:last-child:after {
   margin: 0;
 }
 a.box_news ul li:after {
-  content: '-';
   margin: 0 0 0 10px;
 }
 
@@ -2991,6 +2990,17 @@ a.grid_item .info {
   background: linear-gradient(to bottom, transparent, #000);
   box-sizing: border-box;
 }
+a.grid_item .info-right {
+  position: absolute;
+  width: 100%;
+  z-index: 9;
+  display: block;
+  text-align: right;
+  padding: 25px 20px 5px 20px;
+  color: #fff;
+  right: 0;
+  bottom: 0;
+}
 a.grid_item .info .cat_star {
   font-size: 9px;
   font-size: 0.5625rem;
@@ -3002,6 +3012,7 @@ a.grid_item .info h3 {
   color: #fff;
   font-size: 18px;
   font-size: 1.125rem;
+  margin-bottom: 5px;
 }
 a.grid_item .info p {
   color: #fff;
@@ -3342,13 +3353,14 @@ a.box_feat h3 {
 }
 
 .score strong {
+  font-size: 18px;
   background-color: #0054a6;
   color: #fff;
   line-height: 1;
   -webkit-border-radius: 5px 5px 5px 0;
   -moz-border-radius: 5px 5px 5px 0;
   -ms-border-radius: 5px 5px 5px 0;
-  border-radius: 5px 5px 5px 0;
+  border-radius: 5px 5px 5px 5px;
   padding: 10px;
   display: inline-block;
 }
@@ -6110,7 +6122,7 @@ a.grid_item.latest_adventure em {
 }
 
 .call_section.adventure {
-  background: url(../img/bg_call_action_adventure.jpg) center center no-repeat fixed;
+  background: url(../img/img_cat_home_1.jpeg) center center no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -7749,7 +7761,7 @@ a.btn_explore:hover {
 }
 
 .call_section {
-  background: url(../img/bg_call_section.jpg) center center no-repeat fixed;
+  background: url(../img/img_cat_home_1.jpeg) center center no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
