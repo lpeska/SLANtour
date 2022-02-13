@@ -28,6 +28,12 @@ echo $twig->render('index.html.twig', [
         new Tour('Villa Dino, Mariánské Lázně', 4790, 5, 5290, 4, 'Polopenze', 'Mariánské Lázně', 'img/lazne.png'),
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png')
     ),
+    'newTours' => array(
+        new Tour('Villa Dino, Mariánské Lázně', 4790, 5, 5290, 4, 'Polopenze', 'Mariánské Lázně', 'img/lazne.png'),
+        new Tour('Víkend v Budapešti - vlakem', 3590, 0, 3990, 4, 'bez stravy', 'Maďarsko', 'img/dovolena.png'),
+        new Tour('Jordánsko s pobytem u Rudého moře', 29990, 0, 39986, 7, 'All-inclusive', 'Jordánsko', 'img/poznavaci.png'),
+        new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png')
+    ),
     'news' => array(
         new News('Peking 2022', 'V únoru příštího roku se budou konat Zimní olympijské hry v Peking.', '5.', 'Únor','img/sport.png'),
         new News('NHL - Boston Bruins letecky', 'V současné chvíli rozšiřujeme naši nabídku leteckých zájezdů na NHL o zápasy Boston Bruins,...', '28.', 'Leden','img/sport.png'),

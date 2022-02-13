@@ -11,6 +11,20 @@
     padding-left: 5px !important
 }
 
+.header span {
+    font-size: 20px;
+    font-weight: 500;
+    vertical-align: middle;
+}
+
+.header span.logo_normal {
+    color: #fff;
+}
+
+.header span.logo_sticky {
+    color: #151515;
+}
+
 .categories_grid a {
     display: block;
     position: relative;
@@ -332,3 +346,75 @@ a.grid_item figure .price_discount_tag {
         font-size: 24px;
     }
 }
+
+
+ .main_search {
+    background-color: #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    width: 460px;
+    text-align: left;
+    padding: 30px 30px 15px 30px;
+    position: absolute;
+    z-index: 99;
+    top: 120px;
+    right: 150px;
+  }
+  @media (max-width: 767px) {
+     .main_search {
+      width: auto;
+    }
+  }
+   .main_search h3 {
+    color: #333;
+    font-size: 28px;
+    font-size: 1.75rem;
+    text-transform: none;
+    font-weight: 500;
+  }
+   .main_search p {
+    color: #555;
+    font-size: 18px;
+    font-size: 1.125rem;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+   .main_search .custom-search-input-2 {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+   .main_search .custom-search-input-2 .form-group {
+    margin-bottom: 15px;
+  }
+   .main_search .custom-search-input-2 i {
+    line-height: 48px;
+    top: 1px;
+    right: 1px;
+    padding-right: 12px;
+    height: 46px;
+  }
+   .main_search .custom-search-input-2 input {
+    border: 1px solid #d2d8dd;
+  }
+   .main_search .custom-search-input-2 .panel-dropdown {
+    border: 1px solid #d2d8dd;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    height: 50px;
+    padding: 14px 12px 0 15px;
+  }
+   .main_search .custom-search-input-2 input[type='submit'] {
+    margin: 20px 0 0 0;
+    border: none;
+    width: auto;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+  }
