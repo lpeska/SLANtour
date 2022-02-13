@@ -2546,8 +2546,8 @@ a#moveDown {
   }
 }
 .custom-search-input-2 input[type='submit']:hover {
-  background-color: #FFC107;
-  color: #222;
+  background: #0054a6;
+  color: #fff;
 }
 .custom-search-input-2.inner {
   margin-bottom: 30px;
