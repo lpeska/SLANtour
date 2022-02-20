@@ -8,7 +8,7 @@ $twig = new \Twig\Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('typ-zajezdu.html.twig', [
-    'type' => new TourType('Poznávací', 139, 9900, 'img/poznavaci.png'),
+    'type' => new TourType('Poznávací Zájezdy', 139, 9900, 'img/poznavaci.png'),
     'tours' => array(
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png'),
         new Tour('Víkend v Budapešti - vlakem', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', 'img/dovolena.png'),
