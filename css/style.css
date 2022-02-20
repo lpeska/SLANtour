@@ -1167,13 +1167,6 @@ header.sticky .hamburger-inner, header.sticky .hamburger-inner::before, header.s
     height: 500px;
   }
 }
-.hero_in.tours_detail:before {
-  background: url(../img/hero_in_tours_detail.jpg) center center no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 .hero_in.tours_detail .wrapper {
   background-color: black;
   background-color: rgba(0, 0, 0, 0.6);
