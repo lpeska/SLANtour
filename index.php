@@ -8,7 +8,6 @@ $twig = new \Twig\Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('index.html.twig', [
-    'name' => 'Fabien',
     'typesOfTours' => array(
         new TourType('Poznávací', 139, 9900, 'img/poznavaci.png'),
         new TourType('Eurovíkendy', 62, 15900, 'img/eurovikendy.png'),

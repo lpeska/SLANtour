@@ -1,0 +1,83 @@
+{% extends "_base.html.twig" %}
+
+{% block title %}SLANtour - {{ type.name }}{% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+
+<section class="hero_in tour_list">
+    <img src="{{ type.image }}" alt="Slide background">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>{{ type.name }}</h1>
+        </div>
+    </div>
+</section>
+<!--/hero_in-->
+
+<div class="bg_color_1">
+    <div class="container margin_60_35">
+        <section id="description">
+            <h2>Description</h2>
+            <p>Per consequat adolescens ex, cu nibh commune <strong>temporibus vim</strong>, ad sumo viris eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas oportere democritum. Prima causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+            <p>Cum et probo menandri. Officiis consulatu pro et, ne sea sale invidunt, sed ut sint <strong>blandit</strong> efficiendi. Atomorum explicari eu qui, est enim quaerendum te. Quo harum viris id. Per ne quando dolore evertitur, pro ad cibo commune.</p>
+
+            <!-- End Map -->
+        </section>
+        <!-- /section -->
+        <section class="add_bottom_45">
+            <div class="main_title_3">
+                <span><em></em></span>
+                <h2>Zájezdy</h2>
+            </div>
+            <div class="row">
+                {% for tour in tours %}
+                <div class="col-xl-3 col-lg-6 col-md-6">
+                    <a href="../zajezd.php" class="grid_item">
+                        <figure>
+                            <div class="price">
+                                od {{tour.price}} Kč
+                            </div>
+    
+                            {% if tour.priceDiscount > 0 %}
+                            <div class="price_discount">{{tour.priceOriginal}} Kč</div>
+                            <div class="price_discount_tag">
+                                -{{tour.priceDiscount}}%
+                            </div>
+    
+                            {% endif %}
+    
+                            <img src="{{ tour.image }}" class="img-fluid" alt="">
+                            <div class="info">
+                                <h3>{{tour.name}}</h3>
+                                <em>{{tour.nights}} nocí - {{tour.meals}}</em>
+                            </div>
+                            <div class="info-right">
+                                <em>{{tour.destination}}</em>
+                            </div>
+                        </figure>
+                    </a>
+                </div>
+                <!-- /grid_item -->
+                {% endfor %}
+            </div>
+            <!-- /row -->
+            <a href="hotels-grid-isotope.html"><strong>Zobrazit Více (157) <i class="arrow_carrot-right"></i></strong></a>
+        </section>
+        <!-- /section -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->
+
+
+
+{% endblock main %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}

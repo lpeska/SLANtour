@@ -359,7 +359,7 @@ a.grid_item figure .price_discount_tag {
     padding: 30px 30px 15px 30px;
     position: absolute;
     z-index: 99;
-    top: 120px;
+    top: 170px;
     right: 150px;
   }
   @media (max-width: 767px) {
@@ -418,7 +418,7 @@ a.grid_item figure .price_discount_tag {
     -ms-border-radius: 3px;
     border-radius: 3px;
   }
-.hero_in.tours_detail img {
+.hero_in img {
     width: 100%;
     animation: pop-in 5s .3s cubic-bezier(0,.5,0,1) forwards;
     opacity: 0;
@@ -427,5 +427,11 @@ a.grid_item figure .price_discount_tag {
     right: 0;
     bottom: 0;
     left: 0;
+    margin: auto;
     z-index: -1;
 }
+
+.hero_in.tour_list .wrapper {
+    background-color: black;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
