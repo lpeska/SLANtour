@@ -8,6 +8,8 @@ require_once "./classes/menu.inc.php"; //seznam serialu
 require_once "./classes/serial_lists.inc.php"; //seznam serialu
 require_once "./classes/destinace_list.inc.php"; //menu katalogu
 
+
+/*Loading tour types*/
 $menu = new Menu_katalog("dotaz_typy","", "", "");
 $typy = $menu->get_typy_pobytu();
 //print_r($typy);
@@ -39,6 +41,54 @@ foreach ($typy as $typ) {
 }
 
 
+/*Loading tours_slevy*/
+$discountTours = array();
+
+$slevy_array = array();
+$slevy_list = new Serial_list("","", "", "", "", "", "","","","random",40,"select_slevy");
+while ($slevy_list->get_next_radek()) {
+    $slevyObj = $slevy_list->show_list_item("slevy_list");
+    
+    $od = $slevy_list->get_termin_od();
+    $data = explode("-", $od);
+    if($dlouhodobe){
+        $dny_rozdil = 60;
+    }else{
+        $time_od = mktime(0, 0, 0, $data[1], $data[2], $data[0]);
+        $time_now = mktime(0, 0, 0, Date("m"), Date("d"), Date("Y"));
+        $dny_rozdil = ($time_od - $time_now)/86400;  
+    
+        if($dny_rozdil < 0 or $dny_rozdil > 80){
+        //dlouhodobe zajezdy, nemaji prednost
+            $dny_rozdil = 80;
+        }
+        if($dny_rozdil < 5){
+            $dny_rozdil = 5;
+        }
+    }
+    $dny_rozdil = log($dny_rozdil);
+    $sleva = $slevy_list->get_max_sleva_zajezd();
+    $rand = mt_rand(1, 1000000)/500000;
+    $poradi = ($sleva/$dny_rozdil) + $rand;
+    
+    $slevy_poradi[] = $poradi;
+    $slevy_array[] = $slevyObj;    
+}
+//print_r($slevy_array);
+arsort($slevy_poradi);
+
+foreach ($slevy_poradi as $key => $val) {
+    $k++;
+    $currTour = $slevy_array[$key];
+    $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
+    if($k<=4){
+        $discountTours[] = new Tour($currTour["nazev"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+    }else{
+        break;
+    }
+}
+
+
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
@@ -60,12 +110,14 @@ echo $twig->render('index.html.twig', [
         new Tour('Jordánsko s pobytem u Rudého moře', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', 'img/poznavaci.png'),
         new Tour('Villa Dino, Mariánské Lázně', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', 'img/lazne.png')
     ),
-    'discountTours' => array(
+    'discountTours' => $discountTours,
+    /*'discountTours' => array(
         new Tour('Jordánsko s pobytem u Rudého moře', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', 'img/poznavaci.png'),
         new Tour('Víkend v Budapešti - vlakem', 3590, 10, 3990, 4, 'bez stravy', 'Maďarsko', 'img/dovolena.png'),
         new Tour('Villa Dino, Mariánské Lázně', 4790, 5, 5290, 4, 'Polopenze', 'Mariánské Lázně', 'img/lazne.png'),
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png')
-    ),
+    ),*/
+    "totalDiscountedTours" => 157,
     'newTours' => array(
         new Tour('Villa Dino, Mariánské Lázně', 4790, 5, 5290, 4, 'Polopenze', 'Mariánské Lázně', 'img/lazne.png'),
         new Tour('Víkend v Budapešti - vlakem', 3590, 0, 3990, 4, 'bez stravy', 'Maďarsko', 'img/dovolena.png'),
@@ -104,12 +156,13 @@ class Tour {
     public int $price;
     public int $priceDiscount;
     public int $priceOriginal;
-    public int $nights;
+    public  $nights;
     public string $meals;
     public string $destination;
     public string $image;
+    public $terminy;
 
-    public function __construct(string $name, int $price, int $priceDiscount, int $priceOriginal, int $nights, string $meals, string $destination, string $image) {
+    public function __construct(string $name, int $price, int $priceDiscount, int $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy="") {
         $this->name = $name;
         $this->price = $price;
         $this->priceDiscount = $priceDiscount;
@@ -118,6 +171,7 @@ class Tour {
         $this->meals = $meals;
         $this->destination = $destination;
         $this->image = $image;
+        $this->terminy = $terminy;
     }
 }
 

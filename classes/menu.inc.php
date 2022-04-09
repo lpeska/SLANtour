@@ -548,7 +548,7 @@ class Menu_katalog extends Generic_list{
             $ret = [];
             while($this->get_next_radek()){
                 $this->radek["description"] = $this->description[$this->radek["nazev_typ_web"]];
-                $this->radek["foto_url"] = "https://slantour.cz/foto/nahled/".$this->radek["foto_url"];
+                $this->radek["foto_url"] = "https://slantour.cz/foto/full/".$this->radek["foto_url"];
                 $tourData = $this->get_tour_data($this->radek["nazev_typ_web"]);
                 
                 $this->radek["tourCount"] = $tourData["countSerial"];

@@ -38,18 +38,18 @@ class Serial_list extends Generic_list {
     private $global_cena_do;      
     private $max_sleva_zajezd;
     private $description = array(
-        "pobytove-zajezdy" => " - Chorvatsko, It·lie, äpanÏlsko, Francie - dovolen· u mo¯e; pobyty v »ech·ch a na Slovensku",
+        "pobytove-zajezdy" => " - Chorvatsko, It√°lie, ≈†panƒõlsko, Francie - dovolen√° u mo≈ôe; pobyty v ƒåech√°ch a na Slovensku",
         "poznavaci-zajezdy" => "",
-        "lazenske-pobyty" => " - »esko, Morava, Slovensko, MaÔarsko, NÏmecko - l·znÏ, wellness, term·ly, ubytov·nÌ, pobyty pro seniory...",
-        "za-sportem" => " - Premier League, Serie A, Formule 1, Moto GP, TenisovÈ turnaje, LOH 2016 Rio, z·pasy »esk˝ch n·rodnÌch t˝m˘",
-        "lyzovani" => " - Lyûov·nÌ v Alp·ch ve Francii, It·lii a Rakousku",
-        "jednodenni-zajezdy" => " - Dr·ûÔany, Passov, Tropick˝ ostrov, Plavby lodÌ, VÌdeÚ atd.",
-        "pobyty-hory" => " - Ubytov·nÌ a pobyty v KrkonoöÌch, JesenÌk·ch, Beskydech, na äumavÏ, MalÈ Fat¯e, Vysok˝ch Ëi NÌzk˝ch Tatr·ch...",
-        "exotika" => " - Mexiko (Cancun), Bali, FilipÌny, SpojenÈ ArabskÈ Emir·ty (Dubai, Abu Dhabi)"
+        "lazenske-pobyty" => " - ƒåesko, Morava, Slovensko, Maƒèarsko, Nƒõmecko - l√°znƒõ, wellness, term√°ly, ubytov√°n√≠, pobyty pro seniory...",
+        "za-sportem" => " - Premier League, Serie A, Formule 1, Moto GP, Tenisov√© turnaje, LOH 2016 Rio, z√°pasy ƒåesk√Ωch n√°rodn√≠ch t√Ωm≈Ø",
+        "lyzovani" => " - Ly≈æov√°n√≠ v Alp√°ch ve Francii, It√°lii a Rakousku",
+        "jednodenni-zajezdy" => " - Dr√°≈æƒèany, Passov, Tropick√Ω ostrov, Plavby lod√≠, V√≠de≈à atd.",
+        "pobyty-hory" => " - Ubytov√°n√≠ a pobyty v Krkono≈°√≠ch, Jesen√≠k√°ch, Beskydech, na ≈†umavƒõ, Mal√© Fat≈ôe, Vysok√Ωch ƒçi N√≠zk√Ωch Tatr√°ch...",
+        "exotika" => " - Mexiko (Cancun), Bali, Filip√≠ny, Spojen√© Arabsk√© Emir√°ty (Dubai, Abu Dhabi)"
     );
 
     //------------------- KONSTRUKTOR  -----------------
-    /*     * konstruktor podle specifikovanÈho filtru na typ, podtyp a zemi */
+    /*     * konstruktor podle specifikovan√©ho filtru na typ, podtyp a zemi */
     function __construct($nazev, $zeme_text, $text, $ubytovani, $destinace, $nazev_serialu, $termin_od, $termin_do, $zacatek, $order_by, $pocet_zaznamu = POCET_ZAZNAMU, $typ_pozadavku = "", $id_serial = "", $id_ubytovani = "") {
         //trida pro odesilani dotazu
         $this->object_params = "";
@@ -104,29 +104,29 @@ class Serial_list extends Generic_list {
         if ($_GET["lev1"] == "zobrazit" or $typ_pozadavku == "select_seznam") {
 
             $data_pocet = $this->database->query($this->create_query("select_seznam", 1))
-                    or $this->chyba("Chyba p¯i dotazu do datab·ze");
+                    or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 
             $zaznam_pocet = mysqli_fetch_array($data_pocet);
             $this->pocet_zajezdu = $zaznam_pocet["pocet"];
 
             $this->data = $this->database->query($this->create_query("select_seznam"))
-                    or $this->chyba("Chyba p¯i dotazu do datab·ze");
+                    or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
             
         } else if ($typ_pozadavku == "select_serialy_group") {
             //echo $this->create_query("select_serialy_group");
             $this->data = $this->database->query($this->create_query("select_serialy_group"))
-                    or $this->chyba("Chyba p¯i dotazu do datab·ze");  
+                    or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");  
             $this->pocet_zajezdu = mysqli_num_rows($this->data);
             $t2 = time() - $t1;
             
             
         } else if ($typ_pozadavku == "select_nove_zajezdy") {
             $this->data = $this->database->query($this->create_query("select_nove_zajezdy"))
-                    or $this->chyba("Chyba p¯i dotazu do datab·ze");  
+                    or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");  
             
         } else if ($typ_pozadavku == "select_ubytovani_group") {//3
             $this->data = $this->database->query($this->create_query("select_ubytovani_group"))
-                    or $this->chyba("Chyba p¯i dotazu do datab·ze");
+                    or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
             $this->pocet_zajezdu = mysqli_num_rows($this->data); 
             
             //specialni zachazeni pro doporucovaci komponentu
@@ -196,12 +196,12 @@ class Serial_list extends Generic_list {
             
         } else {//6
             $this->data = $this->database->query($this->create_query($typ_pozadavku))
-                    or $this->chyba("Chyba p¯i dotazu do datab·ze");
+                    or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
         }
         //kontrola zda jsme ziskali nejake zajezdy
         if(is_resource($this->data)){
         if (mysqli_num_rows($this->data) == 0) {
-            $this->chyba("Pro zadanÈ podmÌnky neexistuje û·dn˝ z·jezd");
+            $this->chyba("Pro zadan√© podm√≠nky neexistuje ≈æ√°dn√Ω z√°jezd");
         }
         $this->pocet_radku = mysqli_num_rows($this->data);
         if (!$this->pocet_zajezdu) {
@@ -310,7 +310,7 @@ class Serial_list extends Generic_list {
                window.addEventListener("load", function(){
                   var mymap = L.map("mapid").setView([latY, latX], '.$zoom.');
                   L.tileLayer(\'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibHBlc2thIiwiYSI6ImNrYmx5dGh4cjA3MHMycW1pdHp4Y2ZheGoifQ.e-0fQLJYoUUxsM0X6Z-gxQ\', {
-                    attribution: \'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>\',
+                    attribution: \'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery ¬© <a href="https://www.mapbox.com/">Mapbox</a>\',
                     maxZoom: 18,
                     minZoom: 1,
                     id: "mapbox/streets-v11",
@@ -479,7 +479,7 @@ class Serial_list extends Generic_list {
         }
 
         if ($typ_pozadavku == "select_seznam") {
-            //pokud chceme pouze spoËÌtat vsechny odpovÌdajÌcÌ z·znamy
+            //pokud chceme pouze spoƒç√≠tat vsechny odpov√≠daj√≠c√≠ z√°znamy
             if ($only_count == 1) {
                 $select = "select count(`zajezd`.`id_zajezd`) as pocet";
                 $limit = "";
@@ -542,7 +542,7 @@ class Serial_list extends Generic_list {
         } else if ($typ_pozadavku == "select_serialy_group") {           
 
             
-            //pokud chceme pouze spoËÌtat vsechny odpovÌdajÌcÌ z·znamy
+            //pokud chceme pouze spoƒç√≠tat vsechny odpov√≠daj√≠c√≠ z√°znamy
             if ($only_count == 1) {
                 $limit = "";
             }
@@ -617,7 +617,7 @@ class Serial_list extends Generic_list {
             
             return $dotaz;
          } else if ($typ_pozadavku == "select_nove_zajezdy") {            
-            //pokud chceme pouze spoËÌtat vsechny odpovÌdajÌcÌ z·znamy
+            //pokud chceme pouze spoƒç√≠tat vsechny odpov√≠daj√≠c√≠ z√°znamy
                $select = "select distinct        
                              max(`slevy`.`castka`) as `sleva_castka`,`slevy`.`mena` as `sleva_mena`,`slevy`.`zkraceny_nazev`  as `sleva_nazev`,	
                             `serial`.`id_serial`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`dlouhodobe_zajezdy`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,                            
@@ -662,7 +662,7 @@ class Serial_list extends Generic_list {
             return $dotaz;
             
         } else if ($typ_pozadavku == "select_ubytovani_group") {
-            //pokud chceme pouze spoËÌtat vsechny odpovÌdajÌcÌ z·znamy            
+            //pokud chceme pouze spoƒç√≠tat vsechny odpov√≠daj√≠c√≠ z√°znamy            
             if ($only_count == 1) {
                 $limit = "";
             } else {
@@ -1078,7 +1078,7 @@ class Serial_list extends Generic_list {
             //echo $dotaz;
             return $dotaz;
         } else if ($typ_pozadavku == "select_slevy") {
-            //pokud chceme pouze spoËÌtat vsechny odpovÌdajÌcÌ z·znamy
+            //pokud chceme pouze spoƒç√≠tat vsechny odpov√≠daj√≠c√≠ z√°znamy
             $select = "select distinct `serial`.`id_serial`,`serial`.`id_sablony_zobrazeni`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
                             `serial`.`podtyp`, `serial`.`highlights`,
                             
@@ -1107,14 +1107,14 @@ class Serial_list extends Generic_list {
                     (`foto_serial` join
                         `foto` on (`foto_serial`.`id_foto` = `foto`.`id_foto`) )
                     on (`foto_serial`.`id_serial` = `serial`.`id_serial` and `foto_serial`.`zakladni_foto`=1)
-		    where  `serial`.`id_sablony_zobrazeni`!=12 and `zajezd`.`cena_pred_akci` > 0 and `zajezd`.`akcni_cena`>0 and `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and 
+		    where  `zajezd`.`cena_pred_akci` > 0 and `zajezd`.`akcni_cena`>0 and `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and 
                         " . $where_id_serial . $where_filter. $where_text . $where_nazev_serialu . $where_nazev . $where_ubytovani . $where_typ . $where_podtyp . $where_zeme . $where_destinace . $where_od . $where_do . " 1
                     group by  `serial`.`id_serial`
                     having `vyprodano` = 0
                     
                     limit  " . $this->pocet_zaznamu . "";
 
-            //echo $dotaz;
+            echo $dotaz;
             return $dotaz;
         } else if ($typ_pozadavku == "select_slevy_ubytovani") {
             //jako select slevy, ale group by podle ubytovani
@@ -1154,7 +1154,7 @@ class Serial_list extends Generic_list {
             //echo $dotaz;
             return $dotaz;
         } else if ($typ_pozadavku == "select_podtypy") {
-            //pokud chceme pouze spoËÌtat vsechny odpovÌdajÌcÌ z·znamy
+            //pokud chceme pouze spoƒç√≠tat vsechny odpov√≠daj√≠c√≠ z√°znamy
 
             $select = "select  distinct `serial`.`podtyp` as `podtyp`";
             $dotaz = $select . "
@@ -1177,7 +1177,7 @@ class Serial_list extends Generic_list {
             //echo $dotaz;
             return $dotaz;
         } else if ($typ_pozadavku == "select_hotely") {
-            //pokud chceme pouze spoËÌtat vsechny odpovÌdajÌcÌ z·znamy
+            //pokud chceme pouze spoƒç√≠tat vsechny odpov√≠daj√≠c√≠ z√°znamy
             if ($only_count == 1) {
                 $select = "select count(`zajezd`.`id_zajezd`) as pocet";
                 $limit = "";
@@ -1413,10 +1413,10 @@ function order_by_subquery($vstup) {
   //      echo $this->threshold_orders." - ".$this->radek["suma_objednavek"];
         if($this->radek["suma_objednavek"]>=$this->threshold_orders and $this->radek["suma_objednavek"]>=$this->min_orders_static){
             
-            $zeme = $zeme . " <img class=\"icons\" src=\"/strpix/oblibene.png\" alt=\"OblÌben˝ z·jezd\" title=\"OblÌben˝ z·jezd\" />";           
+            $zeme = $zeme . " <img class=\"icons\" src=\"/strpix/oblibene.png\" alt=\"Obl√≠ben√Ω z√°jezd\" title=\"Obl√≠ben√Ω z√°jezd\" />";           
         }
         if($this->radek["novy_zajezd"]){
-            $zeme = $zeme . " <div class=\"sleva\" title=\"Nov˝ z·jezd v naöÌ nabÌdce\"><span class=\"novy\">nov˝</span></div>"; 
+            $zeme = $zeme . " <div class=\"sleva\" title=\"Nov√Ω z√°jezd v na≈°√≠ nab√≠dce\"><span class=\"novy\">nov√Ω</span></div>"; 
         }
         
         return $zeme;
@@ -1427,7 +1427,7 @@ function order_by_subquery($vstup) {
     function show_filtr($typ_zobrazeni = "") {
         $reload_list = 0;
         //tvroba input datum rezervace od
-        $input_datum_od = "TermÌn od: <input id=\"termin_od\" name=\"termin_od\" type=\"text\" style=\"width:80px;\" value=\"" . ($_SESSION["termin_od"]) . "\"  />
+        $input_datum_od = "Term√≠n od: <input id=\"termin_od\" name=\"termin_od\" type=\"text\" style=\"width:80px;\" value=\"" . ($_SESSION["termin_od"]) . "\"  />
         		
                         ";
         //tvroba input datum rezervace do
@@ -1436,23 +1436,23 @@ function order_by_subquery($vstup) {
                         ";
         
         //tvroba input datum rezervace od
-        $input_cena_od = "Cena od: <input id=\"cena_od\" name=\"cena_od\" type=\"text\" style=\"width:80px;\" value=\"" . ($_SESSION["cena_od"]==0?(""):($_SESSION["cena_od"])) . "\"  /> KË       		
+        $input_cena_od = "Cena od: <input id=\"cena_od\" name=\"cena_od\" type=\"text\" style=\"width:80px;\" value=\"" . ($_SESSION["cena_od"]==0?(""):($_SESSION["cena_od"])) . "\"  /> Kƒç       		
                         ";
         //tvroba input datum rezervace do
-        $input_cena_do = " do: <input id=\"cena_do\" name=\"cena_do\" type=\"text\" style=\"width:80px;\" value=\"" . ($_SESSION["cena_do"]==0?(""):($_SESSION["cena_do"])) . "\"  /> KË       		
+        $input_cena_do = " do: <input id=\"cena_do\" name=\"cena_do\" type=\"text\" style=\"width:80px;\" value=\"" . ($_SESSION["cena_do"]==0?(""):($_SESSION["cena_do"])) . "\"  /> Kƒç       		
                         ";
         
-        $order_by = " Se¯adit: <select name=\"order_by\">
-                         <option value=\"recommended\" ".($this->order_by=="recommended"?( " selected=\"selected\""):("")).">DoporuËenÈ z·jezdy</option>
-                        <option value=\"cena_up\" ".($this->order_by=="cena_up"?( " selected=\"selected\""):("")).">Od nejlevnÏjöÌho</option>
-                        <option value=\"cena_down\" ".($this->order_by=="cena_down"?( " selected=\"selected\""):("")).">Od nejdraûöÌho</option>
-                        <option value=\"datum_od\" ".($this->order_by=="datum_od"?( " selected=\"selected\""):("")).">Od nejbliûöÌho odjezdu</option>
-                        <option value=\"sleva_down\" ".($this->order_by=="sleva_down"?( " selected=\"selected\""):("")).">Podle v˝öe slevy</option>
-                        <!--<option value=\"most_wanted\" ".($this->order_by=="most_wanted"?( " selected=\"selected\""):("")).">Nejû·danÏjöÌ</option>-->
+        $order_by = " Se≈ôadit: <select name=\"order_by\">
+                         <option value=\"recommended\" ".($this->order_by=="recommended"?( " selected=\"selected\""):("")).">Doporuƒçen√© z√°jezdy</option>
+                        <option value=\"cena_up\" ".($this->order_by=="cena_up"?( " selected=\"selected\""):("")).">Od nejlevnƒõj≈°√≠ho</option>
+                        <option value=\"cena_down\" ".($this->order_by=="cena_down"?( " selected=\"selected\""):("")).">Od nejdra≈æ≈°√≠ho</option>
+                        <option value=\"datum_od\" ".($this->order_by=="datum_od"?( " selected=\"selected\""):("")).">Od nejbli≈æ≈°√≠ho odjezdu</option>
+                        <option value=\"sleva_down\" ".($this->order_by=="sleva_down"?( " selected=\"selected\""):("")).">Podle v√Ω≈°e slevy</option>
+                        <!--<option value=\"most_wanted\" ".($this->order_by=="most_wanted"?( " selected=\"selected\""):("")).">Nej≈æ√°danƒõj≈°√≠</option>-->
                         </select>";
         
         $doprava = " Doprava: <select name=\"doprava\">
-            <option value=\"-1\" >--nez·leûÌ--</option>";
+            <option value=\"-1\" >--nez√°le≈æ√≠--</option>";
         $count=0;        
         $doprava_data = mysqli_query($GLOBALS["core"]->database->db_spojeni,$this->create_query("select_all_available_doprava"));
         while($doprava_row = mysqli_fetch_array($doprava_data)){
@@ -1476,8 +1476,8 @@ function order_by_subquery($vstup) {
             
         }
         
-        $zeme = " ZemÏ: <select name=\"zeme\">
-            <option value=\"-1\" >--nez·leûÌ--</option>";
+        $zeme = " Zemƒõ: <select name=\"zeme\">
+            <option value=\"-1\" >--nez√°le≈æ√≠--</option>";
         $count=0;         
         $zeme_data = mysqli_query($GLOBALS["core"]->database->db_spojeni,$this->create_query("select_all_available_zeme"));
         while($zeme_row = mysqli_fetch_array($zeme_data)){
@@ -1491,14 +1491,14 @@ function order_by_subquery($vstup) {
         }    
         $zeme=$zeme."</select>";
         if($count <= 1){ //pokud mam pouze jeden typ dopravy, nezobrazuju ho
-            $zeme = " ZemÏ: <i>$last_zeme</i>";
+            $zeme = " Zemƒõ: <i>$last_zeme</i>";
             $this->filter_zeme = $last_zeme;
             $reload_list = 1;
         }
                 
         
-        $typ = " Typ z·jezdu: <select name=\"typ_zajezdu\">
-            <option value=\"-1\" >--nez·leûÌ--</option>"; 
+        $typ = " Typ z√°jezdu: <select name=\"typ_zajezdu\">
+            <option value=\"-1\" >--nez√°le≈æ√≠--</option>"; 
         $count=0; 
         $typ_data = mysqli_query($GLOBALS["core"]->database->db_spojeni,$this->create_query("select_all_available_typ_zajezdu"));
         while($typ_row = mysqli_fetch_array($typ_data)){
@@ -1513,12 +1513,12 @@ function order_by_subquery($vstup) {
         }    
         $typ=$typ."</select>";
         if($count <= 1){ //pokud mam pouze jeden typ dopravy, nezobrazuju ho
-            $typ = " Typ z·jezdu: <i>$last_typ</i>";
+            $typ = " Typ z√°jezdu: <i>$last_typ</i>";
             $this->filter_typ_zajezdu = $last_typ;
             $reload_list = 1;
         }
         //tlacitko pro odeslani
-        $text = "N·zev z·jezdu/hotelu: <input id=\"keyword\" type=\"text\" name=\"text\" value=\"" . $this->text . "\" />";
+        $text = "N√°zev z√°jezdu/hotelu: <input id=\"keyword\" type=\"text\" name=\"text\" value=\"" . $this->text . "\" />";
         $submit = " <input type=\"submit\" value=\"Vyhledat\" />";
 
         $input_zeme = "  <select name=\"zeme-destinace\" >
@@ -1543,7 +1543,7 @@ function order_by_subquery($vstup) {
             $vystup = "
                     <div>
 			<form method=\"post\" name=\"terminy\" action=\"?update_filter=1" . $promenne . "\">
-                            ZemÏ: " . $input_zeme . " " . $text . "<br/>" . $input_datum_od . $input_datum_do . $submit . "
+                            Zemƒõ: " . $input_zeme . " " . $text . "<br/>" . $input_datum_od . $input_datum_do . $submit . "
 			</form>
                     </div>
                     ";
@@ -1552,7 +1552,7 @@ function order_by_subquery($vstup) {
             $vystup = "  
                     <form method=\"post\" name=\"terminy\" action=\"/vyhledavani?update_filter=1" . $promenne . "\">
                         <fieldset>
-                            Z·jezd / Hotel: <input id=\"keyword\"  name=\"text\" class=\"field\"  value=\"" . $_SESSION["text"] . "\" />                           
+                            Z√°jezd / Hotel: <input id=\"keyword\"  name=\"text\" class=\"field\"  value=\"" . $_SESSION["text"] . "\" />                           
                         </fieldset>
                         <fieldset>
                             $zeme<br/>
@@ -1947,7 +1947,7 @@ function order_by_subquery($vstup) {
                 
                 $this->radek["maxSlevaCastka"] = $maxSlevaCastka;
                 $this->radek["maxSleva"]=$maxSlevaCastka;
-                $this->radek["maxSlevaMena"]="KË";                                
+                $this->radek["maxSlevaMena"]="Kƒç";                                
             }
             return (($maxSlevaCastka + 1)/($row["cena_od"]+1)*100);
         }
@@ -1957,7 +1957,7 @@ function order_by_subquery($vstup) {
     
     function show_list_item($typ_zobrazeni, $text_max = "", $text_min = "", $text_ideal = "", $show_ajax = false) {
         if (in_array($this->radek["id_serial"], $this->vyprodane_serialy)) {
-            $vyprodano = "<span style=\"color:red;font-weight:bold;font-size:1.2em;\">Vyprod·no!</span> ";
+            $vyprodano = "<span style=\"color:red;font-weight:bold;font-size:1.2em;\">Vyprod√°no!</span> ";
         } else if (in_array($this->radek["id_serial"], $this->na_dotaz_serialy)) {
             $vyprodano = "<span style=\"color:blue;font-weight:bold;font-size:1.2em;\">Na Dotaz</span> ";
         } else {
@@ -1988,7 +1988,7 @@ function order_by_subquery($vstup) {
         } else if ($typ_zobrazeni == "termin_list") {//vypis zajezdu vcetne balicku a terminu
             $vypis = "<tr $suda><td>" . $vyprodano . "<a " . $color . " href=\"/zajezdy/zobrazit/" . $this->get_nazev_ubytovani_web() . "/" . $this->get_id_zajezd() . "\">
                                 <strong>" . $this->get_nazev() . "</strong></a>
-                                <td>" . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "
+                                <td>" . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "
                                 <td><span style=\"color:#00aa00;font-size:1.2em;\"><strong>" . $this->get_castka() . " " . $this->get_mena() . "</strong></span>
                                 <td><span style=\"font-weight:bold;color:#ca0000;font-size:1.2em;\">" . $this->get_highlights() . "</span>
                             </tr>
@@ -1996,7 +1996,7 @@ function order_by_subquery($vstup) {
             return $vypis;
         } else if ($typ_zobrazeni == "termin_serial_list") {//vypis zajezdu vcetne balicku a terminu
             $vypis = "<tr $suda><td>" . $vyprodano . "<a " . $color . " href=\"/zajezdy/zobrazit/" . $this->get_nazev_ubytovani_web() . "/" . $this->get_id_zajezd() . "\">
-                                " . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . "</a>" . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "
+                                " . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . "</a>" . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "
 
                                 <td><span style=\"color:#00aa00;font-size:1.2em;\"><strong>" . $this->get_castka() . " " . $this->get_mena() . "</strong></span>
                                 <td><span style=\"font-weight:bold;color:#ca0000;font-size:1.2em;\">" . $this->get_highlights() . "</span>
@@ -2057,7 +2057,7 @@ function order_by_subquery($vstup) {
                                     <a  href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "/" . $this->get_id_zajezd() . "\" >
                                         <b><em>" . $this->get_nazev() . "</em></b>
                                     </a><br/>
-                                     " . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "                                
+                                     " . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "                                
                                 <td width=\"100\" valign=\"top\">  
                                     " . $this->get_akcni_cena() . "<br/>
                                     " . $this->get_sleva() . "
@@ -2092,7 +2092,7 @@ function order_by_subquery($vstup) {
             $terminy = "";
 
             if ($pocet > 1) {
-                $sleva_text = "aû ";
+                $sleva_text = "a≈æ ";
                 $cena_text = "od ";
                 $show_cena_u_terminu = 1;
             } else {
@@ -2116,17 +2116,17 @@ function order_by_subquery($vstup) {
                     $sleva = $act_sleva;
                 }
                 if ($k == 4) {
-                    $terminy .= "<a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "\" title=\"Vöechny termÌny\">...</a>";
+                    $terminy .= "<a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "\" title=\"V≈°echny term√≠ny\">...</a>";
                 } else if($k > 4){
                     //do nothing
                 } else {
                     if($show_cena_u_terminu){
-                        $act_sleva_text = ", <span style=\"color:green;\">" . $cena . " KË</span><br/>";
+                        $act_sleva_text = ", <span style=\"color:green;\">" . $cena . " Kƒç</span><br/>";
                     }else{
                         $act_sleva_text = "";
                     }
                     
-                    $terminy .= "&nbsp;&nbsp;<a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "/" . $row["id_zajezd"] . "\"   class=\"object_link\" >" . $this->change_date_en_cz($row["od"]) . " - " . $this->change_date_en_cz($row["do"]) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "</a>".$act_sleva_text ;
+                    $terminy .= "&nbsp;&nbsp;<a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "/" . $row["id_zajezd"] . "\"   class=\"object_link\" >" . $this->change_date_en_cz($row["od"]) . " - " . $this->change_date_en_cz($row["do"]) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "</a>".$act_sleva_text ;
                 }
             }
 
@@ -2144,7 +2144,7 @@ function order_by_subquery($vstup) {
             if($sleva>0){
                $sleva_celkova =  $this->get_sleva_param($sleva_text . $sleva);
             }
-            //nechci aby se nedokonËenÈ z·jezdy zobrazovaly
+            //nechci aby se nedokonƒçen√© z√°jezdy zobrazovaly
             if($min_cena!=10000000){
             $vypis = "
                             
@@ -2192,71 +2192,55 @@ function order_by_subquery($vstup) {
             $data = mysqli_query($GLOBALS["core"]->database->db_spojeni,$sql);
             $pocet = mysqli_num_rows($data);
             $sleva = 0;
-            $min_cena = 10000000;
+            $best_zajezd = -1;
             $k = 0;
-            $terminy = "";
+            $terminy = array();
 
-            if ($pocet > 1) {
-                $sleva_text = "aû ";
-                $cena_text = "od ";
-                $show_cena_u_terminu = 1;
-            } else {
-                $sleva_text = "";
-                $cena_text = "";
-                $show_cena_u_terminu = 0;
-            }
             while ($row = mysqli_fetch_array($data)) {
                 $k++;
-                $act_sleva = round(( 1 - ($row["akcni_cena"] / $row["cena_pred_akci"]) ) * 100);
-                if ($min_cena > $row["akcni_cena"]) {
-                    $min_cena = $row["akcni_cena"];
-                }
+                $act_sleva = round(( 1 - ($row["akcni_cena"] / $row["cena_pred_akci"]) ) * 100);                      
+                $date1 = strtotime($row["od"]);
+                $date2 = strtotime($row["do"]);                
+                $datediff = $date2 - $date1;
+                $daysCount = round($datediff / (60 * 60 * 24));                    
+                    
+                $terminy[$row["id_zajezd"]] = array(
+                    "id_zajezd" => $row["id_zajezd"],
+                    "od" => $this->change_date_en_cz($row["od"]),
+                    "do" => $this->change_date_en_cz($row["do"]),
+                    "dlouhodobe" => ($this->get_dlouhodobe_zajezdy() ? ("Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu") : ("")),
+                    "pocet_dni" => ($this->get_dlouhodobe_zajezdy() ? (0) : ($daysCount)),
+                    "akcni_cena" => $row["akcni_cena"],
+                    "cena_pred_akci" => $row["cena_pred_akci"],
+                    "sleva" => $act_sleva,
+                    );
+                
                 if ($act_sleva > $sleva) {
-                    $sleva = $act_sleva;
-                }
-                if ($k == 4) {
-                    $terminy .= "<a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "\" title=\"Vöechny termÌny\">...</a>";
-                } else if($k > 4){
-                    //do nothing
-                } else {
-                    $terminy .= "&nbsp;&nbsp;<a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "/" . $row["id_zajezd"] . "\" class=\"object_link\">" . $this->change_date_en_cz($row["od"]) . " - " . $this->change_date_en_cz($row["do"]) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "</a>" .
-                            (($show_cena_u_terminu == 1) ? (", <span style=\"color:green;\">" . $row["akcni_cena"] . " KË</span><br/>") : ("") );
-                }
+                    $best_zajezd = $row["id_zajezd"];
+                }   
+                
             }
-
-            if ($this->get_foto_url()) {
-                $foto = "                                
-                                        <img height=\"45\" src=\"https://www.slantour.cz/" . ADRESAR_IKONA . "/" . $this->get_foto_url() . "\" alt=\"" . $this->get_nazev() . "\" title=\"" . $this->get_nazev() . "\" />";
-            }
-            if ($this->suda) {
-                $class = " class=\"suda objekt\"";
-            } else {
-                $class = " class=\"licha objekt\"";
-            }
-
-            $vypis = "
-                            
-                              <tr " . $class . "  id=\"".$this->get_id_serial()."\" style=\"border-bottom:1px solid black;\">
-                                <td >
-                                    <a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "\" class=\"object_link\">
-                                        $foto
-                                    </a>
-                                <td >    
-                                    <a style=\"color:rgb(60,80,180);font-size:1.2em;\" href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "\" class=\"object_link\">
-                                        <b>" . $this->get_nazev() . "</b>
-                                    </a><br/>
-                                    " . $terminy . "
-                                 <td width=\"100\" valign=\"top\">  
-                                    " . $this->get_akcni_cena_param($cena_text . $min_cena) . "<br/>
-                                    " . $this->get_sleva_param($sleva_text . $sleva) . "
-                           
-                          ";
-            $this->max_sleva_zajezd = $sleva;
-            if($min_cena!=10000000){
-                return $vypis;
+            
+            if(($this->get_nazev_zeme() == "ƒåR" or $this->get_nazev_zeme() == "Slovensko") and $this->get_nazev_destinace()!=""){
+                $lokace = $this->get_nazev_destinace();
             }else{
-                return "";
+                $lokace = $this->get_nazev_zeme();                
             }
+            
+            $res = array(
+                "id_serial" => $this->get_id_serial(),
+                "nazev" => $this->get_nazev(),
+                "url" => "zajezdy/zobrazit/" . $this->get_nazev_web(),
+                "best_zajezd" => $best_zajezd,
+                "foto_url" => "https://slantour.cz/foto/full/".$this->get_foto_url(),
+                "lokace" => $lokace,
+                "strava" => Serial_library::get_typ_stravy($this->radek["strava"] - 1),
+                "terminy" => $terminy                
+                );
+            
+                  
+            return $res;
+            
         } else if ($typ_zobrazeni == "slevy_list_ubytovani") {//vypis zajezdu vcetne balicku a terminu
             //vcetne zgrupovanych terminu zajezdu           
             $sql = "select `zajezd`.*, `serial`.`nazev` ,`serial`.`nazev_web`,                    
@@ -2288,15 +2272,6 @@ function order_by_subquery($vstup) {
             $terminy = "";
             $last_serial = "";
 
-            if ($pocet > 1) {
-                $sleva_text = "aû ";
-                $cena_text = "od ";
-                $show_cena_u_terminu = 1;
-            } else {
-                $sleva_text = "";
-                $cena_text = "";
-                $show_cena_u_terminu = 0;
-            }
             while ($row = mysqli_fetch_array($data)) {
                 $k++;
                 $act_sleva = round(( 1 - ($row["akcni_cena"] / $row["cena_pred_akci"]) ) * 100);
@@ -2307,7 +2282,7 @@ function order_by_subquery($vstup) {
                     $sleva = $act_sleva;
                 }
                 if ($k == 3) {
-                    $terminy .= "<a href=\"/zajezdy/ubytovani/" . $this->get_nazev_web() . "\" title=\"Vöechny termÌny\">...</a>";
+                    $terminy .= "<a href=\"/zajezdy/ubytovani/" . $this->get_nazev_web() . "\" title=\"V≈°echny term√≠ny\">...</a>";
                 } else if($k > 3){
                     //do nothing
                 } else {
@@ -2315,8 +2290,8 @@ function order_by_subquery($vstup) {
                         $last_serial = $row["nazev"];
                         $terminy .= "<b><i style=\"color:#757575;\">" . $row["nazev"] . "</i></b><br/>\n";
                     }
-                    $terminy .= "&nbsp;&nbsp;<a href=\"/zajezdy/zobrazit/" . $row["nazev_web"] . "/" . $row["id_zajezd"] . "\"  class=\"object_link\">" . $this->change_date_en_cz($row["od"]) . " - " . $this->change_date_en_cz($row["do"]) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "</a>" .
-                            (($show_cena_u_terminu == 1) ? (", <span style=\"color:green;\">" . $row["akcni_cena"] . " KË</span><br/>") : ("") );
+                    $terminy .= "&nbsp;&nbsp;<a href=\"/zajezdy/zobrazit/" . $row["nazev_web"] . "/" . $row["id_zajezd"] . "\"  class=\"object_link\">" . $this->change_date_en_cz($row["od"]) . " - " . $this->change_date_en_cz($row["do"]) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "</a>" .
+                            (($show_cena_u_terminu == 1) ? (", <span style=\"color:green;\">" . $row["akcni_cena"] . " Kƒç</span><br/>") : ("") );
                 }
             }
 
@@ -2382,9 +2357,9 @@ function order_by_subquery($vstup) {
                                     <a  href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "/" . $this->get_id_zajezd() . "\" >
                                         <b style=\"font-size:1.2em;\"><em>" . $this->get_nazev() . "</em></b>
                                     </a>" . $text . "<br/>
-                                     " . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "                                
+                                     " . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "                                
                                  
-                                    <span style=\"color:red;font-weight:bold;\">cena od: " . $this->get_castka() . " KË</span>
+                                    <span style=\"color:red;font-weight:bold;\">cena od: " . $this->get_castka() . " Kƒç</span>
                            
                           ";
             return $vypis;
@@ -2442,9 +2417,9 @@ function order_by_subquery($vstup) {
                                     <a  href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "/" . $this->get_id_zajezd() . "\" >
                                         <b><em>" . $this->get_nazev_ubytovani() . " - " . $this->get_nazev() . "</em></b>
                                     </a><br/>" . $text . $sleva . "<br/>
-                                     " . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "                                
+                                     " . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . ($this->get_dlouhodobe_zajezdy() ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : ("")) . "                                
                                  
-                                   <b style=\"color:green;\">cena od: " . $this->get_castka() . " KË</b>
+                                   <b style=\"color:green;\">cena od: " . $this->get_castka() . " Kƒç</b>
                            
                           ";
             return $vypis;
@@ -2551,11 +2526,11 @@ function order_by_subquery($vstup) {
             $pocet = mysqli_num_rows($data);
             
             $max_sleva = 0;
-            $max_sleva_mena = "KË";
+            $max_sleva_mena = "Kƒç";
             $max_sleva_prepocitana_procenta_castka = 0;
             
             $max_sleva_serial = 0;
-            $max_sleva_serial_mena = "KË";
+            $max_sleva_serial_mena = "Kƒç";
             $max_sleva_serial_prepocitana_procenta_castka = 0;
             $min_cena = 10000000;
             $k = 0;
@@ -2566,7 +2541,7 @@ function order_by_subquery($vstup) {
             $sleva_zajezd_procenta_text = "";
             $sleva_zajezd_castka_text = "";
             if ($pocet > 1) {
-                $sleva_text = "aû ";
+                $sleva_text = "a≈æ ";
                 $cena_text = "od ";
                 $show_cena_u_terminu = 1;
             } else {
@@ -2581,10 +2556,10 @@ function order_by_subquery($vstup) {
                         if($last_serial!=""){
                         if ($this->typ_pozadavku == "select_ubytovani_group" and $max_sleva_serial > 0) {
                           if($max_sleva_serial_mena=="%"){
-                             $last_sleva_serial = "<b >SLEVA Aé ". $max_sleva_serial . "%</b> ";
+                             $last_sleva_serial = "<b >SLEVA A≈Ω ". $max_sleva_serial . "%</b> ";
                                                    
                           }else{
-                             $last_sleva_serial = "<b >SLEVA Aé " . $max_sleva_serial . "KË</b> ";                                                   
+                             $last_sleva_serial = "<b >SLEVA A≈Ω " . $max_sleva_serial . "Kƒç</b> ";                                                   
                           }
                             $max_sleva_serial=0;
                             $max_sleva_serial_prepocitana_procenta_castka=0;
@@ -2635,7 +2610,7 @@ function order_by_subquery($vstup) {
                     $act_sleva = round(( 1 - ($row["akcni_cena"] / $row["cena_pred_akci"]) ) * 100);
                     if ($act_sleva > $max_sleva_procenta) {
                         $max_sleva_procenta = $act_sleva;
-                        $text_slevy .= $act_sleva."% akËnÌ sleva ".$row["popis_akce"]."\n";
+                        $text_slevy .= $act_sleva."% akƒçn√≠ sleva ".$row["popis_akce"]."\n";
                     }
                     $sleva_z_akce = 1;
                 }
@@ -2644,7 +2619,7 @@ function order_by_subquery($vstup) {
                     if($sleva_array_castka_zajezd[$key]>0){
                         $text_slevy .= $sleva_array_castka_zajezd[$key].$mena." ".$sleva_array_zkraceny_nazev_zajezd[$key]."\n";
                         
-                        if($mena=="KË" and $max_sleva_kc < $sleva_array_castka_zajezd[$key]){
+                        if($mena=="Kƒç" and $max_sleva_kc < $sleva_array_castka_zajezd[$key]){
                             $max_sleva_kc = $sleva_array_castka_zajezd[$key];
                             //$sleva_z_akce = 0;
                             
@@ -2660,7 +2635,7 @@ function order_by_subquery($vstup) {
                     if($sleva_array_castka[$key]>0){
                         $text_slevy .= $sleva_array_castka[$key].$mena." ".$sleva_array_zkraceny_nazev[$key]."\n";
                         
-                        if($mena=="KË" and $max_sleva_kc < $sleva_array_castka[$key]){
+                        if($mena=="Kƒç" and $max_sleva_kc < $sleva_array_castka[$key]){
                             $max_sleva_kc = $sleva_array_castka[$key];
                             //$sleva_z_akce = 0;
                             
@@ -2672,15 +2647,15 @@ function order_by_subquery($vstup) {
                         }
                     }
                 }
-                //max sleva pro aktu·lnÌ z·jezd
+                //max sleva pro aktu√°ln√≠ z√°jezd
                 
                 $max_sleva_procenta_castka = 0;
                 if($max_sleva_procenta > 0){
-                    //propocitam priblizne slevu v KË
+                    //propocitam priblizne slevu v Kƒç
                     $max_sleva_procenta_castka = $row["castka"] * $max_sleva_procenta/100;
                 }
                 $act_max_sleva=0;
-                $act_max_sleva_mena="KË";
+                $act_max_sleva_mena="Kƒç";
                 
                 if($max_sleva_procenta_castka > 0 or $max_sleva_kc >0){
                     if($max_sleva_procenta_castka > $max_sleva_kc){
@@ -2688,23 +2663,23 @@ function order_by_subquery($vstup) {
                         $act_max_sleva_mena="%";
                             if($max_sleva_procenta > 3 and $sleva_z_akce == 0){
                                 $castka_po_sleve = round($row["castka"] - $max_sleva_procenta_castka);
-                                $sleva_zajezd_text = "<span style=\"color:red;text-decoration:line-through;font-size:0.8em;\">".$row["castka"]." KË</span> <b style=\"color:green;\" title=\"".$text_slevy."\">po slevÏ: <span itemprop=\"price\">". $castka_po_sleve . "</span><meta itemprop=\"priceCurrency\" content=\"CZK\" /> KË</b> ";
+                                $sleva_zajezd_text = "<span style=\"color:red;text-decoration:line-through;font-size:0.8em;\">".$row["castka"]." Kƒç</span> <b style=\"color:green;\" title=\"".$text_slevy."\">po slevƒõ: <span itemprop=\"price\">". $castka_po_sleve . "</span><meta itemprop=\"priceCurrency\" content=\"CZK\" /> Kƒç</b> ";
                             }else if($sleva_z_akce == 1){                                  
-                                $sleva_zajezd_text = "<span style=\"color:red;text-decoration:line-through;font-size:0.8em;\">".$row["cena_pred_akci"]." KË</span> <b style=\"color:green;\" title=\"".$text_slevy."\">po slevÏ: <span itemprop=\"price\">". $row["akcni_cena"] . "</span><meta itemprop=\"priceCurrency\" content=\"CZK\" /> KË</b> ";
+                                $sleva_zajezd_text = "<span style=\"color:red;text-decoration:line-through;font-size:0.8em;\">".$row["cena_pred_akci"]." Kƒç</span> <b style=\"color:green;\" title=\"".$text_slevy."\">po slevƒõ: <span itemprop=\"price\">". $row["akcni_cena"] . "</span><meta itemprop=\"priceCurrency\" content=\"CZK\" /> Kƒç</b> ";
                             }else{
-                                $sleva_zajezd_text = "<b style=\"color:green\" itemprop=\"price\">".$row["castka"]." KË</b><meta itemprop=\"priceCurrency\" content=\"CZK\" />";
+                                $sleva_zajezd_text = "<b style=\"color:green\" itemprop=\"price\">".$row["castka"]." Kƒç</b><meta itemprop=\"priceCurrency\" content=\"CZK\" />";
                             }
                         
                     }else{
                         $act_max_sleva=$max_sleva_kc;
-                        $act_max_sleva_mena="KË";
+                        $act_max_sleva_mena="Kƒç";
                         $sleva_z_akce = 0;
                             $castka_po_sleve = round($row["castka"] - $max_sleva_kc);
-                            $sleva_zajezd_text = "<span style=\"color:red;text-decoration:line-through;font-size:0.8em;\">".$row["castka"]." KË</span> <b style=\"color:green;\" title=\"".$text_slevy."\">po slevÏ: <span itemprop=\"price\">". $castka_po_sleve . "</span><meta itemprop=\"priceCurrency\" content=\"CZK\" /> KË</b>  ";
+                            $sleva_zajezd_text = "<span style=\"color:red;text-decoration:line-through;font-size:0.8em;\">".$row["castka"]." Kƒç</span> <b style=\"color:green;\" title=\"".$text_slevy."\">po slevƒõ: <span itemprop=\"price\">". $castka_po_sleve . "</span><meta itemprop=\"priceCurrency\" content=\"CZK\" /> Kƒç</b>  ";
                                                
                     }
                 }else{
-                    $sleva_zajezd_text = "<b style=\"color:green\" itemprop=\"price\">".$row["castka"]." KË</b><meta itemprop=\"priceCurrency\" content=\"CZK\" />";
+                    $sleva_zajezd_text = "<b style=\"color:green\" itemprop=\"price\">".$row["castka"]." Kƒç</b><meta itemprop=\"priceCurrency\" content=\"CZK\" />";
                 }
                 
                 
@@ -2716,13 +2691,13 @@ function order_by_subquery($vstup) {
                 $showall_text.="<input type='hidden' value='" . $this->get_id_ubytovani() . " - " . $this->get_id_zajezd() . "'/>";
                 if ($k == $max_k and !$showall) {
                     if ($this->typ_pozadavku == "select_ubytovani_group") {
-                        $showall_text.="<!--[if IE]><a href=\"" . $_SERVER["request_uri"] . "?all=" . $this->get_id_ubytovani() . "\"  style=\"color:#505090;\"><i>zobrazit vöechny termÌny</i></a><![endif]-->";
-//                        $showall_text.="<![if !IE]><a href=\"" . $_SERVER["request_uri"] . "?all=" . $this->get_id_ubytovani() . "\"  style=\"color:#505090;\"><i>zobrazit vöechny termÌny</i></a><![endif]>";
-                        $showall_text.="<![if !IE]><div style='cursor: pointer;text-decoration: underline;' onclick=\"getKatalogAJAX(this, " . $this->get_id_ubytovani() . ", 'ubytovani');\"><i>zobrazit vöechny termÌny</i></a><![endif]>";
+                        $showall_text.="<!--[if IE]><a href=\"" . $_SERVER["request_uri"] . "?all=" . $this->get_id_ubytovani() . "\"  style=\"color:#505090;\"><i>zobrazit v≈°echny term√≠ny</i></a><![endif]-->";
+//                        $showall_text.="<![if !IE]><a href=\"" . $_SERVER["request_uri"] . "?all=" . $this->get_id_ubytovani() . "\"  style=\"color:#505090;\"><i>zobrazit v≈°echny term√≠ny</i></a><![endif]>";
+                        $showall_text.="<![if !IE]><div style='cursor: pointer;text-decoration: underline;' onclick=\"getKatalogAJAX(this, " . $this->get_id_ubytovani() . ", 'ubytovani');\"><i>zobrazit v≈°echny term√≠ny</i></a><![endif]>";
                     } else {
-                        $showall_text.="<!--[if IE]><a href=\"" . $_SERVER["request_uri"] . "?all=" . $this->get_id_serial() . "\"  style=\"color:#505090;\"><i>zobrazit vöechny termÌny</i></a><![endif]-->";
-//                        $showall_text.="<![if !IE]><a href=\"" . $_SERVER["request_uri"] . "?all=" . $this->get_id_serial() . "\"  style=\"color:#505090;\"><i>zobrazit vöechny termÌny</i></a><![endif]>";
-                        $showall_text.="<![if !IE]><div style='cursor: pointer;text-decoration: underline;' onclick=\"getKatalogAJAX(this, " . $this->get_id_serial() . ", 'serial');\"><i>zobrazit vöechny termÌny</i></a><![endif]>";
+                        $showall_text.="<!--[if IE]><a href=\"" . $_SERVER["request_uri"] . "?all=" . $this->get_id_serial() . "\"  style=\"color:#505090;\"><i>zobrazit v≈°echny term√≠ny</i></a><![endif]-->";
+//                        $showall_text.="<![if !IE]><a href=\"" . $_SERVER["request_uri"] . "?all=" . $this->get_id_serial() . "\"  style=\"color:#505090;\"><i>zobrazit v≈°echny term√≠ny</i></a><![endif]>";
+                        $showall_text.="<![if !IE]><div style='cursor: pointer;text-decoration: underline;' onclick=\"getKatalogAJAX(this, " . $this->get_id_serial() . ", 'serial');\"><i>zobrazit v≈°echny term√≠ny</i></a><![endif]>";
                     }
                 
                 }
@@ -2739,15 +2714,15 @@ function order_by_subquery($vstup) {
                         if (preg_match("/[0-9]+\. *[0-9]+/", $row["nazev_zajezdu"]) != 0) {
                             $podnazev .= "<a href=\"/zajezdy/zobrazit/" . $row["nazev_web"] . "/" . $row["id_zajezd"] . "\" class=\"object_link\">" . $row["nazev_zajezdu"] . "</a>";
                         } else {
-                            $podnazev .= "<a href=\"/zajezdy/zobrazit/" . $row["nazev_web"] . "/" . $row["id_zajezd"] . "\" class=\"object_link\">" . $row["nazev_zajezdu"] . ", " . $datum . "</a>" . ($row["dlouhodobe_zajezdy"] ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : (""));
+                            $podnazev .= "<a href=\"/zajezdy/zobrazit/" . $row["nazev_web"] . "/" . $row["id_zajezd"] . "\" class=\"object_link\">" . $row["nazev_zajezdu"] . ", " . $datum . "</a>" . ($row["dlouhodobe_zajezdy"] ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : (""));
                         }
                     } else {
-                        $podnazev .= "<a href=\"/zajezdy/zobrazit/" . $row["nazev_web"] . "/" . $row["id_zajezd"] . "\" class=\"object_link\">" . $datum . "</a>" . ($row["dlouhodobe_zajezdy"] ? ("<span title=\"Odjezd a p¯Ìjezd libovolnÏ v r·mci zadanÈho termÌnu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : (""));
+                        $podnazev .= "<a href=\"/zajezdy/zobrazit/" . $row["nazev_web"] . "/" . $row["id_zajezd"] . "\" class=\"object_link\">" . $datum . "</a>" . ($row["dlouhodobe_zajezdy"] ? ("<span title=\"Odjezd a p≈ô√≠jezd libovolnƒõ v r√°mci zadan√©ho term√≠nu\" style=\"color:green;font-weight:bold;font-size:1.2em;\">*</span>") : (""));
                     }
 
                     
-                    if($row["castka"] <= "1"){//podez¯el· cena - rozhodnÏ nechceme zobrazovat cenu za korunu
-                        $text_cena = "<b style=\"color:green\"> P¯edbÏûn· registrace</b>";
+                    if($row["castka"] <= "1"){//podez≈ôel√° cena - rozhodnƒõ nechceme zobrazovat cenu za korunu
+                        $text_cena = "<b style=\"color:green\"> P≈ôedbƒõ≈æn√° registrace</b>";
                     }else{
                         $text_cena = $sleva_zajezd_text;
                     }
@@ -2761,9 +2736,9 @@ function order_by_subquery($vstup) {
                         if($last_serial!=""){
                         if ($this->typ_pozadavku == "select_ubytovani_group" and $max_sleva_serial > 0) {
                           if($max_sleva_serial_mena=="%"){                            
-                                $last_sleva_serial = "<b >SLEVA Aé ". $max_sleva_serial . "%</b> ";                                                   
+                                $last_sleva_serial = "<b >SLEVA A≈Ω ". $max_sleva_serial . "%</b> ";                                                   
                           }else{                            
-                                $last_sleva_serial = "<b >SLEVA Aé " . $max_sleva_serial . "KË</b> ";                                                    
+                                $last_sleva_serial = "<b >SLEVA A≈Ω " . $max_sleva_serial . "Kƒç</b> ";                                                    
                           }
                             $max_sleva_serial=0;
                             $max_sleva_serial_prepocitana_procenta_castka=0;
@@ -2842,7 +2817,7 @@ function order_by_subquery($vstup) {
                     }else{
                         $sleva_style="3";
                     }
-                       $vypis_sleva = "<div class=\"sleva\">SLEVA " . $sleva_text ."<span class=\"sleva_serial$sleva_style\">". $max_sleva . "<span>KË</span></span></div>";
+                       $vypis_sleva = "<div class=\"sleva\">SLEVA " . $sleva_text ."<span class=\"sleva_serial$sleva_style\">". $max_sleva . "<span>Kƒç</span></span></div>";
                        
                 }
             }else{
@@ -2895,7 +2870,7 @@ function order_by_subquery($vstup) {
                                         $vypis."                                        
                                     </td>    
                                     <td valign=\"top\" style=\"text-align:right;\">
-                                        " . $odkaz_tlacitko . " Informace a objedn·vky </a>
+                                        " . $odkaz_tlacitko . " Informace a objedn√°vky </a>
                                     </td>
                                 </tr>
                                </table>  
@@ -2942,7 +2917,7 @@ function order_by_subquery($vstup) {
                                     <a  href=\"/zajezdy/ubytovani/" . $this->get_nazev_web() . "\" >
                                         <b><em>" . $this->get_nazev() . "</em></b>
                                     </a> <span style=\"font-size:0.9em;\">" . $text . "</span>                                     
-                                    cena od: <span style=\"color:red;font-weight:bold;\">" . $this->get_castka() . " KË</span>                           
+                                    cena od: <span style=\"color:red;font-weight:bold;\">" . $this->get_castka() . " Kƒç</span>                           
                           ";
             return $vypis;
         } else if ($typ_zobrazeni == "ubytovani_serial_list") {//vypis zajezdu vcetne balicku a terminu    
@@ -2997,7 +2972,7 @@ function order_by_subquery($vstup) {
             $vypis.= "
                               
                                 <a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "\" >" . $this->get_nazev() . "</a> 
-                                <span style=\"color:red;font-weight:bold;\">od: " . $this->get_castka() . " KË</span>
+                                <span style=\"color:red;font-weight:bold;\">od: " . $this->get_castka() . " Kƒç</span>
                            <br/>
                             ";
 
@@ -3075,14 +3050,14 @@ function order_by_subquery($vstup) {
             } else if($this->radek["sleva_zajezd_castka"] > 0){                   
                     $sleva = "
                          <div style=\"float:right; text-align:right;\">
-                            <b title=\"" . $this->radek["sleva_zajezd_nazev"] . "\">SLEVA aû ".$this->radek["sleva_zajezd_castka"] . " " . $this->radek["sleva_zajezd_mena"] . "</b> 
+                            <b title=\"" . $this->radek["sleva_zajezd_nazev"] . "\">SLEVA a≈æ ".$this->radek["sleva_zajezd_castka"] . " " . $this->radek["sleva_zajezd_mena"] . "</b> 
                          </div>";
             } else {
                     $sleva = "";
             }
             $vypis.= " <tr><td  style=\"padding-left:10px;\">                              
                                 <a href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "/" . $this->get_id_zajezd() . "\"  class=\"object_link\">" . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . "</a> 
-                                <span style=\"color:red;font-weight:bold;\">od: " . $this->get_castka() . " KË " . $sleva . "</span>
+                                <span style=\"color:red;font-weight:bold;\">od: " . $this->get_castka() . " Kƒç " . $sleva . "</span>
                            
                             ";
 
@@ -3151,7 +3126,7 @@ function order_by_subquery($vstup) {
                 $vypis.= "
                               
                                 <a " . $style . " href=\"/zajezdy/zobrazit/" . $this->get_nazev_web() . "/" . $this->get_id_zajezd() . "\" >" . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . "</a> 
-                                <span style=\"color:red;font-weight:bold;\">od: " . $this->get_castka() . " KË " . $sleva . "</span>
+                                <span style=\"color:red;font-weight:bold;\">od: " . $this->get_castka() . " Kƒç " . $sleva . "</span>
                            <br/>
                             ";
             } else {
@@ -3185,7 +3160,7 @@ function order_by_subquery($vstup) {
             $vypis = "<tr $suda><td>" . $vyprodano . "<a " . $color . " href=\"/zajezdy/zobrazit/" . $this->get_nazev_ubytovani_web() . "\">
                                 <strong>" . $this->get_nazev_ubytovani() . "</strong></a>
                                 <td>" . $this->get_nazev_zeme() . ", " . $this->get_nazev_destinace() . "
-                                <td style=\"text-align:right;\"><span style=\"font-weight:bold;color:#009a00;font-size:1.2em;\">" . $this->get_castka() . " KË</span>
+                                <td style=\"text-align:right;\"><span style=\"font-weight:bold;color:#009a00;font-size:1.2em;\">" . $this->get_castka() . " Kƒç</span>
                             </tr>
                             ";
             return $vypis;
@@ -3214,7 +3189,7 @@ function order_by_subquery($vstup) {
                                 <strong>" . $this->get_nazev() . "</strong></a><br/>
                                     " . $foto . "<br/>
                                 " . $this->get_nazev_zeme() . ", " . $this->get_nazev_destinace() . "<br/>
-                                <span style=\"font-weight:bold;color:#009a00;font-size:1.2em;\">cena od: " . $this->get_castka() . " KË</span>
+                                <span style=\"font-weight:bold;color:#009a00;font-size:1.2em;\">cena od: " . $this->get_castka() . " Kƒç</span>
                                  </div>   
                             ";
 	    /*
@@ -3252,7 +3227,7 @@ function order_by_subquery($vstup) {
                                 <strong>" . $this->get_nazev() . "</strong></a></div>
                                     " . $foto . "<br/>
                                 " . $this->get_nazev_zeme() . ", " . $this->get_nazev_destinace() . "<br/>
-                                <span style=\"font-weight:bold;color:#009a00;font-size:1.2em;\">cena od: " . $this->get_castka() . " KË</span>
+                                <span style=\"font-weight:bold;color:#009a00;font-size:1.2em;\">cena od: " . $this->get_castka() . " Kƒç</span>
                                  </div>   
                             ";
             return $vypis;
@@ -3301,7 +3276,7 @@ function order_by_subquery($vstup) {
         }
 
         //odkaz na prvni stranku
-        $vypis = "<div class=\"strankovani\"><a href=\"?str=0" . $destinace . "\" title=\"prvnÌ str·nka z·jezd˘\">&lt;&lt;</a> &nbsp;";
+        $vypis = "<div class=\"strankovani\"><a href=\"?str=0" . $destinace . "\" title=\"prvn√≠ str√°nka z√°jezd≈Ø\">&lt;&lt;</a> &nbsp;";
 
         //odkaz na dalsi stranky z rozsahu
         while (($act_str <= $this->pocet_zajezdu) and ($act_str <= $this->zacatek + (10 * $this->pocet_zaznamu) )) {
@@ -3315,7 +3290,7 @@ function order_by_subquery($vstup) {
 
         //odkaz na posledni stranku
         $posl_str = $this->pocet_zaznamu * floor($this->pocet_zajezdu / $this->pocet_zaznamu);
-        $vypis = $vypis . " &nbsp; <a href=\"?str=" . $posl_str . $destinace . "\" title=\"poslednÌ str·nka z·jezd˘\">&gt;&gt;</a></div>";
+        $vypis = $vypis . " &nbsp; <a href=\"?str=" . $posl_str . $destinace . "\" title=\"posledn√≠ str√°nka z√°jezd≈Ø\">&gt;&gt;</a></div>";
 
         return $vypis;
     }
@@ -3409,10 +3384,10 @@ function order_by_subquery($vstup) {
         //need to change
         //vymenim hacky a carky
         $nazev_web = Str_Replace(
-                Array("‰", "Î", "ˆ", "¸", "·", "Ë", "Ô", "È", "Ï", "Ì", "æ", "Ú", "Û", "¯", "ö", "ù", "˙", "˘", "˝", "û", "ƒ", "À", "÷", "‹", "¡", "»", "œ", "…", "Ã", "Õ", "º", "“", "”", "ÿ", "ä", "ç", "⁄", "Ÿ", "›", "é"), Array("a", "e", "o", "u", "a", "c", "d", "e", "e", "i", "l", "n", "o", "r", "s", "t", "u", "u", "y", "z", "A", "E", "O", "U", "A", "C", "D", "E", "E", "I", "L", "N", "O", "R", "S", "T", "U", "U", "Y", "Z"), $vstup);
-        $nazev_web = Str_Replace(Array(" ", "_", "/"), "-", $nazev_web); //nahradÌ mezery a podtrûÌtka pomlËkami
-        $nazev_web = Str_Replace(Array("(", ")", ".", "!", ",", "\"", "'", "*"), "", $nazev_web); //odstranÌ ().!,"'
-        $nazev_web = StrToLower($nazev_web); //velk· pÌsmena nahradÌ mal˝mi.
+                Array("√§", "√´", "√∂", "√º", "√°", "ƒç", "ƒè", "√©", "ƒõ", "√≠", "ƒæ", "≈à", "√≥", "≈ô", "≈°", "≈•", "√∫", "≈Ø", "√Ω", "≈æ", "√Ñ", "√ã", "√ñ", "√ú", "√Å", "ƒå", "ƒé", "√â", "ƒö", "√ç", "ƒΩ", "≈á", "√ì", "≈ò", "≈†", "≈§", "√ö", "≈Æ", "√ù", "≈Ω"), Array("a", "e", "o", "u", "a", "c", "d", "e", "e", "i", "l", "n", "o", "r", "s", "t", "u", "u", "y", "z", "A", "E", "O", "U", "A", "C", "D", "E", "E", "I", "L", "N", "O", "R", "S", "T", "U", "U", "Y", "Z"), $vstup);
+        $nazev_web = Str_Replace(Array(" ", "_", "/"), "-", $nazev_web); //nahrad√≠ mezery a podtr≈æ√≠tka pomlƒçkami
+        $nazev_web = Str_Replace(Array("(", ")", ".", "!", ",", "\"", "'", "*"), "", $nazev_web); //odstran√≠ ().!,"'
+        $nazev_web = StrToLower($nazev_web); //velk√° p√≠smena nahrad√≠ mal√Ωmi.
         return $nazev_web;
     }
 
@@ -3558,8 +3533,8 @@ function order_by_subquery($vstup) {
         //tvorba vypisu titulku
         if ($_GET["typ"] != "" or $_GET["podtyp"] != "" or $_GET["zeme"] != "" or $_GET["destinace"] != "") {              
             if ($_GET["zeme"] == "" and $_GET["destinace"] == "") {
-                if($this->get_name_for_typ("")=="Pobyty na hor·ch ".Date("Y")){
-                    $nazev_typ = "Ubytov·nÌ a pobyty na hor·ch ".Date("Y")." ";
+                if($this->get_name_for_typ("")=="Pobyty na hor√°ch ".Date("Y")){
+                    $nazev_typ = "Ubytov√°n√≠ a pobyty na hor√°ch ".Date("Y")." ";
                 }else{
                     $nazev_typ = $this->get_name_for_typ(" ");
                 }
@@ -3569,8 +3544,8 @@ function order_by_subquery($vstup) {
                 return  $this->get_name_for_typ(", ").$this->get_name_for_zeme(" | ") . $this->get_name_for_podtyp(" | ") . " SLAN tour";
             
             }else {
-                if($this->get_name_for_typ("")=="Pobyty na hor·ch ".Date("Y")){
-                    $nazev_typ = "Ubytov·nÌ a pobyty na hor·ch ".Date("Y")." | ";
+                if($this->get_name_for_typ("")=="Pobyty na hor√°ch ".Date("Y")){
+                    $nazev_typ = "Ubytov√°n√≠ a pobyty na hor√°ch ".Date("Y")." | ";
                 }else{
                     $nazev_typ = $this->get_name_for_typ(" | ");
                 }
@@ -3587,8 +3562,8 @@ function order_by_subquery($vstup) {
         if (strpos($this->nazev_typ, Date("Y")) === false) {
             $date = " " . Date("Y");
         }
-        if($this->get_name_for_typ("")=="Pobyty na hor·ch"){
-                    $nazev_typ = "Ubytov·nÌ na hor·ch ";
+        if($this->get_name_for_typ("")=="Pobyty na hor√°ch"){
+                    $nazev_typ = "Ubytov√°n√≠ na hor√°ch ";
                 }else{
                     $nazev_typ = $this->get_name_for_typ("");
                 }
@@ -3607,7 +3582,7 @@ function order_by_subquery($vstup) {
         } else if ($this->get_name_for_typ("") != "") {
             return $nazev_typ;
         } else {
-            return "Katalog z·jezd˘ " . Date("Y");
+            return "Katalog z√°jezd≈Ø " . Date("Y");
         }
     }
 
@@ -3617,9 +3592,9 @@ function order_by_subquery($vstup) {
     function show_keyword() {
         //tvorba vypisu titulku                    
         if ($_GET["typ"] != "" or $_GET["podtyp"] != "" or $_GET["zeme"] != "" or $_GET["destinace"] != "") {
-            return $this->get_name_for_destinace() . $this->get_name_for_zeme() . $this->get_name_for_typ() . $this->get_name_for_podtyp() . " SLAN tour, z·jezdy " . Date("Y");
+            return $this->get_name_for_destinace() . $this->get_name_for_zeme() . $this->get_name_for_typ() . $this->get_name_for_podtyp() . " SLAN tour, z√°jezdy " . Date("Y");
         } else {
-            return "SLAN tour, z·jezdy " . Date("Y") . "Pozn·vacÌ, dovolen·, za sportem, l·znÏ";
+            return "SLAN tour, z√°jezdy " . Date("Y") . "Pozn√°vac√≠, dovolen√°, za sportem, l√°znƒõ";
         }
     }
 
@@ -3627,9 +3602,9 @@ function order_by_subquery($vstup) {
     function show_description() {
         //tvorba vypisu titulku
         if ($_GET["typ"] != "" or $_GET["podtyp"] != "" or $_GET["zeme"] != "" or $_GET["destinace"] != "") {
-            return "Katalog z·jezd˘ od CK SLAN tour do " . $this->get_name_for_destinace() . $this->get_name_for_zeme() . $this->get_name_for_typ() . $this->get_name_for_podtyp() . " SLAN tour, z·jezdy " . Date("Y");
+            return "Katalog z√°jezd≈Ø od CK SLAN tour do " . $this->get_name_for_destinace() . $this->get_name_for_zeme() . $this->get_name_for_typ() . $this->get_name_for_podtyp() . " SLAN tour, z√°jezdy " . Date("Y");
         } else {
-            return "SLAN tour, z·jezdy " . Date("Y") . ": Pozn·vacÌ z·jezdy, dovolen· u mo¯e, z·jezdy za sportem, vstupenky na sportovnÌ soutÏûe, l·znÏ a term·ly v »ech·ch, na MoravÏ, Slovensku a MaÔarsku";
+            return "SLAN tour, z√°jezdy " . Date("Y") . ": Pozn√°vac√≠ z√°jezdy, dovolen√° u mo≈ôe, z√°jezdy za sportem, vstupenky na sportovn√≠ soutƒõ≈æe, l√°znƒõ a term√°ly v ƒåech√°ch, na Moravƒõ, Slovensku a Maƒèarsku";
         }
     }
 
@@ -3718,7 +3693,7 @@ function order_by_subquery($vstup) {
                     where 1 
                     order by `serial`.`id_serial`,`zajezd`.`id_zajezd`";
         $data = $this->database->query($dotaz)
-                or $this->chyba("Chyba p¯i dotazu do datab·ze");
+                or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 
         $last_ser = "";
         $last_zaj = "";
@@ -3839,7 +3814,7 @@ function order_by_subquery($vstup) {
 
     function get_doprava() {
         if ($this->radek["doprava"] == 1) {
-            return "VlastnÌ dopravou";
+            return "Vlastn√≠ dopravou";
         } else if ($this->radek["doprava"] == 2) {
             return "Autokarem";
         } else if ($this->radek["doprava"] == 3) {
@@ -3876,13 +3851,13 @@ function order_by_subquery($vstup) {
     function get_cena_pred_akci() {
         return
                 "<div >
-                            p¯ed slevou: <span style=\"color:red;text-decoration:line-through;font-weight:bold;\">" .
-                $this->radek["cena_pred_akci"] . " KË</span></div>";
+                            p≈ôed slevou: <span style=\"color:red;text-decoration:line-through;font-weight:bold;\">" .
+                $this->radek["cena_pred_akci"] . " Kƒç</span></div>";
     }
 
     function get_akcni_cena() {
         return "<span style=\"color:#00ae35;font-size:1.2em;text-decoration:none;font-weight:bold;\">" .
-                $this->radek["akcni_cena"] . " KË</span>";
+                $this->radek["akcni_cena"] . " Kƒç</span>";
     }
 
     function get_sleva($zobrazit = "span") {
@@ -3890,21 +3865,21 @@ function order_by_subquery($vstup) {
         if ($zobrazit == "castka_only") {
             return $sleva;
         }
-        return "<span style=\"color:red;font-size:1.1em;font-weight:bold;\" title=\" Sleva aû " . $sleva . "% \">
+        return "<span style=\"color:red;font-size:1.1em;font-weight:bold;\" title=\" Sleva a≈æ " . $sleva . "% \">
                         SLEVA <span style=\"font-size:1.4em;\">" . $sleva . "%</span></span>";
     }
 
     function get_akcni_cena_param($cena) {
         if(trim($cena)=="1"){//neco je spatne, pravdepodobne se jedna o predbeznou registraci
-            return "<span style=\"color:#00ae35;font-size:1.0em;text-decoration:none;font-weight:bold;\"> P¯edbÏûn· registrace</span>";
+            return "<span style=\"color:#00ae35;font-size:1.0em;text-decoration:none;font-weight:bold;\"> P≈ôedbƒõ≈æn√° registrace</span>";
         }
         return "<span style=\"color:#00ae35;font-size:1.2em;text-decoration:none;font-weight:bold;\">" .
-                $cena . " KË</span>";
+                $cena . " Kƒç</span>";
     }
 
     function get_sleva_param($sleva) {
 
-        return "<span style=\"color:red;font-size:1.1em;font-weight:bold;\" title=\" Sleva aû " . $sleva . "% \">
+        return "<span style=\"color:red;font-size:1.1em;font-weight:bold;\" title=\" Sleva a≈æ " . $sleva . "% \">
                         SLEVA <span style=\"font-size:1.4em;\">" . $sleva . "%</span></span>";
     }
 
@@ -3917,8 +3892,8 @@ function order_by_subquery($vstup) {
     }
 
     function get_nazev_zeme() {
-        if ($this->radek["nazev_zeme"] == "»esk· republika" or $this->radek["nazev_zeme"] == "»esk· republika, vÌkendovÈ pobyty") {
-            return "»R";
+        if ($this->radek["nazev_zeme"] == "ƒåesk√° republika" or $this->radek["nazev_zeme"] == "ƒåesk√° republika, v√≠kendov√© pobyty") {
+            return "ƒåR";
         } else {
             return $this->radek["nazev_zeme"];
         }

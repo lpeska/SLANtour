@@ -2,7 +2,7 @@
 				/** 
 					config.inc.php - nastavuje konfiguracni konstanty pro nastaveni celeho systemu 
 				*/
-				/*--------------------- NASTAVENÍ webu--------------------------------*/
+				/*--------------------- NASTAVENÃ webu--------------------------------*/
 				define("ZEME", "");
 				define("TYP_ZAJEZDU", "");
 				
@@ -10,15 +10,15 @@
 				define("FOTO_WEB", "https://www.slantour.cz");
 				define("DOKUMENT_WEB", "https://www.slantour.cz");
 								
-				/*--------------------- NASTAVENÍ ODESÍLÁNÍ E-MAILÙ--------------------------------*/
+				/*--------------------- NASTAVENÃ ODESÃLÃNÃ E-MAILÅ®--------------------------------*/
 
-				/*jméno odesilatele u automaticky generovaných e-mailù ze systému RSCK*/
+				/*jmÃ©no odesilatele u automaticky generovanÃ½ch e-mailÅ¯ ze systÃ©mu RSCK*/
 				define("AUTO_MAIL_SENDER", "CK SLAN tour");
 
-				/*email odesilatele u automaticky generovaných e-mailù ze systému RSCK*/
+				/*email odesilatele u automaticky generovanÃ½ch e-mailÅ¯ ze systÃ©mu RSCK*/
 				define("AUTO_MAIL_EMAIL", "info@slantour.cz");
 
-				/*email na ktery budou chodit dotazy, pøedbìžné poptávky a objednávky zajezdu ze systému RSCK*/
+				/*email na ktery budou chodit dotazy, pÅ™edbÄ›Å¾nÃ© poptÃ¡vky a objednÃ¡vky zajezdu ze systÃ©mu RSCK*/
 				define("PRIJIMACI_EMAIL", "info@slantour.cz");
 
 				?>				
