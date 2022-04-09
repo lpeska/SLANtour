@@ -1,6 +1,6 @@
 {% extends "_base.html.twig" %}
 
-{% block title %}SLANtour - {{ tour.name }}{% endblock title %}
+{% block title %}SLANtour - {{ name }}{% endblock title %}
 
 {% block stylesheets %}
 
@@ -9,16 +9,19 @@
 {% block main %}
 
 <section class="hero_in tours_detail">
-    <img src="{{ tour.image }}" alt="Slide background">
+    <img src="{{ imageMain }}" alt="Slide background">
     <div class="wrapper">
         <div class="container">
-            <h1 class="fadeInUp"><span></span>{{ tour.name }} </h1>
+            <h1 class="fadeInUp"><span></span>{{ name }} </h1>
         </div>
         <span class="magnific-gallery">
-            <a href="img/gallery/tour_list_1.jpg" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">View
-                photos</a>
-            <a href="img/gallery/tour_list_2.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
-            <a href="img/gallery/tour_list_3.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
+            {% for image in images %}
+                {% if loop.index0 == 0 %}
+                    <a href="{{ image }}" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">Galerie</a>
+                {% else %}
+                    <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"></a>
+                {% endif %}
+            {% endfor %}
         </span>
     </div>
 </section>
@@ -28,45 +31,62 @@
     <nav class="secondary_nav sticky_horizontal">
         <div class="container">
             <ul class="clearfix">
-                <li><a href="#description" class="active">Description</a></li>
-                <li><a href="#reviews">Reviews</a></li>
-                <li><a href="#sidebar">Booking</a></li>
+                <li><a href="#description" class="active">Zájezd</a></li>
+                <li><a href="#dates">Termíny</a></li>
+                <li><a href="#reviews">Recenze</a></li>
+                <li><a href="#sidebar">Objednávka</a></li> 
             </ul>
         </div>
     </nav>
-    <div class="container margin_60_35">
+    <div class="container margin_30_95">
         <div class="row">
             <div class="col-lg-8">
                 <section id="description">
-                    <h2>Placeholder - Description</h2>
-                    <p>Per consequat adolescens ex, cu nibh commune <strong>temporibus vim</strong>, ad sumo viris
-                        eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas oportere democritum. Prima
-                        causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An
-                        sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                    <p>Cum et probo menandri. Officiis consulatu pro et, ne sea sale invidunt, sed ut sint
-                        <strong>blandit</strong> efficiendi. Atomorum explicari eu qui, est enim quaerendum te. Quo
-                        harum viris id. Per ne quando dolore evertitur, pro ad cibo commune.</p>
+                    <!--features-->
+                    <div class="tour_feat">
+                        <ul>
+                            {% for feature in features %}
+                                <li><span><i class="fas {{feature.icon}}"></i></span>{{feature.text|raw}}</li>
+                                
+                            {% endfor %}
+                           
+                        </ul>
+                    </div>
+                    <h2>Popis Zájezdu</h2>
+                    <p>{{ descriptionMain }}</p>
 
-                    <h3>Pictures from our users</h3>
                     <div class="pictures_grid magnific-gallery clearfix">
-                        <figure><a href="img/detail_gallery/detail_1.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><img src="img/detail_gallery/detail_1.jpg" alt=""></a>
-                        </figure>
-                        <figure><a href="img/detail_gallery/detail_2.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><img src="img/detail_gallery/detail_2.jpg" alt=""></a>
-                        </figure>
-                        <figure><a href="img/detail_gallery/detail_3.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><img src="img/detail_gallery/detail_3.jpg" alt=""></a>
-                        </figure>
-                        <figure><a href="img/detail_gallery/detail_4.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><img src="img/detail_gallery/detail_4.jpg" alt=""></a>
-                        </figure>
-                        <figure><a href="img/detail_gallery/detail_5.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><span
-                                    class="d-flex align-items-center justify-content-center">+10</span><img
-                                    src="img/detail_gallery/detail_5.jpg" alt=""></a></figure>
+                        {% for image in images %}
+                            {% if loop.index0 <= 3 %}
+                                <figure>
+                                    <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"><img src="{{ image }}" alt=""></a>
+                                </figure>
+                            {% elseif loop.index0 == 4 %}
+                                {% if loop.last %}
+                                    <figure>
+                                        <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"><img src="{{ image }}" alt=""></a>
+                                    </figure>
+                                {% else %}
+                                    <figure>
+                                        <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in">
+                                            <span class="d-flex align-items-center justify-content-center">+{{ loop.length - 4}}</span>
+                                            <img src="{{ image }}" alt="">
+                                        </a>
+                                    </figure>
+                                {% endif %}
+                            {% else %}
+                                <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"></a>
+                            {% endif %}
+                        {% endfor %}
+
                     </div>
                     <!-- /pictures -->
+
+                    <h3>Ubytování</h3>
+                    <p>{{ descriptionAccomodation }}</p>
+
+                    <h3>Stravování</h3>
+                    <p>{{ descriptionMeals }}</p>
 
                     <hr>
 
@@ -79,14 +99,13 @@
                     </p>
                     <ul class="cbp_tmtimeline">
                         <li>
-                            <time class="cbp_tmtime" datetime="09:30"><span>30 min.</span><span>09:30</span>
-                            </time>
+                            
                             <div class="cbp_tmicon">
-                                1
+                                1.den
                             </div>
                             <div class="cbp_tmlabel">
                                 <div class="hidden-xs">
-                                    <img src="img/tour_plan_1.jpg" alt="" class="rounded-circle thumb_visit">
+                                    <img src="/img/dovolena.jpg" alt="" class="rounded-circle thumb_visit">
                                 </div>
                                 <h4>Interior of the cathedral</h4>
                                 <p>
@@ -175,6 +194,14 @@
                     <h3>Location</h3>
                     <div id="map" class="map map_single add_bottom_30"></div>
                     <!-- End Map -->
+
+                    <h3>Cena Nezahrnuje</h3>
+                    <p>{{ notIncluded }}</p>
+                </section>
+                <!-- /section -->
+
+                <section id="dates">
+                    <h2>Termíny</h2>
                 </section>
                 <!-- /section -->
 
@@ -408,5 +435,8 @@
 {% endblock main %}
 
 {% block javascripts %}
-
+<!-- Map -->
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script src="/html-template/js/map_single_tour.js"></script>
+<script src="/html-template/js/infobox.js"></script>
 {% endblock javascripts %}

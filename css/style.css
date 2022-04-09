@@ -3017,7 +3017,7 @@ a.grid_item figure {
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 100%;
+  height: 17vw;
 }
 @media (max-width: 767px) {
   a.grid_item figure {
