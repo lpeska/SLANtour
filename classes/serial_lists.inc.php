@@ -624,7 +624,9 @@ class Serial_list extends Generic_list {
                           `serial`.`id_sablony_zobrazeni`,
                             `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`,`objekt_ubytovani`.`popis_poloha` as `popisek_ubytovani`,
                             `objekt_ubytovani`.`posX` , `objekt_ubytovani`.`posY`,
+                            `zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`,destinace.nazev_destinace,
                             `foto`.`foto_url`,`foto`.`id_foto`,`foto`.`nazev_foto`,`foto`.`popisek_foto`";
+
                 $dotaz = $select . "
                     from `serial` join
                     `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`) join
@@ -1051,29 +1053,43 @@ class Serial_list extends Generic_list {
             return $dotaz;
             
         } else if ($typ_pozadavku == "select_vahy") {
-            $datum_rezervace = (Date("Y") - 1) . "-" . Date("m") . "-" . Date("d");
+            $datum_rezervace = date('Y-m-d',strtotime("-2 months"));
             $dotaz = "
-                    SELECT sum( `celkova_cena` ) as `pocet` , `serial`.`nazev` , 
-                        `objekt_ubytovani`.`nazev_ubytovani` , 
-                        `serial`.`id_serial`, `serial`.`nazev_web`, `serial`.`id_sablony_zobrazeni`
-                        FROM `serial`
-                        JOIN `objednavka` ON ( `objednavka`.`id_serial` = `serial`.`id_serial` )
-                        LEFT JOIN 
-                            (`objekt_serial` join
+                SELECT 
+                    sum( `celkova_cena`)+ count(distinct `objednavka`.id_objednavka)*5000 as `pocet`, 
+                    sum( `celkova_cena`) as castka,
+                    count(distinct `objednavka`.id_objednavka) as `pocet_objednavek`,
+                    sum(`objednavka`.`pocet_osob`) as `pocet_osob`, 
+                        `serial`.`nazev` , `objekt_ubytovani`.`nazev_ubytovani` , `serial`.`id_serial`, `serial`.`nazev_web`, `serial`.`id_sablony_zobrazeni`,
+                        `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`, serial.strava, serial.doprava,
+                        
+                    `zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`,destinace.nazev_destinace,
+                    `foto`.`foto_url`,`foto`.`id_foto`,`foto`.`nazev_foto`,`foto`.`popisek_foto`
+
+                    FROM `serial`
+                            JOIN `objednavka` ON ( `objednavka`.`id_serial` = `serial`.`id_serial` and `objednavka`.`datum_rezervace` > \"".$datum_rezervace."\")
+                            left join
+                           (`objekt_serial` join
                             `objekt` on (`objekt`.`typ_objektu`= 1 and `objekt`.`id_objektu` = `objekt_serial`.`id_objektu`) join
                             `objekt_ubytovani` on (`objekt`.`id_objektu` = `objekt_ubytovani`.`id_objektu`)
-                            ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial`) 
-                        JOIN `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)
-                        JOIN `zeme_serial` on (`zeme_serial`.`id_serial` = `serial`.`id_serial`) 
-                        JOIN `zeme` on (`zeme_serial`.`id_zeme` =`zeme`.`id_zeme`)
-                        left join (
-                            `destinace_serial`
-                            join `destinace` on (`destinace`.`id_destinace` = `destinace_serial`.`id_destinace`)
-                        )  on (`serial`.`id_serial` = `destinace_serial`.`id_serial`)
-                        WHERE `objednavka`.`rezervace_do` > \"" . $datum_rezervace . "\" and " . $where_text . $where_nazev_serialu . $where_nazev . $where_typ . $where_zeme . $where_destinace . $where_od . $where_do . " 1
-                        GROUP BY `serial`.`id_serial`
-                        HAVING `pocet` > 100000
-                        ORDER BY `serial`.`nazev`               
+                            ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial`)
+                            join    
+                            `zeme_serial` on (`zeme_serial`.`id_serial` = `serial`.`id_serial`) join
+                            `zeme` on (`zeme_serial`.`id_zeme` =`zeme`.`id_zeme`)
+                            left join (
+                                 `destinace_serial`
+                                 join `destinace` on (`destinace`.`id_destinace` = `destinace_serial`.`id_destinace`)
+                            )  on (`serial`.`id_serial` = `destinace_serial`.`id_serial`)
+                            left join
+                            (`foto_serial` join
+                                `foto` on (`foto_serial`.`id_foto` = `foto`.`id_foto`) )
+                            on (`foto_serial`.`id_serial` = `serial`.`id_serial` and `foto_serial`.`zakladni_foto`=1)                                
+
+                    WHERE `serial`.`nezobrazovat`<>1
+                    GROUP BY `serial`.`id_serial`
+                    HAVING `pocet` > 1
+                    ORDER BY `pocet` desc    
+                    limit  " . $this->pocet_zaznamu . "
                 ";
             //echo $dotaz;
             return $dotaz;
@@ -1086,7 +1102,7 @@ class Serial_list extends Generic_list {
                         
                             min(`cena_zajezd`.`vyprodano`) as `vyprodano`,
                             min(`zajezd`.`od`) as `od`,                             
-                            `zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`,
+                            `zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`,destinace.nazev_destinace,
                             `foto`.`foto_url`,`foto`.`id_foto`,`foto`.`nazev_foto`,`foto`.`popisek_foto`";
             $dotaz = $select . "
                     from `serial` left join
@@ -2169,8 +2185,7 @@ function order_by_subquery($vstup) {
                 return "";
             }
             
-            
-            
+
         } else if ($typ_zobrazeni == "slevy_list") {//vypis zajezdu vcetne balicku a terminu
             //vcetne zgrupovanych terminu zajezdu
             $sql = "select `zajezd`.*,
@@ -2199,8 +2214,8 @@ function order_by_subquery($vstup) {
             while ($row = mysqli_fetch_array($data)) {
                 $k++;
                 $act_sleva = round(( 1 - ($row["akcni_cena"] / $row["cena_pred_akci"]) ) * 100);                      
-                $date1 = strtotime($row["od"]);
-                $date2 = strtotime($row["do"]);                
+                $date1 = strtotime($row["od"]." 00:00:00" );
+                $date2 = strtotime($row["do"]." 23:59:59");                
                 $datediff = $date2 - $date1;
                 $daysCount = round($datediff / (60 * 60 * 24));                    
                     
@@ -2240,6 +2255,92 @@ function order_by_subquery($vstup) {
             
                   
             return $res;
+            
+            
+        } else if ($typ_zobrazeni == "new_tour_list") {//vypis zajezdu vcetne balicku a terminu
+            //vcetne zgrupovanych terminu zajezdu
+            $sql = "select `zajezd`.*,
+                    min(`cena_zajezd`.`vyprodano`) as `vyprodano`,
+                    min(`cena_zajezd`.`castka`) as `castka`
+                    from
+                    `serial` join
+                    `zajezd` on ( `serial`.`id_serial` = `zajezd`.`id_serial` ) join                    
+                    `cena_zajezd` on ( `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 ) join
+                    `cena` on ( `cena`.`id_cena` = `cena_zajezd`.`id_cena` and `cena`.`id_serial` = " . $this->get_id_serial() . " and (`cena`.`zakladni_cena`=1 or `cena`.`typ_ceny`=1 or `cena`.`typ_ceny`=2))
+                    where `serial`.`id_serial` = " . $this->get_id_serial() . " and `zajezd`.`nezobrazovat_zajezd`<>1
+                       and " . $this->global_od . $this->global_do . " 1
+                    group by `zajezd`.`id_zajezd`
+                    having `vyprodano` = 0
+                    order by `od`, `do`
+                    limit 20
+
+                ";
+            //echo $sql;
+            $data = mysqli_query($GLOBALS["core"]->database->db_spojeni,$sql);
+            $pocet = mysqli_num_rows($data);
+            $min_cena = 1000000;
+            $best_zajezd = -1;
+            $k = 0;
+            $terminy = array();
+
+            while ($row = mysqli_fetch_array($data)) {
+                $k++;
+                if($row["cena_pred_akci"]>0){
+                    $act_sleva = round(( 1 - ($row["akcni_cena"] / $row["cena_pred_akci"]) ) * 100);  
+                    $akcni_cena = $row["akcni_cena"];
+                    $castka = $row["cena_pred_akci"];
+                }else{
+                    $act_sleva = -1;
+                    $akcni_cena = $row["castka"];
+                    $castka = -1;
+ 
+                }
+
+                
+                $date1 = strtotime($row["od"]." 00:00:00" );
+                $date2 = strtotime($row["do"]." 23:59:59");                               
+                $datediff = $date2 - $date1;
+                $daysCount = round($datediff / (60 * 60 * 24));                    
+                    
+                $terminy[$row["id_zajezd"]] = array(
+                    "id_zajezd" => $row["id_zajezd"],
+                    "od" => $this->change_date_en_cz($row["od"]),
+                    "do" => $this->change_date_en_cz($row["do"]),
+                    "dlouhodobe" => ($this->get_dlouhodobe_zajezdy() ? ("Odjezd a příjezd libovolně v rámci zadaného termínu") : ("")),
+                    "pocet_dni" => ($this->get_dlouhodobe_zajezdy() ? (0) : ($daysCount)),
+                    "akcni_cena" => $akcni_cena,
+                    "cena_pred_akci" => $castka,
+                    "sleva" => $act_sleva
+                    );
+                
+                if ($akcni_cena < $min_cena) {
+                    $best_zajezd = $row["id_zajezd"];
+                }   
+                
+            }
+            
+            if(($this->get_nazev_zeme() == "ČR" or $this->get_nazev_zeme() == "Slovensko") and $this->get_nazev_destinace()!=""){
+                $lokace = $this->get_nazev_destinace();
+            }else{
+                $lokace = $this->get_nazev_zeme();                
+            }
+            
+            $res = array(
+                "id_serial" => $this->get_id_serial(),
+                "nazev" => $this->get_nazev(),
+                "url" => "zajezdy/zobrazit/" . $this->get_nazev_web(),
+                "best_zajezd" => $best_zajezd,
+                "foto_url" => "https://slantour.cz/foto/full/".$this->get_foto_url(),
+                "lokace" => $lokace,
+                "strava" => Serial_library::get_typ_stravy($this->radek["strava"] - 1),
+                "terminy" => $terminy                
+                );
+            
+                  
+            return $res;
+            
+
+            
             
         } else if ($typ_zobrazeni == "slevy_list_ubytovani") {//vypis zajezdu vcetne balicku a terminu
             //vcetne zgrupovanych terminu zajezdu           
