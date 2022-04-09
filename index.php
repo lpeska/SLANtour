@@ -71,18 +71,80 @@ while ($slevy_list->get_next_radek()) {
     $rand = mt_rand(1, 1000000)/500000;
     $poradi = ($sleva/$dny_rozdil) + $rand;
     
-    $slevy_poradi[] = $poradi;
-    $slevy_array[] = $slevyObj;    
+    if($slevyObj["best_zajezd"] > -1){
+        $slevy_poradi[] = $poradi;
+        $slevy_array[] = $slevyObj;   
+    }
 }
 //print_r($slevy_array);
 arsort($slevy_poradi);
-
+$k = 0;
 foreach ($slevy_poradi as $key => $val) {
     $k++;
     $currTour = $slevy_array[$key];
     $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
     if($k<=4){
         $discountTours[] = new Tour($currTour["nazev"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+    }else{
+        break;
+    }
+}
+
+
+/*Loading tours_popularni*/
+$popularTours = array();
+$popular_array = array();
+$popular_zajezdy = new Serial_list("","", "", "", "", "", "","","","random",10,"select_vahy");
+$i = 0;
+while ($popular_zajezdy->get_next_radek()) {
+    $i++;
+    $toursObj = $popular_zajezdy->show_list_item("new_tour_list");
+    if($toursObj["best_zajezd"] > -1){
+        $popular_array[] = $toursObj;    
+    }
+}
+//print_r($popular_array);
+shuffle($popular_array);
+$k = 0;
+foreach ($popular_array as $key => $currTour) {
+    $k++;
+    //$currTour = $novinky_array[$key];
+    $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
+    if($k<=4){
+        $popularTours[] = new Tour($currTour["nazev"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+    }else{
+        break;
+    }
+}
+
+
+
+/*Loading tours_novinky*/
+$newTours = array();
+$novinky_array = array();
+$novinky_zajezdy = new Serial_list("","", "", "", "", "", "","","","random",20,"select_nove_zajezdy");
+$i = 0;
+while ($novinky_zajezdy->get_next_radek()) {
+    $i++;
+    $toursObj = $novinky_zajezdy->show_list_item("new_tour_list");
+    $rand = mt_rand(1, 150)/10;
+    $poradi = $i + $rand;
+    
+    if($toursObj["best_zajezd"] > -1){
+        $novinky_poradi[] = $poradi;
+        $novinky_array[] = $toursObj;  
+    }
+}
+//print_r($novinky_array);
+//print_r($novinky_poradi);
+asort($novinky_poradi);
+$k = 0;
+foreach ($novinky_poradi as $key => $val) {
+    $k++;
+    $currTour = $novinky_array[$key];
+    $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
+    if($k<=4){
+        $newTours[] = new Tour($currTour["nazev"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
     }else{
         break;
     }
@@ -104,12 +166,14 @@ echo $twig->render('index.html.twig', [
         new TourType('Sport', 32, 7900, 'img/sport.png'),
     ),*/
     'typesOfTours' => $types_for_twig,
-    'popularTours' => array(
+    
+    'popularTours' => $popularTours,
+    /*'popularTours' => array(
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png'),
         new Tour('Víkend v Budapešti - vlakem', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', 'img/dovolena.png'),
         new Tour('Jordánsko s pobytem u Rudého moře', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', 'img/poznavaci.png'),
         new Tour('Villa Dino, Mariánské Lázně', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', 'img/lazne.png')
-    ),
+    ),*/
     'discountTours' => $discountTours,
     /*'discountTours' => array(
         new Tour('Jordánsko s pobytem u Rudého moře', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', 'img/poznavaci.png'),
@@ -118,12 +182,14 @@ echo $twig->render('index.html.twig', [
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png')
     ),*/
     "totalDiscountedTours" => 157,
-    'newTours' => array(
+    
+    'newTours' => $newTours,
+    /*'newTours' => array(
         new Tour('Villa Dino, Mariánské Lázně', 4790, 5, 5290, 4, 'Polopenze', 'Mariánské Lázně', 'img/lazne.png'),
         new Tour('Víkend v Budapešti - vlakem', 3590, 0, 3990, 4, 'bez stravy', 'Maďarsko', 'img/dovolena.png'),
         new Tour('Jordánsko s pobytem u Rudého moře', 29990, 0, 39986, 7, 'All-inclusive', 'Jordánsko', 'img/poznavaci.png'),
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png')
-    ),
+    ),*/
     'news' => array(
         new News('Peking 2022', 'V únoru příštího roku se budou konat Zimní olympijské hry v Peking.', '5.', 'Únor','img/sport.png'),
         new News('NHL - Boston Bruins letecky', 'V současné chvíli rozšiřujeme naši nabídku leteckých zájezdů na NHL o zápasy Boston Bruins,...', '28.', 'Leden','img/sport.png'),
@@ -154,15 +220,15 @@ class TourType {
 class Tour {
     public string $name;
     public int $price;
-    public int $priceDiscount;
-    public int $priceOriginal;
+    public  $priceDiscount;
+    public  $priceOriginal;
     public  $nights;
     public string $meals;
     public string $destination;
     public string $image;
     public $terminy;
 
-    public function __construct(string $name, int $price, int $priceDiscount, int $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy="") {
+    public function __construct(string $name, int $price,  $priceDiscount,  $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy="") {
         $this->name = $name;
         $this->price = $price;
         $this->priceDiscount = $priceDiscount;

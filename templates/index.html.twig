@@ -300,9 +300,17 @@
 						{% endif %}
 
 						<img src="{{ tour.image }}" class="img-fluid" alt="">
-						<div class="info">
+                                                <div class="info">
 							<h3>{{tour.name}}</h3>
-							<em>{{tour.nights}} nocí - {{tour.meals}}</em>
+                                                        <em>
+                                                        {% if tour.nights > 4 %}
+                                                            {{tour.nights}} nocí -
+                                                        {% elseif tour.nights > 1 %}
+                                                            {{tour.nights}} noci -
+                                                        {% elseif tour.nights > 0 %}
+                                                            {{tour.nights}} noc
+                                                        {% endif %}
+							{{tour.meals}}</em>
 						</div>
 						<div class="info-right">
 							<em>{{tour.destination}}</em>
@@ -395,9 +403,17 @@
 						{% endif %}
 
 						<img src="{{ tour.image }}" class="img-fluid" alt="">
-						<div class="info">
+                                                <div class="info">
 							<h3>{{tour.name}}</h3>
-							<em>{{tour.nights}} nocí - {{tour.meals}}</em>
+                                                        <em>
+                                                        {% if tour.nights > 4 %}
+                                                            {{tour.nights}} nocí -
+                                                        {% elseif tour.nights > 1 %}
+                                                            {{tour.nights}} noci -
+                                                        {% elseif tour.nights > 0 %}
+                                                            {{tour.nights}} noc
+                                                        {% endif %}
+							{{tour.meals}}</em>
 						</div>
 						<div class="info-right">
 							<em>{{tour.destination}}</em>
