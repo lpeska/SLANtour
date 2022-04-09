@@ -1114,7 +1114,7 @@ class Serial_list extends Generic_list {
                     
                     limit  " . $this->pocet_zaznamu . "";
 
-            echo $dotaz;
+            //echo $dotaz;
             return $dotaz;
         } else if ($typ_pozadavku == "select_slevy_ubytovani") {
             //jako select slevy, ale group by podle ubytovani
