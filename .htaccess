@@ -1,0 +1,39 @@
+RewriteEngine On
+Options +FollowSymlinks
+
+RewriteRule    agentury-server/detail.php$   /agentury-server    [L,R,QSA]
+RewriteRule    agentury-server/katalog/(.*)$   /agentury-server/zajezdy/katalog/$1    [L,R,QSA]
+RewriteRule    agentury-server/zajezdy/([^/]+)/(.*)$   /agentury-server/_$1.php?params=$2    [L,QSA]
+RewriteRule    agentury-server/zajezdy/([^/]+)$   /agentury-server/_$1.php    [L,QSA]
+RewriteRule    agentury-server/zajezdy/$   /agentury-server/index.php     [L,QSA]
+RewriteRule    agentury-server/zajezdy$   /agentury-server/index.php     [L,QSA]
+
+RewriteRule    zajezdy/([^/]+)/(.*)$   /$1.php?params=$2     [L,QSA]
+RewriteRule    zajezdy/([^/]+)$   /$1.php     [L,QSA]
+RewriteRule    zajezdy/$   /index.php     [L,QSA]
+RewriteRule    zajezdy$   /index.php     [L,QSA]
+
+
+RewriteRule    zeme/(.*)/(.*)$   /destinace.php?zeme=$1&nazev_destinace=$2     [L,QSA]
+RewriteRule    zeme/(.*)$   /zeme_.php?zeme=$1     [L,QSA]
+
+RewriteRule    typ/(.*)/(.*)/(.*)$   /destinace.php?typ=$1&zeme=$2&nazev_destinace=$3     [L,QSA]
+RewriteRule    typ/(.*)/(.*)$   /zeme.php?typ=$1&zeme=$2     [L,QSA]
+RewriteRule    typ/(.*)$   /index.php?typ=$1     [L,QSA]
+
+RewriteRule    ubytovani/(.*)$   /ubyt.php?ubytovani=$1     [L,QSA]
+
+RewriteRule    pobyty/(.*)/(.*)$   /serial.php?serial=$1&zajezd=$2     [L,QSA]
+RewriteRule    pobyty/(.*)$   /serial.php?serial=$1     [L,QSA]
+
+RewriteRule    podrobne-vyhledavani$   /podrobne_vyhled.php     [L,QSA]
+
+
+RewriteRule    (.*).html$   /$1.php     [L,QSA]
+
+
+RewriteRule ^([^/\.]+)$ /$1.php [L,QSA]
+RewriteRule ^([^/\.]+).html$ /$1.php [L,QSA]
+
+
+

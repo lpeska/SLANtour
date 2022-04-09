@@ -1,0 +1,6 @@
+{
+    "require": {
+        "twig/twig": "^3.0",
+        "timetoogo/pinq": "~3.3"
+    }
+}

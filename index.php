@@ -1,6 +1,44 @@
 <?php
 require_once 'vendor/autoload.php';
 
+
+require_once "./core/load_core.inc.php"; 
+
+require_once "./classes/menu.inc.php"; //seznam serialu
+require_once "./classes/serial_lists.inc.php"; //seznam serialu
+require_once "./classes/destinace_list.inc.php"; //menu katalogu
+
+$menu = new Menu_katalog("dotaz_typy","", "", "");
+$typy = $menu->get_typy_pobytu();
+//print_r($typy);
+
+$types_for_twig = array();
+foreach ($typy as $typ) {
+    switch ($typ["id_typ"]) {
+        case 1:
+            $foto = 'img/dovolena.png';
+            break;
+        case 2:
+            $foto = 'img/poznavaci.png';
+            break;
+        case 29:
+            $foto = 'img/eurovikendy.png';
+            break;
+        case 3:
+            $foto = 'img/lazne.png';
+            break;
+        case 4:
+            $foto = 'img/sport.png';
+            break;        
+        default:
+            $foto = $typ["foto_url"];
+    }
+    
+    $t = new TourType($typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $typ["description"], "/zajezdy/typ-zajezdu/".$typ["nazev_typ_web"]);
+    $types_for_twig[$typ["id_typ"]] = $t;
+}
+
+
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
@@ -8,13 +46,14 @@ $twig = new \Twig\Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('index.html.twig', [
-    'typesOfTours' => array(
+    /*'typesOfTours' => array(
         new TourType('Poznávací', 139, 9900, 'img/poznavaci.png'),
         new TourType('Eurovíkendy', 62, 15900, 'img/eurovikendy.png'),
         new TourType('Dovolená', 140, 7900, 'img/dovolena.png'),
         new TourType('Lázně & Wellness', 79, 3900, 'img/lazne.png'),
         new TourType('Sport', 32, 7900, 'img/sport.png'),
-    ),
+    ),*/
+    'typesOfTours' => $types_for_twig,
     'popularTours' => array(
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png'),
         new Tour('Víkend v Budapešti - vlakem', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', 'img/dovolena.png'),
@@ -46,12 +85,16 @@ class TourType {
     public int $numberOfTours;
     public int $priceFrom;
     public string $image;
+    public  $description;
+    public string $url;
 
-    public function __construct(string $name, int $numberOfTours, int $priceFrom, string $image) {
+    public function __construct(string $name, int $numberOfTours, int $priceFrom, string $image, $description, $url) {
         $this->name = $name;
         $this->numberOfTours = $numberOfTours;
         $this->priceFrom = $priceFrom;
         $this->image = $image;
+        $this->description = $description;
+        $this->url = $url;
         
     }
 }

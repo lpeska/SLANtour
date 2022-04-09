@@ -1,0 +1,21 @@
+<?php
+
+
+class EnumMesice
+{
+
+    public static $MESICE_CZ = array(
+        array('1', 'leden'),
+        array('2', 'únor'),
+        array('3', 'bøezen'),
+        array('4', 'duben'),
+        array('5', 'kvìten'),
+        array('6', 'èerven'),
+        array('7', 'èervenec'),
+        array('8', 'srpen'),
+        array('9', 'záøí'),
+        array('10', 'øíjen'),
+        array('11', 'listopad'),
+        array('12', 'prosinec')
+    );
+}

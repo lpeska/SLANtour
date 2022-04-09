@@ -201,27 +201,35 @@
 	<div class="main_title_2">
 		<span><em></em></span>
 		<h2>Typy zájezdů</h2>
-		<p>Poznávací zájezdy, Dovolená u moře, Tuzemské pobyty, Zájezdy za sportem, Eurovíkendy, Fly and Drive, Exotické
-			zájezdy, Pobyty na horách, Lázně a termály, Jednodenní zájezdy.</p>
+                <!--TODO: zbavit se posledni carky - nevim jak to ve twigu udelat...
+                    TODO na zvazeni: puvodni barva textu pro jednotlive linky na typy
+                -->
+                <p>
+                {% for type in typesOfTours %}
+                    <a href="{{ type.url }}" title="{{ type.name }}: {{ type.numberOfTours }} Zájezdů s cenami od {{ type.priceFrom }} Kč; {{ type.description }}">{{ type.name }}</a>,
+                {% endfor %}
+                
+		<!--Poznávací zájezdy, Dovolená u moře, Tuzemské pobyty, Zájezdy za sportem, Eurovíkendy, Fly and Drive, Exotické
+			zájezdy, Pobyty na horách, Lázně a termály, Jednodenní zájezdy.--></p>
 	</div>
 	<div class="row small-gutters categories_grid add_bottom_45">
 		<div class="col-sm-12 col-md-6">
 			<div class="row small-gutters mt-md-0 mt-sm-2">
 				<div class="col-sm-12">
-					<a href="../typ-zajezdu.php">
-						<img src="{{ typesOfTours[0].image }}" alt="" class="img-fluid">
+					<a href="{{ typesOfTours[2].url }}">
+						<img src="{{ typesOfTours[2].image }}" alt="{{ typesOfTours[2].name }} - {{ typesOfTours[2].description }}" class="img-fluid">
 						<div class="wrapper">
-							<h2>{{ typesOfTours[0].name }}</h2>
-							<p>{{ typesOfTours[0].numberOfTours }} Zájezdů</p>
+							<h2>{{ typesOfTours[2].name }}</h2>
+							<p>{{ typesOfTours[2].numberOfTours }} Zájezdů s cenami od {{ typesOfTours[2].priceFrom }} Kč</p>
 						</div>
 					</a>
 				</div>
 				<div class="col-sm-12 mt-sm-2">
-					<a href="../typ-zajezdu.php">
-						<img src="{{ typesOfTours[1].image }}" alt="" class="img-fluid">
+					<a href="{{ typesOfTours[29].url }}">
+						<img src="{{ typesOfTours[29].image }}" alt="{{ typesOfTours[29].name }} - {{ typesOfTours[29].description }}" class="img-fluid">
 						<div class="wrapper">
-							<h2>{{ typesOfTours[1].name }}</h2>
-							<p>{{ typesOfTours[1].numberOfTours }} Zájezdů</p>
+							<h2>{{ typesOfTours[29].name }}</h2>
+							<p>{{ typesOfTours[29].numberOfTours }} Zájezdů s cenami od {{ typesOfTours[29].priceFrom }} Kč</p>
 						</div>
 					</a>
 				</div>
@@ -230,29 +238,29 @@
 		<div class="col-sm-12 col-md-6">
 			<div class="row small-gutters mt-md-0 mt-sm-2">
 				<div class="col-sm-6">
-					<a href="../typ-zajezdu.php">
-						<img src="{{ typesOfTours[2].image }}" alt="" class="img-fluid">
+					<a href="{{ typesOfTours[1].url }}">
+						<img src="{{ typesOfTours[1].image }}" alt="{{ typesOfTours[1].name }} - {{ typesOfTours[1].description }}" class="img-fluid">
 						<div class="wrapper">
-							<h2>{{ typesOfTours[2].name }}</h2>
-							<p>{{ typesOfTours[2].numberOfTours }} Zájezdů</p>
+							<h2>{{ typesOfTours[1].name }}</h2>
+							<p>{{ typesOfTours[1].numberOfTours }} Zájezdů s cenami od {{ typesOfTours[1].priceFrom }} Kč</p>
 						</div>
 					</a>
 				</div>
 				<div class="col-sm-6">
-					<a href="../typ-zajezdu.php">
-						<img src="{{ typesOfTours[3].image }}" alt="" class="img-fluid">
+					<a href="{{ typesOfTours[3].url }}">
+						<img src="{{ typesOfTours[3].image }}" alt="{{ typesOfTours[3].name }} - {{ typesOfTours[3].description }}" class="img-fluid">
 						<div class="wrapper">
 							<h2>{{ typesOfTours[3].name }}</h2>
-							<p>{{ typesOfTours[3].numberOfTours }} Zájezdů</p>
+							<p>{{ typesOfTours[3].numberOfTours }} Zájezdů s cenami od {{ typesOfTours[3].priceFrom }} Kč</p>
 						</div>
 					</a>
 				</div>
 				<div class="col-sm-12 mt-sm-2">
-					<a href="../typ-zajezdu.php">
-						<img src="{{ typesOfTours[4].image }}" alt="" class="img-fluid">
+					<a href="{{ typesOfTours[4].url }}">
+						<img src="{{ typesOfTours[4].image }}" alt="{{ typesOfTours[4].name }} - {{ typesOfTours[4].description }}" class="img-fluid">
 						<div class="wrapper">
 							<h2>{{ typesOfTours[4].name }}</h2>
-							<p>{{ typesOfTours[4].numberOfTours }} Zájezdů</p>
+							<p>{{ typesOfTours[4].numberOfTours }} Zájezdů s cenami od {{ typesOfTours[4].priceFrom }} Kč</p>
 						</div>
 					</a>
 				</div>
