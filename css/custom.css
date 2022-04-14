@@ -183,8 +183,8 @@ a.grid_item figure .price_discount {
     text-decoration: line-through;
     line-height: 1;
     color: #eee;
-    background: transparent;
-    z-index: 9;
+    background: linear-gradient(to bottom,#00000075, transparent);
+    z-index: 8;
 }
 
 a.grid_item figure .price_discount_tag {
@@ -360,12 +360,25 @@ a.grid_item figure .price_discount_tag {
     position: absolute;
     z-index: 99;
     top: 170px;
-    right: 150px;
+    right: 18%;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1440px) {
+    .main_search {
+        right: 150px;
+    }
+}
+
+@media (max-width: 1224px) {
+    .main_search {
+        right: 100px;
+    }
+}
+
+@media (max-width: 1023px) {
     .main_search {
         width: auto;
+        position:initial;
     }
 }
 
