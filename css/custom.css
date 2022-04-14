@@ -475,3 +475,49 @@ a.grid_item figure .price_discount_tag {
     font-size: 24px;
     vertical-align: middle;
 }
+
+.accordion-header .teaser{
+    display: inline-block;
+}
+
+.accordion-header button{
+    text-align: left;
+    position: relative;
+    width: 100%;
+    min-height: 70px;
+}
+
+.accordion-header button > div{
+    display: inline-block;
+    padding-right: 10px;
+}
+
+.accordion-header .date_date{
+    width: 200px;
+}
+
+.accordion-header .date_price{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.accordion-header button .date_select {
+    position: absolute;
+    top: 27px;
+    right: 15px;
+    z-index: 9;
+    font-size: 14px;
+}
+
+.accordion-button::after{
+    display: none;
+}
+
+[data-toggle="collapse"] .fa:before {
+    content: "\f106";
+}
+
+[data-toggle="collapse"].collapsed .fa:before {
+    content: "\f107";
+    
+}
