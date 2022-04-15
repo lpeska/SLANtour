@@ -21,7 +21,22 @@
 
 <div class="bg_color_1">
     <div class="container margin_60_35">
-        vypsat typy v gridu?
+        <div class="row">
+			{% for type in typesOfTours %}
+			<div class="col-xl-3 col-lg-6 col-md-6">
+				<a href="../typ-zajezdu.php" class="grid_item">
+					<figure>
+						<img src="{{ type.image }}" class="img-fluid" alt="">
+						<div class="info">
+							<h3>{{type.name}}</h3>
+							{{type.numberOfTours}} zájezdů od {{type.priceFrom}} Kč
+						</div>
+					</figure>
+				</a>
+			</div>
+			<!-- /grid_item -->
+			{% endfor %}
+		</div>
     </div>
     <!-- /container -->
 </div>
