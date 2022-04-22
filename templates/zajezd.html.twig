@@ -113,36 +113,78 @@
                         {% endfor %}
                     </ul>
                     <hr>
-                    <p>Mea appareat omittantur eloquentiam ad, nam ei quas <strong>oportere democritum</strong>. Prima
-                        causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An
-                        sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="bullets">
-                                <li>Dolorem mediocritatem</li>
-                                <li>Mea appareat</li>
-                                <li>Prima causae</li>
-                                <li>Singulis indoctum</li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="bullets">
-                                <li>Timeam inimicus</li>
-                                <li>Oportere democritum</li>
-                                <li>Cetero inermis</li>
-                                <li>Pertinacia eum</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /row -->
 
-                    <hr>
-                    <h3>Location</h3>
-                    <div id="map" class="map map_single add_bottom_30"></div>
-                    <!-- End Map -->
+                    <h3>Cena Zahrnuje</h3>
+                    {% if included|length < 5 %}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="bullets">
+                                    {% for item in included %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
 
-                    <h3>Cena Nezahrnuje</h3>
-                    <p>{{ notIncluded }}</p>
+                    {% else %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    {% for item in included|slice(0, (included|length/2)|round(0, 'ceil')) %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    {% for item in included|slice((included|length/2)|round(0, 'ceil')) %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                    
+                    <h3 class="margin_30">Cena Nezahrnuje</h3>
+                    {% if notIncluded|length < 5 %}
+                        <div class="row margin_0_30">
+                            <div class="col-lg-12">
+                                <ul class="bullets">
+                                    {% for item in notIncluded %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <div class="row margin_0_30">
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    {% for item in notIncluded|slice(0, (notIncluded|length/2)|round(0, 'ceil')) %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    {% for item in notIncluded|slice((notIncluded|length/2)|round(0, 'ceil')) %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    {% endif %}
+                    
                 </section>
                 <!-- /section -->
 
@@ -172,6 +214,19 @@
                             </div>
                         {% endfor %}
                     </div>
+                    
+                    <hr>
+                    <h3>Podrobný popis</h3>
+                    <p>{{ descriptionDetails }}</p>
+
+                    <h3>Poznámky</h3>
+                    <p>{{ descriptionNotes }}</p>
+                    
+
+                    <hr>
+                    <h3>Lokace</h3>
+                    <div id="map" class="map map_single add_bottom_30"></div>
+                    <!-- End Map -->
 
                 </section>
                 <!-- /section -->
@@ -363,30 +418,32 @@
             <aside class="col-lg-4" id="sidebar">
                 <div class="box_detail booking">
                     <div class="price">
-                        <span>45$ <small>person</small></span>
-                        <div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div>
+                        <span><small>od</small> {{priceFrom}} Kč</span>
+                        <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div>
                     </div>
-                    <div class="form-group input-dates">
-                        <input class="form-control" type="text" name="dates" placeholder="When..">
-                        <i class="icon_calendar"></i>
-                    </div>
-                    <div class="panel-dropdown">
-                        <a href="#">Guests <span class="qtyTotal">1</span></a>
-                        <div class="panel-dropdown-content right">
-                            <div class="qtyButtons">
-                                <label>Adults</label>
-                                <input type="text" name="qtyInput" value="1">
-                            </div>
-                            <div class="qtyButtons">
-                                <label>Childrens</label>
-                                <input type="text" name="qtyInput" value="0">
+                    <div class="date_selected">
+                        <div class="form-group input-dates">
+                            <input class="form-control" type="text" name="dates" placeholder="When..">
+                            <i class="icon_calendar"></i>
+                        </div>
+                        <div class="panel-dropdown">
+                            <a href="#">Počet osob <span class="qtyTotal">1</span></a>
+                            <div class="panel-dropdown-content right">
+                                <div class="qtyButtons">
+                                    <label>Dospělí</label>
+                                    <input type="text" name="qtyInput" value="1">
+                                </div>
+                                <div class="qtyButtons">
+                                    <label>Děti</label>
+                                    <input type="text" name="qtyInput" value="0">
+                                </div>
                             </div>
                         </div>
+                        <a href="cart-1.html" class="btn_1 full-width purchase">Pokračovat k objednávce</a>
+                        <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a>
+                        <div class="text-center"><small>No money charged in this step</small></div>
                     </div>
-                    <a href="cart-1.html" class="btn_1 full-width purchase">Purchase</a>
-                    <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Add to
-                        wishlist</a>
-                    <div class="text-center"><small>No money charged in this step</small></div>
+                    <a href="#dates" class="btn_1 select_date">Vybrat termín</a>
                 </div>
                 <ul class="share-buttons">
                     <li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
