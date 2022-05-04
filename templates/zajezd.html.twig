@@ -422,10 +422,12 @@
                         <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div>
                     </div>
                     <div class="date_selected">
-                        <div class="form-group input-dates">
-                            <input class="form-control" type="text" name="dates" placeholder="When..">
-                            <i class="icon_calendar"></i>
-                        </div>
+                        <select class="form-select form-control form-group" required aria-label="Select tour date">
+                            <option value="" disabled selected hidden>Vyberte datum...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
                         <div class="panel-dropdown">
                             <a href="#">Počet osob <span class="qtyTotal">1</span></a>
                             <div class="panel-dropdown-content right">
@@ -443,7 +445,6 @@
                         <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a>
                         <div class="text-center"><small>No money charged in this step</small></div>
                     </div>
-                    <a href="#dates" class="btn_1 select_date">Vybrat termín</a>
                 </div>
                 <ul class="share-buttons">
                     <li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
