@@ -4390,17 +4390,6 @@ section#reviews {
   transform: scale(1.3);
 }
 
-.box_detail .date_selected {
-  visibility: hidden;
-}
-
-.box_detail .select_date {
-  position: absolute;
-  left: 50%;
-  top: 170px;
-  margin-left: -80px;
-}
-
 .booking input {
   font-weight: 500;
   height: 45px;
@@ -4409,9 +4398,15 @@ section#reviews {
   box-shadow: none;
   border: 1px solid #d2d8dd;
 }
-.booking select {
-  display: none;
+
+.booking select:invalid { 
+  color: #727b82;
 }
+
+.booking select { 
+  font-weight: 500;
+}
+
 .booking .panel-dropdown {
   background-color: #fff;
   font-size: 14px;
