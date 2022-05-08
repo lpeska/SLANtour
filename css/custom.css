@@ -534,3 +534,12 @@ a.grid_item figure .price_discount_tag {
     content: "\f107";
     
 }
+
+.target-highlight {
+    animation: target-fade 2s 1;
+}
+
+@keyframes target-fade {
+    0% { background-color: #c3faaab5; }
+    100% { background-color: #f8f8f8; }
+}

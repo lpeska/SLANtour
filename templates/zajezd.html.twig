@@ -17,7 +17,7 @@
         <span class="magnific-gallery">
             {% for image in images %}
                 {% if loop.index0 == 0 %}
-                    <a href="{{ image }}" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">Galerie</a>
+                    <a href="{{ image }}" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in"><i class="fas fa-camera"></i> Galerie</a>
                 {% else %}
                     <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"></a>
                 {% endif %}
@@ -201,7 +201,7 @@
                                         </div>
                                         <div class="date_date">{{ tourDate.date}}</div> 
                                         <div class="date_price">{{ tourDate.price}} Kč</div>
-                                        <a href="" class="date_select"><strong>Vybrat Termín <i class="arrow_carrot-right"></i></strong></a>
+                                        <a class="date_select" data-dateindex="{{loop.index}}"><strong>Vybrat Termín <i class="arrow_carrot-right"></i></strong></a>
                                         
                                     </button>
                                 </h2>
@@ -418,33 +418,25 @@
             <aside class="col-lg-4" id="sidebar">
                 <div class="box_detail booking">
                     <div class="price">
-                        <span><small>od</small> {{priceFrom}} Kč</span>
+                        <span class="price_span"><small>od</small> {{priceFrom}} Kč</span>
                         <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div>
                     </div>
-                    <div class="date_selected">
-                        <select class="form-select form-control form-group" required aria-label="Select tour date">
-                            <option value="" disabled selected hidden>Vyberte datum...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <div class="panel-dropdown">
-                            <a href="#">Počet osob <span class="qtyTotal">1</span></a>
-                            <div class="panel-dropdown-content right">
-                                <div class="qtyButtons">
-                                    <label>Dospělí</label>
-                                    <input type="text" name="qtyInput" value="1">
-                                </div>
-                                <div class="qtyButtons">
-                                    <label>Děti</label>
-                                    <input type="text" name="qtyInput" value="0">
-                                </div>
-                            </div>
-                        </div>
-                        <a href="cart-1.html" class="btn_1 full-width purchase">Pokračovat k objednávce</a>
-                        <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a>
-                        <div class="text-center"><small>No money charged in this step</small></div>
-                    </div>
+                    
+                    
+                    <label for="orderDate"><i class="fas fa-calendar-days"></i> Termín</label>
+                    <select id="orderDate" class="form-select form-control form-group" required aria-label="Select tour date">
+                        <option value="" disabled selected>Vyberte termín...</option>
+                        {% for tourDate in dates %}
+                        <option value="{{loop.index}}" data-price="{{tourDate.price}}">{{tourDate.date}} ({{tourDate.price}} Kč)</option>
+                    
+                        {% endfor %} 
+                    </select>
+                    <label for="orderPerson"><i class="fas fa-user"></i> Počet osob</label>
+                    <input class="form-control form-group" type="number" name="orderPerson" id="orderPerson" value="1" min="1">
+                    
+                    <a href="cart-1.html" class="btn_1 full-width purchase"><i class="fas fa-cart-shopping"></i> Objednat</a>
+                    <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a>
+                    
                 </div>
                 <ul class="share-buttons">
                     <li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>

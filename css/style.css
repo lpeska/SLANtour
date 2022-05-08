@@ -745,6 +745,7 @@ a.btn_1.full-width,
 a.btn_1.full-width.purchase,
 .btn_1.full-width.purchase {
   background-color: #32a067;
+  margin-top: 25px;
 }
 a.btn_1.full-width.purchase:hover,
 .btn_1.full-width.purchase:hover {
@@ -2781,13 +2782,16 @@ a#moveDown {
   display: inline-block;
   border: none !important;
 }
-.qtyButtons label {
+
+.box_detail label {
   font-weight: 500;
-  line-height: 36px;
-  padding-right: 15px;
   display: block;
-  flex: 1;
   color: #727b82;
+}
+
+.box_detail i{
+ padding-right: 5px;
+ padding-left: 2px;
 }
 
 .qtyInc,
@@ -4392,7 +4396,6 @@ section#reviews {
 
 .booking input {
   font-weight: 500;
-  height: 45px;
 }
 .booking input:focus {
   box-shadow: none;
@@ -4441,7 +4444,7 @@ section#reviews {
   display: none;
 }
 .booking .form-group {
-  margin: 0 0 10px 0;
+  margin: 0 0 15px 0;
 }
 .booking .form-group i {
   -webkit-border-radius: 3px;
