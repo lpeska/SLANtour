@@ -1,6 +1,6 @@
 <?php
 /** 
-* trida pro zobrazenÌ seznamu fotografiÌ seri·lu
+* trida pro zobrazen√≠ seznamu fotografi√≠ seri√°lu
 */
 /*------------------- SEZNAM fotografii -------------------  */
 /*rozsireni tridy Serial o seznam fotografii*/
@@ -12,7 +12,7 @@ class Seznam_fotografii extends Generic_list{
 	public $database; //trida pro odesilani dotazu
 		
 	//------------------- KONSTRUKTOR -----------------
-	/**konstruktor t¯Ìdy na z·kladÏ id serialu*/
+	/**konstruktor t≈ô√≠dy na z√°kladƒõ id serialu*/
 	function __construct($typ_pozadavku, $id){
 		//trida pro odesilani dotazu
 		$this->database = Database::get_instance();			
@@ -21,7 +21,7 @@ class Seznam_fotografii extends Generic_list{
                 $this->i = 0;	
 	//ziskani zajezdu z databaze	
 		$this->data=$this->database->query($this->create_query($this->typ_pozadavku) )
-		 	or $this->chyba("Chyba p¯i dotazu do datab·ze");
+		 	or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 		
 	}	
 //------------------- METODY TRIDY -----------------	
@@ -86,7 +86,7 @@ class Seznam_fotografii extends Generic_list{
 			return $dotaz;
 		}
 	}	
-	/**zobrazeni prvku seznamu fotografiÌ*/
+	/**zobrazeni prvku seznamu fotografi√≠*/
 		function show_list_item($typ_zobrazeni){
 		if($typ_zobrazeni=="nahled"){                        
 			$vystup="<td colspan=\"2\">
@@ -165,6 +165,9 @@ class Seznam_fotografii extends Generic_list{
 									alt=\"".$this->get_nazev_foto().$this->get_popisek_foto()."\"
 									title=\"".$this->get_nazev_foto().$this->get_popisek_foto()."\" />
 						</a>";
+			return $vystup;
+		}else if($typ_zobrazeni=="url"){
+			$vystup="https://www.slantour.cz/foto/full/".$this->get_foto_url()."";
 			return $vystup;
 		}
 	}	

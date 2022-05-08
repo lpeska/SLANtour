@@ -1,16 +1,16 @@
 <?php
 /** 
-* trida pro zobrazenÌ seri·lu bez specifikovanÈho z·jezdu
-* - zobrazuje seznam fotografiÌ, informacÌ, dokument˘ a takÈ seznam platn˝ch z·jezd˘
+* trida pro zobrazen√≠ seri√°lu bez specifikovan√©ho z√°jezdu
+* - zobrazuje seznam fotografi√≠, informac√≠, dokument≈Ø a tak√© seznam platn√Ωch z√°jezd≈Ø
 */
 
 /*--------------------- SERIAL -------------------------------------------*/
 class Serial extends Generic_data_class{
-	//vstupnidata
+	//vstupnidata                                          
 	protected $nazev_serialu;
 	
 	protected $data;
-	protected $serial;
+	public $serial;
 	
 	//vnorene tridy
 	protected $zajezdy;
@@ -21,7 +21,7 @@ class Serial extends Generic_data_class{
 	protected $database; //trida pro odesilani dotazu	
 		
 //------------------- KONSTRUKTOR -----------------
-	/**konstruktor t¯Ìdy na z·kladÏ nazvu serialu*/
+	/**konstruktor t≈ô√≠dy na z√°kladƒõ nazvu serialu*/
 	function __construct($nazev_serialu){
 		//trida pro odesilani dotazu
 		$this->database = Database::get_instance();
@@ -30,13 +30,13 @@ class Serial extends Generic_data_class{
 
 	//ziskani serialu z databaze	
 		$this->data=$this->database->query($this->create_query($this->nazev_serialu))
-		 	or $this->chyba("Chyba p¯i dotazu do datab·ze");
+		 	or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 		
 	//kontrola zda jsme ziskali prave 1 serial
 		if(mysqli_num_rows($this->data)==1){
 			$this->serial = mysqli_fetch_array($this->data);
 		}else{
-			$this->chyba("N·zev seri·lu je neplatn˝");
+			$this->chyba("N√°zev seri√°lu je neplatn√Ω");
 		}
 
 	}	
@@ -74,7 +74,7 @@ class Serial extends Generic_data_class{
 		if(!$this->get_error_message()){
 			$vystup = $this->get_nazev()." | ".$this->get_destinace(" | ").$this->get_zeme(" | ").$this->get_nazev_typ(" | ")."SLAN tour";
 		}else{
-			$vystup = "Chyba p¯i p¯istupu k z·jezdu".$this->get_nazev()." ";
+			$vystup = "Chyba p≈ôi p≈ôistupu k z√°jezdu".$this->get_nazev()." ";
 		}
 		return $vystup;
 	}
@@ -103,7 +103,7 @@ class Serial extends Generic_data_class{
                window.addEventListener("load", function(){
                   var mymap = L.map("mapid").setView([latY, latX], 10);
                   L.tileLayer(\'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibHBlc2thIiwiYSI6ImNrYmx5dGh4cjA3MHMycW1pdHp4Y2ZheGoifQ.e-0fQLJYoUUxsM0X6Z-gxQ\', {
-                    attribution: \'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>\',
+                    attribution: \'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery ¬© <a href="https://www.mapbox.com/">Mapbox</a>\',
                     maxZoom: 18,
                     id: "mapbox/streets-v11",
                     tileSize: 512,
@@ -177,13 +177,13 @@ class Serial extends Generic_data_class{
         
         function get_cena_pred_akci() {
             return
-                "d¯Ìve: <span style=\"color:red;text-decoration:line-through;font-size:1.2em;\">".
-                $this->serial["cena_pred_akci"]." KË</span>";
+                "d≈ô√≠ve: <span style=\"color:red;text-decoration:line-through;font-size:1.2em;\">".
+                $this->serial["cena_pred_akci"]." Kƒç</span>";
 
         }
         function get_akcni_cena() {
-            return " <br/> nynÌ od: <span style=\"color:#00ae35;text-decoration:none;font-size:1.2em;font-weight:bold;\">".
-                $this->serial["akcni_cena"]." KË</span>";
+            return " <br/> nyn√≠ od: <span style=\"color:#00ae35;text-decoration:none;font-size:1.2em;font-weight:bold;\">".
+                $this->serial["akcni_cena"]." Kƒç</span>";
 
 
 
@@ -191,7 +191,7 @@ class Serial extends Generic_data_class{
         function get_sleva() {
                 $sleva = round ( ( 1 - ($this->serial["akcni_cena"] / $this->serial["cena_pred_akci"]) )*100);
 
-            return  "<span style=\"color:#009e15;font-size:2.2em;font-weight:bold;\" title=\" Sleva aû ".$sleva."% \">
+            return  "<span style=\"color:#009e15;font-size:2.2em;font-weight:bold;\" title=\" Sleva a≈æ ".$sleva."% \">
                 ".$sleva."%</span>";
 
         }
@@ -218,7 +218,7 @@ class Serial extends Generic_data_class{
 
                         $vypis = "
                             <div class=\"akce\" style=\"margin-bottom:10px\">
-                            <h3>AK»NÕ NABÕDKA</h3>
+                            <h3>AKƒåN√ç NAB√çDKA</h3>
                             <table style=\"margin:0px;padding:0px;width:195px;\">
                                     
                                         <tr>".$slevy.$popisek." </tr>
@@ -241,16 +241,16 @@ class Serial extends Generic_data_class{
 		$this->database = Database::get_instance();
 		//ziskani slev z databaze	
 		$data = $this->database->query($dotaz_slevy)
-		 	or $this->chyba("Chyba p¯i dotazu do datab·ze");
+		 	or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
                 
                 $vystup = "
                     <tr><td colspan=\"2\">
                     <table style=\"width:296px;background-color:#ffefc0;margin-left:2px;\">";	
 		while($sleva = mysqli_fetch_array($data)){
                         if($sleva["sleva_staly_klient"] == 1){
-                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeËtena po zkontrolov·nÌ Vaöich ˙daj˘ pracovnÌkem CK</span>";
+                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeƒçtena po zkontrolov√°n√≠ Va≈°ich √∫daj≈Ø pracovn√≠kem CK</span>";
                         }else{
-                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeËtena v pr˘bÏhu objedn·vky</span>";                        
+                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeƒçtena v pr≈Øbƒõhu objedn√°vky</span>";                        
                         }                    
                        $vystup .= "<tr><td style=\"border-bottom:1px dashed grey;margin:0px;padding:2px;\" valign=\"top\" title=\"".$sleva["nazev_slevy"]."\"><span class=\"serial_sleva\">".$sleva["castka"]."<span>".$sleva["mena"]."</span></span></td>
                                         <td style=\"border-bottom:1px dashed grey;margin:0px;padding:2px;\" title=\"".$sleva["nazev_slevy"]."\"><strong>SLEVA:</strong> ".$sleva["zkraceny_nazev"]."<br/>".$text_slevy."</td></tr>";
@@ -311,11 +311,7 @@ class Serial extends Generic_data_class{
 	function get_nazev_zeme_web() { return $this->serial["nazev_zeme_web"];}
 	function get_nazev_typ_web() { return $this->serial["nazev_typ_web"];}
 	function get_popisek() { 
-            /*<h3 class=\"plain_text\"><b>POPIS A POLOHA</b></h3>*/
-            if($this->serial["id_sablony_zobrazeni"]!=12){
-                return "".$this->serial["popisek"];
-            }
-               return "".$this->serial["popisek"]."
+            return "".$this->serial["popisek"]."
                     ".$this->serial["popisek_ubytovani"]."";
             
         }
@@ -343,30 +339,22 @@ class Serial extends Generic_data_class{
 		
 	function get_popis_ubytovani() {             
 		if($this->serial["popis_ubytovani"]!="" or $this->serial["ubytovani_popis_ubytovani"]!=""){
-                    if($this->serial["id_sablony_zobrazeni"]==12){
-			return "<h3 class=\"plain_text\"><b>UBYTOV¡NÕ, POKOJE</b></h3>
-				".$this->serial["ubytovani_popis_ubytovani"]."".$this->serial["popis_ubytovani"]."
-				";
-                    }else if($this->serial["popis_ubytovani"]!=""){
-                        return "<h3 class=\"plain_text\"><b>UBYTOV¡NÕ, POKOJE</b></h3>
-				".$this->serial["popis_ubytovani"]."
-				";
-                    }   
+                    return "".$this->serial["ubytovani_popis_ubytovani"]."".$this->serial["popis_ubytovani"]."";
+                      
 		}else{ 
 			return "";
 		}
 	}
 	function get_popis_stravovani()  { 
 		if($this->serial["popis_stravovani"]!=""){
-			return "<h3 class=\"plain_text\"><b>STRAVOV¡NÕ</b></h3>
-				".$this->serial["popis_stravovani"]."";
+			return "".$this->serial["popis_stravovani"]."";
 		}else{ 
 			return "";
 			}
 	}
 	function get_program_zajezdu()  { 
 		if($this->serial["program_zajezdu"]!=""){
-			return "<h3 class=\"plain_text\"><b>PROGRAM Z¡JEZDU</b></h3>\n".$this->serial["program_zajezdu"];
+			return "".$this->serial["program_zajezdu"];
 		}else{ 
 			return "";
 			}
@@ -406,10 +394,10 @@ class Serial extends Generic_data_class{
 		if($typ_zobrazeni=="seznam"){
 			$vypis = "
 				<li class=\"nohref\">Typ: <strong>".$this->serial["nazev_typ"]."</strong></li>
-				<li class=\"nohref\">ZemÏ: <strong>".$this->serial["nazev_zeme"]."</strong></li>
+				<li class=\"nohref\">Zemƒõ: <strong>".$this->serial["nazev_zeme"]."</strong></li>
 				<li class=\"nohref\">Doprava: ".Serial_library::get_typ_dopravy($this->serial["doprava"]-1)."</li>
-				<li class=\"nohref\">Ubytov·nÌ: ".Serial_library::get_typ_ubytovani($this->serial["ubytovani"]-1)."</li>
-				<li class=\"nohref\">Stravov·nÌ: ".Serial_library::get_typ_stravy($this->serial["strava"]-1)."</li>
+				<li class=\"nohref\">Ubytov√°n√≠: ".Serial_library::get_typ_ubytovani($this->serial["ubytovani"]-1)."</li>
+				<li class=\"nohref\">Stravov√°n√≠: ".Serial_library::get_typ_stravy($this->serial["strava"]-1)."</li>
 			";
 			return $vypis;
 		}
@@ -417,39 +405,39 @@ class Serial extends Generic_data_class{
 		
 	function get_popis() { 
 		if($this->serial["popis"]!=""){
-			return "<h3 class=\"plain_text\"><b>PODROBN› POPIS</b></h3>".$this->serial["popis"]."";
+			return "".$this->serial["popis"]."";
 		}
 	}
 	
 	function get_cena_zahrnuje() { 
 		if($this->serial["cena_zahrnuje"]!=""){
-			return "<h3 class=\"plain_text\"><b>Z¡KLADNÕ CENA ZAHRNUJE</b></h3>".$this->serial["cena_zahrnuje"]."";
+			return "".$this->serial["cena_zahrnuje"]."";
 		}
 	}
 	
 	function get_cena_nezahrnuje() { 
 		if($this->serial["cena_nezahrnuje"]!=""){
-			return "<h3 class=\"plain_text\"><b>Z¡KLADNÕ CENA NEZAHRNUJE</b></h3>".$this->serial["cena_nezahrnuje"]."";
+			return "".$this->serial["cena_nezahrnuje"]."";
 		}
 	}
 	
 	function get_poznamky() { 
 		if($this->serial["poznamky"]!="" or $this->serial["poznamka_ubytovani"]!=""){
-                        $ret = "<h3 class=\"plain_text\"><b>POZN¡MKY</b></h3>";
+                        
                         if($this->serial["poznamky"]!=""){
-                           $ret .= "<p>".$this->serial["poznamky"]."</p>";
+                           $ret .= "".$this->serial["poznamky"]."";
                         }
                         if($this->serial["poznamka_ubytovani"]!=""){
-                           $ret .= "<p>".$this->serial["poznamka_ubytovani"]."</p>";
+                           $ret .= " ".$this->serial["poznamka_ubytovani"]."";
                         }
                         if($this->serial["pes"]==2){
-                           $ret .= "<p>Pobyt se psem: <b>nelze</b></p>";
+                           $ret .= " Pobyt se psem: <b>nelze</b>";
                         }else if($this->serial["pes"]==1 and $this->serial["pes_cena"]!=""){
-                           $ret .= "<p>Pobyt se psem <b>je moûn˝</b>, poplatek ".$this->serial["pes_cena"]." / den.</p>";
+                           $ret .= " Pobyt se psem <b>je mo≈æn√Ω</b>, poplatek ".$this->serial["pes_cena"]." / den.";
                         }else if($this->serial["pes"]==1){
-                           $ret .= "<p>Pobyt se psem <b>je moûn˝</b></p>";
+                           $ret .= " Pobyt se psem <b>je mo≈æn√Ω</b>";
                         }
-			return $ret."<br/>";
+			return $ret." ";
 		}
 	}
 	
@@ -503,7 +491,7 @@ class Serial extends Generic_data_class{
 
 //zobrazeni pouze ubytovani bez zvoleneho serialu
 class Serial_ubytovani extends Serial{
- 	/**konstruktor t¯Ìdy na z·kladÏ nazvu serialu*/
+ 	/**konstruktor t≈ô√≠dy na z√°kladƒõ nazvu serialu*/
 	function __construct($nazev_serialu){
 		//trida pro odesilani dotazu
 		$this->database = Database::get_instance();
@@ -513,14 +501,14 @@ class Serial_ubytovani extends Serial{
 
 	//ziskani serialu z databaze
 		$this->data=$this->database->query($this->create_query($this->nazev_serialu))
-		 	or $this->chyba("Chyba p¯i dotazu do datab·ze");
+		 	or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 
 	//kontrola zda jsme ziskali prave 1 serial
 		if(mysqli_num_rows($this->data)==1){
 			$this->serial = mysqli_fetch_array($this->data);
                         $this->id_ubytovani = $this->serial["id_ubytovani"];
 		}else{
-			$this->chyba("N·zev ubytov·nÌ je neplatn˝");
+			$this->chyba("N√°zev ubytov√°n√≠ je neplatn√Ω");
 		}
 
 	}
@@ -586,7 +574,7 @@ class Serial_ubytovani extends Serial{
         }
         function show_popis() { 
             if($this->serial["popis"]!=""){
-                return  "<h3 class=\"plain_text\"><b>UBYTOV¡NÕ, POKOJE</b></h3>
+                return  "<h3 class=\"plain_text\"><b>UBYTOV√ÅN√ç, POKOJE</b></h3>
                     ".$this->serial["popis"];                
             }else{
                 return "";
@@ -594,7 +582,7 @@ class Serial_ubytovani extends Serial{
         }        
         function show_poznamka() {
             if($this->serial["zamereni_lazni"]!=""){
-                return  "<h3 class=\"plain_text\"><b>POZN¡MKY</b></h3>
+                return  "<h3 class=\"plain_text\"><b>POZN√ÅMKY</b></h3>
                 ".$this->serial["zamereni_lazni"]." <br/>".$this->show_pes();                
             }else{
                 return $this->show_pes();
@@ -605,9 +593,9 @@ class Serial_ubytovani extends Serial{
                 return  "<b>Pobyt se psem: <em>nelze</em></b>.<br/>";
             }else if($this->serial["pes"]==1){
                 if($this->serial["pes_cena"]!=""){
-                   return  "<b>Pobyt se psem <em>je moûn˝</em></b>, poplatek ".$this->serial["pes_cena"]." /den.<br/>";
+                   return  "<b>Pobyt se psem <em>je mo≈æn√Ω</em></b>, poplatek ".$this->serial["pes_cena"]." /den.<br/>";
                 }else{
-                   return  "<b>Pobyt se psem <em>je moûn˝</em></b>.<br/>";
+                   return  "<b>Pobyt se psem <em>je mo≈æn√Ω</em></b>.<br/>";
                 }
             }
         }    
@@ -617,17 +605,17 @@ class Serial_ubytovani extends Serial{
 
 }
 /**
-*	trida pro zobrazeni serialu se specifikovan˝m z·jezdem
-* - zobrazuje seznam sluûeb z·jezdu vË. kapacit a formul·¯e pro objedn·vku z·jezdu
+*	trida pro zobrazeni serialu se specifikovan√Ωm z√°jezdem
+* - zobrazuje seznam slu≈æeb z√°jezdu vƒç. kapacit a formul√°≈ôe pro objedn√°vku z√°jezdu
 */
-/*--------------------- SERIAL se specifikovan˝m z·jezdem ----------------------------*/
+/*--------------------- SERIAL se specifikovan√Ωm z√°jezdem ----------------------------*/
 class Serial_with_zajezd extends Serial{
 	//vstupni parametry
 	protected $id_zajezdu;
 	//vnorene tridy
 	protected $ceny;
 	
-	/** konstruktor t¯Ìdy na z·kladÏ nazvu serialu a id zajezdu*/
+	/** konstruktor t≈ô√≠dy na z√°kladƒõ nazvu serialu a id zajezdu*/
 	function __construct($nazev_serialu,$id_zajezdu){
 		//trida pro odesilani dotazu
 		$this->database = Database::get_instance();
@@ -637,13 +625,13 @@ class Serial_with_zajezd extends Serial{
 		
 	//ziskani serialu z databaze	
 		$this->data=$this->database->query($this->create_query($this->nazev_serialu,$this->id_zajezdu)) 
-			or $this->chyba("Chyba p¯i dotazu do datab·ze");
+			or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 		
 	//kontrola zda jsme ziskali prave 1 serial
 		if(mysqli_num_rows($this->data)==1){
 			$this->serial = mysqli_fetch_array($this->data);
 		}else{
-			$this->chyba("N·zev seri·lu, nebo ËÌslo z·jezdu jsou neplatnÈ");
+			$this->chyba("N√°zev seri√°lu, nebo ƒç√≠slo z√°jezdu jsou neplatn√©");
 		}
 	}
         function is_zajezd_valid(){
@@ -726,14 +714,14 @@ class Serial_with_zajezd extends Serial{
 				$rezervace= "
 					<div class=\"".$class_rezervace."\">				
 					<a href=\"".$this->get_adress( array($adresa_zobrazit,$_GET["lev1"],$_GET["lev2"],$_GET["lev3"],$_GET["lev4"],"objednavka") )."\">
-						Objedn·vka
+						Objedn√°vka
 					</a>
 					</div>";
 			//}else{
 			//	$rezervace= "
 			//		<div class=\"".$class_rezervace."\">				
-			//		<span title=\"Objedn·vka z·jezdu je dostupn· pouze pro p¯ihl·öenÈ uûivatele\">
-			//			Objedn·vka
+			//		<span title=\"Objedn√°vka z√°jezdu je dostupn√° pouze pro p≈ôihl√°≈°en√© u≈æivatele\">
+			//			Objedn√°vka
 			//		</span>
 			//		</div>";		
 			//}
@@ -741,14 +729,14 @@ class Serial_with_zajezd extends Serial{
 				$poptavka= "
 					<div class=\"".$class_poptavka."\">
 					<a href=\"".$this->get_adress( array($adresa_zobrazit,$_GET["lev1"],$_GET["lev2"],$_GET["lev3"],$_GET["lev4"],"predbezna_poptavka") )."\">
-						P¯edbÏûn· popt·vka
+						P≈ôedbƒõ≈æn√° popt√°vka
 					</a>
 					</div>";	
 			}		
 			$dotaz= "
 				<div class=\"".$class_dotaz."\">
 				<a href=\"".$this->get_adress( array($adresa_zobrazit,$_GET["lev1"],$_GET["lev2"],$_GET["lev3"],$_GET["lev4"],"dotaz") )."\">
-					Dotaz k z·jezdu
+					Dotaz k z√°jezdu
 				</a>
 				</div>
 				<div style=\"float:left;width:100%;\">&nbsp;</div>";	
@@ -776,27 +764,27 @@ class Serial_with_zajezd extends Serial{
 		$this->database = Database::get_instance();
 		//ziskani slev z databaze	
 		$data = $this->database->query($dotaz_slevy)
-		 	or $this->chyba("Chyba p¯i dotazu do datab·ze");			
+		 	or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");			
 						
 		$data_zajezd = $this->database->query($dotaz_slevy_zajezd)
-		 	or $this->chyba("Chyba p¯i dotazu do datab·ze");	
+		 	or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");	
 			
 		$vystup = "
                     <table style=\"width:296px;background-color:#ffefc0;margin-left:2px;\">";	
 		while($sleva = mysqli_fetch_array($data)){
                         if($sleva["sleva_staly_klient"] == 1){
-                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeËtena po zkontrolov·nÌ Vaöich ˙daj˘ pracovnÌkem CK</span>";
+                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeƒçtena po zkontrolov√°n√≠ Va≈°ich √∫daj≈Ø pracovn√≠kem CK</span>";
                         }else{
-                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeËtena v pr˘bÏhu objedn·vky</span>";                        
+                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeƒçtena v pr≈Øbƒõhu objedn√°vky</span>";                        
                         }
                        $vystup .= "<tr><td style=\"border-bottom:1px dashed grey;margin:0px;padding:2px;\" valign=\"top\" title=\"".$sleva["nazev_slevy"]."\"><span class=\"serial_sleva\">".$sleva["castka"]."<span>".$sleva["mena"]."</span></span></td>
                                         <td style=\"border-bottom:1px dashed grey;margin:0px;padding:2px;\" title=\"".$sleva["nazev_slevy"]."\"><strong>SLEVA:</strong> ".$sleva["zkraceny_nazev"]."<br/>".$text_slevy."</td></tr>";
 		}	
 		while($sleva = mysqli_fetch_array($data_zajezd)){
                         if($sleva["sleva_staly_klient"] == 1){
-                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeËtena po zkontrolov·nÌ Vaöich ˙daj˘ pracovnÌkem CK</span>";
+                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeƒçtena po zkontrolov√°n√≠ Va≈°ich √∫daj≈Ø pracovn√≠kem CK</span>";
                         }else{
-                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeËtena v pr˘bÏhu objedn·vky</span>";                        
+                            $text_slevy = "<span style=\"color:grey;font-size:0.8em;font-style:italic\">Sleva bude odeƒçtena v pr≈Øbƒõhu objedn√°vky</span>";                        
                         }                    
                        $vystup .= "<tr><td style=\"border-bottom:1px dashed grey;margin:0px;padding:2px;\" valign=\"top\" title=\"".$sleva["nazev_slevy"]."\"><span class=\"serial_sleva\">".$sleva["castka"]."<span>".$sleva["mena"]."</span></span></td>
                                         <td style=\"border-bottom:1px dashed grey;margin:0px;padding:2px;\" title=\"".$sleva["nazev_slevy"]."\"><strong>SLEVA:</strong> ".$sleva["zkraceny_nazev"]."<br/>".$text_slevy."</td></tr>";
@@ -804,10 +792,10 @@ class Serial_with_zajezd extends Serial{
                 if($this->serial["cena_pred_akci"]>0 and $this->serial["akcni_cena"]>0){
                         $sleva_procenta = round( 1-($this->serial["akcni_cena"] / $this->serial["cena_pred_akci"]),2) * 100 ;
 			$vystup .= "<tr><td>
-                                    <span style=\"font-size:2.2em;color:#009015;font-weight:bold;float:left;font-style:italic\" title=\"Sleva aû ".$sleva_procenta."%\"/><span class=\"serial_sleva\">".$sleva_procenta."<span>%</span></span>
+                                    <span style=\"font-size:2.2em;color:#009015;font-weight:bold;float:left;font-style:italic\" title=\"Sleva a≈æ ".$sleva_procenta."%\"/><span class=\"serial_sleva\">".$sleva_procenta."<span>%</span></span>
                                         </td><td title=\"".strip_tags($this->serial["popis_akce"])."\">
-                                        <strong style=\"font-size:1.2em;\">AKCE:</strong> cena p¯ed akcÌ: <span style=\"color:red;text-decoration:line-through;font-size:1.2em;\">".$this->serial["cena_pred_akci"]."</span> KË<br/>
-                                        nynÌ cena od: <span style=\"color:green;font-size:1.6em;font-style:italic;\"><b>".$this->serial["akcni_cena"]." KË</b></span></td></tr>";
+                                        <strong style=\"font-size:1.2em;\">AKCE:</strong> cena p≈ôed akc√≠: <span style=\"color:red;text-decoration:line-through;font-size:1.2em;\">".$this->serial["cena_pred_akci"]."</span> Kƒç<br/>
+                                        nyn√≠ cena od: <span style=\"color:green;font-size:1.6em;font-style:italic;\"><b>".$this->serial["akcni_cena"]." Kƒç</b></span></td></tr>";
                 }
 		$vystup .= "</table>";	
 		
@@ -844,11 +832,11 @@ class Serial_with_zajezd extends Serial{
                     if($this->get_nazev_zajezdu()){
                         $vystup = $this->get_nazev_zajezdu()." | ".$this->get_nazev()." | ".$this->get_destinace(" | ").$this->get_zeme(" | ").$this->get_nazev_typ(" | ")."SLAN tour";
                     }else{
-                        $vystup = $this->get_nazev()." | ".$this->get_destinace(" | ").$this->get_zeme(" | ").$this->get_nazev_typ(" | ")." TermÌn: ".$this->change_date_en_cz_short($this->get_termin_od())." - ".$this->change_date_en_cz($this->get_termin_do())." | SLAN tour"; 
+                        $vystup = $this->get_nazev()." | ".$this->get_destinace(" | ").$this->get_zeme(" | ").$this->get_nazev_typ(" | ")." Term√≠n: ".$this->change_date_en_cz_short($this->get_termin_od())." - ".$this->change_date_en_cz($this->get_termin_do())." | SLAN tour"; 
                     }
 			
 		}else{
-			$vystup = "Chyba p¯i p¯istupu k z·jezdu".$this->get_nazev()." ";
+			$vystup = "Chyba p≈ôi p≈ôistupu k z√°jezdu".$this->get_nazev()." ";
 		}
 		return $vystup;
 	}
@@ -888,7 +876,7 @@ class Serial_with_zajezd extends Serial{
         
 	function get_poznamky_zajezd() {
 		if($this->serial["poznamky_zajezd"]!=""){
-			return "<h3 class=\"plain_text\">POZN¡MKY K TERMÕNU</h3><p>".$this->serial["poznamky_zajezd"]."</p>";
+			return "<h3 class=\"plain_text\">POZN√ÅMKY K TERM√çNU</h3><p>".$this->serial["poznamky_zajezd"]."</p>";
 		}
 	}
 	

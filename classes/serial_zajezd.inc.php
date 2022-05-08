@@ -1,6 +1,6 @@
 <?php
 /** 
-* trida pro zobrazenÌ seznamu z·jezd˘ seri·lu
+* trida pro zobrazen√≠ seznamu z√°jezd≈Ø seri√°lu
 */
 /*------------------- SEZNAM ZAJEZDU -------------------  */
 /*rozsireni tridy Serial o seznam zajezdu*/
@@ -17,7 +17,7 @@ class Seznam_zajezdu extends Generic_list{
 	public $database; //trida pro odesilani dotazu	
 
 	//------------------- KONSTRUKTOR -----------------
-	/**konstruktor t¯Ìdy na z·kladÏ id serialu*/
+	/**konstruktor t≈ô√≠dy na z√°kladƒõ id serialu*/
 	function __construct($id_serialu,$nazev_typu,$nazev_zeme,$nazev_serial){
 		//trida pro odesilani dotazu
 		$this->database = Database::get_instance();
@@ -29,16 +29,16 @@ class Seznam_zajezdu extends Generic_list{
 	
 	//ziskani id vsech cen ktere nas zajimaji
 		$this->seznam_cen = $this->database->query($this->check_ceny() )	
-			or $this->chyba("Chyba p¯i dotazu do datab·ze");
+			or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 		$this->pocet_cen = mysqli_num_rows($this->seznam_cen);
 		$i=0;
 		$select_ceny="";
-		$this->sloupce_cen="";
+		$this->sloupce_cen=array();
 		$join_ceny="";
 		//ziskavani dotazu pro jednotlive ceny
 		while($zaznam_cena = mysqli_fetch_array($this->seznam_cen)){
 			$i++;
-			$this->sloupce_cen.="<th style=\"min-width:65px;\">".($zaznam_cena["kratky_nazev"]==""?($zaznam_cena["nazev_ceny"]):($zaznam_cena["kratky_nazev"]))."</th>";
+			$this->sloupce_cen[$i] = ($zaznam_cena["kratky_nazev"]==""?($zaznam_cena["nazev_ceny"]):($zaznam_cena["kratky_nazev"]));
 			$select_ceny.="`cena_zajezd".$i."`.`id_cena` as `id_cena".$i."`,
 								`cena_zajezd".$i."`.`castka` as `castka".$i."`,
 								`cena_zajezd".$i."`.`mena` as `mena".$i."`,
@@ -56,8 +56,9 @@ class Seznam_zajezdu extends Generic_list{
 					where `zajezd`.`do` >\"".date("Y-m-d")."\" and `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`id_serial`= ".$this->id_serialu." order by `zajezd`.`od` ";
 					
 	//ziskani zajezdu z databaze	
+                //echo $dotaz;
 		$this->data=$this->database->query($dotaz)
-		 	or $this->chyba("Chyba p¯i dotazu do datab·ze");
+		 	or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 		
 	}	
 //------------------- METODY TRIDY -----------------	
@@ -105,7 +106,7 @@ class Seznam_zajezdu extends Generic_list{
                         order by `castka` desc limit 1";		//echo $dotaz;
 		$data = mysqli_query($GLOBALS["core"]->database->db_spojeni,$sql);
                 while ($row = mysqli_fetch_array($data)) {
-                     $sleva = " <b style=\"color:green; title=\"".$row["nazev_slevy"]."\"\">SLEVA " . $row["castka"] . $row["mena"]."</b>";
+                     $sleva =  $row["castka"] . $row["mena"];
                      return $sleva;
                 }
                 return "";
@@ -115,7 +116,7 @@ class Seznam_zajezdu extends Generic_list{
 		if($typ=="dalsi_terminy"){
 			$vystup="<table class=\"zajezdy\">
 							<tr>
-								<th>Vöechny termÌny z·jezdu</th>
+								<th>V≈°echny term√≠ny z√°jezdu</th>
 								".$this->sloupce_cen."	
                                                                 <th></th>    
 							</tr>";		
@@ -129,14 +130,14 @@ class Seznam_zajezdu extends Generic_list{
 		}else	if($typ=="vstupenky_dalsi_termin"){
 			$vystup="<table class=\"zajezdy\">
 							<tr>
-								<th>DalöÌ vstupenky</th>
+								<th>Dal≈°√≠ vstupenky</th>
 								".$this->sloupce_cen."	
                                                                  <th></th>    
 							</tr>";		
 		}else{
 			$vystup="<table class=\"zajezdy\">
 							<tr>
-								<th>TermÌn z·jezdu</th>
+								<th>Term√≠n z√°jezdu</th>
 								".$this->sloupce_cen."	
                                                                  <th></th>    
 							</tr>";
@@ -148,6 +149,7 @@ class Seznam_zajezdu extends Generic_list{
 	function show_list_item($typ_zobrazeni){
 		$core = Core::get_instance();
 		$adresa_zobrazit = "zobrazit";
+                $first_cena = false;
 		if( $adresa_zobrazit !== false ){//pokud existuje modul pro zpracovani		
 		
 			if($typ_zobrazeni=="tabulka"){
@@ -173,21 +175,21 @@ class Seznam_zajezdu extends Generic_list{
 				}
 				$termin.=$sleva;
 				$vystup="<tr>
-                                            <td><a href=\"".$this->get_adress(array($adresa_zobrazit,$this->nazev_serial,$this->get_id_zajezd()))."\" title=\"Detaily a informace o termÌnu, objedn·vka\">".$termin."</a></td>";
+                                            <td><a href=\"".$this->get_adress(array($adresa_zobrazit,$this->nazev_serial,$this->get_id_zajezd()))."\" title=\"Detaily a informace o term√≠nu, objedn√°vka\">".$termin."</a></td>";
 				
 				//jednotlive ceny
 				$i=0;
 				while($i < $this->pocet_cen){
 					$i++;
 					if($this->radek["vyprodano".$i]){
-						$vystup.="<td><strong><span class=\"red\">Vyprod·no!</span></strong></td>";
+						$vystup.="<td><strong><span class=\"red\">Vyprod√°no!</span></strong></td>";
 					}else{									
 						$vystup.="<td>".$this->radek["castka".$i]." ".$this->radek["mena".$i]."</td>";
 					}
 				}								
 				$vystup.="
 						
-                                   <td style=\"width:68px;\"><a href=\"".$this->get_adress(array($adresa_zobrazit,$this->nazev_serial,$this->get_id_zajezd()))."\" title=\"Detaily a informace o termÌnu, objedn·vka\">Podrobnosti</a></td>             
+                                   <td style=\"width:68px;\"><a href=\"".$this->get_adress(array($adresa_zobrazit,$this->nazev_serial,$this->get_id_zajezd()))."\" title=\"Detaily a informace o term√≠nu, objedn√°vka\">Podrobnosti</a></td>             
                                 </tr>
                                 ";
                                 
@@ -207,6 +209,48 @@ class Seznam_zajezdu extends Generic_list{
                                     $vystup = "<li> <a class=\"list_terminy\" href=\"".$this->get_adress(array($adresa_zobrazit,$this->nazev_serial,$this->get_id_zajezd()))."\" >".$termin."</a></li>";                                
                                 }
                                 return $vystup;
+                                
+                        }else if($typ_zobrazeni=="array"){
+                            if ($this->radek["cena_pred_akci"] and $this->radek["akcni_cena"]) {
+                                $sleva =  round((1 - $this->radek["akcni_cena"] / $this->radek["cena_pred_akci"]) * 100)." %";
+                            } else {
+                                $sleva = $this->get_max_sleva($this->get_id_zajezd());
+                            }
+                            
+                            if( $this->get_termin_od() == $this->get_termin_do() ){
+					$termin = $this->change_date_en_cz( $this->get_termin_od() );
+                            }else{
+					$termin = $this->change_date_en_cz( $this->get_termin_od() )." - ".$this->change_date_en_cz( $this->get_termin_do() );
+                            }
+                            
+                            
+                            if( $this->get_nazev_zajezdu()!="" ){
+				$termin = $this->get_nazev_zajezdu() ."(".$termin.")";					
+                            }
+                            
+                            $priceMap = array();
+                            $i=0;
+                            while($i < $this->pocet_cen){
+                                $i++;
+                                if($this->radek["vyprodano".$i]){
+                                        $priceMap[] = [$this->sloupce_cen[$i],"Vyprod√°no!"];
+                                }else{									
+                                        $priceMap[] = [$this->sloupce_cen[$i],$this->radek["castka".$i]." ".$this->radek["mena".$i]];
+                                    if(!$first_cena){
+                                        $first_cena = true;
+                                        $price = $this->radek["castka".$i];
+                                    }
+                                }
+                            }
+                            //print_r($priceMap) ;
+                            return array(
+                                $termin,
+                                $price,                                
+                                $sleva,
+                                $this->get_poznamky_zajezd(),
+                                $priceMap 
+                            );
+                            
                         }
 		}
 	}	
@@ -218,7 +262,7 @@ class Seznam_zajezdu extends Generic_list{
 	function get_nazev_zajezdu() { return $this->radek["nazev_zajezdu"];}
 	function get_castka() { return $this->radek["castka"];}
 	function get_mena() { return $this->radek["mena"];}
-	function get_poznamky_zajezd() { return $this->radek["poznamky_zajezd"];}
+	function get_poznamky_zajezd() { return "".$this->radek["poznamky_zajezd"];}
 }
 
 

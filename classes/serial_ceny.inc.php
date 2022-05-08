@@ -1,6 +1,6 @@
 <?php
 /** 
-* trida pro zobrazenÌ seznamu cen z·jezdu vË. kapacit
+* trida pro zobrazen√≠ seznamu cen z√°jezdu vƒç. kapacit
 */
 /*------------------- SEZNAM CEN -------------------  */
 /*rozsireni tridy Serial_with_zajezd o seznam cen*/
@@ -8,7 +8,7 @@ class Seznam_cen extends Generic_list{
 	protected $id_zajezdu;
 	protected $id_serialu;
 	protected $pocet_cen;
-	protected $last_typ_ceny;
+	protected $last_typ_ceny;                              
         protected $celkova_castka;
 	protected $vse_volne; //funguje az po precteni seznamu cen!! hlasi, zda jsou vsechny ceny volne
 	private $id_pole;
@@ -16,7 +16,7 @@ class Seznam_cen extends Generic_list{
 	private $scriptStart;
         private $scriptEnd;
 	//------------------- KONSTRUKTOR -----------------
-	/** konstruktor t¯Ìdy na z·kladÏ id serialu a zajezdu*/
+	/** konstruktor t≈ô√≠dy na z√°kladƒõ id serialu a zajezdu*/
 	function __construct($id_serialu,$id_zajezdu){
 		//trida pro odesilani dotazu
 		$this->last_typ_ceny = 0;
@@ -28,7 +28,7 @@ class Seznam_cen extends Generic_list{
 		$this->vse_volne = 1; //vse volne, dokud se neprokaze opak
 	//ziskani zajezdu z databaze	
 		$this->data=$this->database->query( $this->create_query() )
-		 	or $this->chyba("Chyba p¯i dotazu do datab·ze");
+		 	or $this->chyba("Chyba p≈ôi dotazu do datab√°ze");
 			
 		$this->pocet_cen = mysqli_num_rows($this->data);
                 $this->id_pole = 0;
@@ -75,15 +75,15 @@ class Seznam_cen extends Generic_list{
 	
 	function name_of_typ_ceny($typ_ceny){
 		if($typ_ceny == 1){
-			return "Sluûby";
+			return "Slu≈æby";
 		}else if($typ_ceny == 2){
 			return "LAST MINUTE";
 		}else if($typ_ceny == 3){
 			return "Slevy";
 		}else if($typ_ceny == 4){
-			return "P¯Ìplatky";
+			return "P≈ô√≠platky";
 		}else if($typ_ceny == 5){
-			return "Odjezdov· mÌsta";			
+			return "Odjezdov√° m√≠sta";			
 		}else{
 			return "";
 		}
@@ -97,9 +97,9 @@ class Seznam_cen extends Generic_list{
 		}else if($typ_ceny == 3){
 			return "Slevy";
 		}else if($typ_ceny == 4){
-			return "P¯Ìplatky";
+			return "P≈ô√≠platky";
 		}else if($typ_ceny == 5){
-			return "Odjezdov· mÌsta";			
+			return "Odjezdov√° m√≠sta";			
 		}else{
 			return ""; 
 		}
@@ -147,7 +147,7 @@ class Seznam_cen extends Generic_list{
                                 }
                             }
                             $additional_row .= "</div>";
-                            $priceLinkStart = "<a href=\"#\" title=\"Zobrazit detail sluûby\" id=\"showHide_".$this->radek["id_cena"]."\" > ";
+                            $priceLinkStart = "<a href=\"#\" title=\"Zobrazit detail slu≈æby\" id=\"showHide_".$this->radek["id_cena"]."\" > ";
                             $priceLinkEnd = "<div style=\"float:right;font-size:0.8em;\">[podrobnosti]</div></a>";
                             $this->scriptStart .= "
                                 $(\"#showHide_".$this->radek["id_cena"]."\").click(function(){
@@ -237,7 +237,7 @@ class Seznam_cen extends Generic_list{
                             $let_text = "<p>".$let_text."</p>";
                             
                            $pos_let_tam = stripos($let_text,"Let tam" );
-                           $pos_let_zpet = stripos($let_text,"Let zpÏt" );
+                           $pos_let_zpet = stripos($let_text,"Let zpƒõt" );
                            preg_match('/[0-9]+\.[0-9]+\. 2[0-9][0-9][0-9]/', $let_text, $date_let_tam, PREG_OFFSET_CAPTURE, $pos_let_tam); 
                            preg_match('/[0-9]+\.[0-9]+\. 2[0-9][0-9][0-9]/', $let_text, $date_let_zpet, PREG_OFFSET_CAPTURE, $pos_let_zpet); 
                            
@@ -245,7 +245,7 @@ class Seznam_cen extends Generic_list{
                            $datum_zpet = $date_let_zpet[0][0];
                            
                            $let_text = str_replace("<b>Let tam</b>:", "<b>Let tam: $datum_tam</b>", $let_text);
-                           $let_text = str_replace("<b>Let zpÏt</b>:", "<b>Let zpÏt: $datum_zpet</b>", $let_text);
+                           $let_text = str_replace("<b>Let zpƒõt</b>:", "<b>Let zpƒõt: $datum_zpet</b>", $let_text);
                            $let_text = preg_replace("/(\+[0-9])/", "<b>[\$1]</b>", $let_text);
                            $let_text = preg_replace("/- ([A-Z]+ [0-9]+):([^<]+)/", "- \$2 (\$1)", $let_text);
                            
@@ -255,7 +255,7 @@ class Seznam_cen extends Generic_list{
                         
                         if($this->radek["popis_kategorie"]!="" or $this->radek["foto_url"]!="" or $let_text!=""){
                             if($let_text!=""){
-                                $let_text = "<h4>P¯edpokl·danÈ lety:</h4>".$let_text."<br/>";
+                                $let_text = "<h4>P≈ôedpokl√°dan√© lety:</h4>".$let_text."<br/>";
                             }
                             $additional_row = "<tr style=\"margin:0;padding:0;\"><td colspan=\"4\" style=\"margin:0;padding:0;\">
                                 <div  id=\"hidden_".$this->radek["id_cena"]."\" style=\"display:none;\">".$this->radek["popis_kategorie"]."<br/>";
@@ -268,7 +268,7 @@ class Seznam_cen extends Generic_list{
                                 }
                             }
                             $additional_row .= $let_text."</div>";
-                            $priceLinkStart = "<a href=\"#\" title=\"Zobrazit detail sluûby\" id=\"showHide_".$this->radek["id_cena"]."\" > ";
+                            $priceLinkStart = "<a href=\"#\" title=\"Zobrazit detail slu≈æby\" id=\"showHide_".$this->radek["id_cena"]."\" > ";
                             $priceLinkEnd = "<div style=\"float:right;font-size:0.8em;\">[podrobnosti]</div></a>";
                             
 
@@ -363,12 +363,12 @@ class Seznam_cen extends Generic_list{
 					soucet = soucet + pocet*pole_cen[i];
 				}
 				var y = document.getElementById(\"celkova_cena\");
-				y.innerHTML = \"<b>Celkov· cena sluûeb: \"+soucet+\" KË</b>\";
+				y.innerHTML = \"<b>Celkov√° cena slu≈æeb: \"+soucet+\" Kƒç</b>\";
                                 
                                 if(typ_zalohy==\"procenta\"){
                                     var zaloha = Math.round( soucet * 0.01 * castka_zaloha );
                                     var z = document.getElementById(\"zaloha\");
-                                    z.innerHTML = \"<b>Z·loha \"+castka_zaloha+\"%: \"+zaloha+\" KË</b>\";
+                                    z.innerHTML = \"<b>Z√°loha \"+castka_zaloha+\"%: \"+zaloha+\" Kƒç</b>\";
                                 }
                                 
 			}
@@ -385,15 +385,15 @@ class Seznam_cen extends Generic_list{
 			";
 
             $vystup="   <br/>
-                        <strong>PoËet ˙ËastnÌk˘ z·jezdu:</strong> 
+                        <strong>Poƒçet √∫ƒçastn√≠k≈Ø z√°jezdu:</strong> 
                         <input type=\"text\" name=\"pocet_osob\" value=\"".$_POST["pocet_osob"]."\" />
                         <br/>
                         <table cellspacing=\"2\" cellpadding=\"2\" class=\"sluzby\">
 				<tr>
-					<th>N·zev sluûby</th>
-					<th>Voln· mÌsta</th>
+					<th>N√°zev slu≈æby</th>
+					<th>Voln√° m√≠sta</th>
 					<th>Cena</th>
-					<th>Objedn·vka</th>
+					<th>Objedn√°vka</th>
 				</tr>
 			";	
             $i=0;
@@ -483,8 +483,8 @@ class Seznam_cen extends Generic_list{
             $vystup="
                         <table cellspacing=\"2\" cellpadding=\"2\" class=\"rekapitulace_cen\" style=\"width:100%\">
 				<tr>
-					<th>N·zev sluûby</th>
-                                        <th>PoËet</th>
+					<th>N√°zev slu≈æby</th>
+                                        <th>Poƒçet</th>
 					<th>Cena</th>
                                         <th>Celkem</th>
 				</tr>
@@ -544,7 +544,7 @@ class Seznam_cen extends Generic_list{
 	function get_dostupnost(){
 		if($this->get_vyprodano()==1 or $this->get_objekt_vyprodano()==1){
 			$this->vse_volne = 0;
-			return "<span style=\"color:red;\"><b>Vyprod·no!</b></span>";
+			return "<span style=\"color:red;\"><b>Vyprod√°no!</b></span>";
 		}else if($this->get_na_dotaz()==1 or $this->get_objekt_na_dotaz()==1){
 			$this->vse_volne = 0;
 			return "<span style=\"color:blue;\"><b>Na dotaz</b></span>";
