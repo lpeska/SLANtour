@@ -8217,16 +8217,16 @@ ul.list_ok li:before {
   color: #8dc63f;
 }
 
-ul.bullets {
+.bullets ul {
   line-height: 1.8;
   margin: 0;
   padding: 0;
 }
-ul.bullets li {
+.bullets ul li {
   position: relative;
   padding-left: 20px;
 }
-ul.bullets li:before {
+.bullets ul li:before {
   font-style: normal;
   font-weight: normal;
   font-family: 'ElegantIcons';

@@ -82,40 +82,55 @@
                     </div>
                     <!-- /pictures -->
 
+                    {% if descriptionAccomodation is not empty %}
                     <h3>Ubytování</h3>
-                    <p>{{ descriptionAccomodation }}</p>
+                    <p>{{ descriptionAccomodation|raw }}</p>
+                    {% endif %}
 
+                    {% if descriptionMeals is not empty %}
                     <h3>Stravování</h3>
-                    <p>{{ descriptionMeals }}</p>
+                    <p>{{ descriptionMeals|raw }}</p>
+                    {% endif %}
                     
                     <hr>
                     
-                    <h3>Program <small>(60 minutes)</small></h3>
-                    <p>{{ descriptionProgram }}</p>
+                    {% if descriptionProgram is not empty or program is not empty %}
+                    <h3>Program <small>{{night}} nocí</small></h3>
+                    <p>{{ descriptionProgram|raw }}</p>
                     <ul class="cbp_tmtimeline">
                         {% for day in program %}
-                            <li>
-                                <div class="cbp_tmicon">
-                                    {{ loop.index0 + 1 }}
+                        <li>
+                            <div class="cbp_tmicon">
+                                {{ loop.index0 + 1 }}
+                            </div>
+                            <div class="cbp_tmlabel">
+                                {% if day.image %}
+                                <div class="hidden-xs">
+                                    <img src="{{ day.image }}" alt="" class="rounded-circle thumb_visit">
                                 </div>
-                                <div class="cbp_tmlabel">
-                                    {% if day.image %}
-                                        <div class="hidden-xs">
-                                            <img src="{{ day.image }}" alt="" class="rounded-circle thumb_visit">
-                                        </div>
-                                    {% endif %}
-                                    <h4>{{ day.title }}</h4>
-                                    <p>
-                                        {{ day.description }}
-                                    </p>
-                                </div>
-                            </li>
+                                {% endif %}
+                                <h4>{{ day.title }}</h4>
+                                <p>
+                                    {{ day.description|raw }}
+                                </p>
+                            </div>
+                        </li>
                         {% endfor %}
                     </ul>
+                    {% endif %}
                     <hr>
-
+                    
+                    {% if included is not empty %}
                     <h3>Cena Zahrnuje</h3>
-                    {% if included|length < 5 %}
+                    
+                    <div class="row margin_0_30">
+                        <div class="col-lg-12 bullets">
+                            {{included[0]|raw}}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {# {% if included|length < 5 %}
                         <div class="row">
                             <div class="col-lg-12">
                                 <ul class="bullets">
@@ -147,11 +162,20 @@
                             </div>
                         </div>
 
+                    {% endif %} #}
+
+                    {% if notIncluded is not empty %}
+                    <h3 class="margin_30">Cena Nezahrnuje</h3>
+                    
+                    <div class="row margin_0_30">
+                        <div class="col-lg-12 bullets">
+                            {{notIncluded[0]|raw}}
+                        </div>
+                    </div>
                     {% endif %}
 
-                    
-                    <h3 class="margin_30">Cena Nezahrnuje</h3>
-                    {% if notIncluded|length < 5 %}
+                    <!-- TODO: jak udelat rozdeleni na dva sloupce kdyz mam vse v jednom textu hmtl -->
+                    {# {% if notIncluded|length < 5 %}
                         <div class="row margin_0_30">
                             <div class="col-lg-12">
                                 <ul class="bullets">
@@ -183,7 +207,7 @@
                             </div>
                         </div>
 
-                    {% endif %}
+                    {% endif %} #}
                     
                 </section>
                 <!-- /section -->
@@ -208,19 +232,36 @@
                                 <div id="collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="heading{{loop.index}}"
                                     data-bs-parent="#accordionDates">
                                     <div class="accordion-body">
-                                        {{ tourDate.details}}
+                                        <h4>Služby a příplatky</h4>
+                                        <ul>
+                                            {% for service in tourDate.priceTable %}
+                                                <li>{{ service[0] }} ... {{ service[1] }}</li>
+                                            {% endfor %}
+
+                                        </ul>
+
+                                        {# <pre>
+                                            {{ dump(tourDate) }}
+                                        </pre> #}
                                     </div>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                     
+                    {% if descriptionDetails is not empty or descriptionNotes is not empty %}
                     <hr>
+                    {% endif %}
+
+                    {% if descriptionDetails is not empty %}
                     <h3>Podrobný popis</h3>
                     <p>{{ descriptionDetails }}</p>
+                    {% endif %}
 
+                    {% if descriptionNotes is not empty %}
                     <h3>Poznámky</h3>
                     <p>{{ descriptionNotes }}</p>
+                    {% endif %}
                     
 
                     <hr>

@@ -299,14 +299,16 @@ class Program {
 class TourDate {
     public string $date;
     public int $price;
+    public string $discount;
     public string $details;
+    public array $priceTable;
 
     public function __construct(string $date, int $price, string $discount, string $details, array $priceTable) {
         $this->date = $date;
         $this->price = $price;
         $this->discount = $discount;
         $this->details = $details;
-        $this->$priceTable = $priceTable;
+        $this->priceTable = $priceTable;
     }
 }
 
