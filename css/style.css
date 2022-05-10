@@ -96,7 +96,7 @@ Author URI: http://themeforest.net/user/Ansonika/
   }
 
   /*First level styles */
-  .main-menu > ul > li span > a {
+  .main-menu > ul > li > span > a {
     color: #fff;
     padding: 0 8px 15px 8px;
     font-size: 14px;
@@ -104,16 +104,16 @@ Author URI: http://themeforest.net/user/Ansonika/
     font-weight: 500;
   }
 
-  header.sticky .main-menu > ul > li span > a {
+  header.sticky .main-menu > ul > li > span > a {
     color: #444;
   }
-  header.sticky .main-menu > ul > li span:hover > a {
+  header.sticky .main-menu > ul > li > span:hover > a {
     opacity: 1;
     color: #fc5b62;
   }
 
   /* Submenu*/
-  .main-menu ul ul {
+  .main-menu ul ul.menu, .main-menu ul.menu ul {
     position: absolute;
     z-index: 1;
     visibility: hidden;
@@ -141,7 +141,7 @@ Author URI: http://themeforest.net/user/Ansonika/
     -ms-border-radius: 3px;
     border-radius: 3px;
   }
-  .main-menu ul ul:before {
+  .main-menu ul ul.menu:before {
     bottom: 100%;
     left: 15%;
     border: solid transparent;
@@ -154,12 +154,12 @@ Author URI: http://themeforest.net/user/Ansonika/
     border-width: 7px;
     margin-left: -7px;
   }
-  .main-menu ul ul li {
+  .main-menu ul ul.menu li {
     display: block;
     height: auto;
     padding: 0;
   }
-  .main-menu ul ul li a {
+  .main-menu ul ul.menu li a {
     font-size: 12px;
     font-size: 0.75rem;
     font-weight: 500;
@@ -170,7 +170,7 @@ Author URI: http://themeforest.net/user/Ansonika/
     line-height: 1;
   }
 
-  .main-menu ul li:hover > ul {
+  .main-menu ul li:hover > ul:not(.megamenu-list) {
     padding: 0;
     visibility: visible;
     opacity: 1;
@@ -182,16 +182,16 @@ Author URI: http://themeforest.net/user/Ansonika/
     transition-duration: 0s, 0.2s, 0.2s;
   }
 
-  .main-menu ul ul li:first-child a:hover {
+  .main-menu ul ul.menu li:first-child a:hover {
     -webkit-border-radius: 3px 3px 0 0;
     -moz-border-radius: 3px 3px 0 0;
     -ms-border-radius: 3px 3px 0 0;
     border-radius: 3px 3px 0 0;
   }
-  .main-menu ul ul li:last-child a {
+  .main-menu ul ul.menu li:last-child a {
     border-bottom: none;
   }
-  .main-menu ul ul li:last-child a:hover {
+  .main-menu ul ul.menu li:last-child a:hover {
     -webkit-border-radius: 0 0 3px 3px;
     -moz-border-radius: 0 0 3px 3px;
     -ms-border-radius: 0 0 3px 3px;
@@ -202,7 +202,83 @@ Author URI: http://themeforest.net/user/Ansonika/
     color: #fc5b62;
     padding-left: 18px;
   }
+  .main-menu ul.megamenu {
+    width: 800px;
+    position: absolute;
+    z-index: 1;
+    visibility: hidden;
+    left: -400px;
+    top: 100%;
+    margin: 0;
+    display: flex;
+    padding: 20px 10px !important;
+    background: #fff;
+    -webkit-box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.175);
+    -moz-box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.175);
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.175);
+    transform: scale(0.4);
+    transform-origin: 10% top;
+    transition: 0.15s linear, 0.1s opacity cubic-bezier(0.39, 0.575, 0.565, 1), 0.15s transform cubic-bezier(0.1, 1.26, 0.83, 1);
+    opacity: 0;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+  }
+  .main-menu ul.megamenu:before {
+    bottom: 100%;
+    left: 55%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #fff;
+    border-width: 7px;
+    margin-left: -7px;
+  }
+  .main-menu .megamenu-item{
+    padding-left: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #ededed;
+    min-width: 150px;
+  }
+  .main-menu .megamenu-item:last-child{
+    border-right: none;
+  }
+  .main-menu li.megamenu-item h6{
+    text-transform: uppercase;
+  }
+  .main-menu li.megamenu-listitem{
+    display: block;
+  }
+  .main-menu ul.megamenu-list{
+    width: 100%;
+  }
+  .main-menu ul.megamenu-list li a {
+    font-size: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #555;
+    display: block;
+    padding: 10px 5px 5px 0px;
+    line-height: 1;
+    z-index: 1;
+  }
+  .main-menu ul.megamenu-list li:hover > a {
+    background-color: #f9f9f9;
+    color: #fc5b62;
+    padding-left: 5px;
+    padding-right: 0px;
+  }
 }
+
 /* Submenu 2nd level right */
 .main-menu ul ul.second_level_right {
   left: auto;
@@ -214,15 +290,15 @@ Author URI: http://themeforest.net/user/Ansonika/
 }
 
 /* Submenu 3rd level */
-.main-menu ul ul li span a {
+.main-menu ul ul.menu li span a {
   font-weight: 500 !important;
 }
-.main-menu ul ul li span a:hover {
+.main-menu ul ul.menu li span a:hover {
   color: #fc5b62;
   padding-left: 18px;
   opacity: 1;
 }
-.main-menu ul ul li span a:after {
+.main-menu ul ul.menu li span a:after {
   font-family: 'ElegantIcons';
   content: "\35";
   float: right;
@@ -231,7 +307,7 @@ Author URI: http://themeforest.net/user/Ansonika/
   margin-top: -2px;
 }
 
-.main-menu ul ul ul {
+.main-menu ul ul.menu ul {
   position: absolute;
   border-top: 0;
   z-index: 1;
@@ -249,15 +325,15 @@ Author URI: http://themeforest.net/user/Ansonika/
   right: 100%;
   left: auto;
 }
-.main-menu ul ul ul li a {
+.main-menu ul ul.menu ul li a {
   border-bottom: 1px solid #ededed !important;
 }
-.main-menu ul ul ul li:last-child a {
+.main-menu ul ul.menu ul li:last-child a {
   border-bottom: none !important;
 }
 
 /* Arrows top 3rd level*/
-.main-menu ul ul ul:before {
+.main-menu ul ul.menu ul:before {
   border-width: 0;
   margin-left: 0;
 }
@@ -669,6 +745,7 @@ a.btn_1.full-width,
 a.btn_1.full-width.purchase,
 .btn_1.full-width.purchase {
   background-color: #32a067;
+  margin-top: 25px;
 }
 a.btn_1.full-width.purchase:hover,
 .btn_1.full-width.purchase:hover {
@@ -2705,13 +2782,16 @@ a#moveDown {
   display: inline-block;
   border: none !important;
 }
-.qtyButtons label {
+
+.box_detail label {
   font-weight: 500;
-  line-height: 36px;
-  padding-right: 15px;
   display: block;
-  flex: 1;
   color: #727b82;
+}
+
+.box_detail i{
+ padding-right: 5px;
+ padding-left: 2px;
 }
 
 .qtyInc,
@@ -3017,7 +3097,12 @@ a.grid_item figure {
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 100%;
+  height: 15vw;
+}
+@media (max-width: 1440px) {
+  a.grid_item figure {
+    height: 17vw;
+  }
 }
 @media (max-width: 767px) {
   a.grid_item figure {
@@ -3054,7 +3139,7 @@ a.grid_item figure small {
 }
 a.grid_item figure img {
   width: 100%;
-  height: auto;
+  height: 100%;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
@@ -3065,6 +3150,7 @@ a.grid_item figure img {
   -ms-transform: scale(1.1);
   -o-transform: scale(1.1);
   transform: scale(1.1);
+  object-fit: cover;
 }
 a.grid_item:hover figure img {
   -webkit-transform: scale(1);
@@ -4038,19 +4124,19 @@ a.boxed_list:hover i {
   font-weight: 500;
 }
 
-section#description, section#reviews {
+section#description, section#reviews, section#dates {
   border-bottom: 3px solid #ededed;
   margin-bottom: 45px;
 }
-section#description h2, section#reviews h2 {
+section#description h2, section#reviews h2, section#dates h2 {
   font-size: 24px;
   font-size: 1.5rem;
 }
-section#description h3, section#reviews h3 {
+section#description h3, section#reviews h3, section#dates h3 {
   font-size: 21px;
   font-size: 1.3125rem;
 }
-section#description h4, section#reviews h4 {
+section#description h4, section#reviews h4, section#dates h4 {
   font-size: 18px;
   font-size: 1.125rem;
 }
@@ -4310,15 +4396,20 @@ section#reviews {
 
 .booking input {
   font-weight: 500;
-  height: 45px;
 }
 .booking input:focus {
   box-shadow: none;
   border: 1px solid #d2d8dd;
 }
-.booking select {
-  display: none;
+
+.booking select:invalid { 
+  color: #727b82;
 }
+
+.booking select { 
+  font-weight: 500;
+}
+
 .booking .panel-dropdown {
   background-color: #fff;
   font-size: 14px;
@@ -4353,7 +4444,7 @@ section#reviews {
   display: none;
 }
 .booking .form-group {
-  margin: 0 0 10px 0;
+  margin: 0 0 15px 0;
 }
 .booking .form-group i {
   -webkit-border-radius: 3px;
@@ -4436,7 +4527,7 @@ ul.cbp_tmtimeline {
   bottom: 0;
   width: 2px;
   background: #ebeef3;
-  left: 18.5%;
+  left: 25px;
   margin-left: -2px;
 }
 
@@ -4470,13 +4561,14 @@ ul.cbp_tmtimeline {
 
 /* Right content */
 img.thumb_visit {
-  width: 70px;
-  height: 70px;
+  width: 150px;
+  height: 150px;
   border: 2px solid #fff;
   margin-top: -5px;
   float: right;
   margin-left: 15px;
 }
+
 @media (max-width: 767px) {
   img.thumb_visit {
     display: none;
@@ -4484,9 +4576,10 @@ img.thumb_visit {
 }
 
 .cbp_tmtimeline > li .cbp_tmlabel {
-  margin: 0 0 15px 25%;
+  margin: 0 0 15px 80px;
   background: #eef3f7;
   padding: 20px;
+  min-height: 180px;
   position: relative;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -4535,9 +4628,8 @@ img.thumb_visit {
   border-radius: 50%;
   box-shadow: 0 0 0 2px #999;
   text-align: center;
-  left: 18.5%;
+  left: 0;
   top: 0;
-  margin: 0 0 0 -25px;
 }
 
 /* Media Queries */
@@ -4562,8 +4654,9 @@ img.thumb_visit {
   }
 
   .cbp_tmtimeline > li .cbp_tmlabel {
-    margin: 0 0 30px 0;
+    margin: 15px 0 30px 0;
     padding: 1em;
+    min-height: 0px;
   }
 
   .cbp_tmtimeline > li .cbp_tmlabel:after {
@@ -4581,9 +4674,7 @@ img.thumb_visit {
 
   .cbp_tmtimeline > li .cbp_tmicon {
     position: relative;
-    float: right;
-    left: auto;
-    margin: -65px 5px 0 0px;
+    left: 5px;
   }
 }
 ul.hotel_facilities {
@@ -8298,6 +8389,34 @@ ul.bullets li:before {
   .margin_30_95 {
     padding-top: 5px;
     padding-bottom: 30px;
+  }
+}
+
+.margin_30 {
+  padding-top: 30px;
+}
+@media (max-width: 991px) {
+  .margin_30 {
+    padding-top: 15px;
+  }
+}
+@media (max-width: 575px) {
+  .margin_30 {
+    padding-top: 5px;
+  }
+}
+
+.margin_0_30 {
+  padding-bottom: 30px;
+}
+@media (max-width: 991px) {
+  .margin_0_30 {
+    padding-bottom: 15px;
+  }
+}
+@media (max-width: 575px) {
+  .margin_0_30 {
+    padding-bottom: 5px;
   }
 }
 

@@ -1,6 +1,6 @@
 {% extends "_base.html.twig" %}
 
-{% block title %}SLANtour - {{ tour.name }}{% endblock title %}
+{% block title %}SLANtour - {{ name }}{% endblock title %}
 
 {% block stylesheets %}
 
@@ -9,16 +9,19 @@
 {% block main %}
 
 <section class="hero_in tours_detail">
-    <img src="{{ tour.image }}" alt="Slide background">
+    <img src="{{ imageMain }}" alt="Slide background">
     <div class="wrapper">
         <div class="container">
-            <h1 class="fadeInUp"><span></span>{{ tour.name }} </h1>
+            <h1 class="fadeInUp"><span></span>{{ name }} </h1>
         </div>
         <span class="magnific-gallery">
-            <a href="img/gallery/tour_list_1.jpg" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">View
-                photos</a>
-            <a href="img/gallery/tour_list_2.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
-            <a href="img/gallery/tour_list_3.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
+            {% for image in images %}
+                {% if loop.index0 == 0 %}
+                    <a href="{{ image }}" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in"><i class="fas fa-camera"></i> Galerie</a>
+                {% else %}
+                    <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"></a>
+                {% endif %}
+            {% endfor %}
         </span>
     </div>
 </section>
@@ -28,158 +31,208 @@
     <nav class="secondary_nav sticky_horizontal">
         <div class="container">
             <ul class="clearfix">
-                <li><a href="#description" class="active">Description</a></li>
-                <li><a href="#reviews">Reviews</a></li>
-                <li><a href="#sidebar">Booking</a></li>
+                <li><a href="#description" class="active">Zájezd</a></li>
+                <li><a href="#dates">Termíny</a></li>
+                <li><a href="#reviews">Recenze</a></li>
+                <li><a href="#sidebar">Objednávka</a></li> 
             </ul>
         </div>
     </nav>
-    <div class="container margin_60_35">
+    <div class="container margin_30_95">
         <div class="row">
             <div class="col-lg-8">
                 <section id="description">
-                    <h2>Placeholder - Description</h2>
-                    <p>Per consequat adolescens ex, cu nibh commune <strong>temporibus vim</strong>, ad sumo viris
-                        eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas oportere democritum. Prima
-                        causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An
-                        sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                    <p>Cum et probo menandri. Officiis consulatu pro et, ne sea sale invidunt, sed ut sint
-                        <strong>blandit</strong> efficiendi. Atomorum explicari eu qui, est enim quaerendum te. Quo
-                        harum viris id. Per ne quando dolore evertitur, pro ad cibo commune.</p>
+                    <!--features-->
+                    <div class="tour_feat">
+                        <ul>
+                            {% for feature in features %}
+                                <li><span><i class="fas {{feature.icon}}"></i></span>{{feature.text|raw}}</li>
+                                
+                            {% endfor %}
+                           
+                        </ul>
+                    </div>
+                    <h2>Popis Zájezdu</h2>
+                    <p>{{ descriptionMain }}</p>
 
-                    <h3>Pictures from our users</h3>
                     <div class="pictures_grid magnific-gallery clearfix">
-                        <figure><a href="img/detail_gallery/detail_1.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><img src="img/detail_gallery/detail_1.jpg" alt=""></a>
-                        </figure>
-                        <figure><a href="img/detail_gallery/detail_2.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><img src="img/detail_gallery/detail_2.jpg" alt=""></a>
-                        </figure>
-                        <figure><a href="img/detail_gallery/detail_3.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><img src="img/detail_gallery/detail_3.jpg" alt=""></a>
-                        </figure>
-                        <figure><a href="img/detail_gallery/detail_4.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><img src="img/detail_gallery/detail_4.jpg" alt=""></a>
-                        </figure>
-                        <figure><a href="img/detail_gallery/detail_5.jpg" title="Photo title"
-                                data-effect="mfp-zoom-in"><span
-                                    class="d-flex align-items-center justify-content-center">+10</span><img
-                                    src="img/detail_gallery/detail_5.jpg" alt=""></a></figure>
+                        {% for image in images %}
+                            {% if loop.index0 <= 3 %}
+                                <figure>
+                                    <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"><img src="{{ image }}" alt=""></a>
+                                </figure>
+                            {% elseif loop.index0 == 4 %}
+                                {% if loop.last %}
+                                    <figure>
+                                        <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"><img src="{{ image }}" alt=""></a>
+                                    </figure>
+                                {% else %}
+                                    <figure>
+                                        <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in">
+                                            <span class="d-flex align-items-center justify-content-center">+{{ loop.length - 4}}</span>
+                                            <img src="{{ image }}" alt="">
+                                        </a>
+                                    </figure>
+                                {% endif %}
+                            {% else %}
+                                <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"></a>
+                            {% endif %}
+                        {% endfor %}
+
                     </div>
                     <!-- /pictures -->
 
-                    <hr>
+                    <h3>Ubytování</h3>
+                    <p>{{ descriptionAccomodation }}</p>
 
+                    <h3>Stravování</h3>
+                    <p>{{ descriptionMeals }}</p>
+                    
+                    <hr>
+                    
                     <h3>Program <small>(60 minutes)</small></h3>
-                    <p>
-                        Iudico omnesque vis at, ius an laboramus adversarium. An eirmod doctus admodum est, vero numquam
-                        et mel, an duo modo error. No affert timeam mea, legimus ceteros his in. Aperiri honestatis sit
-                        at. Eos aeque fuisset ei, case denique eam ne. Augue invidunt has ad, ullum debitis mea ei, ne
-                        aliquip dignissim nec.
-                    </p>
+                    <p>{{ descriptionProgram }}</p>
                     <ul class="cbp_tmtimeline">
-                        <li>
-                            <time class="cbp_tmtime" datetime="09:30"><span>30 min.</span><span>09:30</span>
-                            </time>
-                            <div class="cbp_tmicon">
-                                1
-                            </div>
-                            <div class="cbp_tmlabel">
-                                <div class="hidden-xs">
-                                    <img src="img/tour_plan_1.jpg" alt="" class="rounded-circle thumb_visit">
+                        {% for day in program %}
+                            <li>
+                                <div class="cbp_tmicon">
+                                    {{ loop.index0 + 1 }}
                                 </div>
-                                <h4>Interior of the cathedral</h4>
-                                <p>
-                                    Vero consequat cotidieque ad eam. Ea duis errem qui, impedit blandit sed eu. Ius
-                                    diam vivendo ne.
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <time class="cbp_tmtime" datetime="11:30"><span>2 hours</span><span>11:30</span>
-                            </time>
-                            <div class="cbp_tmicon">
-                                2
-                            </div>
-                            <div class="cbp_tmlabel">
-                                <div class="hidden-xs">
-                                    <img src="img/tour_plan_2.jpg" alt="" class="rounded-circle thumb_visit">
+                                <div class="cbp_tmlabel">
+                                    {% if day.image %}
+                                        <div class="hidden-xs">
+                                            <img src="{{ day.image }}" alt="" class="rounded-circle thumb_visit">
+                                        </div>
+                                    {% endif %}
+                                    <h4>{{ day.title }}</h4>
+                                    <p>
+                                        {{ day.description }}
+                                    </p>
                                 </div>
-                                <h4>Statue of Saint Reparata</h4>
-                                <p>
-                                    Vero consequat cotidieque ad eam. Ea duis errem qui, impedit blandit sed eu. Ius
-                                    diam vivendo ne.
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <time class="cbp_tmtime" datetime="13:30"><span>1 hour</span><span>13:30</span>
-                            </time>
-                            <div class="cbp_tmicon">
-                                3
-                            </div>
-                            <div class="cbp_tmlabel">
-                                <div class="hidden-xs">
-                                    <img src="img/tour_plan_3.jpg" alt="" class="rounded-circle thumb_visit">
-                                </div>
-                                <h4>Huge clock decorated</h4>
-                                <p>
-                                    Vero consequat cotidieque ad eam. Ea duis errem qui, impedit blandit sed eu. Ius
-                                    diam vivendo ne.
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <time class="cbp_tmtime" datetime="14:30"><span>2 hours</span><span>14:30</span>
-                            </time>
-                            <div class="cbp_tmicon">
-                                4
-                            </div>
-                            <div class="cbp_tmlabel">
-                                <div class="hidden-xs">
-                                    <img src="img/tour_plan_4.jpg" alt="" class="rounded-circle thumb_visit">
-                                </div>
-                                <h4>Vasari's fresco</h4>
-                                <p>
-                                    Vero consequat cotidieque ad eam. Ea duis errem qui, impedit blandit sed eu. Ius
-                                    diam vivendo ne.
-                                </p>
-                            </div>
-                        </li>
+                            </li>
+                        {% endfor %}
                     </ul>
                     <hr>
-                    <p>Mea appareat omittantur eloquentiam ad, nam ei quas <strong>oportere democritum</strong>. Prima
-                        causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An
-                        sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="bullets">
-                                <li>Dolorem mediocritatem</li>
-                                <li>Mea appareat</li>
-                                <li>Prima causae</li>
-                                <li>Singulis indoctum</li>
-                            </ul>
+
+                    <h3>Cena Zahrnuje</h3>
+                    {% if included|length < 5 %}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <ul class="bullets">
+                                    {% for item in included %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-lg-6">
-                            <ul class="bullets">
-                                <li>Timeam inimicus</li>
-                                <li>Oportere democritum</li>
-                                <li>Cetero inermis</li>
-                                <li>Pertinacia eum</li>
-                            </ul>
+
+                    {% else %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    {% for item in included|slice(0, (included|length/2)|round(0, 'ceil')) %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    {% for item in included|slice((included|length/2)|round(0, 'ceil')) %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
+
+                    {% endif %}
+
+                    
+                    <h3 class="margin_30">Cena Nezahrnuje</h3>
+                    {% if notIncluded|length < 5 %}
+                        <div class="row margin_0_30">
+                            <div class="col-lg-12">
+                                <ul class="bullets">
+                                    {% for item in notIncluded %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <div class="row margin_0_30">
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    {% for item in notIncluded|slice(0, (notIncluded|length/2)|round(0, 'ceil')) %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    {% for item in notIncluded|slice((notIncluded|length/2)|round(0, 'ceil')) %}
+                                        <li>{{item}}</li>
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    {% endif %}
+                    
+                </section>
+                <!-- /section -->
+
+                <section id="dates">
+                    <h2>Termíny</h2>
+
+                    <div class="accordion" id="accordionDates">
+                        {% for tourDate in dates %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{loop.index}}">
+                                    <button class="accordion-button collapsed" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
+                                        <div class="">
+                                            <i class="fa" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="date_date">{{ tourDate.date}}</div> 
+                                        <div class="date_price">{{ tourDate.price}} Kč</div>
+                                        <a class="date_select" data-dateindex="{{loop.index}}"><strong>Vybrat Termín <i class="arrow_carrot-right"></i></strong></a>
+                                        
+                                    </button>
+                                </h2>
+                                <div id="collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="heading{{loop.index}}"
+                                    data-bs-parent="#accordionDates">
+                                    <div class="accordion-body">
+                                        {{ tourDate.details}}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <!-- /row -->
+                    
+                    <hr>
+                    <h3>Podrobný popis</h3>
+                    <p>{{ descriptionDetails }}</p>
+
+                    <h3>Poznámky</h3>
+                    <p>{{ descriptionNotes }}</p>
+                    
 
                     <hr>
-                    <h3>Location</h3>
+                    <h3>Lokace</h3>
                     <div id="map" class="map map_single add_bottom_30"></div>
                     <!-- End Map -->
+
                 </section>
                 <!-- /section -->
 
                 <section id="reviews">
-                    <h2>Reviews</h2>
+                    <h2>Recenze</h2>
                     <div class="reviews-container">
                         <div class="row">
                             <div class="col-lg-3">
@@ -365,30 +418,25 @@
             <aside class="col-lg-4" id="sidebar">
                 <div class="box_detail booking">
                     <div class="price">
-                        <span>45$ <small>person</small></span>
-                        <div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div>
+                        <span class="price_span"><small>od</small> {{priceFrom}} Kč</span>
+                        <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div>
                     </div>
-                    <div class="form-group input-dates">
-                        <input class="form-control" type="text" name="dates" placeholder="When..">
-                        <i class="icon_calendar"></i>
-                    </div>
-                    <div class="panel-dropdown">
-                        <a href="#">Guests <span class="qtyTotal">1</span></a>
-                        <div class="panel-dropdown-content right">
-                            <div class="qtyButtons">
-                                <label>Adults</label>
-                                <input type="text" name="qtyInput" value="1">
-                            </div>
-                            <div class="qtyButtons">
-                                <label>Childrens</label>
-                                <input type="text" name="qtyInput" value="0">
-                            </div>
-                        </div>
-                    </div>
-                    <a href="cart-1.html" class="btn_1 full-width purchase">Purchase</a>
-                    <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Add to
-                        wishlist</a>
-                    <div class="text-center"><small>No money charged in this step</small></div>
+                    
+                    
+                    <label for="orderDate"><i class="fas fa-calendar-days"></i> Termín</label>
+                    <select id="orderDate" class="form-select form-control form-group" required aria-label="Select tour date">
+                        <option value="" disabled selected>Vyberte termín...</option>
+                        {% for tourDate in dates %}
+                        <option value="{{loop.index}}" data-price="{{tourDate.price}}">{{tourDate.date}} ({{tourDate.price}} Kč)</option>
+                    
+                        {% endfor %} 
+                    </select>
+                    <label for="orderPerson"><i class="fas fa-user"></i> Počet osob</label>
+                    <input class="form-control form-group" type="number" name="orderPerson" id="orderPerson" value="1" min="1">
+                    
+                    <a href="cart-1.html" class="btn_1 full-width purchase"><i class="fas fa-cart-shopping"></i> Objednat</a>
+                    <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a>
+                    
                 </div>
                 <ul class="share-buttons">
                     <li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
@@ -408,5 +456,11 @@
 {% endblock main %}
 
 {% block javascripts %}
+<!-- Map -->
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script src="/html-template/js/map_single_tour.js"></script>
+<script src="/html-template/js/infobox.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 {% endblock javascripts %}

@@ -312,7 +312,7 @@
 		var $target = $(target);
 		$('html, body').animate({
 			'scrollTop': $target.offset().top - 140
-		}, 800, 'swing');
+		}, 400, 'swing');
 	});
 	$sticky_nav.find('ul li a').on('click', function () {
 		$sticky_nav.find('ul li a.active').removeClass('active');
@@ -430,6 +430,36 @@
 	  $(this).siblings().stop().fadeTo(300, 1);
 	  $(this).parent().siblings().stop().fadeTo(300, 1);
 	});
-	
+
+	// Order date select value changed
+	$('#orderDate').change(function(){
+		const price = $('.price .price_span');
+		price.text(this[this.value].dataset.price + " Kč");
+	});
+
+	// date selected from terminy
+	$('#accordionDates .date_select').click(function(event){
+		const dateIndex = this.dataset.dateindex;
+		const dateSelect = $('#orderDate');
+		dateSelect[0].value = dateIndex;
+		dateSelect.change();
+		event.stopPropagation();
+
+		addTargetingClass();
+		
+		setTimeout(function() {
+			removeTargetingClass();
+		}, 3000);
+
+	});
+
+	function addTargetingClass() {
+		$('.box_detail.booking').addClass('target-highlight');
+	}
+
+	function removeTargetingClass() {
+		$('.box_detail.booking').removeClass('target-highlight');
+	}
+
 })(window.jQuery); 
 
