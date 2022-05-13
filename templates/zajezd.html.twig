@@ -53,7 +53,7 @@
                         </ul>
                     </div>
                     <h2>Popis Zájezdu</h2>
-                    <p>{{ descriptionMain }}</p>
+                    <p class="tour-html-block">{{ descriptionMain }}</p>
 
                     <div class="pictures_grid magnific-gallery clearfix">
                         {% for image in images %}
@@ -84,19 +84,19 @@
 
                     {% if descriptionAccomodation is not empty %}
                     <h3>Ubytování</h3>
-                    <p>{{ descriptionAccomodation|raw }}</p>
+                    <p class="tour-html-block">{{ descriptionAccomodation|raw }}</p>
                     {% endif %}
 
                     {% if descriptionMeals is not empty %}
                     <h3>Stravování</h3>
-                    <p>{{ descriptionMeals|raw }}</p>
+                    <p class="tour-html-block">{{ descriptionMeals|raw }}</p>
                     {% endif %}
                     
                     <hr>
                     
                     {% if descriptionProgram is not empty or program is not empty %}
                     <h3>Program <small>{{night}} nocí</small></h3>
-                    <p>{{ descriptionProgram|raw }}</p>
+                    <p class="tour-html-block">{{ descriptionProgram|raw }}</p>
                     <ul class="cbp_tmtimeline">
                         {% for day in program %}
                         <li>
@@ -110,105 +110,40 @@
                                 </div>
                                 {% endif %}
                                 <h4>{{ day.title }}</h4>
-                                <p>
+                                <p class="tour-html-block">
                                     {{ day.description|raw }}
                                 </p>
                             </div>
                         </li>
                         {% endfor %}
                     </ul>
-                    {% endif %}
                     <hr>
-                    
-                    {% if included is not empty %}
-                    <h3>Cena Zahrnuje</h3>
-                    
-                    <div class="row margin_0_30">
-                        <div class="col-lg-12 bullets">
-                            {{included[0]|raw}}
-                        </div>
-                    </div>
                     {% endif %}
                     
-                    {# {% if included|length < 5 %}
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <ul class="bullets">
-                                    {% for item in included %}
-                                        <li>{{item}}</li>
-                                        
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-
-                    {% else %}
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <ul class="bullets">
-                                    {% for item in included|slice(0, (included|length/2)|round(0, 'ceil')) %}
-                                        <li>{{item}}</li>
-                                        
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul class="bullets">
-                                    {% for item in included|slice((included|length/2)|round(0, 'ceil')) %}
-                                        <li>{{item}}</li>
-                                        
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-
-                    {% endif %} #}
-
-                    {% if notIncluded is not empty %}
-                    <h3 class="margin_30">Cena Nezahrnuje</h3>
                     
                     <div class="row margin_0_30">
-                        <div class="col-lg-12 bullets">
-                            {{notIncluded[0]|raw}}
+                        {% if included is not empty %}
+                        <div class="col-lg-6">
+                            <h3>Cena Zahrnuje</h3>
+                            <div class="bullets positive">
+                                {{included[0]|raw}}
+                            </div>
                         </div>
+                        {% endif %}
+                        
+                        
+                        {% if notIncluded is not empty %}
+                        <div class="col-lg-6">
+                            <h3>Cena Nezahrnuje</h3>
+                            <div class="bullets negative">
+                                {{notIncluded[0]|raw}}
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
-
-                    <!-- TODO: jak udelat rozdeleni na dva sloupce kdyz mam vse v jednom textu hmtl -->
-                    {# {% if notIncluded|length < 5 %}
-                        <div class="row margin_0_30">
-                            <div class="col-lg-12">
-                                <ul class="bullets">
-                                    {% for item in notIncluded %}
-                                        <li>{{item}}</li>
-                                        
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-
-                    {% else %}
-                        <div class="row margin_0_30">
-                            <div class="col-lg-6">
-                                <ul class="bullets">
-                                    {% for item in notIncluded|slice(0, (notIncluded|length/2)|round(0, 'ceil')) %}
-                                        <li>{{item}}</li>
-                                        
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <ul class="bullets">
-                                    {% for item in notIncluded|slice((notIncluded|length/2)|round(0, 'ceil')) %}
-                                        <li>{{item}}</li>
-                                        
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-
-                    {% endif %} #}
                     
+
+
                 </section>
                 <!-- /section -->
 
@@ -255,15 +190,30 @@
 
                     {% if descriptionDetails is not empty %}
                     <h3>Podrobný popis</h3>
-                    <p>{{ descriptionDetails }}</p>
+                    {# <pre>
+                        {{ dump(descriptionDetails) }}
+                    </pre> #}
+                    <div class="tour-html-block margin_0_30">
+                        {{ descriptionDetails|raw }}
+                    </div>
                     {% endif %}
 
                     {% if descriptionNotes is not empty %}
                     <h3>Poznámky</h3>
-                    <p>{{ descriptionNotes }}</p>
+                    <div class="tour-html-block margin_0_30">
+                        {{ descriptionNotes|raw }}
+                    </div>
                     {% endif %}
-                    
 
+                    <h3>Důležité odkazy</h3>
+                    <div>
+                        <ul>
+                            <li><a href="{{contractLink}}">Smluvní podmínky</a></li>
+                            <li><a href="{{infoLink}}">Povinné onformace k zájezdu</a></li>
+                            <li><a href="{{insuranceLink}}">Pčehled pojištění</a></li>
+                        </ul>
+                    </div>
+                    
                     <hr>
                     <h3>Lokace</h3>
                     <div id="map" class="map map_single add_bottom_30"></div>

@@ -255,6 +255,9 @@ echo $twig->render('zajezd.html.twig', [
         /*array('autokarová doprava', 'Pobytová taxa - 2 Euro/osoba/den. (osoby starší 14 let)', 'neco dalsiho', 'neco dalsiho ale delsiho', 'neco jeste jineho', 'neco jeste jineho 2', 'neco jeste jineho 3'),*/
     'included' => array($serial->get_cena_zahrnuje()),
     'descriptionProgram' => $serial->get_program_zajezdu(),
+    'contractLink'  => 'https://www.slantour.cz/dokumenty/193-smluvni-podminky.pdf',
+    'infoLink'  => 'https://www.slantour.cz/dokumenty/3126-povinne-informace-k-zajezdu.pdf',
+    'insuranceLink'  => 'https://www.slantour.cz/dokumenty/3132-pojisteni-prehled.pdf',
     /*
      * Zatim neumim namapovat
      * 'program'  => array(

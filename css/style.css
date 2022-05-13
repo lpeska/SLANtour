@@ -8239,6 +8239,14 @@ ul.list_ok li:before {
   top: 0;
 }
 
+.bullets.positive ul li:before {
+  color: #008a69;
+}
+
+.bullets.negative ul li:before {
+  color: #dd4b39;
+}
+
 /*-------- 3.4 Spacing --------*/
 .add_bottom_15 {
   margin-bottom: 15px;

@@ -467,6 +467,7 @@ a.grid_item figure .price_discount_tag {
     width: 90px;
     margin: 0 5px 20px 0;
     text-align: center;
+    vertical-align: top;
 }
 
 .tour_feat ul li span {
@@ -537,6 +538,10 @@ a.grid_item figure .price_discount_tag {
 
 .target-highlight {
     animation: target-fade 2s 1;
+}
+
+.tour-html-block p{
+    margin-bottom: 0;
 }
 
 @keyframes target-fade {
