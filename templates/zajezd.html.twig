@@ -95,13 +95,14 @@
                     <hr>
                     
                     {% if descriptionProgram is not empty or program is not empty %}
-                    <h3>Program <small>{{night}} nocí</small></h3>
+                    <h3>Program <small>{{nights}} nocí</small></h3>
                     <p class="tour-html-block">{{ descriptionProgram|raw }}</p>
                     <ul class="cbp_tmtimeline">
                         {% for day in program %}
                         <li>
                             <div class="cbp_tmicon">
-                                {{ loop.index0 + 1 }}
+                                {{ day.day }}. 
+                                <br><span>den</span>
                             </div>
                             <div class="cbp_tmlabel">
                                 {% if day.image %}
