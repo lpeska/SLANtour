@@ -156,7 +156,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading{{loop.index}}">
                                     <button class="accordion-button collapsed" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
-                                        <div class="">
+                                        <div>
                                             <i class="fa" aria-hidden="true"></i>
                                         </div>
                                         <div class="date_date">{{ tourDate.date}}</div> 
@@ -168,13 +168,77 @@
                                 <div id="collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="heading{{loop.index}}"
                                     data-bs-parent="#accordionDates">
                                     <div class="accordion-body">
-                                        <h4>Služby a příplatky</h4>
-                                        <ul>
-                                            {% for service in tourDate.priceTable %}
-                                                <li>{{ service[0] }} ... {{ service[1] }}</li>
-                                            {% endfor %}
+                                        {% if tourDate.details is not empty %}
+                                        <div class="tour-html-block margin_0_30">
+                                            {{ tourDate.details|raw }}
+                                        </div>
+                                        {% endif %}
+                                        
+                                        {% if tourDate.services is not empty %}
+                                        <table class="table service_table">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col" class="service_title">Služby</th>
+                                                    <th scope="col">Kapacita</th>
+                                                    <th scope="col">Cena</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for service in tourDate.services %}
+                                                    <tr>
+                                                        <td>{{ service.title }}</td>
+                                                        <td>{{ service.capacity }}</td>
+                                                        <td>{{ service.price }} Kč</td>
+                                                    </tr>
+                                                    
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% endif %}
+                                        
+                                        {% if tourDate.extraFees is not empty %}
+                                        <table class="table service_table">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col" class="service_title">Příplatky</th>
+                                                    <th scope="col">Kapacita</th>
+                                                    <th scope="col">Cena</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for extraFee in tourDate.extraFees %}
+                                                    <tr>
+                                                        <td>{{ extraFee.title }}</td>
+                                                        <td>{{ extraFee.capacity }}</td>
+                                                        <td>{{ extraFee.price }} Kč</td>
+                                                    </tr>
+                                                    
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% endif %}
 
-                                        </ul>
+                                        {% if tourDate.pickupSpots is not empty %}
+                                        <table class="table service_table">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col" class="service_title">Odjezdová místa</th>
+                                                    <th scope="col">Kapacita</th>
+                                                    <th scope="col">Cena</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for pickupSpot in tourDate.pickupSpots %}
+                                                    <tr>
+                                                        <td>{{ pickupSpot.title }}</td>
+                                                        <td>{{ pickupSpot.capacity }}</td>
+                                                        <td>{{ pickupSpot.price }} Kč</td>
+                                                    </tr>
+                                                    
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% endif %}
 
                                         {# <pre>
                                             {{ dump(tourDate) }}

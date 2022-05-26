@@ -548,3 +548,16 @@ a.grid_item figure .price_discount_tag {
     0% { background-color: #c3faaab5; }
     100% { background-color: #f8f8f8; }
 }
+
+.service_table {
+    color: #555;
+}
+
+.service_table th {
+    color: #333;
+    font-weight: 500;
+}
+
+.service_table th.service_title {
+    width: 60%;
+}
