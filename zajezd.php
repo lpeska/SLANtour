@@ -11,7 +11,7 @@ echo $twig->render('zajezd.html.twig', [
     'name' => 'HOTEL BUSIGNANI***, RIMINI RIVABELLA',
     'priceFrom' => 15900,
     'priceDiscount' => 29,
-    'nights' => 4,
+    'nights' => 5,
     'accomodation' => 'Hotel',
     'meals' => 'Polopenze',
     'destination' => 'Itálie',
@@ -52,10 +52,10 @@ echo $twig->render('zajezd.html.twig', [
     'infoLink'  => 'https://www.slantour.cz/dokumenty/3126-povinne-informace-k-zajezdu.pdf',
     'insuranceLink'  => 'https://www.slantour.cz/dokumenty/3132-pojisteni-prehled.pdf',
     'program'  => array(
-        new Program('Odlet Praha - Londýn', 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.', '/img/dovolena.jpg'), 
-        new Program('Historické centrum Londýna', 'Dopoledne na vás čeká prohlídka tradičních míst historického centra Londýna:  Královská čtvrť Westminster - Westminster Abbey, Houses of Parliament s věží Big Ben. Slavnostní ceremonie střídání králov­ských gard na Whitehall či u Buckinghamského paláce. Trafalgar Square s nádherně nasvíceným vánočním stromem a zastavíme se i na populárním náměstí Picadilly Circus. Během prohlídky centra Londýna, která je plánována pěšky i místní dopravou, vyzkoušíte nejen londýnské metro, ale také i populární londýnské doubledeckery. Odpoledne se pak vydáte na proslulý Camden Town. Camden Town je neuvěřitelné rozsáhlá nákupní čtvrť v severní části Londýna. Právě sem chodí nakupovat londýňané!', '/img/dovolena.jpg'), 
-        new Program('Návštěva OXFORD Street', 'nejproslulejší nákupní ulice Londýna.Najdete zde jak luxusní obchodní dům HARRODS, tak i atraktivními cenami známý PRIMARK či typicky anglický MARKS and SPENCER.  Dále pak zamíříte do Hyde Parku na proslulé WINTER WONDER LAND - tedy londýnské vánoční trhy s řadou atrakcí i pestrého občerstvení i nápojů. Projdete se rovněž  proslulými čtvrtěmi Soho a China Town. Později odpoledne pak zamíříte k Toweru a na Tower Bridge. Dále se vydáte na Londýnské oko. Navštívit můžete i blízké akvárium.  V některé z restaurací na břehu Temže pak můžete ochutnat populární fish and chips.', ""), 
-        new Program('Soho a China Town', 'Dopoledne se můžete vydáte k  návštěvě těch míst a muzeí, které jste během prvních dní ještě navštívit nestihli  (v doprovodu průvodce či samostatně). Navštívit můžete muzeum voskových figurín Madame Tussaud´s případně  rozsáhlé Britské muzeum. Nebo si na Baker Street zajdete na návštěvu k Sherlocku Holmesovi (zda bude doma nemůžeme garantovat).  Projdete se rovněž pro proslulé Oxford Street a nevynecháte ani pověstné Soho a Čínskou čtvrť. Odpoledne odjezd na letiště a odlet  zpět do Prahy.', '/img/dovolena.jpg')
+        new Program('1', 'Odlet Praha - Londýn', 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.', '/img/dovolena.jpg'), 
+        new Program('2-3', 'Historické centrum Londýna', 'Dopoledne na vás čeká prohlídka tradičních míst historického centra Londýna:  Královská čtvrť Westminster - Westminster Abbey, Houses of Parliament s věží Big Ben. Slavnostní ceremonie střídání králov­ských gard na Whitehall či u Buckinghamského paláce. Trafalgar Square s nádherně nasvíceným vánočním stromem a zastavíme se i na populárním náměstí Picadilly Circus. Během prohlídky centra Londýna, která je plánována pěšky i místní dopravou, vyzkoušíte nejen londýnské metro, ale také i populární londýnské doubledeckery. Odpoledne se pak vydáte na proslulý Camden Town. Camden Town je neuvěřitelné rozsáhlá nákupní čtvrť v severní části Londýna. Právě sem chodí nakupovat londýňané!', '/img/dovolena.jpg'), 
+        new Program('4', 'Návštěva OXFORD Street', 'nejproslulejší nákupní ulice Londýna.Najdete zde jak luxusní obchodní dům HARRODS, tak i atraktivními cenami známý PRIMARK či typicky anglický MARKS and SPENCER.  Dále pak zamíříte do Hyde Parku na proslulé WINTER WONDER LAND - tedy londýnské vánoční trhy s řadou atrakcí i pestrého občerstvení i nápojů. Projdete se rovněž  proslulými čtvrtěmi Soho a China Town. Později odpoledne pak zamíříte k Toweru a na Tower Bridge. Dále se vydáte na Londýnské oko. Navštívit můžete i blízké akvárium.  V některé z restaurací na břehu Temže pak můžete ochutnat populární fish and chips.', ""), 
+        new Program('5', 'Soho a China Town', 'Dopoledne se můžete vydáte k  návštěvě těch míst a muzeí, které jste během prvních dní ještě navštívit nestihli  (v doprovodu průvodce či samostatně). Navštívit můžete muzeum voskových figurín Madame Tussaud´s případně  rozsáhlé Britské muzeum. Nebo si na Baker Street zajdete na návštěvu k Sherlocku Holmesovi (zda bude doma nemůžeme garantovat).  Projdete se rovněž pro proslulé Oxford Street a nevynecháte ani pověstné Soho a Čínskou čtvrť. Odpoledne odjezd na letiště a odlet  zpět do Prahy.', '/img/dovolena.jpg')
     ),
     'dates'  => array(
         new TourDate('22.04. - 25.04.2022', 16900, 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.'), 
@@ -77,11 +77,13 @@ class Feature {
 }
 
 class Program {
+    public string $day;
     public string $title;
     public string $description;
     public string $image;
 
-    public function __construct(string $title, string $description, string $image) {
+    public function __construct(string $day, string $title, string $description, string $image) {
+        $this->day = $day;
         $this->title = $title;
         $this->description = $description;
         $this->image = $image;
