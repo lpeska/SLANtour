@@ -527,6 +527,10 @@ a.grid_item figure .price_discount_tag {
     display: none;
 }
 
+.accordion-button {
+    background-color: #f8f8f8;
+}
+
 [data-toggle="collapse"] .fa:before {
     content: "\f106";
 }
@@ -556,8 +560,15 @@ a.grid_item figure .price_discount_tag {
 .service_table th {
     color: #333;
     font-weight: 500;
+    width: 20%;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
 }
 
 .service_table th.service_title {
     width: 60%;
+}
+
+.service_table tbody.service_table_body {
+    border-top: 0px;
 }
