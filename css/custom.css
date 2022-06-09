@@ -591,3 +591,30 @@ a.grid_item figure .price_discount_tag {
 .mm-listview i.fa-caret-down {
     display: none;
 }
+
+.breadcrumbs {
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.breadcrumbs_item {
+    display: inline-block;
+}
+
+.breadcrumbs_item:not(:last-of-type)::after {
+    content: "/";
+    margin: 0 5px;
+    color: #ccc;
+}
+
+.breadcrumbs_link {
+    color:#333;
+}
+
+.breadcrumbs_link i {
+    color:#666;
+}
+
+.breadcrumbs_link:hover, .breadcrumbs_link i:hover {
+    color: #fc5b62;
+}

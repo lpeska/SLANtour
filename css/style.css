@@ -8405,6 +8405,17 @@ ul.list_ok li:before {
   }
 }
 
+.margin_35_35 {
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+@media (max-width: 575px) {
+  .margin_35_35 {
+    padding-top: 30px;
+    padding-bottom: 5px;
+  }
+}
+
 .margin_80 {
   padding-top: 80px;
   padding-bottom: 80px;

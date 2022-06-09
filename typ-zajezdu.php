@@ -18,8 +18,21 @@ echo $twig->render('typ-zajezdu.html.twig', [
         new Tour('Víkend v Budapešti - vlakem', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png'),
         new Tour('Jordánsko s pobytem u Rudého moře', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png'),
         new Tour('Villa Dino, Mariánské Lázně', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png')
+    ),
+    'breadcrumbs' => array(
+        new Breadcrumb('Pobytové zájezdy', '/typ-zajezdu.php')
     )
 ]);
+
+class Breadcrumb {
+    public string $label;
+    public string $link;
+
+    public function __construct(string $label, string $link) {
+        $this->label = $label;
+        $this->link = $link;
+    }
+}
 
 class Tour
 {

@@ -1,0 +1,13 @@
+<div class="container">
+    <ul class="breadcrumbs">
+        <li class="breadcrumbs_item">
+            <a href="/index.php" class="breadcrumbs_link"><i class="fas fa-house"></i></a>
+        </li>
+        {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumbs_item">
+                <a href="{{breadcrumb.link}}" class="breadcrumbs_link">{{breadcrumb.label}}</a>
+            </li>
+            
+        {% endfor %}
+    </ul>
+</div>

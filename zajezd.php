@@ -127,8 +127,22 @@ echo $twig->render('zajezd.html.twig', [
             )
         )
     ),
+    'breadcrumbs' => array(
+        new Breadcrumb('Pobytové zájezdy', '/zajezdy/typ-zajezdu/poznavaci-zajezdy'),
+        new Breadcrumb('Španělsko', '/destinace.php'),
+        new Breadcrumb('Hotel Busignani ***, Rimini Rivabella', '/zajezd.php')
+    )
 ]);
 
+class Breadcrumb {
+    public string $label;
+    public string $link;
+
+    public function __construct(string $label, string $link) {
+        $this->label = $label;
+        $this->link = $link;
+    }
+}
 
 class Feature {
     public string $icon;

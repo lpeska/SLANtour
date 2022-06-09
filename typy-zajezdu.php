@@ -18,8 +18,21 @@ echo $twig->render('typy-zajezdu.html.twig', [
         new TourType('Fly and Drive', 140, 7900, 'img/dovolena.png'),
         new TourType('Exotické zájezdy', 79, 3900, 'img/lazne.png'),
         new TourType('Jednodenní zájezdy', 32, 7900, 'img/sport.png'),
+    ),
+    'breadcrumbs' => array(
+        new Breadcrumb('Typy zájezdů', '/typy-zajezdu.php')
     )
-    ]);
+]);
+
+class Breadcrumb {
+    public string $label;
+    public string $link;
+
+    public function __construct(string $label, string $link) {
+        $this->label = $label;
+        $this->link = $link;
+    }
+}
 
 class TourType {
     public string $name;
