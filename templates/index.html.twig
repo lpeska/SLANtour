@@ -293,7 +293,7 @@
 		<div class="row">
 			{% for tour in popularTours %}
 			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="../zajezd.php" class="grid_item">
+				<a href="/zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}" class="grid_item">
 					<figure>
 						<div class="price">
 							od {{tour.price}} Kč
@@ -344,7 +344,7 @@
 			{% for tour in discountTours %}
 			<!--TODO: u mouseover dat podrobnejsi informace o terminu/terminech? -->
 			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="../zajezd.php" class="grid_item">
+				<a href="/zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}" class="grid_item">
 					<figure>
 						<div class="price">
 							od {{tour.price}} Kč
@@ -396,7 +396,7 @@
 		<div class="row">
 			{% for tour in newTours %}
 			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="../zajezd.php" class="grid_item">
+				<a href="/zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}" class="grid_item">
 					<figure>
 						<div class="price">
 							od {{tour.price}} Kč

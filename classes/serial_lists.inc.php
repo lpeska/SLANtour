@@ -2245,6 +2245,7 @@ function order_by_subquery($vstup) {
             $res = array(
                 "id_serial" => $this->get_id_serial(),
                 "nazev" => $this->get_nazev(),
+                "nazev_web" => $this->get_nazev_web(),
                 "url" => "zajezdy/zobrazit/" . $this->get_nazev_web(),
                 "best_zajezd" => $best_zajezd,
                 "foto_url" => "https://slantour.cz/foto/full/".$this->get_foto_url(),
@@ -2328,6 +2329,7 @@ function order_by_subquery($vstup) {
             $res = array(
                 "id_serial" => $this->get_id_serial(),
                 "nazev" => $this->get_nazev(),
+                "nazev_web" => $this->get_nazev_web(),
                 "url" => "zajezdy/zobrazit/" . $this->get_nazev_web(),
                 "best_zajezd" => $best_zajezd,
                 "foto_url" => "https://slantour.cz/foto/full/".$this->get_foto_url(),

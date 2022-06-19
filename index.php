@@ -84,7 +84,7 @@ foreach ($slevy_poradi as $key => $val) {
     $currTour = $slevy_array[$key];
     $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
     if($k<=4){
-        $discountTours[] = new Tour($currTour["nazev"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+        $discountTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"],  $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
     }else{
         break;
     }
@@ -111,7 +111,7 @@ foreach ($popular_array as $key => $currTour) {
     //$currTour = $novinky_array[$key];
     $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
     if($k<=4){
-        $popularTours[] = new Tour($currTour["nazev"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+        $popularTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
     }else{
         break;
     }
@@ -144,7 +144,7 @@ foreach ($novinky_poradi as $key => $val) {
     $currTour = $novinky_array[$key];
     $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
     if($k<=4){
-        $newTours[] = new Tour($currTour["nazev"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+        $newTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"]-1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
     }else{
         break;
     }
@@ -219,6 +219,8 @@ class TourType {
 
 class Tour {
     public string $name;
+    public string $escapedName;
+    public int $id_zajezd;
     public int $price;
     public  $priceDiscount;
     public  $priceOriginal;
@@ -228,8 +230,10 @@ class Tour {
     public string $image;
     public $terminy;
 
-    public function __construct(string $name, int $price,  $priceDiscount,  $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy="") {
+    public function __construct(string $name, string $escapedName, int $id_zajezd, int $price,  $priceDiscount,  $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy="") {
         $this->name = $name;
+        $this->escapedName = $escapedName;
+        $this->id_zajezd = $id_zajezd;
         $this->price = $price;
         $this->priceDiscount = $priceDiscount;
         $this->priceOriginal = $priceOriginal;

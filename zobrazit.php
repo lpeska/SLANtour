@@ -48,6 +48,8 @@ if ($_GET["lev4"] != "") { //mame velmi pravdepodobne stary serial+zajezd
     $_GET["id_zajezd"] = $serial->get_id_zajezd();
     $valid_zajezd = $serial->is_zajezd_valid();
     
+    $serial->create_zajezdy();
+    
 } else if ($_GET["lev1"] != "") {
     $serial = new Serial($_GET["lev1"]);
     $nazev_serialu = $_GET["lev1"];
@@ -79,6 +81,7 @@ if ($_GET["lev4"] != "") { //mame velmi pravdepodobne stary serial+zajezd
     exit;
 }
 
+//echo $_GET["id_serial"].",".$_GET["id_zajezd"];
 
 $typ_serial = $serial->get_nazev_typ(); //Not shown in template at the moment
 $typ_serial_web = $serial->get_nazev_typ_web();//might be necessary for breadcrumb links - search
@@ -111,10 +114,46 @@ if ($zobrazit_zajezd) {
     $pozn .= $serial->get_poznamky_zajezd();
 }
 
+//var_dump($serial);
+
 //All dates
 $dates = array();
 while ($serial->get_zajezdy()->get_next_radek()) {
-    $dates[] =  new TourDate(...$serial->get_zajezdy()->show_list_item("array"));
+    $tourDetails = $serial->get_zajezdy()->show_list_item("array");
+    
+    $services = array();
+    $extras = array();
+    $pickups = array();
+    $details = "";
+    $priceHeadline = -1;
+    
+    $tourPrices = new Seznam_cen($_GET["id_serial"],$tourDetails[0]);
+    while($tourPrices->get_next_radek()){
+        $prices = $tourPrices->show_list_item_array();
+        
+        //var_dump($prices);
+        
+        if($prices[3] <= 3){
+            $services[] = new Service($prices[0], $prices[1], $prices[2]);
+            if($prices[5] and $priceHeadline < 0){//dostupnasluzba
+                $priceHeadline = $prices[2];                
+            }
+            
+        }else if($prices[3] == 4){
+            $extras[] = new Service($prices[0], $prices[1], $prices[2]);
+        }else{
+            $pickups[] = new Service($prices[0], $prices[1], $prices[2]);
+        }
+        
+        if($prices[4]!=""){
+            $details .= $prices[4];            
+        }
+        
+    }
+    
+
+    $dates[] =  new TourDate($tourDetails[0],$tourDetails[1],$priceHeadline,$tourDetails[2],$details.$tourDetails[3],$services,$extras,$pickups);
+
 }
 //print_r($dates);
 
@@ -142,20 +181,24 @@ $first = 1;
 $fotos = array();
 
 while ($serial->get_foto()->get_next_radek()) {
+    $ft = $serial->get_foto()->show_list_item("url");
     if ($first) {
         $first = 0;
-        $foto = $serial->get_foto()->show_list_item("url");
+        
+        $foto = new Foto($ft[0],$ft[1]);
     }   
     
-    $fotos[] = $serial->get_foto()->show_list_item("url");
-    
+    $fotos[] = new Foto($ft[0],$ft[1]);
+     
 }
 if ($serial->create_foto_ubytovani()) {
     while ($serial->get_foto()->get_next_radek()) {
-        $fotos[] = $serial->get_foto()->show_list_item("url");
+        $ft = $serial->get_foto()->show_list_item("url");
+        $fotos[] = new Foto($ft[0],$ft[1]);
     }
 }
 
+//var_dump($fotos);
 /*end of basic logic*/
 
 
@@ -225,6 +268,7 @@ $twig = new \Twig\Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('zajezd.html.twig', [
+    'dateID' => $_GET["id_zajezd"],
     'name' => $nazev,
     'priceFrom' => $minPrice,
     'priceDiscount' => $maxDiscount,
@@ -233,7 +277,7 @@ echo $twig->render('zajezd.html.twig', [
     'meals' => Serial_library::get_typ_stravy($serial->serial["strava"]-1),
     'destination' => $location,
     'trans' => Serial_library::get_typ_dopravy($serial->serial["doprava"]-1),
-    'imageMain' => $foto, //TODO: u fotek by to chtelo pridat minimalne description - zatim jsem nechtel hrabat do struktury...
+    'imageMain' => $foto,
     'images' => $fotos,
     'features' => array(
         new Feature('fa-plane', Serial_library::get_typ_dopravy($serial->serial["doprava"]-1)), 
@@ -245,7 +289,7 @@ echo $twig->render('zajezd.html.twig', [
         //new Feature('fa-wifi', 'Wifi')
         //To zakomentovane zatim neumime na nic namapovat - mozna pres $serial->get_highlights(), ale tam aktualne chybi mapovani na ikony
     ),
-    'descriptionMain' => 'Rimini je nejznámější i nejstarší letovisko na Adriatické riviéře. Nabízí kromě širokých pláží s jemným pískem o délce více než 15 km i pestrou možnost zábavy, nákupů či promenád. Na vlastní město Rimini kontinuálně navazuje řada menších letovisek, odlišených jen místními názvy - např. Miramare či Torre Pedrera di Rimini aj. Hotel Delfin se nachází na krásném ostrově Hvar. Je situován na nádherné promenáděa nabízí výhled na přístav a centrum města. OD centra města je hotel vzdálen jen 300 m a od pláže cca 100 m. K vybavení hotelu patří recepce, směnárna, restaurace s terasou, aperitiv bar, parkoviště.',
+    'descriptionMain' => strip_tags($serial->get_popisek()),  //TODO: tady by to spis chtelo ty tagy umoznit normalne zobrazit, stale dela problem treba &nbsp;
     'descriptionMeals' => $serial->get_popis_stravovani(),
     'descriptionAccomodation' => $serial->get_popis_ubytovani(),
     'descriptionDetails' => $serial->get_popis(),
@@ -255,9 +299,11 @@ echo $twig->render('zajezd.html.twig', [
         /*array('autokarová doprava', 'Pobytová taxa - 2 Euro/osoba/den. (osoby starší 14 let)', 'neco dalsiho', 'neco dalsiho ale delsiho', 'neco jeste jineho', 'neco jeste jineho 2', 'neco jeste jineho 3'),*/
     'included' => array($serial->get_cena_zahrnuje()),
     'descriptionProgram' => $serial->get_program_zajezdu(),
-    'contractLink'  => 'https://www.slantour.cz/dokumenty/193-smluvni-podminky.pdf',
+    'contractLink'  => 'https://www.slantour.cz/dokumenty/'.$serial->get_adresa_smluvni_podminky().'',
     'infoLink'  => 'https://www.slantour.cz/dokumenty/3126-povinne-informace-k-zajezdu.pdf',
     'insuranceLink'  => 'https://www.slantour.cz/dokumenty/3132-pojisteni-prehled.pdf',
+    
+    "mapContent" => $serial->show_map(),
     /*
      * Zatim neumim namapovat
      * 'program'  => array(
@@ -267,7 +313,6 @@ echo $twig->render('zajezd.html.twig', [
         new Program('Soho a China Town', 'Dopoledne se můžete vydáte k  návštěvě těch míst a muzeí, které jste během prvních dní ještě navštívit nestihli  (v doprovodu průvodce či samostatně). Navštívit můžete muzeum voskových figurín Madame Tussaud´s případně  rozsáhlé Britské muzeum. Nebo si na Baker Street zajdete na návštěvu k Sherlocku Holmesovi (zda bude doma nemůžeme garantovat).  Projdete se rovněž pro proslulé Oxford Street a nevynecháte ani pověstné Soho a Čínskou čtvrť. Odpoledne odjezd na letiště a odlet  zpět do Prahy.', '/img/dovolena.jpg')
     ),*/
     'dates'  => $dates,
-    /*TODO: aktualne u priceMap chybi detailni popis ktery je u nekterych cen (treba jake jsou tam konkretni lety, pripadne fotky konkretniho hotelu*/
     /*array(
         new TourDate('22.04. - 25.04.2022', 16900, 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.'), 
         new TourDate('11.05. - 16.05.2022', 15900, 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.'), 
@@ -287,6 +332,16 @@ class Feature {
     }
 }
 
+class Foto {
+    public string $url;
+    public string $description;
+
+    public function __construct(string $url, string $description) {
+        $this->url = $url;
+        $this->description = $description;
+    }
+}
+
 class Program {
     public string $title;
     public string $description;
@@ -300,18 +355,36 @@ class Program {
 }
 
 class TourDate {
+    public int $dateID;
     public string $date;
     public int $price;
     public string $discount;
     public string $details;
-    public array $priceTable;
+    public array $services;
+    public array $extraFees;
+    public array $pickupSpots;
 
-    public function __construct(string $date, int $price, string $discount, string $details, array $priceTable) {
+    public function __construct(int $dateID, string $date, int $price, string $discount, string $details, array $services, array $extraFees, array $pickupSpots) {
+        $this->dateID = $dateID;
         $this->date = $date;
         $this->price = $price;
         $this->discount = $discount;
         $this->details = $details;
-        $this->priceTable = $priceTable;
+        $this->services = $services;
+        $this->extraFees = $extraFees;
+        $this->pickupSpots = $pickupSpots;
+    }    
+}
+
+class Service {
+    public string $title;
+    public string $capacity;
+    public int $price;
+
+    public function __construct(string $title, string $capacity, int $price) {
+        $this->title = $title;
+        $this->capacity = $capacity;
+        $this->price = $price;
     }
 }
 

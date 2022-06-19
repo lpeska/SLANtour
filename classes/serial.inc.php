@@ -117,8 +117,7 @@ class Serial extends Generic_data_class{
                 });
 
             </script>
-            <div  id="mapid" style="width:490px; height:350px;">
-            </div>
+            
          ';    
     
     }

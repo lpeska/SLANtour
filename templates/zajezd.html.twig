@@ -9,7 +9,7 @@
 {% block main %}
 
 <section class="hero_in tours_detail">
-    <img src="{{ imageMain }}" alt="Slide background">
+    <img src="{{ imageMain.url }}" alt="{{ imageMain.description }}">
     <div class="wrapper">
         <div class="container">
             <h1 class="fadeInUp"><span></span>{{ name }} </h1>
@@ -17,9 +17,9 @@
         <span class="magnific-gallery">
             {% for image in images %}
                 {% if loop.index0 == 0 %}
-                    <a href="{{ image }}" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in"><i class="fas fa-camera"></i> Galerie</a>
+                    <a href="{{ image.url }}" class="btn_photos" title="{{ image.description }}" data-effect="mfp-zoom-in"><i class="fas fa-camera"></i> Galerie</a>
                 {% else %}
-                    <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"></a>
+                    <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"></a>
                 {% endif %}
             {% endfor %}
         </span>
@@ -62,23 +62,23 @@
                         {% for image in images %}
                             {% if loop.index0 <= 3 %}
                                 <figure>
-                                    <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"><img src="{{ image }}" alt=""></a>
+                                    <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"><img src="{{ image.url }}" alt=""></a>
                                 </figure>
                             {% elseif loop.index0 == 4 %}
                                 {% if loop.last %}
                                     <figure>
-                                        <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"><img src="{{ image }}" alt=""></a>
+                                        <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"><img src="{{ image.url }}" alt=""></a>
                                     </figure>
                                 {% else %}
                                     <figure>
-                                        <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in">
+                                        <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in">
                                             <span class="d-flex align-items-center justify-content-center">+{{ loop.length - 4}}</span>
-                                            <img src="{{ image }}" alt="">
+                                            <img src="{{ image.url }}" alt="">
                                         </a>
                                     </figure>
                                 {% endif %}
                             {% else %}
-                                <a href="{{ image }}" title="Photo title" data-effect="mfp-zoom-in"></a>
+                                <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"></a>
                             {% endif %}
                         {% endfor %}
 
@@ -283,9 +283,16 @@
                     </div>
                     
                     <hr>
-                    <h3>Lokace</h3>
-                    <div id="map" class="map map_single add_bottom_30"></div>
-                    <!-- End Map -->
+                    
+                    
+                    {% if mapContent is not empty %}
+                        {{ mapContent|raw  }}
+                        <h3>Lokace</h3>
+                        <div  id="mapid" style="width:100%; height:350px;"> </div>
+                    {% endif %}
+                    
+                    <!--<div id="map" class="map map_single add_bottom_30"></div>
+                     End Map -->
 
                 </section>
                 <!-- /section -->
@@ -515,8 +522,8 @@
 {% endblock main %}
 
 {% block javascripts %}
-<!-- Map -->
-<script src="http://maps.googleapis.com/maps/api/js"></script>
+<!-- Map 
+<script src="https://maps.googleapis.com/maps/api/js"></script>-->
 <script src="/html-template/js/map_single_tour.js"></script>
 <script src="/html-template/js/infobox.js"></script>
 

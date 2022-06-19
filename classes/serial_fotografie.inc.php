@@ -167,7 +167,7 @@ class Seznam_fotografii extends Generic_list{
 						</a>";
 			return $vystup;
 		}else if($typ_zobrazeni=="url"){
-			$vystup="https://www.slantour.cz/foto/full/".$this->get_foto_url()."";
+			$vystup=array("https://www.slantour.cz/foto/full/".$this->get_foto_url()."", $this->get_nazev_foto()."".$this->get_popisek_foto());
 			return $vystup;
 		}
 	}	

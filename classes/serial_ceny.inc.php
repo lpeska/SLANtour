@@ -69,7 +69,7 @@ class Seznam_cen extends Generic_list{
                             where `zajezd`.`id_zajezd`= ".$this->id_zajezdu." 
                             group by `cena_zajezd`.`id_cena`,`cena_zajezd`.`id_zajezd`
                             order by `cena`.`zakladni_cena` desc,`cena`.`typ_ceny`,`cena`.`poradi_ceny`,`cena`.`nazev_ceny` ";		
-                echo "<!--".$dotaz."-->";
+                //echo "<!--".$dotaz."-->";
 		return $dotaz;
 	}
 	
@@ -204,114 +204,80 @@ class Seznam_cen extends Generic_list{
 			return $vystup;
 	}	
 	/**zobrazeni prvku seznamu cen*/
-	function show_list_item_hotel($typ_zobrazeni){
-                $this->id_pole++;
-		if($typ_zobrazeni=="tabulka"){	
-                        $let_text="";
-                        $query_let = "select `cena_promenna_cenova_mapa`.`poznamka`, `cena_promenna_cenova_mapa`.`external_id`, 
-                                        (abs(DATEDIFF(`cena_promenna_cenova_mapa`.termin_od, `zajezd`.`od`)) +  
-                                            IF((`termin_do_shift` is null or `termin_do_shift`=0),
-                                                abs(DATEDIFF(`cena_promenna_cenova_mapa`.termin_do, `zajezd`.`do`)),
-                                                abs(DATEDIFF(`zajezd`.`do`,`cena_promenna_cenova_mapa`.termin_do)-1))) 
-                                         as sanity_check   
-                        
-                                    from
-                                    `cena_promenna_cenova_mapa` 
-                                        join `cena_promenna` on (`cena_promenna_cenova_mapa`.`id_objektu` = `cena_promenna`.`data_from_object` or `cena_promenna_cenova_mapa`.`id_cena_promenna` = `cena_promenna`.`id_cena_promenna`)
-                                        join `zajezd` on (`zajezd`.`id_zajezd`= ".$this->id_zajezdu.")
-                                    where
-                                        `cena_promenna_cenova_mapa`.`poznamka` != \"\" AND
-                                       `cena_promenna`.`id_cena` = ".$this->radek["id_cena"]."  and `cena_promenna`.`typ_promenne` = \"letuska\"
-                                        and ((`cena_promenna_cenova_mapa`.termin_od <= `zajezd`.`od` and `cena_promenna_cenova_mapa`.termin_do >= `zajezd`.`do` and `cena_promenna_cenova_mapa`.`castka` is not null and `cena_promenna_cenova_mapa`.`termin_do_shift` is null ) 
-                                            or (`cena_promenna_cenova_mapa`.termin_od >= `zajezd`.`od` and `cena_promenna_cenova_mapa`.termin_do <= `zajezd`.`do` and `cena_promenna_cenova_mapa`.`castka` is not null and `cena_promenna_cenova_mapa`.`no_dates_generation` >= 1 ) 
-                                            or (`cena_promenna_cenova_mapa`.termin_od <= `zajezd`.`od` and `cena_promenna_cenova_mapa`.termin_do >= DATE_ADD(`zajezd`.`do`, INTERVAL -(`cena_promenna_cenova_mapa`.`termin_do_shift`) DAY) and `cena_promenna_cenova_mapa`.`castka` is not null and `cena_promenna_cenova_mapa`.`termin_do_shift` is not null))
-                                   order by sanity_check
-                                    ";
-                        //echo "<!--".$query_let."-->";
-                        $query = mysqli_query($GLOBALS["core"]->database->db_spojeni,$query_let);
-                        while ($row = mysqli_fetch_array($query)) {
-                            $let_text = str_replace($row["external_id"].", ", "", $row["poznamka"]);
-                            $let_text = preg_replace("/\. Nalezeno: .*/", "", $let_text);
-                            $let_text = str_replace(array("[","]"), array("<",">"), $let_text);
-                            $let_text = preg_replace("/(2[0-9][0-9][0-9])-([0-9][0-9])-([0-9]+)/", "\$3.\$2. \$1", $let_text);
-                            $let_text = "<p>".$let_text."</p>";
-                            
-                           $pos_let_tam = stripos($let_text,"Let tam" );
-                           $pos_let_zpet = stripos($let_text,"Let zpět" );
-                           preg_match('/[0-9]+\.[0-9]+\. 2[0-9][0-9][0-9]/', $let_text, $date_let_tam, PREG_OFFSET_CAPTURE, $pos_let_tam); 
-                           preg_match('/[0-9]+\.[0-9]+\. 2[0-9][0-9][0-9]/', $let_text, $date_let_zpet, PREG_OFFSET_CAPTURE, $pos_let_zpet); 
-                           
-                           $datum_tam = $date_let_tam[0][0];
-                           $datum_zpet = $date_let_zpet[0][0];
-                           
-                           $let_text = str_replace("<b>Let tam</b>:", "<b>Let tam: $datum_tam</b>", $let_text);
-                           $let_text = str_replace("<b>Let zpět</b>:", "<b>Let zpět: $datum_zpet</b>", $let_text);
-                           $let_text = preg_replace("/(\+[0-9])/", "<b>[\$1]</b>", $let_text);
-                           $let_text = preg_replace("/- ([A-Z]+ [0-9]+):([^<]+)/", "- \$2 (\$1)", $let_text);
-                           
-                           break;
-                           
-                        }
-                        
-                        if($this->radek["popis_kategorie"]!="" or $this->radek["foto_url"]!="" or $let_text!=""){
-                            if($let_text!=""){
-                                $let_text = "<h4>Předpokládané lety:</h4>".$let_text."<br/>";
-                            }
-                            $additional_row = "<tr style=\"margin:0;padding:0;\"><td colspan=\"4\" style=\"margin:0;padding:0;\">
-                                <div  id=\"hidden_".$this->radek["id_cena"]."\" style=\"display:none;\">".$this->radek["popis_kategorie"]."<br/>";
-                            $foto_url_array = explode(";", $this->radek["foto_url"]);
-                            $foto_nazev_array = explode(";", $this->radek["nazev_foto"]);
-                            foreach ($foto_url_array as $key => $url) {
-                                if($url!=""){
-                                    $additional_row .= "<a href=\"https://www.slantour.cz/".ADRESAR_FULL."/".$url."\"\" title=\"".$foto_nazev_array[$key]."\">
-                                        <img class=\"round\" height=\"60\" src=\"https://www.slantour.cz/".ADRESAR_MINIIKONA."/".$url."\"\" alt=\"".$foto_nazev_array[$key]."\" /></a>";
-                                }
-                            }
-                            $additional_row .= $let_text."</div>";
-                            $priceLinkStart = "<a href=\"#\" title=\"Zobrazit detail služby\" id=\"showHide_".$this->radek["id_cena"]."\" > ";
-                            $priceLinkEnd = "<div style=\"float:right;font-size:0.8em;\">[podrobnosti]</div></a>";
-                            
+	
+    /**zobrazeni prvku seznamu cen*/
+    function show_list_item_array(){
+        $this->id_pole++;
+        $let_text="";
+        $query_let = "select `cena_promenna_cenova_mapa`.`poznamka`, `cena_promenna_cenova_mapa`.`external_id`, 
+                        (abs(DATEDIFF(`cena_promenna_cenova_mapa`.termin_od, `zajezd`.`od`)) +  
+                            IF((`termin_do_shift` is null or `termin_do_shift`=0),
+                                abs(DATEDIFF(`cena_promenna_cenova_mapa`.termin_do, `zajezd`.`do`)),
+                                abs(DATEDIFF(`zajezd`.`do`,`cena_promenna_cenova_mapa`.termin_do)-1))) 
+                         as sanity_check   
 
-                            $this->scriptStart .= "
-                                $(\"#showHide_".$this->radek["id_cena"]."\").click(function(){
-                                    $(\"#hidden_".$this->radek["id_cena"]."\").toggle(\"blind\", 500);
-                                    return false;
-                                });
-                            ";
-                        }else{
-                            $additional_row = "";
-                            $priceLinkStart = "";
-                            $priceLinkEnd = "";
-                        }
-			if($this->last_typ_ceny != $this->radek["typ_ceny"]){
-				$this->last_typ_ceny = $this->radek["typ_ceny"];
-				$vystup="
-					<tr >
-						<th class=\"nadpis_cena_".$this->radek["typ_ceny"]."\">".$this->name_of_typ_ceny($this->radek["typ_ceny"])."</th>
-						<th style=\"width:70px;\" class=\"nadpis_cena_".$this->radek["typ_ceny"]."\">Kapacita</th>
-						<th style=\"width:70px;\" class=\"nadpis_cena_".$this->radek["typ_ceny"]."\">Cena</th>
-					</tr>
-				";
-			}else{
-				$vystup="";
-			}
-                        if($_POST["id_cena_".$i] == $this->get_id_cena() ) {
-                            $pocet = $this->check_int($_POST["cena_pocet_".$i]);
-                        }else {
-                            $pocet = 0;
-                        }
-			$vystup.="<tr class=\"suda cena_".$this->radek["typ_ceny"]."\">
-							<td>".$priceLinkStart.$this->get_nazev_ceny().$priceLinkEnd."</td>
-							<td>".$this->get_dostupnost()."</td>
-							<td class=\"cena\"><strong>".$this->get_castka()." ".$this->get_mena()."</strong></td>
-						<input type=\"hidden\" name=\"id_cena_".$this->id_pole."\" value=\"".$this->get_id_cena()."\" />
-						<input type=\"hidden\" name=\"typ_ceny_".$this->id_pole."\" value=\"".$this->get_typ_ceny()."\" />
-                                                        </td>
-						</tr>"
-                                .$additional_row;
-			return $vystup;
-		}
-	}	
+                    from
+                    `cena_promenna_cenova_mapa` 
+                        join `cena_promenna` on (`cena_promenna_cenova_mapa`.`id_objektu` = `cena_promenna`.`data_from_object` or `cena_promenna_cenova_mapa`.`id_cena_promenna` = `cena_promenna`.`id_cena_promenna`)
+                        join `zajezd` on (`zajezd`.`id_zajezd`= ".$this->id_zajezdu.")
+                    where
+                        `cena_promenna_cenova_mapa`.`poznamka` != \"\" AND
+                       `cena_promenna`.`id_cena` = ".$this->radek["id_cena"]."  and `cena_promenna`.`typ_promenne` = \"letuska\"
+                        and ((`cena_promenna_cenova_mapa`.termin_od <= `zajezd`.`od` and `cena_promenna_cenova_mapa`.termin_do >= `zajezd`.`do` and `cena_promenna_cenova_mapa`.`castka` is not null and `cena_promenna_cenova_mapa`.`termin_do_shift` is null ) 
+                            or (`cena_promenna_cenova_mapa`.termin_od >= `zajezd`.`od` and `cena_promenna_cenova_mapa`.termin_do <= `zajezd`.`do` and `cena_promenna_cenova_mapa`.`castka` is not null and `cena_promenna_cenova_mapa`.`no_dates_generation` >= 1 ) 
+                            or (`cena_promenna_cenova_mapa`.termin_od <= `zajezd`.`od` and `cena_promenna_cenova_mapa`.termin_do >= DATE_ADD(`zajezd`.`do`, INTERVAL -(`cena_promenna_cenova_mapa`.`termin_do_shift`) DAY) and `cena_promenna_cenova_mapa`.`castka` is not null and `cena_promenna_cenova_mapa`.`termin_do_shift` is not null))
+                   order by sanity_check
+                    ";
+        //echo "<!--".$query_let."-->";
+        $query = mysqli_query($GLOBALS["core"]->database->db_spojeni,$query_let);
+        while ($row = mysqli_fetch_array($query)) {
+            $let_text = str_replace($row["external_id"].", ", "", $row["poznamka"]);
+            $let_text = preg_replace("/\. Nalezeno: .*/", "", $let_text);
+            $let_text = str_replace(array("[","]"), array("<",">"), $let_text);
+            $let_text = preg_replace("/(2[0-9][0-9][0-9])-([0-9][0-9])-([0-9]+)/", "\$3.\$2. \$1", $let_text);
+            $let_text = "<p>".$let_text."</p>";
+
+           $pos_let_tam = stripos($let_text,"Let tam" );
+           $pos_let_zpet = stripos($let_text,"Let zpět" );
+           preg_match('/[0-9]+\.[0-9]+\. 2[0-9][0-9][0-9]/', $let_text, $date_let_tam, PREG_OFFSET_CAPTURE, $pos_let_tam); 
+           preg_match('/[0-9]+\.[0-9]+\. 2[0-9][0-9][0-9]/', $let_text, $date_let_zpet, PREG_OFFSET_CAPTURE, $pos_let_zpet); 
+
+           $datum_tam = $date_let_tam[0][0];
+           $datum_zpet = $date_let_zpet[0][0];
+
+           $let_text = str_replace("<b>Let tam</b>:", "<b>Let tam: $datum_tam</b>", $let_text);
+           $let_text = str_replace("<b>Let zpět</b>:", "<b>Let zpět: $datum_zpet</b>", $let_text);
+           $let_text = preg_replace("/(\+[0-9])/", "<b>[\$1]</b>", $let_text);
+           $let_text = preg_replace("/- ([A-Z]+ [0-9]+):([^<]+)/", "- \$2 (\$1)", $let_text);
+
+           break;
+
+        }
+
+        if($this->radek["popis_kategorie"]!="" or $this->radek["foto_url"]!="" or $let_text!=""){
+            if($let_text!=""){
+                $let_text = "<h4>Předpokládané lety:</h4>".$let_text."<br/>";
+            }
+            $additional_row = "".$this->radek["popis_kategorie"]."<br/>";
+            $foto_url_array = explode(";", $this->radek["foto_url"]);
+            $foto_nazev_array = explode(";", $this->radek["nazev_foto"]);
+            foreach ($foto_url_array as $key => $url) {
+                if($url!=""){
+                    $additional_row .= "<a href=\"https://www.slantour.cz/foto/full/".$url."\"\" title=\"".$foto_nazev_array[$key]."\">
+                        <img class=\"round\" height=\"70\" src=\"https://www.slantour.cz/foto/ico/".$url."\"\" alt=\"".$foto_nazev_array[$key]."\" /></a>";
+                }
+            }
+            $additional_row .= $let_text."";
+
+        }else{
+            $additional_row = "";
+        }
+
+
+        $vystup = array($this->get_nazev_ceny(),$this->get_dostupnost(),$this->get_castka()." ".$this->get_mena(),$this->radek["typ_ceny"],$additional_row, $this->cena_dostupna());							
+        return $vystup;
+
+    }		
 
 
     function calculate_pocet_noci($od, $do, $upresneni_od, $upresneni_do){
@@ -544,17 +510,17 @@ class Seznam_cen extends Generic_list{
 	function get_dostupnost(){
 		if($this->get_vyprodano()==1 or $this->get_objekt_vyprodano()==1){
 			$this->vse_volne = 0;
-			return "<span style=\"color:red;\"><b>Vyprodáno!</b></span>";
+			return "Vyprodáno!";
 		}else if($this->get_na_dotaz()==1 or $this->get_objekt_na_dotaz()==1){
 			$this->vse_volne = 0;
-			return "<span style=\"color:blue;\"><b>Na dotaz</b></span>";
+			return "Na dotaz";
 		}else if($this->get_kapacita_bez_omezeni()==1 or $this->get_objekt_kapacita_bez_omezeni()==1){
-			return "<span style=\"color:green;\"><b>Volno</b></span>";
+			return "Volno";
 		}else if($this->get_kapacita()>0 or $this->get_objekt_kapacita()>0){			
-			return "<span style=\"color:green;\"><b>Volno</b></span>";  //.$this->get_kapacita().
+			return "Volno";  //.$this->get_kapacita().
 		}else{
                         $this->vse_volne = 0;
-			return "<span style=\"color:blue;\"><b>Na dotaz</b></span>";
+			return "Na dotaz";
 		}		
 	}
 	function cena_dostupna(){

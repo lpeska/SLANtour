@@ -28,7 +28,7 @@ class Seznam_zajezdu extends Generic_list{
 		$this->nazev_serial = $this->check($nazev_serial);
 	
 	//ziskani id vsech cen ktere nas zajimaji
-		$this->seznam_cen = $this->database->query($this->check_ceny() )	
+		/*$this->seznam_cen = $this->database->query($this->check_ceny() )	
 			or $this->chyba("Chyba při dotazu do databáze");
 		$this->pocet_cen = mysqli_num_rows($this->seznam_cen);
 		$i=0;
@@ -38,23 +38,29 @@ class Seznam_zajezdu extends Generic_list{
 		//ziskavani dotazu pro jednotlive ceny
 		while($zaznam_cena = mysqli_fetch_array($this->seznam_cen)){
 			$i++;
-			$this->sloupce_cen[$i] = ($zaznam_cena["kratky_nazev"]==""?($zaznam_cena["nazev_ceny"]):($zaznam_cena["kratky_nazev"]));
+			$this->sloupce_cen[$i] = $zaznam_cena["nazev_ceny"];
 			$select_ceny.="`cena_zajezd".$i."`.`id_cena` as `id_cena".$i."`,
 								`cena_zajezd".$i."`.`castka` as `castka".$i."`,
 								`cena_zajezd".$i."`.`mena` as `mena".$i."`,
 								`cena_zajezd".$i."`.`vyprodano` as `vyprodano".$i."`,
+                                                                `cena".$i."`.`typ_ceny` as `typ_ceny".$i."`,
 								`cena".$i."`.`nazev_ceny` as `nazev_ceny".$i."`,
 								`cena".$i."`.`kratky_nazev` as `kratky_nazev".$i."`,";
 			$join_ceny.="left join (`cena` as `cena".$i."` join `cena_zajezd` as `cena_zajezd".$i."` on (`cena_zajezd".$i."`.`id_cena`=`cena".$i."`.`id_cena` and `cena_zajezd".$i."`.`nezobrazovat`!=1))
 				on (`cena".$i."`.`id_serial` =`serial`.`id_serial` and `cena_zajezd".$i."`.`id_zajezd` =`zajezd`.`id_zajezd` and `cena".$i."`.`id_cena`=".$zaznam_cena["id_cena"].") ";
 		}
-		
 		$dotaz = "select `serial`.`id_serial`,`zajezd`.`id_zajezd`,".$select_ceny."`zajezd`.`od`,`zajezd`.`nazev_zajezdu`,`zajezd`.`do` ,`zajezd`.`akcni_cena` ,`zajezd`.`cena_pred_akci` 
 					from `serial` join
 					`zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)"
 					.$join_ceny."
 					where `zajezd`.`do` >\"".date("Y-m-d")."\" and `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`id_serial`= ".$this->id_serialu." order by `zajezd`.`od` ";
-					
+		*/	
+                $dotaz = "select `zajezd`.`id_zajezd`,`zajezd`.`od`,`zajezd`.`nazev_zajezdu`,`zajezd`.`do` ,`zajezd`.`akcni_cena` ,`zajezd`.`cena_pred_akci` 
+					from `serial` join
+					`zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)
+					where `zajezd`.`do` >\"".date("Y-m-d")."\" and `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`id_serial`= ".$this->id_serialu." order by `zajezd`.`od` ";
+
+                
 	//ziskani zajezdu z databaze	
                 //echo $dotaz;
 		$this->data=$this->database->query($dotaz)
@@ -66,7 +72,7 @@ class Seznam_zajezdu extends Generic_list{
 	function check_ceny(){
 		$dotaz = "select `serial`.`id_serial`,`cena`.`id_cena`,`cena`.`nazev_ceny`,`cena`.`kratky_nazev`
 					from `serial` join `cena` on (`cena`.`id_serial` =`serial`.`id_serial`) 
-					where ((`cena`.`zkraceny_vypis`=1 and `cena`.`kratky_nazev`!=\"\" ) or `cena`.`zakladni_cena`=1) and `serial`.`id_serial`= ".$this->id_serialu." order by `cena`.`poradi_ceny`,`cena`.`typ_ceny` ";
+					where `serial`.`id_serial`= ".$this->id_serialu." order by `cena`.`poradi_ceny`,`cena`.`typ_ceny` ";
 		//echo $dotaz;
 		return $dotaz;
 	}	
@@ -228,27 +234,28 @@ class Seznam_zajezdu extends Generic_list{
 				$termin = $this->get_nazev_zajezdu() ."(".$termin.")";					
                             }
                             
-                            $priceMap = array();
+                            /*$priceMap = array();
                             $i=0;
                             while($i < $this->pocet_cen){
                                 $i++;
                                 if($this->radek["vyprodano".$i]){
-                                        $priceMap[] = [$this->sloupce_cen[$i],"Vyprodáno!"];
-                                }else{									
-                                        $priceMap[] = [$this->sloupce_cen[$i],$this->radek["castka".$i]." ".$this->radek["mena".$i]];
+                                    $priceMap[] = array($this->radek["nazev_ceny".$i],"Vyprodáno!",$this->radek["castka".$i]." ".$this->radek["mena".$i], $this->radek["typ_ceny".$i]);
+                                }else {									
+                                    $priceMap[] = array($this->radek["nazev_ceny".$i],"",$this->radek["castka".$i]." ".$this->radek["mena".$i], $this->radek["typ_ceny".$i]);
                                     if(!$first_cena){
                                         $first_cena = true;
                                         $price = $this->radek["castka".$i];
                                     }
                                 }
                             }
-                            //print_r($priceMap) ;
+                            //print_r($priceMap) ;*/
                             return array(
+                                $this->get_id_zajezd(),
                                 $termin,
-                                $price,                                
+                                //$price,                                
                                 $sleva,
                                 $this->get_poznamky_zajezd(),
-                                $priceMap 
+                                //$priceMap 
                             );
                             
                         }
