@@ -252,9 +252,7 @@
                         {% endfor %}
                     </div>
                     
-                    {% if descriptionDetails is not empty or descriptionNotes is not empty %}
                     <hr>
-                    {% endif %}
 
                     {% if descriptionDetails is not empty %}
                     <h3>Podrobný popis</h3>
@@ -277,15 +275,13 @@
                     <div>
                         <ul>
                             <li><a href="{{contractLink}}">Smluvní podmínky</a></li>
-                            <li><a href="{{infoLink}}">Povinné onformace k zájezdu</a></li>
-                            <li><a href="{{insuranceLink}}">Pčehled pojištění</a></li>
+                            <li><a href="{{infoLink}}">Povinné informace k zájezdu</a></li>
+                            <li><a href="{{insuranceLink}}">Přehled pojištění</a></li>
                         </ul>
                     </div>
                     
-                    <hr>
-                    
-                    
                     {% if mapContent is not empty %}
+                        <hr>
                         {{ mapContent|raw  }}
                         <h3>Lokace</h3>
                         <div  id="mapid" style="width:100%; height:350px;"> </div>
