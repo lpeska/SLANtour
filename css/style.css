@@ -905,7 +905,6 @@ a.btn_map {
   -ms-border-radius: 3px;
   border-radius: 3px;
   padding: 8px 12px 8px 12px;
-  line-height: 1;
   margin-bottom: 5px;
   display: inline-block;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -3998,11 +3997,6 @@ a.box_feat h3 {
 
 .switch-field {
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  border-radius: 3px;
 }
 .switch-field input {
   position: absolute !important;
@@ -4029,7 +4023,6 @@ a.box_feat h3 {
   text-align: center;
   text-shadow: none;
   padding: 10px 12px 8px 12px;
-  line-height: 1;
   border-right: 1px solid rgba(0, 0, 0, 0.08);
   -moz-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;

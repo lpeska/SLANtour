@@ -163,33 +163,18 @@
 
 <div class="main_search">
 	<h3>Vyhledat zájezd</h3>
-	<form>
+	<form action="../vyhledat-zajezd.php">
 		<div class="custom-search-input-2">
 			<div class="form-group">
-				<input class="form-control" type="text" placeholder="Kam" id="autocomplete">
+				<input class="form-control" type="text" placeholder="Kamkoliv" id="autocomplete">
 				<i class="icon_pin_alt"></i>
 			</div>
 			<div class="form-group">
-				<input class="form-control" type="text" name="dates" placeholder="Kdy">
+				<input class="form-control" type="text" name="dates" placeholder="Kdykoliv">
 				<i class="icon_calendar"></i>
 			</div>
-
-			<div class="panel-dropdown">
-				<a href="#">Guests <span class="qtyTotal">1</span></a>
-				<div class="panel-dropdown-content">
-					<!-- Quantity Buttons -->
-					<div class="qtyButtons">
-						<label>Adults</label>
-						<input type="text" name="qtyInput" value="1">
-					</div>
-					<div class="qtyButtons">
-						<label>Childrens</label>
-						<input type="text" name="qtyInput" value="0">
-					</div>
-				</div>
-			</div>
 			<div class="form-group text-right">
-				<input type="submit" class="btn_search" value="Vyhledat">
+				<input type="submit" class="btn_search" value="Ukázat 675 zájezdů">
 			</div>
 		</div>
 		<!-- /row -->
@@ -211,7 +196,7 @@
 			type.name }}</a>,
 		{% endfor %} #}
 		<p>
-			At uz touzite po odpocinku u more, adrenalinu spickovych sportovnich akci, ci poznani exotických zemi, nase cestovní kancelar vam pripravi zazitek presne pro vas. V nasi nabidce naleznete zajezdy vseho druhu.
+			Ať už toužíte po odpočinku u moře, adrenalinu špičkových sportovních akcí, či poznání exotických zemá, naše cestovní kancelář Vám připraví zážitek přesně pro vás. V naší nabídce naleznete zájezdy všeho druhu.
 			{# Poznávací zájezdy, Dovolená u moře, Tuzemské pobyty, Zájezdy za sportem, Eurovíkendy, Fly and Drive, Exotické zájezdy, Pobyty na horách, Lázně a termály, Jednodenní zájezdy. #}
 		</p>
 	</div>

@@ -459,6 +459,9 @@ a.grid_item figure .price_discount_tag {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.hero_in.search {
+    height: 80px;
+}
 
 .tour_feat ul li {
     display: inline-block;
@@ -593,7 +596,7 @@ a.grid_item figure .price_discount_tag {
 }
 
 .breadcrumbs {
-    margin-top: 15px;
+    padding-top: 15px;
     margin-bottom: 0;
 }
 
@@ -618,3 +621,13 @@ a.grid_item figure .price_discount_tag {
 .breadcrumbs_link:hover, .breadcrumbs_link i:hover {
     color: #fc5b62;
 }
+
+.list-header {
+    display: flex;
+    margin: 0 15px 15px;
+}
+
+.list-header h3{
+    flex-grow: 1;
+}
+
