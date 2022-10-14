@@ -41,4 +41,4 @@ $result = from($categories)
         )'
     );
 
-print_r($result);
+print_r($result->toArrayDeep());
