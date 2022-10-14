@@ -34,11 +34,12 @@ $categories = array(
 // Put products with non-zero quantity into matching categories;
 // sort categories by name;
 // sort products within categories by quantity descending, then by name.
-
+//->where('$zaj ==> matches($zaj["nazev"],"\Hotel.*\")')
 $result = from($zajezdyArr)
-        ->where('$zaj ==> matches($zaj["nazev"],"\Hotel.*\")')
-        ->orderByDescending('$zaj ==> $zaj["od"]')
-        ->thenBy('$zaj ==> $zaj["do"]');
+        ->where('$zaj ==> $zaj["ubytovani"] == 7')
+        ->orderBy('$zaj ==> $zaj["od"]')
+        ->thenBy('$zaj ==> $zaj["do"]')
+        ->select('$zaj ==> array("name" => $zaj["nazev"], "id" => $zaj["id_zajezd"])');
 
 $result = from($categories)
     ->orderBy('$cat ==> $cat["name"]')
