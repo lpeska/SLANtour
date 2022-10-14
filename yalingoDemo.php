@@ -50,7 +50,7 @@ $r3 = from($r0)
         ->groupBy('$zaj ==> $zaj["id_serial"]')
         ->select('$n ==> array(
                                "id_serial" => n["id_serial"],
-                               "count" => n->count()
+                               "count" => n.count()
                           )');
 
 
