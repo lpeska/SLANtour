@@ -41,10 +41,15 @@ $result = from($zajezdyArr)
         ->thenBy('$zaj ==> $zaj["do"]')
         ->select('$zaj ==> array("nazev" => $zaj["nazev"], "id_zajezd" => $zaj["id_zajezd"], "od" => $zaj["od"], "do" => $zaj["do"])');
 
-$r1 = $result->select('$zaj ==> $zaj["id_zajezd"]');
-$r2 = $result->select('$zaj ==> $zaj["id_serial"]')->distinct();
+$r0 = $result->toArrayDeep();
+
+
+$r1 = from($r0)->select('$zaj ==> $zaj["id_zajezd"]');
+$r2 = from($r0)->select('$zaj ==> $zaj["id_serial"]')->distinct();
 
 print_r($r1->toArray());
+
+
 print_r($r2->toArray());
 
-print_r($result->toArrayDeep());
+print_r($r0);
