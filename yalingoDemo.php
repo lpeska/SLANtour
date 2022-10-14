@@ -39,13 +39,13 @@ $result = from($zajezdyArr)
         ->where('$zaj ==> ($zaj["ubytovani"] == 7 and $zaj["doprava"] == 1 )')
         ->orderBy('$zaj ==> $zaj["od"]')
         ->thenBy('$zaj ==> $zaj["do"]')
-        ->select('$zaj ==> array("nazev" => $zaj["nazev"], "id_zajezd" => $zaj["id_zajezd"], "od" => $zaj["od"], "do" => $zaj["do"])');
+        ->select('$zaj ==> array("id_serial" => $zaj["id_serial"], "nazev" => $zaj["nazev"], "id_zajezd" => $zaj["id_zajezd"], "od" => $zaj["od"], "do" => $zaj["do"], "ubytovani" => $zaj["ubytovani"], "doprava" => $zaj["doprava"])');
 
 $r0 = $result->toArrayDeep();
 
 
 $r1 = from($r0)->select('$zaj ==> $zaj["id_zajezd"]');
-$r2 = from($r0)->select('$zaj ==> $zaj["id_serial"]')->distinct();
+$r2 = from($r0)->select('$zaj ==> $zaj["id_serial"]');
 
 print_r($r1->toArray());
 print_r($r2->toArray());
