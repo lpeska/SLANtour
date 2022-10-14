@@ -38,8 +38,20 @@ $categories = array(
 $result = from($zajezdyArr)
         ->where('$zaj ==> matches($zaj["nazev"],"\Hotel.*\")')
         ->orderByDescending('$zaj ==> $zaj["od"]')
-        ->thenBy('$zaj ==> $zaj["do"]')
-        ->select('$zaj ==> array("name" => $zaj["nazev"], "id" => $zaj["id_zajezd"])');
+        ->thenBy('$zaj ==> $zaj["do"]');
 
+$result = from($categories)
+    ->orderBy('$cat ==> $cat["name"]')
+    ->groupJoin(
+        from($products)
+            ->where('$prod ==> $prod["quantity"] > 0')
+            ->orderByDescending('$prod ==> $prod["quantity"]')
+            ->thenBy('$prod ==> $prod["name"]'),
+        '$cat ==> $cat["id"]', '$prod ==> $prod["catId"]',
+        '($cat, $prods) ==> array(
+            "name" => $cat["name"],
+            "products" => $prods
+        )'
+    );
 
 print_r($result->toArrayDeep());
