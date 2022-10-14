@@ -2,11 +2,18 @@
 require_once 'vendor/autoload.php';
 use \YaLinqo\Enumerable;
 
-// 'from' can be called as a static method or via a global function shortcut
-Enumerable::from(array(1, 2, 3));
-from(array(1, 2, 3));
 
+require_once "./core/load_core.inc.php"; 
+require_once "./classes/menu.inc.php"; //seznam serialu
+require_once "./classes/serial_collection.inc.php"; //seznam serialu
+require_once "./classes/destinace_list.inc.php"; //menu katalogu
 
+$serialCol = new Serial_collection();
+
+$res = $serialCol.get_zajezdy();
+$zajezdyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
+
+print_r($zajezdyArr);
 // Data
 $products = array(
     array('name' => 'Keyboard',    'catId' => 'hw', 'quantity' =>  10, 'id' => 1),
