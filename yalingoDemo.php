@@ -39,8 +39,12 @@ $result = from($zajezdyArr)
         ->where('$zaj ==> $zaj["ubytovani"] == 7')
         ->orderBy('$zaj ==> $zaj["od"]')
         ->thenBy('$zaj ==> $zaj["do"]')
-        ->select('$zaj ==> array("name" => $zaj["nazev"], "id" => $zaj["id_zajezd"])');
+        ->select('$zaj ==> array("nazev" => $zaj["nazev"], "id_zajezd" => $zaj["id_zajezd"], "od" => $zaj["od"], "do" => $zaj["do"])');
 
+$r1 = $result->select('$zaj ==> $zaj["id_zajezd"]');
+$r2 = $result->select('$zaj ==> $zaj["id_serial"]')->distinct();
 
+print_r($r1->toArray());
+print_r($r2->toArray());
 
 print_r($result->toArrayDeep());
