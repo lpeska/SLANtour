@@ -46,7 +46,10 @@ $r0 = $result->toArrayDeep();
 
 $r1 = from($r0)->select('$zaj ==> $zaj["id_zajezd"]');
 $r2 = from($r0)->distinct('$zaj ==> $zaj["id_serial"]')->select('$zaj ==> $zaj["id_serial"]');
+$r3 = from($r0)->groupBy('$zaj ==> $zaj["id_serial"]')->count();
+
 
 print_r($r1->toArray());
 print_r($r2->toList());
+print_r($r3->toList());
 print_r($r0);
