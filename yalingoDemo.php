@@ -10,7 +10,7 @@ require_once "./classes/destinace_list.inc.php"; //menu katalogu
 
 $serialCol = new Serial_collection();
 
-$res = $serialCol.get_zajezdy();
+$res = $serialCol->get_zajezdy();
 $zajezdyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
 print_r($zajezdyArr);
