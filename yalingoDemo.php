@@ -13,7 +13,7 @@ $serialCol = new Serial_collection();
 $res = $serialCol->get_zajezdy();
 $zajezdyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
-print_r($zajezdyArr);
+#print_r($zajezdyArr);
 // Data
 $products = array(
     array('name' => 'Keyboard',    'catId' => 'hw', 'quantity' =>  10, 'id' => 1),
@@ -34,18 +34,12 @@ $categories = array(
 // Put products with non-zero quantity into matching categories;
 // sort categories by name;
 // sort products within categories by quantity descending, then by name.
-$result = from($categories)
-    ->orderBy('$cat ==> $cat["name"]')
-    ->groupJoin(
-        from($products)
-            ->where('$prod ==> $prod["quantity"] > 0')
-            ->orderByDescending('$prod ==> $prod["quantity"]')
-            ->thenBy('$prod ==> $prod["name"]'),
-        '$cat ==> $cat["id"]', '$prod ==> $prod["catId"]',
-        '($cat, $prods) ==> array(
-            "name" => $cat["name"],
-            "products" => $prods
-        )'
-    );
+
+$result = from($zajezdyArr)
+        ->where('$zaj ==> matches($zaj["nazev"],"\Hotel.*\")')
+        ->orderByDescending('$zaj ==> $zaj["od"]')
+        ->thenBy('$zaj ==> $zaj["do"]')
+        ->select('$zaj ==> array("name" => $zaj["nazev"], "id" => $zaj["id_zajezd"])');
+
 
 print_r($result->toArrayDeep());
