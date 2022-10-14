@@ -1,6 +1,6 @@
 {
     "require": {
         "twig/twig": "^3.0",
-        "timetoogo/pinq": "~3.3"
+        "athari/yalinqo": "^2.0"
     }
 }
