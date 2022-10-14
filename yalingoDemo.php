@@ -36,7 +36,7 @@ $categories = array(
 // sort products within categories by quantity descending, then by name.
 //->where('$zaj ==> matches($zaj["nazev"],"\Hotel.*\")')
 $result = from($zajezdyArr)
-        ->where('$zaj ==> $zaj["ubytovani"] == 7')
+        ->where('$zaj ==> ($zaj["ubytovani"] == 7 and $zaj["doprava"] == 1 )')
         ->orderBy('$zaj ==> $zaj["od"]')
         ->thenBy('$zaj ==> $zaj["do"]')
         ->select('$zaj ==> array("nazev" => $zaj["nazev"], "id_zajezd" => $zaj["id_zajezd"], "od" => $zaj["od"], "do" => $zaj["do"])');
@@ -48,8 +48,5 @@ $r1 = from($r0)->select('$zaj ==> $zaj["id_zajezd"]');
 $r2 = from($r0)->select('$zaj ==> $zaj["id_serial"]')->distinct();
 
 print_r($r1->toArray());
-
-
 print_r($r2->toArray());
-
 print_r($r0);
