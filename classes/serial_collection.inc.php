@@ -21,7 +21,7 @@ class Serial_collection extends Generic_list {
     function get_zajezdy() {
         $query = 
                 "select 
-                    `serial`.`id_serial`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
+                    `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
                     `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`,`objekt_ubytovani`.`popis_poloha` as `popisek_ubytovani`,`objekt_ubytovani`.`posX` , `objekt_ubytovani`.`posY`,
                     `zajezd`.`id_zajezd`,`zajezd`.`nazev_zajezdu`,`zajezd`.`od`,`zajezd`.`do`,`zajezd`.`cena_pred_akci`,`zajezd`.`akcni_cena` 
                 from `serial` left join
@@ -32,7 +32,7 @@ class Serial_collection extends Generic_list {
                 `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)
                 where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1 ) )                    
                  ";
-        echo $query;
+        #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
         return $data;
@@ -41,19 +41,19 @@ class Serial_collection extends Generic_list {
         $query = 
                 "select cena.*, cena_zajezd.*
                 from `zajezd` join                    
-                    `cena` on (`cena`.`id_serial` = `zajezd`.`id_serial` and `cena`.`typ_ceny`<=2) join
+                    `cena` on (`cena`.`id_serial` = `zajezd`.`id_serial` and `cena`.`zakladni_cena` = 1) join
                     `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 )                    
 
-                where `cena_zajezd`.`id_zajezd` in (".implode($valid_zajezdIDs).")                     
+                where `cena_zajezd`.`id_zajezd` in (".implode(",", $valid_zajezdIDs).")                     
                  ";
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
-        
+        #echo $query;        
         return $data;     
     }    
     function get_zeme_a_destinace_serialu($valid_serialIDs) {
         $query = 
                 "select 
-                    `zeme_serial`.`id_serial`,`zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`, destinace.nazev_destinace
+                    `zeme_serial`.`id_serial`,`zeme`.`id_zeme`,`zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`, destinace.id_destinace, destinace.nazev_destinace
                 from 
                  `zeme_serial` join
                     `zeme` on (`zeme_serial`.`id_zeme` =`zeme`.`id_zeme`)
@@ -62,10 +62,10 @@ class Serial_collection extends Generic_list {
                          join `destinace` on (`destinace`.`id_destinace` = `destinace_serial`.`id_destinace`)
                     )  on (`zeme_serial`.`id_serial` = `destinace_serial`.`id_serial` and `zeme`.`id_zeme` = `destinace`.`id_zeme`)
                     
-                where `zeme_serial`.`id_serial` in (".implode($valid_serialIDs).")                    
+                where `zeme_serial`.`id_serial` in (".implode(",", $valid_serialIDs).")                    
                  ";
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
-        
+        #echo $query;        
         return $data; 
     }    
     function get_slevy_zajezdu($valid_zajezdIDs) {
