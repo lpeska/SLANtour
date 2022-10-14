@@ -40,3 +40,5 @@ $result = from($categories)
             "products" => $prods
         )'
     );
+
+print_r($result);
