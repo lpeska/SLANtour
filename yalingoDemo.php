@@ -1,5 +1,5 @@
 <?php
-require_once 'vendor/autoloader.php';
+require_once 'vendor/autoload.php';
 use \YaLinqo\Enumerable;
 
 // 'from' can be called as a static method or via a global function shortcut
