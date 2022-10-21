@@ -24,14 +24,20 @@ $zajezdyFilters = array(
     '$z["do"] >= "2022-12-31"',  
     '($z["strava"] == 1 or $z["strava"] == 2)'
 );
-
-$zajezdyFiltered = from($zajezdyArr)->where('$z ==>'.implode(" and ",$zajezdyFilters))->toArray();     
+if(count($zajezdyFilters)>0){
+    $zajezdyFiltered = from($zajezdyArr)->where('$z ==>'.implode(" and ",$zajezdyFilters))->toArray();     
+}else{
+    $zajezdyFiltered = $zajezdyArr;
+}
 $time2 = microtime();
 #print_r(array_slice($zajezdyFiltered, 1, 3));
 
 #get all relevant zajezdy and serialy IDs
 
 $serialyIDs = from($zajezdyFiltered)->distinct('$zaj ==> $zaj["id_serial"]')->select('$zaj ==> $zaj["id_serial"]')->toList();
+
+$filters_for_zajezd = array("strava", "doprava", "ubytovani");
+
 
 $time3 = microtime();
 #get portion of data with zeme & destinace
@@ -84,11 +90,11 @@ $zajezdZemeCenaMerged = from($zajezdZemeMerged)
 
 $time5 = microtime();
 
-echo $time1-$time0;            
-echo $time2-$time1; 
-echo $time3-$time2; 
-echo $time4-$time3; 
-echo $time5-$time4; 
+echo $time1-$time0."<br/>";            
+echo $time2-$time1."<br/>"; 
+echo $time3-$time2."<br/>"; 
+echo $time4-$time3."<br/>"; 
+echo $time5-$time4."<br/>"; 
 
 print_r($zajezdZemeCenaMerged);
 
