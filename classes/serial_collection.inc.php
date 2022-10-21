@@ -18,6 +18,28 @@ class Serial_collection extends Generic_list {
         $this->data = $this->database->query($this->create_query()) or $this->chyba("Chyba při dotazu do databáze");
     }
 
+    function get_zajezdy_base() {
+        $query = 
+                "select 
+                    `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
+                    `objekt_ubytovani`.`nazev_ubytovani`,`zajezd`.`id_zajezd`,`zajezd`.`od`,`zajezd`.`do`,`cena_zajezd`.castka
+                from `serial` left join
+                 (`objekt_serial` join
+                    `objekt` on (`objekt`.`typ_objektu`= 1 and `objekt`.`id_objektu` = `objekt_serial`.`id_objektu`) join
+                    `objekt_ubytovani` on (`objekt`.`id_objektu` = `objekt_ubytovani`.`id_objektu`)
+                    ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial`)   join
+                `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`) join                    
+                `cena` on (`cena`.`id_serial` = `zajezd`.`id_serial` and `cena`.`zakladni_cena` = 1) join
+                `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 )   
+                
+                where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1 ) )                    
+                 ";
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }        
+    
     function get_zajezdy() {
         $query = 
                 "select 
