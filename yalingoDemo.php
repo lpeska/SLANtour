@@ -2,7 +2,7 @@
 require_once 'vendor/autoload.php';
 use \YaLinqo\Enumerable;
 
-
+$time0 = microtime();
 require_once "./core/load_core.inc.php"; 
 require_once "./classes/menu.inc.php"; //seznam serialu
 require_once "./classes/serial_collection.inc.php"; //seznam serialu
@@ -14,6 +14,8 @@ $serialCol = new Serial_collection();
 $res = $serialCol->get_zajezdy();
 $zajezdyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
+$time1 = microtime();
+
 #TODO: zajezdy filters
 $zajezdyFilters = array(
     '($z["od"] >= "2022-12-31" or ($z["do"] >= "2022-12-31" and $z["dlouhodobe_zajezdy"] == 1) )',
@@ -24,14 +26,14 @@ $zajezdyFilters = array(
 );
 
 $zajezdyFiltered = from($zajezdyArr)->where('$z ==>'.implode(" and ",$zajezdyFilters))->toArray();     
-
+$time2 = microtime();
 #print_r(array_slice($zajezdyFiltered, 1, 3));
 
 #get all relevant zajezdy and serialy IDs
-$zajezdyIDs = from($zajezdyFiltered)->select('$zaj ==> $zaj["id_zajezd"]')->toList();
+
 $serialyIDs = from($zajezdyFiltered)->distinct('$zaj ==> $zaj["id_serial"]')->select('$zaj ==> $zaj["id_serial"]')->toList();
 
-
+$time3 = microtime();
 #get portion of data with zeme & destinace
 $res = $serialCol->get_zeme_a_destinace_serialu($serialyIDs);
 $zemeArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -43,30 +45,56 @@ $zemeFiltered = from($zemeArr)->where('$z ==>'.implode(" and ",$zemeFilters))->t
 
 
 
-$zajezdZemeMerged = from($zajezdyFiltered).groupJoin(
-        from($zemeFiltered),
-        '$z ==> $z["id_serial"]',
-        '$zm ==> $zm["id_serial"]',
-        '($z, $zm) ==> ["zajezd" => $z,"zeme" => $zm]');
+$zajezdZemeMerged = from($zajezdyFiltered)
+        ->groupJoin(
+                from($zemeFiltered),
+                '$z ==> $z["id_serial"]',
+                '$zm ==> $zm["id_serial"]',
+                '($z, $zm) ==> ["id_serial" => $z["id_serial"], "id_zajezd" => $z["id_zajezd"], "zajezd" => $z,"zeme" => $zm, "countZeme" => $zm->count() ]'
+              )
+        ->where('$z==> $z["countZeme"]>0')->toArrayDeep();
 
-print_r(array_slice($zajezdZemeMerged, 1, 5));
+#print_r($zajezdZemeMerged[0]);
+
+$zajezdyIDs = from($zajezdZemeMerged)->select('$z ==> $z["zajezd"]')->select('$z ==> $z["id_zajezd"]')->toList();
+$time4 = microtime();
 
 #get portion of data with ceny
 $res = $serialCol->get_ceny_zajezdu($zajezdyIDs);
 $cenyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
-
+#print_r($cenyArr[0]);
 $cenyFilters = array(
     '$c["vyprodano"] == 0',
     '$c["castka"] >= 100',
     '$c["castka"] <= 1500'
 );
 
-$cenyFiltered = from($cenyArr)->where('$c ==>'.implode(" and ",$cenyFilters))->toArray();              
-print_r(array_slice($cenyFiltered, 1, 3));
+$cenyFiltered = from($cenyArr)->where('$c ==>'.implode(" and ",$cenyFilters))->toArray();  
+#print_r(array_slice($cenyFiltered, 1, 3));
+
+
+$zajezdZemeCenaMerged = from($zajezdZemeMerged)
+        ->groupJoin(
+                from($cenyFiltered),
+                '$z ==> $z["id_zajezd"]',
+                '$c ==> $c["id_zajezd"]',
+                '($z, $c) ==> ["zajezd" => $z["zajezd"],"zeme" => $z["zeme"],"countZeme" => $z["countZeme"], "cena" => $c, "countCena" => $c->count() ]'
+              )
+        ->where('$z ==> $z["countCena"]>0')->toArrayDeep();
+
+$time5 = microtime();
+
+echo $time1-$time0;            
+echo $time2-$time1; 
+echo $time3-$time2; 
+echo $time4-$time3; 
+echo $time5-$time4; 
+
+print_r($zajezdZemeCenaMerged);
 
 
 
-
+/*
 print_r($zemeArr[0]);
 
 #print_r($zajezdyArr);
@@ -94,14 +122,9 @@ foreach($r3 as $id => $val){
     $count = from($val)->count();
     echo $id.": ".$count;    
 }
-/*
-        ->select('$n ==> array(
-                               "id_serial" => $n["id_serial"],
-                               "count" => $n->count()
-                          )');
-*/
+
 
 print_r($r1->toArray());
 print_r($r2->toList());
 
-print_r($r3);
+print_r($r3);*/
