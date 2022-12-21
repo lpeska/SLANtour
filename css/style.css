@@ -3728,7 +3728,7 @@ a.box_feat h3 {
   background-color: #fff;
   display: block;
   position: relative;
-  margin: 0 15px 30px 15px;
+  margin: 0 15px 20px 15px;
   min-height: 310px;
   -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
@@ -3787,7 +3787,7 @@ a.box_feat h3 {
   position: absolute;
   background-color: black;
   background-color: rgba(0, 0, 0, 0.6);
-  right: 20px;
+  left: 20px;
   top: 20px;
   text-transform: uppercase;
   color: #ccc;
@@ -3915,32 +3915,36 @@ a.box_feat h3 {
   font-size: 1.25rem;
   margin-top: 0;
 }
-.box_list .wrapper .price {
+.box_list .price {
   display: inline-block;
   font-weight: 500;
   color: #999;
 }
-.box_list .wrapper .price strong {
+.box_list .price strong {
   color: #32a067;
+  font-size: 20px;
 }
 .box_list small {
   text-transform: uppercase;
   color: #999;
   font-weight: 600;
 }
-.box_list ul {
-  padding: 20px 15px 20px 30px;
+.box_list ul.footer {
+  position: relative;
+  padding: 15px 15px 15px 30px;
   border-top: 1px solid #ededed;
   margin-bottom: 0;
 }
-.box_list ul li {
+.box_list ul.footer li {
   display: inline-block;
   margin-right: 15px;
+  height: 50px;
+  line-height: 50px;
 }
-.box_list ul li .score {
+.box_list ul.footer li .score {
   margin-top: -10px;
 }
-.box_list ul li:last-child {
+.box_list ul.footer li:last-child {
   margin-right: 0;
   float: right;
 }
@@ -3969,7 +3973,7 @@ a.box_feat h3 {
   }
 }
 #list_sidebar .box_list .wrapper {
-  min-height: 265px;
+  min-height: 249px;
 }
 @media (max-width: 991px) {
   #list_sidebar .box_list .wrapper {

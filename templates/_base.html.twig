@@ -357,22 +357,56 @@
 	
 	<!-- DATEPICKER  -->
 	<script>
-	$(function() {
-	  'use strict';
-	  $('input[name="dates"]').daterangepicker({
-		  autoUpdateInput: false,
-		  minDate:new Date(),
-		  locale: {
-			  cancelLabel: 'Clear'
-		  }
-	  });
-	  $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
-		  $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate.format('MM-DD-YY'));
-	  });
-	  $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
-		  $(this).val('');
-	  });
-	});
+		$(function () {
+				'use strict';
+
+
+				$('input[name="dates"]').daterangepicker({
+					autoUpdateInput: false,
+					minDate: new Date(),
+					locale: {
+						"format": "DD/MM/YY",
+						"separator": "/",
+						"applyLabel": "Potvrdit",
+						"cancelLabel": "Zrušit",
+						"fromLabel": "Od",
+						"toLabel": "Do",
+						"customRangeLabel": "Custom",
+						"weekLabel": "Týden",
+						"daysOfWeek": [
+							"Ne",
+							"Po",
+							"Út",
+							"St",
+							"Čt",
+							"Pá",
+							"So"
+						],
+						"monthNames": [
+							"Leden",
+							"Únor",
+							"Březen",
+							"Duben",
+							"Květen",
+							"Červen",
+							"Červenec",
+							"Srpen",
+							"Září",
+							"Říjen",
+							"Listopad",
+							"Prosinec"
+						],
+						"firstDay": 1
+					},
+				});
+				$('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
+					$(this).val(picker.startDate.format('DD/MM/YY') + ' > ' + picker.endDate.format('DD/MM/YY'));
+				});
+
+				$('input[name="dates"]').on('cancel.daterangepicker', function (ev, picker) {
+					$(this).val('');
+				});
+			});
 	</script>
 	
 </body>
