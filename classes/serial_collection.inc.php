@@ -18,10 +18,32 @@ class Serial_collection extends Generic_list {
         $this->data = $this->database->query($this->create_query()) or $this->chyba("Chyba při dotazu do databáze");
     }
 
+    function get_zajezdy_base() {
+        $query = 
+                "select 
+                    `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
+                    `objekt_ubytovani`.`nazev_ubytovani`,`zajezd`.`id_zajezd`,`zajezd`.`od`,`zajezd`.`do`,`cena_zajezd`.castka
+                from `serial` left join
+                 (`objekt_serial` join
+                    `objekt` on (`objekt`.`typ_objektu`= 1 and `objekt`.`id_objektu` = `objekt_serial`.`id_objektu`) join
+                    `objekt_ubytovani` on (`objekt`.`id_objektu` = `objekt_ubytovani`.`id_objektu`)
+                    ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial`)   join
+                `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`) join                    
+                `cena` on (`cena`.`id_serial` = `zajezd`.`id_serial` and `cena`.`zakladni_cena` = 1) join
+                `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 )   
+                
+                where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1 ) )                    
+                 ";
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }        
+    
     function get_zajezdy() {
         $query = 
                 "select 
-                    `serial`.`id_serial`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
+                    `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
                     `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`,`objekt_ubytovani`.`popis_poloha` as `popisek_ubytovani`,`objekt_ubytovani`.`posX` , `objekt_ubytovani`.`posY`,
                     `zajezd`.`id_zajezd`,`zajezd`.`nazev_zajezdu`,`zajezd`.`od`,`zajezd`.`do`,`zajezd`.`cena_pred_akci`,`zajezd`.`akcni_cena` 
                 from `serial` left join
@@ -32,7 +54,7 @@ class Serial_collection extends Generic_list {
                 `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)
                 where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1 ) )                    
                  ";
-        echo $query;
+        #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
         return $data;
@@ -41,19 +63,19 @@ class Serial_collection extends Generic_list {
         $query = 
                 "select cena.*, cena_zajezd.*
                 from `zajezd` join                    
-                    `cena` on (`cena`.`id_serial` = `zajezd`.`id_serial` and `cena`.`typ_ceny`<=2) join
+                    `cena` on (`cena`.`id_serial` = `zajezd`.`id_serial` and `cena`.`zakladni_cena` = 1) join
                     `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 )                    
 
-                where `cena_zajezd`.`id_zajezd` in (".implode($valid_zajezdIDs).")                     
+                where `cena_zajezd`.`id_zajezd` in (".implode(",", $valid_zajezdIDs).")                     
                  ";
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
-        
+        #echo $query;        
         return $data;     
     }    
     function get_zeme_a_destinace_serialu($valid_serialIDs) {
         $query = 
                 "select 
-                    `zeme_serial`.`id_serial`,`zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`, destinace.nazev_destinace
+                    `zeme_serial`.`id_serial`,`zeme`.`id_zeme`,`zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`, destinace.id_destinace, destinace.nazev_destinace
                 from 
                  `zeme_serial` join
                     `zeme` on (`zeme_serial`.`id_zeme` =`zeme`.`id_zeme`)
@@ -62,10 +84,10 @@ class Serial_collection extends Generic_list {
                          join `destinace` on (`destinace`.`id_destinace` = `destinace_serial`.`id_destinace`)
                     )  on (`zeme_serial`.`id_serial` = `destinace_serial`.`id_serial` and `zeme`.`id_zeme` = `destinace`.`id_zeme`)
                     
-                where `zeme_serial`.`id_serial` in (".implode($valid_serialIDs).")                    
+                where `zeme_serial`.`id_serial` in (".implode(",", $valid_serialIDs).")                    
                  ";
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
-        
+        #echo $query;        
         return $data; 
     }    
     function get_slevy_zajezdu($valid_zajezdIDs) {
@@ -223,94 +245,8 @@ class Serial_collection extends Generic_list {
         }
     }
 
-    /** vytvori text pro titulek stranky */
-    function show_titulek() {
 
-        //tvorba vypisu titulku
-        if ($_GET["typ"] != "" or $_GET["podtyp"] != "" or $_GET["zeme"] != "" or $_GET["destinace"] != "") {              
-            if ($_GET["zeme"] == "" and $_GET["destinace"] == "") {
-                if($this->get_name_for_typ("")=="Pobyty na horách ".Date("Y")){
-                    $nazev_typ = "Ubytování a pobyty na horách ".Date("Y")." ";
-                }else{
-                    $nazev_typ = $this->get_name_for_typ(" ");
-                }
-                return $nazev_typ . $this->description[$_GET["typ"]] . $this->get_name_for_podtyp(" ") . " | SLAN tour";
-            } else if($this->get_typ()!="za-sportem"  and $_GET["zeme"] != "" and $_GET["destinace"] == ""){
-                
-                return  $this->get_name_for_typ(", ").$this->get_name_for_zeme(" | ") . $this->get_name_for_podtyp(" | ") . " SLAN tour";
-            
-            }else {
-                if($this->get_name_for_typ("")=="Pobyty na horách ".Date("Y")){
-                    $nazev_typ = "Ubytování a pobyty na horách ".Date("Y")." | ";
-                }else{
-                    $nazev_typ = $this->get_name_for_typ(" | ");
-                }
-                return $this->get_name_for_destinace(", ") . $this->get_name_for_zeme(" | ") . $nazev_typ . $this->get_name_for_podtyp(" | ") . " SLAN tour";
-            }
-        } else {
-
-            return TITLE_TOP;
-        }
-    }
-
-    function show_nadpis() {
-        //tvorba vypisu titulku
-        if (strpos($this->nazev_typ, Date("Y")) === false) {
-            $date = " " . Date("Y");
-        }
-        if($this->get_name_for_typ("")=="Pobyty na horách"){
-                    $nazev_typ = "Ubytování na horách ";
-                }else{
-                    $nazev_typ = $this->get_name_for_typ("");
-                }
-        if ($this->get_name_for_destinace("") != "") {
-            if ($this->get_name_for_typ("") != "") {
-                return $this->get_name_for_destinace() . $nazev_typ;
-            } else {
-                return $this->get_name_for_destinace() . $this->get_name_for_zeme("");
-            }
-        } else if ($this->get_name_for_zeme("") != "" and $this->get_name_for_typ("") != "") {
-            return $this->get_name_for_zeme() . $nazev_typ;
-        } else if ($this->get_name_for_zeme("") != "" and $this->get_name_for_typ("") != "") {
-            return $this->get_name_for_zeme() . $nazev_typ;
-        } else if ($this->get_name_for_zeme("") != "") {
-            return $this->get_name_for_zeme("");
-        } else if ($this->get_name_for_typ("") != "") {
-            return $nazev_typ;
-        } else {
-            return "Katalog zájezdů " . Date("Y");
-        }
-    }
-
-    /** vytvori text pro nadpis stranky */
-
-    /** vytvori text pro meta keyword stranky */
-    function show_keyword() {
-        //tvorba vypisu titulku                    
-        if ($_GET["typ"] != "" or $_GET["podtyp"] != "" or $_GET["zeme"] != "" or $_GET["destinace"] != "") {
-            return $this->get_name_for_destinace() . $this->get_name_for_zeme() . $this->get_name_for_typ() . $this->get_name_for_podtyp() . " SLAN tour, zájezdy " . Date("Y");
-        } else {
-            return "SLAN tour, zájezdy " . Date("Y") . "Poznávací, dovolená, za sportem, lázně";
-        }
-    }
-
-    /** vytvori text pro meta description stranky */
-    function show_description() {
-        //tvorba vypisu titulku
-        if ($_GET["typ"] != "" or $_GET["podtyp"] != "" or $_GET["zeme"] != "" or $_GET["destinace"] != "") {
-            return "Katalog zájezdů od CK SLAN tour do " . $this->get_name_for_destinace() . $this->get_name_for_zeme() . $this->get_name_for_typ() . $this->get_name_for_podtyp() . " SLAN tour, zájezdy " . Date("Y");
-        } else {
-            return "SLAN tour, zájezdy " . Date("Y") . ": Poznávací zájezdy, dovolená u moře, zájezdy za sportem, vstupenky na sportovní soutěže, lázně a termály v Čechách, na Moravě, Slovensku a Maďarsku";
-        }
-    }
-
-    function show_zajezdy_option() {
-
-        while ($this->get_next_radek()) {
-            $result .= "<option value=\"" . $this->get_id_zajezd() . "\">" . $this->change_date_en_cz($this->get_termin_od()) . " - " . $this->change_date_en_cz($this->get_termin_do()) . " </option>";
-        }
-        return $result;
-    }
+   
 
     function show_zeme($typ_zobrazeni) {
 
@@ -369,99 +305,6 @@ class Serial_collection extends Generic_list {
             $result.="</ul>";
         }
         return $result;
-    }
-
-    /* metody pro pristup k parametrum */
-
-    function get_vyprodane_serialy() {
-        $this->vyprodane_serialy = array();
-        $this->na_dotaz_serialy = array();
-        $this->vyprodane_zajezdy = array();
-        $this->na_dotaz_zajezdy = array();
-
-        //debilni dotaz, ktery trva pres dve vteriny, docasne zruseny, snad nic moc nerozesere
-        /*
-        $dotaz = "select `serial`.`id_serial`,`cena_zajezd`.`vyprodano`,`cena_zajezd`.`na_dotaz`, `cena_zajezd`.`kapacita_volna`
-            	    from `serial` join
-                    `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`) join
-                    `cena` on (`cena`.`id_serial` = `serial`.`id_serial` and (`cena`.`typ_ceny`=1 or `cena`.`typ_ceny`=2) ) join
-                    `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 )
-                    where 1 
-                    order by `serial`.`id_serial`,`zajezd`.`id_zajezd`";
-        $data = $this->database->query($dotaz)
-                or $this->chyba("Chyba při dotazu do databáze");
-
-        $last_ser = "";
-        $last_zaj = "";
-        $vyprodano = 0;
-        $na_dotaz = 0;
-        $vyprodano_zajezd = 0;
-        $na_dotaz_zajezd = 0;
-        while ($zaznam = mysqli_fetch_array($data)) {
-            //uprava poli
-            if ($last_ser != $zaznam["id_serial"]) {
-                if ($vyprodano) {
-                    $this->vyprodane_serialy[] = $last_ser;
-                } else if ($na_dotaz) {
-                    $this->na_dotaz_serialy[] = $last_ser;
-                }
-                $vyprodano = 1;
-                $na_dotaz = 1;
-                $last_ser = $zaznam["id_serial"];
-            }
-            if ($last_zaj != $zaznam["id_zajezd"]) {
-                if ($vyprodano_zajezd) {
-                    $this->vyprodane_zajezdy[] = $last_zaj;
-                } else if ($na_dotaz_zajezd) {
-                    $this->na_dotaz_zajezdy[] = $last_zaj;
-                }
-                $vyprodano_zajezd = 1;
-                $na_dotaz_zajezd = 1;
-                $last_zaj = $zaznam["id_zajezd"];
-            }
-
-            //kontrola, zda je neco nevyprodane
-            if ($zaznam["vyprodano"] != 1) {
-                $vyprodano = 0;
-                $vyprodano_zajezd = 0;
-            }
-            if ($zaznam["na_dotaz"] != 1) {
-                $na_dotaz = 0;
-                $na_dotaz_zajezd = 0;
-            }
-        }
-        if ($last_ser != $zaznam["id_serial"]) {
-            if ($vyprodano) {
-                $this->vyprodane_serialy[] = $last_ser;
-            } else if ($na_dotaz) {
-                $this->na_dotaz_serialy[] = $last_ser;
-            }
-        }
-        if ($last_zaj != $zaznam["id_zajezd"]) {
-            if ($vyprodano_zajezd) {
-                $this->vyprodane_zajezdy[] = $last_zaj;
-            } else if ($na_dotaz_zajezd) {
-                $this->na_dotaz_zajezdy[] = $last_zaj;
-            }
-        }*/
-    }
-
-    /* metody pro pristup k parametrum */
-
-    function get_cena_vstupenek() {
-        require_once "./classes/zajezd_vstupenky.inc.php"; //seznam serialu
-        $vstup = new Seznam_vstupenek("v_cene", $this->radek["id_serial"]);
-        return $vstup->get_sum_cena();
-    }
-
-    function get_nazev_zajezdu() {
-        if ($this->radek["nazev_zajezdu"] != "") {
-            return "<strong><i>" . $this->radek["nazev_zajezdu"] . "</i></strong> ";
-        }
-    }
-
-    function get_id_serial() {
-        return $this->radek["id_serial"];
     }
 
     function get_nazev() {
