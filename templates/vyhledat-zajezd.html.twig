@@ -8,6 +8,67 @@
 
 {% block main %}
 
+<script src="/node_modules/itemsjs/dist/itemsjs.js"></script>
+<script>
+        var minPrice = 100;
+        var maxPrice = 4000;
+        
+        
+        var data = fetch('data.json')
+            .then((response) => response.json())
+            .then((zajezdyData) => itemsjs(zajezdyData, 
+                {
+                    sortings: {
+                      termin_asc: {
+                        field: 'do',
+                        order: 'asc'
+                      },
+                      termin_desc: {
+                        field: 'do',
+                        order: 'desc'
+                      }              
+                    },
+                    aggregations: {
+                      strava: {
+                        title: 'Typ stravování',
+                        size: 10,
+                        conjunction: false,
+                        sort: "key",
+                      },
+                      doprava: {
+                        title: 'Doprava',
+                        size: 10,
+                        conjunction: false,
+                        sort: "key",
+                      },    
+                      ubytovani: {
+                        title: 'Typ ubytování',
+                        size: 10,
+                        conjunction: false,
+                        sort: "key",
+                      }
+                    },
+                    searchableFields: ['nazev', 'nazev_ubytovani']
+                }))
+            .then((ijs) => ijs.search(
+                {
+                    per_page: 20,
+                    page: 1,
+                    sort: 'termin_asc',
+                    query: "Luhačov",
+                    filters: {
+                      doprava: [1,2,3]
+                    },
+                    filter: function(item) {
+                        return item.castka >= minPrice && item.castka <= maxPrice && item.od >= "2022-11-01";
+                    }
+                    
+                }))
+            .then((tours) => console.dir(tours));
+          
+          
+        ;
+    </script>
 
 <section class="hero_in tour_list search">
     <img src="../img/dovolena.png" alt="Slide background">
