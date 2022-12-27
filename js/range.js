@@ -1,7 +1,3 @@
-(function ($) {
-
-    "use strict";
-
     var $range = $("#range");
     var $inputFrom = $("#range-min");
     var $inputTo = $("#range-max");
@@ -10,6 +6,24 @@
     var max = 100000;
     var from = 0;
     var to = 100000;
+   
+   function updateInputs(data) {
+        from = data.from;
+        to = data.to;
+
+        $inputFrom.prop("value", from + " Kč");
+        $inputTo.prop("value", to + " Kč");
+    }
+
+    function removeCurrency (value) {
+        return value.replace(/ Kč/g, "");
+    }
+
+(function ($) {
+
+    "use strict";
+
+
 
     $range.ionRangeSlider({
         skin: "flat",
@@ -26,17 +40,7 @@
     });
     instance = $range.data("ionRangeSlider");
 
-    function updateInputs(data) {
-        from = data.from;
-        to = data.to;
 
-        $inputFrom.prop("value", from + " Kč");
-        $inputTo.prop("value", to + " Kč");
-    }
-
-    function removeCurrency (value) {
-        return value.replace(/ Kč/g, "");
-    }
 
     $inputFrom.on("change", function () {
         var val = $(this).prop("value");
