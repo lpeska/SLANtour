@@ -8,7 +8,7 @@
 
 {% block main %}
 
-
+<script src="/node_modules/itemsjs/dist/itemsjs.js"></script>
 <section class="hero_in tour_list search">
     <img src="../img/dovolena.png" alt="Slide background">
     <div class="wrapper">
@@ -36,7 +36,7 @@
                         <input class="form-control" type="text" name="dates" placeholder="Kdykoliv">
                         <i class="icon_calendar"></i>
                     </div>
-                    <input type="submit" class="btn_search" value="Ukázat 675 zájezdů">
+                    <input type="submit" class="btn_search" id="toursVolume" value="Ukázat 675 zájezdů">
                 </div>
                 <!-- /custom-search-input-2 -->
                 <div id="filters_col">
@@ -44,12 +44,12 @@
                         aria-controls="collapseFilters" id="filters_col_bt">Filters </a>
                     <div class="collapse show" id="collapseFilters">
 
-                        <div class="filter_type">
+                        <div class="filter_type" id="tour_type_filter">
                             <h6>Typ Zájezdu</h6>
                             <ul>
                                 {% for tourType in types %}
                                 <li>
-                                    <label class="container_check">{{tourType.name}} <small>(945)</small>
+                                    <label class="container_check filter" id="tourTypeFilter_{{tourType.id}}">{{tourType.name}} <small>(945)</small>
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
@@ -58,7 +58,7 @@
                             </ul>
                         </div>
                         
-                        <div class="filter_type">
+                        <div class="filter_type" id="price_filter">
                             <h6>Cena</h6>
                             <input type="text" id="range" name="range" value="">
                             <div class="price_inputs">
@@ -69,12 +69,12 @@
                             </div>
                         </div>
 
-                        <div class="filter_type">
+                        <div class="filter_type" id="transport_filter">
                             <h6>Doprava</h6>
                             <ul>
-                                {% for transport in transports %}
+                                {% for key,transport in transports %}
                                 <li>
-                                    <label class="container_check">{{transport}} <small>(945)</small>
+                                    <label class="container_check filter" id="transportFilter_{{key}}">{{transport}} <small>(945)</small>
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
@@ -83,12 +83,12 @@
                             </ul>
                         </div>
                         
-                        <div class="filter_type">
+                        <div class="filter_type" id="food_filter">
                             <h6>Strava</h6>
                             <ul>
-                                {% for food in foods %}
+                                {% for key,food in foods %}
                                 <li>
-                                    <label class="container_check">{{food}} <small>(945)</small>
+                                    <label class="container_check filter" id="foodFilter_{{key}}">{{food}} <small>(945)</small>
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
@@ -97,7 +97,7 @@
                             </ul>
                         </div>
 
-                        <div class="filter_type">
+                        <div class="filter_type" id="tour_length_filter">
                             <h6>Délka pobytu</h6>
                             <ul>
                                 {% for len in tourLenght %}
@@ -110,7 +110,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                        <div class="filter_type">
+                        <div class="filter_type" id="sales_filter">
                             <h6>Akce a slevy</h6>
                             <ul>
                                 {% for sale in sales %}
@@ -302,4 +302,213 @@
 
 {% block javascripts %}
     <script src="../js/range.js"></script>
+    <script>        
+        var selected_filters = ["txt_Lo","minPrice_100","maxPrice_20000"];
+        
+
+        async function getData(){
+            var res = await fetch('data.json');
+            var data = await res.json();
+            return data;
+        }
+        
+        function checkFilter(el){
+            if($(el).find("input").is(":checked")){
+                return $(el).attr('id');
+            }
+            return false;
+        }
+        
+        function updateFilters(){
+            var selected_filters = [];
+            $(".filter").each(function(idx,el){
+                let r = checkFilter(el);
+                if(r){
+                    selected_filters.push(r)
+                }
+            })
+            
+            selected_filters.push("txt_"+$("#autocomplete").val());
+            selected_filters.push("minPrice_"+removeCurrency($("#range-min").val()));
+            selected_filters.push("maxPrice_"+removeCurrency($("#range-max").val()));
+            
+            return selected_filters;
+        }
+                                              
+        async function filterData(data,selected_filters){
+            var filters = {tourTypeFilter:[],transportFilter:[],foodFilter:[],txt:[],minPrice:[],maxPrice:[]}
+            selected_filters.forEach(f => {
+                let arr = f.split("_");
+                filters[arr[0]].push(arr[1]);
+            
+            });
+            classFilters = {}
+            if( filters.tourTypeFilter.length >0){
+                classFilters["id_typ"] = filters.tourTypeFilter;
+            }
+            if( filters.transportFilter.length >0){
+                classFilters["doprava"] = filters.transportFilter;
+            }
+            if( filters.foodFilter.length >0){
+                classFilters["strava"] = filters.foodFilter;
+            }
+            
+            var filteredData = await data
+                    .then(data => itemsjs(data, 
+                    {
+                        sortings: {
+                          termin_asc: {
+                            field: 'do',
+                            order: 'asc'
+                          },
+                          termin_desc: {
+                            field: 'do',
+                            order: 'desc'
+                          }              
+                        },
+                        aggregations: {
+                          id_typ: {
+                            title: 'Typ zájezdu',
+                            size: 15,
+                            conjunction: false,
+                            sort: "key",
+                          },
+                          strava: {
+                            title: 'Typ stravování',
+                            size: 10,
+                            conjunction: false,
+                            sort: "key",
+                          },
+                          doprava: {
+                            title: 'Doprava',
+                            size: 10,
+                            conjunction: false,
+                            sort: "key",
+                          },    
+                          ubytovani: {
+                            title: 'Typ ubytování',
+                            size: 10,
+                            conjunction: false,
+                            sort: "key",
+                          }
+                        },
+                        searchableFields: ['nazev', 'nazev_ubytovani']
+                    }))
+                    .then(ijs => ijs.search(
+                    {
+                        per_page: 20,
+                        page: 1,
+                        sort: 'termin_asc',
+                        query: filters.txt[0],
+                        filters: classFilters,
+                        filter: function(item) {
+                            return item.castka >= parseInt(filters.minPrice[0]) && item.castka <= parseInt(filters.maxPrice[0]) && item.od >= "2022-11-01";
+                        }
+
+                    }));
+              
+            return filteredData;            
+        }
+        
+        async function updateEnumElement(el,prefix){
+            try{
+                $("#"+prefix+"_"+el.key+" small").text("("+el.doc_count+")")
+                if(el.selected==false){
+                   $("#"+prefix+"_"+el.key+" input").prop("checked",false) 
+                }else{
+                   $("#"+prefix+"_"+el.key+" input").prop("checked",true)  
+                }
+                if(el.doc_count <= 0){
+                    $("#"+prefix+"_"+el.key).css("font-style","italic");
+                    $("#"+prefix+"_"+el.key).css("color","grey");
+                    $("#"+prefix+"_"+el.key+" input").prop("disabled",true)                    
+                }else{
+                    $("#"+prefix+"_"+el.key).css("font-style","");
+                    $("#"+prefix+"_"+el.key).css("color","");
+                    $("#"+prefix+"_"+el.key+" input").prop("disabled",false)                    
+                                    
+                }
+            }catch(err){
+                
+            }
+        }
+        
+        async function updatePrice(min,max){
+            try{
+                updateInputs({from:min, to:max});
+                instance = $range.data("ionRangeSlider");
+                instance.update({
+                    from: min,
+                    to: max
+                });
+            }catch(err){
+                console.log(err);
+            }            
+        }    
+        
+        async function updateTextSearch(text){
+            try{
+                $("#autocomplete").val(text)
+            }catch(err){
+                console.log(err);
+            }            
+        }  
+        async function updateTotalTours(toursVolume){
+            try{
+                $("#toursVolume").val("Ukázat "+toursVolume+ " zájezdů");
+            }catch(err){
+                console.log(err);
+            }            
+        }  
+        
+        
+        async function showData(filteredData,selected_filters){ 
+            var filters = {tourTypeFilter:[],transportFilter:[],foodFilter:[],txt:[],minPrice:[],maxPrice:[]}
+            selected_filters.forEach(f => {
+                let arr = f.split("_");
+                filters[arr[0]].push(arr[1]);
+            
+            });
+            
+            filteredData.then(fd => 
+            {
+                fd.data.aggregations.strava.buckets.forEach(el => updateEnumElement(el,"foodFilter"));
+                fd.data.aggregations.doprava.buckets.forEach(el => updateEnumElement(el,"transportFilter"));
+                fd.data.aggregations.id_typ.buckets.forEach(el => updateEnumElement(el,"tourTypeFilter"));
+                updatePrice(filters.minPrice,filters.maxPrice);
+                updateTextSearch(filters.txt);
+                updateTotalTours(fd.pagination.total);
+                console.dir(fd);
+            }        
+            );
+        }
+        
+        
+        $(function(){
+            
+            var data = getData();
+            var filteredData = filterData(data,selected_filters);
+            showData(filteredData,selected_filters);
+            
+            $(".form-control").change(function(){
+                selected_filters = updateFilters();
+                var filteredData = filterData(data, selected_filters);
+                showData(filteredData,selected_filters);
+            });
+            $(".filter input").change(function(){
+                selected_filters = updateFilters();
+                var filteredData = filterData(data, selected_filters);
+                showData(filteredData,selected_filters);                
+            });
+            
+            
+            
+        });
+        
+        
+
+        
+        
+        
+    </script>    
 {% endblock javascripts %}
