@@ -1,6 +1,17 @@
 <?php
 require_once 'vendor/autoload.php';
 
+
+require_once "./core/load_core.inc.php"; 
+require_once "./classes/serial_collection.inc.php"; //seznam serialu
+$serialCol = new Serial_collection();
+
+#get portion of data with zajezdy
+$res = $serialCol->get_zajezdy_base();
+$zajezdyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$jsonData = json_encode($zajezdyArr);
+file_put_contents("data.json",$jsonData,LOCK_EX);
+
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
