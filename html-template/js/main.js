@@ -461,5 +461,25 @@
 		$('.box_detail.booking').removeClass('target-highlight');
 	}
 
-})(window.jQuery); 
+	// Creating map options
+	var mapOptions = {
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		maxZoom: 18,
+		id: "mapbox/streets-v11",
+		tileSize: 512,
+		zoomOffset: -1,
+		accessToken: "pk.eyJ1IjoibHBlc2thIiwiYSI6ImNrYmx5dGh4cjA3MHMycW1pdHp4Y2ZheGoifQ.e-0fQLJYoUUxsM0X6Z-gxQ"
+	};
 
+	var latMarkerX = 50.230446218120264;
+	var latMarkerY = 14.082620927422633;
+	var markerText = 'Cestovní kancelář Slantour';
+
+	var mymap = L.map("map_contact").setView([latMarkerX, latMarkerY], 16);
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibHBlc2thIiwiYSI6ImNrYmx5dGh4cjA3MHMycW1pdHp4Y2ZheGoifQ.e-0fQLJYoUUxsM0X6Z-gxQ',
+		mapOptions).addTo(mymap);
+
+	var marker2 = L.marker([latMarkerX,latMarkerY]).addTo(mymap);
+	marker2.bindPopup(markerText);
+
+})(window.jQuery); 

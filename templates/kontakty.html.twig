@@ -3,7 +3,9 @@
 {% block title %}SLANtour - Kontakty{% endblock title %}
 
 {% block stylesheets %}
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
 {% endblock stylesheets %}
 
 {% block main %}
@@ -23,18 +25,21 @@
             <li>
                 <i class="pe-7s-map-marker"></i>
                 <h4>Adresa</h4>
-                <span>SLAN tour, s.r.o.<br>Wilsonova 597, 27401 Slaný</span>
+                <span> SLAN tour, s.r.o.<br>Wilsonova 597, 27401 Slaný</span>
             </li>
             <li>
                 <i class="pe-7s-mail-open-file"></i>
                 <h4>Email</h4>
-                <span>info@slantour.cz</span>
+                <span><a href="mailto:info@slantour.cz">info@slantour.cz</a></span>
 
             </li>
             <li>
                 <i class="pe-7s-phone"></i>
                 <h4>Telefon</h4>
-                <span>+420 312 522 704 +420 604 255 018<br><small>Pondělí - Pátek, 8:00 - 17:00</small></span>
+                <span>
+                    <a href="tel:+420312522704">+420 312 522 704</a> <a href="tel:+420604255018">+420 604 255 018</a><br>
+                    <small>Pondělí - Pátek, 8:00 - 17:00</small>
+                </span>
             </li>
         </ul>
     </div>
@@ -48,7 +53,10 @@
     <div class="container margin_80_55">
         <div class="row justify-content-between">
             <div class="col-lg-5">
-                <div class="map_contact">
+                <div id="map_contact" class="map_contact">
+                    
+
+
                 </div>
                 <!-- /map -->
             </div>
@@ -112,4 +120,7 @@
 {% endblock main %}
 
 {% block javascripts %}
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+crossorigin=""></script>
 {% endblock javascripts %}

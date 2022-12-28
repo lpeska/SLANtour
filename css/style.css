@@ -5286,6 +5286,12 @@ span.infobox_rate {
 .contact_info ul li span {
   opacity: 0.7;
 }
+.contact_info ul li span a {
+  color: #fff;
+}
+.contact_info ul li span a:hover {
+  color: #fc5b62;
+}
 .contact_info ul li h4 {
   color: #fff;
   font-size: 18px;
