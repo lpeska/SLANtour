@@ -202,9 +202,10 @@
 				
 				<li><span><a>O Nás <i class="fas fa-caret-down"></i></a></span>
 					<ul class="menu">
-						<li><a href="../onas.php">O nás</a></li>
-						<li><a href="../kontakty.php">Kontakty</a></li>
-						<li><a href="../slevy.php">Slevy</a></li>
+						<li><a href="/onas.php">O nás</a></li>
+						<li><a href="/kontakty.php">Kontakty</a></li>
+						<li><a href="/kontakty.php">Ohlasy klientů</a></li>
+						<li><a href="/slevy.php">Slevy</a></li>
 					</ul>
 				</li>
 
@@ -225,42 +226,41 @@
 		<div class="container margin_60_35">
 			<div class="row">
 				<div class="col-lg-5 col-md-12 p-r-5">
-					<p><img src="/html-template/img/logo.svg" width="150" height="36" alt=""></p>
+					<p>
+						<img src="/img/logo_slan-light.png" height="36" alt="slantour">
+						<span class="title logo_normal">SLAN tour</span>
+					</p>
 					<p>Mea nibh meis philosophia eu. Duis legimus efficiantur ea sea. Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu. Nihil facilisi indoctum an vix, ut delectus expetendis vis.</p>
 					<div class="follow_us">
 						<ul>
-							<li>Follow us</li>
-							<li><a href="/html-template/#0"><i class="ti-facebook"></i></a></li>
-							<li><a href="/html-template/#0"><i class="ti-twitter-alt"></i></a></li>
-							<li><a href="/html-template/#0"><i class="ti-google"></i></a></li>
-							<li><a href="/html-template/#0"><i class="ti-pinterest"></i></a></li>
-							<li><a href="/html-template/#0"><i class="ti-instagram"></i></a></li>
+							<li>Sledujte nás</li>
+							<li><a href="https://www.facebook.com/slantour/"><i class="ti-facebook"></i></a></li>
+							<li><a href="https://www.instagram.com/slan.tour"><i class="ti-instagram"></i></a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 ml-lg-auto">
-					<h5>Useful links</h5>
+					<h5>Užitečné odkazy</h5>
 					<ul class="links">
-						<li><a href="/html-template/about.html">About</a></li>
-						<li><a href="/html-template/login.html">Login</a></li>
-						<li><a href="/html-template/register.html">Register</a></li>
-						<li><a href="/html-template/blog.html">News &amp; Events</a></li>
-						<li><a href="/html-template/contacts.html">Contacts</a></li>
+						<li><a href="/html-template/about.html">Info pro prodejce</a></li>
+						<li><a href="/html-template/login.html">Sodexo poukazy</a></li>
+						<li><a href="/html-template/register.html">Katalogy</a></li>
+						<li><a href="/html-template/blog.html">Časté dotazy</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-3 col-md-6">
-					<h5>Contact with Us</h5>
+					<h5>Kontaktujte nás</h5>
 					<ul class="contacts">
-						<li><a href="/html-template/tel://61280932400"><i class="ti-mobile"></i> + 61 23 8093 3400</a></li>
-						<li><a href="/html-template/mailto:info@Panagea.com"><i class="ti-email"></i> info@Panagea.com</a></li>
+						<li><a href="tel:+420312522704"><i class="ti-mobile"></i> +420 312 522 704</a></li>
+						<li><a href="mailto:info@slantour.cz"><i class="ti-email"></i> info@slantour.cz</a></li>
 					</ul>
 					<div id="newsletter">
 					<h6>Newsletter</h6>
 					<div id="message-newsletter"></div>
 					<form method="post" action="assets/newsletter.php" name="newsletter_form" id="newsletter_form">
 						<div class="form-group">
-							<input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Your email">
-							<input type="submit" value="Submit" id="submit-newsletter">
+							<input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Váš email">
+							<input type="submit" value="Odebírat" id="submit-newsletter">
 						</div>
 					</form>
 					</div>
@@ -270,33 +270,13 @@
 			<hr>
 			<div class="row">
 				<div class="col-lg-6">
-					<ul id="footer-selector">
-						<li>
-							<div class="styled-select" id="lang-selector">
-								<select>
-									<option value="English" selected>English</option>
-									<option value="French">French</option>
-									<option value="Spanish">Spanish</option>
-									<option value="Russian">Russian</option>
-								</select>
-							</div>
-						</li>
-						<li>
-							<div class="styled-select" id="currency-selector">
-								<select>
-									<option value="US Dollars" selected>US Dollars</option>
-									<option value="Euro">Euro</option>
-								</select>
-							</div>
-						</li>
-						<li><img src="/html-template/img/cards_all.svg" alt=""></li>
-					</ul>
+					
 				</div>
 				<div class="col-lg-6">
 					<ul id="additional_links">
 						<li><a href="/html-template/#0">Terms and conditions</a></li>
 						<li><a href="/html-template/#0">Privacy</a></li>
-						<li><span>© 2019 Panagea</span></li>
+						<li><span>© 2022 Slantour s.r.o.</span></li>
 					</ul>
 				</div>
 			</div>
@@ -308,12 +288,14 @@
 	
 	<div id="toTop"></div><!-- Back to top button -->
 	
-	<!-- COMMON SCRIPTS -->
-    {% block javascripts %}{% endblock javascripts %}
+	{% block javascripts_before %}{% endblock javascripts_before %}
 
+	<!-- COMMON SCRIPTS -->
     <script src="/html-template/js/common_scripts.js"></script>
     <script src="/html-template/js/main.js"></script>
 	<script src="/html-template/assets/validate.js"></script>
+	
+    {% block javascripts %}{% endblock javascripts %}
 	
 	<!-- DATEPICKER  -->
 	<script>

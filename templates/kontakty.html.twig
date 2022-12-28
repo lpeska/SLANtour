@@ -3,9 +3,7 @@
 {% block title %}SLANtour - Kontakty{% endblock title %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-     crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
 {% endblock stylesheets %}
 
 {% block main %}
@@ -119,8 +117,6 @@
 
 {% endblock main %}
 
-{% block javascripts %}
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-crossorigin=""></script>
-{% endblock javascripts %}
+{% block javascripts_before %}
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+{% endblock javascripts_before %}

@@ -11,17 +11,17 @@
     padding-left: 5px !important
 }
 
-.header span.title {
+span.title {
     font-size: 24px;
     font-weight: 600;
     vertical-align: middle;
 }
 
-.header span.logo_normal {
+span.logo_normal {
     color: #fff;
 }
 
-.header span.logo_sticky {
+span.logo_sticky {
     color: #151515;
 }
 
@@ -328,6 +328,11 @@ figure .price_discount_tag {
     background-color: #ffffff;
     align-items: center;
     text-align: center;
+}
+
+.counter_item img {
+    width: 100%;
+    height: 350px;
 }
 
 .counter_item {
