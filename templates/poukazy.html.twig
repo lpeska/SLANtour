@@ -1,0 +1,61 @@
+{% extends "_base.html.twig" %}
+
+{% block title %}SLANtour - Slevové karty a poukazy{% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+<section class="hero_in general">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Slevové karty a poukazy</h1>
+        </div>
+    </div>
+</section>
+<!--/hero_in-->
+
+<div class="bg_color_1">
+
+    {% include "_breadcrumbs.html.twig" %}
+
+    <div class="container margin_35_35">
+        <section>
+            <h3>Podmínky pro SODEXO PASS, Holiday Pass, Flexi Pass a Dárkový Pass</h3>
+            <ul>
+                <li>možnost uplatnit poukázky na celou nabídku všech zájezdů do výše 12 000 Kč, maximálně však do hodnoty 50 % z celkové sumy na jednu cestovní smlouvu</li>
+                <li>poukázky musí být uplatněny v jejich plné hodnotě</li>
+                <li>platbu poukázkami je potřeba hlásit předem, nejpozději při rezervaci zájezdu a zároveň je nutno uvést do cestovní smlouvy celkovou výši uplatňovaných poukázek</li>
+                <li>slevy za včasný nákup i další slevy jsou poskytovány pouze z doplatku, tedy z rozdílu mezi cenou zájezdu a platbou v poukázkách</li>
+                <li>platby poukázkami se nevztahuje na last minute nabídky, na letecké a bezpečnostní taxy, na fakultativní služby a pobytové taxy</li>
+                <li>vrácení uplatněných poukázek v případě stornování objednávky není možné</li>
+            </ul>
+            <p>Za zpracování těchto poukázek účtujeme manipulační poplatek ve výši 5% (+ DPH) z uplatňované hodnoty poukázek!</p>
+        </section>
+        <section>
+            <h3>Informace pro využití příspěvku přes BENEFIT PLUS</h3>
+            <p>Jsme partnerem společnosti BENEFIT PLUS. Pokud váš zaměstnavatel nabízí finanční příspěvek na dovolenou přes tuto společnost, 
+                můžete jej využít na zájezdy či pobyty pořádané naší CK. Jak postupovat: Zadejte si objednávku vybraného zájezdu na našich 
+                webových stránkách, nebo sepište objednávku na některé z našich prodejen. Poté se přihlaste do systému Benefit Plus a 
+                zadejte si objednávku v tomto systému, kde uvedete název naší CK, název a termín vybraného zájezdu a výši příspěvku, 
+                kterou požadujete uplatnit. Vyřízení proplacení příspěvku s firmou Benefit Plus již zajistí naše CK.
+            </p>
+            <p>Za zpracování poukázek Benefit Plus účtujeme manipulační poplatek ve výši 5% (+ DPH) z uplatňované hodnoty příspěvku!</p>
+        </section>
+        <section>
+            <h3>Informace pro držitele karet SPHERE</h3>
+            <p>Držitelům karet SPHERE card nabízíme slevu 5% z ceny našich katalogových zájezdů. Pro uplatnění slevy předložte kartu na 
+                naší pobočce, nebo při on-line objednávce zájezdu v poznámce uveďte jméno držitele a číslo karty. Maximální výše slevy 
+                pro jednu osobu 3000 Kč.</p>
+        </section>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->
+
+{% endblock main %}
+
+{% block javascripts %}
+{% endblock javascripts %}

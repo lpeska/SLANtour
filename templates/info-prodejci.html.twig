@@ -1,0 +1,85 @@
+{% extends "_base.html.twig" %}
+
+{% block title %}SLANtour - Info pro prodejce{% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+<section class="hero_in general">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Info pro prodejce</h1>
+        </div>
+    </div>
+</section>
+<!--/hero_in-->
+
+<div class="bg_color_1">
+
+    {% include "_breadcrumbs.html.twig" %}
+
+    <div class="container margin_35_35">
+        <section>
+            <h3>Certifikát pojištění na rok 2022</h3>
+            <p>Pro rok 2022 má cestovní kancelář SLAN tour s.r.o. uzavřeno zákonné pojištění s pojišťovnou UNIQA a.s. Certifikát na rok 2022 je ke stažení níže na této stránce.
+                Potvrzení úhrady garančního fondu naleznete rovněž níže na této stránce.</p>
+        </section>
+        <section>
+            <h3>Rezervační systém pro agentury - ALBATROS 3000</h3>
+            <p>CK SLAN tour nově spustila systém pro online vyhledávání a rezervaci zájezdů s podporou pro cestovní agentury. Systém vám umožní online vyhledat naše zájezdy, zjistit obsazenost zájezdu, můžete zájezd pomocí formuláře objednat, ihned vytisknout PDF cestovní smlouvu atd.
+                Přístupovou bránu do systému (přihlášení, registrace, manuál) naleznete na <a href="https://www.slantour.cz/agentury.php">www.slantour.cz/agentury.php</a>.
+                Manuál ke stažení naleznete <a href="https://www.slantour.cz/dokumenty/3049-albatros-3000---modul-agentury.doc" target="_blank" rel="noopener noreferrer">zde</a> .</p>
+        </section>
+        <section>
+            <h3>XML exporty</h3>
+            <p>CK SLAN tour exportuje veškeré své zájezdy do dokumentů ve 3 různých formátech tak, aby je libovolná CA mohla jednoduše 
+                importovat do své databáze a zobrazovat na svých stránkách. Dokumenty jsou pravidelně aktualizovány, takže chcete-li svým zákazníkům zobrazovat ty nejnovější informace, jsou naše XML exporty tím nejlepšim řešením.
+                Kromě našeho standardního XML formátu, který už nekteří z Vás využívají (další informace viz. <a href="https://www.slantour.cz/xml">www.slantour.cz/xml</a>) 
+                jsme vytvořili další dva formáty, které by Vám mohly usnadnit práci při importování našich zájezdů.</p>
+        </section>
+        <section>
+            <h3>Formát INVIA</h3>
+            <p>Jedná se o standardní formát sloužící primárně k exportu/importu zájezdů pro CA Invia (XML dokumenty obsahují stejné 
+                informace jako v našem standardním formátu, ale jsou jinak uspořádané). XML soubory ve stejném formátu by měla mít k 
+                dispozici většina CK, které spolupracují s CA Invia a proto by Vám tento formát mohl usnadnit import zájezdů z XML 
+                (pro více CK se stejným formátem souborů stačí naprogramovat jeden vstup). Specifikaci XML formátu a aktuální 
+                dokumenty naleznete na <a href="https://www.slantour.cz/invia" target="_blank" rel="noopener noreferrer">www.slantour.cz/invia</a>. Vzhledem k tomu, že požadavky agentury INvia se určitým způsobem 
+                vyvýjejí, připravili jsem i další, mírěn upravený export pro tuto agenturu, ve které již nejsou zařazeny 
+                zájezdy s tzv. "dlouhými termíny", které některé jednodušší databázové systémy cestovních agentur neumí správně 
+                zpracovat a interpretovat.
+                Tento upravený formát nalezete zde: <a href="https://www.slantour.cz/invia-nove/" target="_blank" rel="noopener noreferrer">www.slantour.cz/invia-nove</a>.</p>
+        </section>
+        <section>
+            <h3>Formát SDOVOLENA</h3>
+            <p>Jedná se o standardní formát sloužící primárně k exportu/importu zájezdů pro Sdovolena.cz XML soubory ve 
+                stejném formátu by měla mít k dispozici většina CK, které spolupracují s portálem Sdovolena a proto by Vám 
+                tento formát mohl usnadnit import zájezdů z XML (pro více CK se stejným formátem souborů stačí naprogramovat 
+                jeden vstup). Specifikaci XML formátu a aktuální dokumenty naleznete na XML export naleznete na adrese 
+                <a href="https://www.slantour.cz/sdovolena/cele.xml" target="_blank" rel="noopener noreferrer">www.slantour.cz/sdovolena/cele.xml</a>.</p>
+        </section>
+        <section>
+            <h3>Formát CESTUJEME</h3>
+            <p>Jedná se o náš upravený původní formát, který jsme vytvořili ve spolupráci s CA Cestujeme. Oproti původnímu formátu 
+                jsou zde navíc důležité informace jako počet dní, či název zájezdu (důležitý především pro naše zájezdy za sportem) 
+                informace o tom co zahrnuje základní cena, lastminute ceny atd. specifikaci XML formátu a aktuální dokumenty naleznete 
+                na <a href="https://www.slantour.cz/cestujeme" target="_blank" rel="noopener noreferrer">www.slantour.cz/cestujeme</a>
+            </p>
+
+            <p>
+                Máte-li jakýkoli dotaz, speciální požadavky ohledně našich XML dat (změny, doplnění formátů atp.), nebo nevíte jak 
+                přesně naše XML data zpracovávat, neváhejte nás kontaktovat. Bude-li to v našich silách, rádi Vám vyhovíme.
+            </p>
+        </section>
+        
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->
+
+{% endblock main %}
+
+{% block javascripts %}
+{% endblock javascripts %}
