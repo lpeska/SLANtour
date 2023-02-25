@@ -3916,13 +3916,25 @@ a.box_feat h3 {
   margin-top: 0;
 }
 .box_list .price {
-  display: inline-block;
+  display: block;
   font-weight: 500;
   color: #999;
 }
 .box_list .price strong {
   color: #32a067;
   font-size: 20px;
+}
+.box_list .dates {
+  display: block;
+  font-weight: 500;
+  color: #999;
+}
+.box_list .dates a {
+  font-size: 12px;
+  color: #999;
+}
+.box_list .dates a:hover {
+  color: #fc5b62;
 }
 .box_list small {
   text-transform: uppercase;
@@ -3932,14 +3944,11 @@ a.box_feat h3 {
 .box_list ul.footer {
   position: relative;
   padding: 15px 15px 15px 30px;
-  border-top: 1px solid #ededed;
   margin-bottom: 0;
 }
 .box_list ul.footer li {
   display: inline-block;
   margin-right: 15px;
-  height: 50px;
-  line-height: 50px;
 }
 .box_list ul.footer li .score {
   margin-top: -10px;
@@ -3950,10 +3959,10 @@ a.box_feat h3 {
 }
 
 #list_sidebar .box_list {
-  min-height: 330px;
+  min-height: 300px;
 }
 #list_sidebar .box_list figure {
-  min-height: 330px;
+  min-height: 300px;
 }
 @media (max-width: 991px) {
   #list_sidebar .box_list figure {
@@ -3973,7 +3982,7 @@ a.box_feat h3 {
   }
 }
 #list_sidebar .box_list .wrapper {
-  min-height: 249px;
+  min-height: 219px;
 }
 @media (max-width: 991px) {
   #list_sidebar .box_list .wrapper {

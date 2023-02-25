@@ -22,11 +22,12 @@ $features = array(
     new Feature('fa-plane', 'Letecky'), 
     new Feature('fa-hotel', 'Hotel 3&#9733;'), 
     new Feature('fa-bed', '4 noci'), 
-    new Feature('fa-utensils', 'Polopenze'),
-    new Feature('fa-umbrella-beach', 'Na pláži'),
-    new Feature('fa-person-swimming', 'Bazén'),
-    new Feature('fa-wifi', 'Wifi')
+    new Feature('fa-utensils', 'Polopenze')
 );
+
+$description = 'Zájezd nás zavede do oblasti, kde se prolíná historie v podobě unikátních památek s malebnou kopcovitou krajinou, 
+která utváří ráz této jedinečné oblasti Itálie. Navštívíme historické skvosty často zařazené do seznamu UNESCO, např. 
+Assisi, ale i další půvabná městečka s úžasnou atmosférou. Poznávání kulturních zajímavostí proložíme koupáním na italské adriatické riviéře.';
 
 echo $twig->render('vyhledat-zajezd.html.twig', [
     'types' => array(
@@ -45,14 +46,14 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
     'sales' => array('Akční nabídky', 'Slevy', 'Last Minute'),
     'tourLenght' => array('Jednodenní', '1-7 nocí', '7-14 nocí', '> 14 nocí'),
     'tours' => array(
-        new Tour('Hotel Esprit***, Špindlerův Mlýn', 'Poznávací', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', $features),
-        new Tour('Víkend v Budapešti - vlakem', 'Eurovíkendy', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', $features),
-        new Tour('Jordánsko s pobytem u Rudého moře', 'Dovolená u moře', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', $features),
-        new Tour('Villa Dino, Mariánské Lázně', 'Sport', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', $features),
-        new Tour('Hotel Esprit***, Špindlerův Mlýn', 'Poznávací', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', $features),
-        new Tour('Víkend v Budapešti - vlakem', 'Exotické zájezdy', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', $features),
-        new Tour('Jordánsko s pobytem u Rudého moře', 'Lázně & Wellness', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', $features),
-        new Tour('Villa Dino, Mariánské Lázně', 'Lázně & Wellness', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', $features)
+        new Tour('Hotel Esprit***, Špindlerův Mlýn', 'Poznávací', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', $features, $description),
+        new Tour('Víkend v Budapešti - vlakem', 'Eurovíkendy', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', $features, $description),
+        new Tour('Jordánsko s pobytem u Rudého moře', 'Dovolená u moře', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', $features, $description),
+        new Tour('Villa Dino, Mariánské Lázně', 'Sport', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', $features, $description),
+        new Tour('Hotel Esprit***, Špindlerův Mlýn', 'Poznávací', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', $features, $description),
+        new Tour('Víkend v Budapešti - vlakem', 'Exotické zájezdy', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', $features, $description),
+        new Tour('Jordánsko s pobytem u Rudého moře', 'Lázně & Wellness', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', $features, $description),
+        new Tour('Villa Dino, Mariánské Lázně', 'Lázně & Wellness', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', $features, $description)
     ),
     'breadcrumbs' => array(
         new Breadcrumb('Zájezdy', '../vyhledat-zajezd.php')
@@ -81,10 +82,10 @@ class Tour
     public string $destination;
     public string $image;
     public array $features;
+    public string $description;
 
-    public function __construct( string $name, string $type, int $price, int $priceDiscount, int $priceOriginal, int $nights, string $meals, string $destination, string $image, array $features)
+    public function __construct( string $name, string $type, int $price, int $priceDiscount, int $priceOriginal, int $nights, string $meals, string $destination, string $image, array $features, string $description)
     {
-        
         $this->name = $name;
         $this->type = $type;
         $this->price = $price;
@@ -95,6 +96,7 @@ class Tour
         $this->destination = $destination;
         $this->image = $image;
         $this->features = $features;
+        $this->description = $description;
     }
 }
 

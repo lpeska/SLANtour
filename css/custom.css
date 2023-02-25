@@ -212,8 +212,8 @@ figure .price_discount_tag {
 
 .box_list .price_discount {
     position: absolute;
-    left: 52px;
-    bottom: 55px;
+    left: 30px;
+    bottom: 66px;
     font-size: 16px;
     text-decoration: line-through;
     line-height: 1;
@@ -547,6 +547,10 @@ figure .price_discount_tag {
     vertical-align: middle;
 }
 
+.tour_list_feat2 {
+    margin-bottom: 15px;
+}
+
 .tour_list_feat2 ul {
     margin: 0;
 }
@@ -576,6 +580,22 @@ figure .price_discount_tag {
     font-size: 14px;
     vertical-align: middle;
     margin-right: 5px;
+    
+}
+
+.tour_description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+    hyphens: auto;
+    text-align: var(--align, left); 
+    margin-bottom: 15px;
+}
+
+.tour_destination{
+    margin-bottom: 15px;
+    font-size: 16px;
 }
 
 .accordion-header .teaser{
