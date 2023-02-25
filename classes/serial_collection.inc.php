@@ -41,7 +41,7 @@ class Serial_collection extends Generic_list {
     function get_all_zeme_serial() {
         $query = 
             "select 
-                serial.id_serial as sID,
+                serial.id_serial as sId,
                 GROUP_CONCAT(distinct `zeme_serial`.id_zeme order by `zeme_serial`.zakladni_zeme desc separator ',') as zId,
                 GROUP_CONCAT(distinct `zeme`.nazev_zeme order by `zeme_serial`.zakladni_zeme desc separator ',') as zName
                 from `zeme_serial` 
@@ -65,7 +65,7 @@ class Serial_collection extends Generic_list {
     function get_all_destinace_serial() {
         $query = 
             "select 
-                serial.id_serial as sID,
+                serial.id_serial as sId,
                 GROUP_CONCAT(distinct `destinace_serial`.id_destinace order by `destinace_serial`.polozka_menu desc separator ',') as dId,
                 GROUP_CONCAT(distinct `destinace`.nazev_destinace order by `destinace_serial`.polozka_menu desc separator ',') as dName
                 from `destinace_serial` 
@@ -98,7 +98,15 @@ class Serial_collection extends Generic_list {
     
     function get_all_tour_types() {
         $query = 
-                "select * from `typ_serial` ";
+                "select * from `typ_serial` 
+                    join (`serial` join zajezd on 
+                            (zajezd.id_serial = serial.id_serial and 
+                            zajezd.do >= '".Date("Y-m-d")."' and
+                            zajezd.nezobrazovat_zajezd <> 1)    
+                         )
+                         on (typ_serial.id_typ = serial.id_typ and
+                            serial.nezobrazovat <> 1)    
+                    ";
         #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
@@ -125,7 +133,70 @@ class Serial_collection extends Generic_list {
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
         return $data;
-    }        
+    }         
+
+    function get_full_data_from_zajezdIDs($zajezdIDs) {
+        $query = 
+                "select 
+                    `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,`serial`.`id_sablony_zobrazeni`,
+                    `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`,`objekt_ubytovani`.`popis_poloha` as `popisek_ubytovani`,`objekt_ubytovani`.`posX` , `objekt_ubytovani`.`posY`,
+                    `zajezd`.`id_zajezd`,`zajezd`.`nazev_zajezdu`,`zajezd`.`od`,`zajezd`.`do`,`zajezd`.`cena_pred_akci`,`zajezd`.`akcni_cena`,
+                    `zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`, coalesce(`destinace`.`nazev_destinace`) as nazev_destinace,
+                    `typ_serial`.`nazev_typ`,
+                    max(`cena_zajezd`.`castka`) as `max_castka`, min(`cena_zajezd`.`castka`) as `min_castka`,
+                    greatest(
+                            coalesce(max(1-((`zajezd`.`akcni_cena`+1)/(`zajezd`.`cena_pred_akci`+1)))*100,0),
+                            coalesce(IF(max(`slevy`.`castka`)<100,max(`slevy`.`castka`),((max(`slevy`.`castka`)+1)/(avg(`cena_zajezd`.`castka`)+1))*100),0),
+                            coalesce(IF(max(`slevy_zaj`.`castka`)<100,max(`slevy_zaj`.`castka`),((max(`slevy_zaj`.`castka`)+1)/(avg(`cena_zajezd`.`castka`)+1))*100),0)
+                    ) as final_max_sleva, 
+                    `foto`.`foto_url`
+
+                from `zajezd` join
+                    `serial` on (`zajezd`.`id_serial` = `serial`.`id_serial`) join
+                    `typ_serial` on (`typ_serial`.`id_typ` = `serial`.`id_typ`) join
+                    `cena` on (`cena`.`id_serial` = `serial`.`id_serial` and `cena`.`zakladni_cena`=1) join
+                    `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 ) join                    
+                    `zeme_serial` on (`zeme_serial`.`id_serial` = `serial`.`id_serial`) join
+                    `zeme` on (`zeme_serial`.`id_zeme` =`zeme`.`id_zeme`)
+                    
+                    left join (
+                         `destinace_serial`
+                         join `destinace` on (`destinace`.`id_destinace` = `destinace_serial`.`id_destinace`)
+                    )  on (`serial`.`id_serial` = `destinace_serial`.`id_serial`)
+                    
+                    left join
+                    (`foto_serial` join
+                        `foto` on (`foto_serial`.`id_foto` = `foto`.`id_foto`) )
+                    on (`foto_serial`.`id_serial` = `serial`.`id_serial` and `foto_serial`.`zakladni_foto`=1) 
+                    
+                    left join
+                     (`objekt_serial` join
+                        `objekt` on (`objekt`.`typ_objektu`= 1 and `objekt`.`id_objektu` = `objekt_serial`.`id_objektu`) join
+                        `objekt_ubytovani` on (`objekt`.`id_objektu` = `objekt_ubytovani`.`id_objektu`)
+                        ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial`)   
+                    left join (
+			`slevy` 
+			 join `slevy_serial` on (`slevy_serial`.`id_slevy` = `slevy`.`id_slevy`)
+			) on (`slevy_serial`.`id_serial` = `serial`.`id_serial`						  			
+			  and (`slevy`.`platnost_od` = \"0000-00-00\" or `slevy`.`platnost_od`<=\"" . Date("Y-m-d") . "\" or `slevy`.`platnost_od` is null)
+			  and (`slevy`.`platnost_do` = \"0000-00-00\" or `slevy`.`platnost_do`>=\"" . Date("Y-m-d") . "\" or `slevy`.`platnost_do` is null) )
+                    left join (
+			`slevy` as  `slevy_zaj`
+			 join `slevy_zajezd` on (`slevy_zajezd`.`id_slevy` = `slevy_zaj`.`id_slevy`)
+			) on (`slevy_zajezd`.`id_zajezd` = `zajezd`.`id_zajezd`						  			
+			  and (`slevy_zaj`.`platnost_od` = \"0000-00-00\" or `slevy_zaj`.`platnost_od`<=\"" . Date("Y-m-d") . "\" or `slevy_zaj`.`platnost_od` is null)
+			  and (`slevy_zaj`.`platnost_do` = \"0000-00-00\" or `slevy_zaj`.`platnost_do`>=\"" . Date("Y-m-d") . "\" or `slevy_zaj`.`platnost_do` is null) )
+                   
+
+                where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and `zajezd`.`id_zajezd` in (".implode(",",$zajezdIDs).")  
+                group by `zajezd`.`id_zajezd`
+                 ";
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }  
+
     
     function get_zajezdy() {
         $query = 
@@ -394,204 +465,59 @@ class Serial_collection extends Generic_list {
         return $result;
     }
 
-    function get_nazev() {
-        if($this->radek["id_sablony_zobrazeni"] != 12){
-            return $this->radek["nazev"];
-        }else if ($this->radek["nazev_ubytovani"]) {
-            return $this->radek["nazev_ubytovani"] . ", " . $this->radek["nazev"];
-        }
-        return $this->radek["nazev"];
-    }
-
-    function get_nazev_reverse() {
-        if ($this->radek["nazev_ubytovani"]) {
-            return $this->radek["nazev"] . ", " . $this->radek["nazev_ubytovani"];
-        }
-        return $this->radek["nazev"];
-    }
-
-    function get_nazev_web() {
-        return $this->radek["nazev_web"];
-    }
-
-    function get_nazev_ubytovani() {
-        return $this->radek["nazev_ubytovani"];
-    }
-
-    function get_nazev_ubytovani_web() {
-        return $this->radek["nazev_ubytovani_web"];
-    }
-
-    function get_popisek() {
-        return $this->radek["popisek"];
-    }
-
-    function get_popisek_ubytovani() {
-        return $this->radek["popisek_ubytovani"];
-    }
-
-    function get_popisek_serialu() {
-        return strip_tags($this->radek["popisek"], "<b><strong><a><br><br/>");
-    }
-
-    function get_dlouhodobe_zajezdy() {
-        return $this->radek["dlouhodobe_zajezdy"];
-    }
-
-    function get_doprava() {
-        if ($this->radek["doprava"] == 1) {
-            return "Vlastní dopravou";
-        } else if ($this->radek["doprava"] == 2) {
-            return "Autokarem";
-        } else if ($this->radek["doprava"] == 3) {
-            return "Letecky";
+    static function get_nazev($radek) {
+        if($radek["id_sablony_zobrazeni"] != 12){
+            return $radek["nazev"];
+        }else if ($radek["nazev_ubytovani"]) {
+            return $radek["nazev_ubytovani"] . ", " . $radek["nazev"];
         }
     }
 
-    function get_doprava_web() {
-        if ($this->radek["doprava"] == 1) {
-            return "vlastni-doprava";
-        } else if ($this->radek["doprava"] == 2) {
-            return "autokarem";
-        } else if ($this->radek["doprava"] == 3) {
-            return "letecky";
-        }
+
+    function get_description($radek) {
+        return strip_tags($radek["popisek"].$radek["popisek_ubytovani"], "<b><strong><a><br><br/>");
     }
 
-    function get_id_zajezd() {
-        return $this->radek["id_zajezd"];
-    }
-
-    function get_termin_od() {
-        return $this->radek["od"];
-    }
-
-    function get_termin_do() {
-        return $this->radek["do"];
-    }
-
-    function get_highlights() {
-        return $this->radek["highlights"];
-    }
-
-    function get_cena_pred_akci() {
+    function get_cena_pred_akci($radek) {
         return
                 "<div >
                             před slevou: <span style=\"color:red;text-decoration:line-through;font-weight:bold;\">" .
                 $this->radek["cena_pred_akci"] . " Kč</span></div>";
     }
 
-    function get_akcni_cena() {
-        return "<span style=\"color:#00ae35;font-size:1.2em;text-decoration:none;font-weight:bold;\">" .
-                $this->radek["akcni_cena"] . " Kč</span>";
-    }
-
-    function get_sleva($zobrazit = "span") {
-        $sleva = round(( 1 - ($this->radek["akcni_cena"] / $this->radek["cena_pred_akci"]) ) * 100);
-        if ($zobrazit == "castka_only") {
-            return $sleva;
-        }
-        return "<span style=\"color:red;font-size:1.1em;font-weight:bold;\" title=\" Sleva až " . $sleva . "% \">
-                        SLEVA <span style=\"font-size:1.4em;\">" . $sleva . "%</span></span>";
-    }
-
-    function get_akcni_cena_param($cena) {
-        if(trim($cena)=="1"){//neco je spatne, pravdepodobne se jedna o predbeznou registraci
-            return "<span style=\"color:#00ae35;font-size:1.0em;text-decoration:none;font-weight:bold;\"> Předběžná registrace</span>";
-        }
-        return "<span style=\"color:#00ae35;font-size:1.2em;text-decoration:none;font-weight:bold;\">" .
-                $cena . " Kč</span>";
-    }
-
-    function get_sleva_param($sleva) {
-
-        return "<span style=\"color:red;font-size:1.1em;font-weight:bold;\" title=\" Sleva až " . $sleva . "% \">
-                        SLEVA <span style=\"font-size:1.4em;\">" . $sleva . "%</span></span>";
-    }
-
-    function get_castka() {
-        return $this->radek["castka"];
-    }
-
-    function get_mena() {
-        return $this->radek["mena"];
-    }
-
-    function get_nazev_zeme() {
-        if ($this->radek["nazev_zeme"] == "Česká republika" or $this->radek["nazev_zeme"] == "Česká republika, víkendové pobyty") {
-            return "ČR";
+    static function get_destinace($radek) {
+        if ($radek["nazev_destinace"] != "") {
+            return $radek["nazev_destinace"];
         } else {
-            return $this->radek["nazev_zeme"];
+            return $radek["nazev_zeme"];
         }
     }
+    
+    static function get_nights($radek) {
+        if ($radek["dlouhodobe_zajezdy"] == "1") {
+            return "variabilní";
+        } else if ($radek["od"] == $radek["do"]){
+            return "jednodenní";
+        } else{
+            $od = strtotime($radek["od"]);
+            $do = strtotime($radek["do"]);
+            /*if($od > $do){
+                print_r([$od,$do,$radek["od"],$radek["do"]]);                
+            }*/
+            $datediff = $do - $od;
+            $nights = round($datediff / (60 * 60 * 24));
+            if($nights == 1){
+                return strval($nights)." noc";
+            }else if($nights <= 4){
+                return strval($nights)." noci";
+            }else{
+                return strval($nights)." nocí";
+            }
+            
+        }
+    }    
+    
 
-    function get_nazev_zeme_web() {
-        return $this->radek["nazev_zeme_web"];
-    }
-
-    function get_nazev_destinace() {
-        return $this->radek["nazev_destinace"];
-    }
-
-    function get_id_destinace() {
-        return $this->radek["id_destinace"];
-    }
-
-    function get_id_foto() {
-        return $this->radek["id_foto"];
-    }
-
-    function get_foto_url() {
-        return $this->radek["foto_url"];
-    }
-
-    function get_nazev_foto() {
-        return $this->radek["nazev_foto"];
-    }
-
-    function get_popisek_foto() {
-        return $this->radek["popisek_foto"];
-    }
-
-    function get_popis_akce() {
-        return $this->radek["popis_akce"];
-    }
-
-    function get_id_ubytovani() {
-        return $this->radek["id_ubytovani"];
-    }
-
-    function get_typ() {
-        return $this->radek["nazev_typ_web"];
-    }
-
-    function get_podtyp() {
-        return $this->radek["nazev_podtyp_web"];
-    }
-
-    function get_podtyp_text() {
-        return $this->radek["podtyp"];
-    }
-
-    function get_sleva_castka() {
-        return $this->radek["sleva_castka"];
-    }
-
-    function get_sleva_mena() {
-        return $this->radek["sleva_mena"];
-    }
-
-    function get_sleva_nazev() {
-        return $this->radek["sleva_nazev"];
-    }
-
-    function get_max_sleva_zajezd() {
-        return $this->max_sleva_zajezd;
-    }
-
-    function get_pocet_zajezdu() {
-        return $this->pocet_zajezdu;
-    }
 
 }
 
