@@ -40,7 +40,12 @@ class Serial_collection extends Generic_list {
     
     function get_all_zeme_serial() {
         $query = 
-                "select distinct `zeme_serial`.* from `zeme_serial` 
+            "select 
+                serial.id_serial as sID,
+                GROUP_CONCAT(distinct `zeme_serial`.id_zeme order by `zeme_serial`.zakladni_zeme desc separator ',') as zId,
+                GROUP_CONCAT(distinct `zeme`.nazev_zeme order by `zeme_serial`.zakladni_zeme desc separator ',') as zName
+                from `zeme_serial` 
+                    join zeme on `zeme_serial`.id_zeme = `zeme`.id_zeme
                     join (`serial` join zajezd on 
                             (zajezd.id_serial = serial.id_serial and 
                             zajezd.do >= '".Date("Y-m-d")."' and
@@ -48,7 +53,8 @@ class Serial_collection extends Generic_list {
                          )
                          on (zeme_serial.id_serial = serial.id_serial and
                             serial.nezobrazovat <> 1)
-                         ";
+                    
+                group by serial.id_serial";
         
         #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
@@ -58,7 +64,12 @@ class Serial_collection extends Generic_list {
     
     function get_all_destinace_serial() {
         $query = 
-                "select distinct `destinace_serial`.* from `destinace_serial` 
+            "select 
+                serial.id_serial as sID,
+                GROUP_CONCAT(distinct `destinace_serial`.id_destinace order by `destinace_serial`.polozka_menu desc separator ',') as dId,
+                GROUP_CONCAT(distinct `destinace`.nazev_destinace order by `destinace_serial`.polozka_menu desc separator ',') as dName
+                from `destinace_serial` 
+                    join destinace on `destinace_serial`.id_destinace = `destinace`.id_destinace
                     join (`serial` join zajezd on 
                             (zajezd.id_serial = serial.id_serial and 
                             zajezd.do >= '".Date("Y-m-d")."' and
@@ -66,7 +77,8 @@ class Serial_collection extends Generic_list {
                          )
                          on (destinace_serial.id_serial = serial.id_serial and
                             serial.nezobrazovat <> 1)
-                         ";
+                    
+                group by serial.id_serial";
         
         #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
@@ -76,7 +88,7 @@ class Serial_collection extends Generic_list {
     
     function get_tour_type_for_nazev_web($nazev) {
         $query = 
-                "select * from `typ_serial` where nazev_typ_web == '".$nazev."' ";
+                "select * from `typ_serial` where nazev_typ_web = '".$nazev."' ";
         #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
