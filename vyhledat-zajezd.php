@@ -14,16 +14,23 @@ $jsonData = json_encode($zajezdyArr);
 file_put_contents("data.json",$jsonData,LOCK_EX);
 
 $res = $serialCol->get_all_zeme_serial();
-$zemeArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
-$jsonData = json_encode($zemeArr);
+$zemeDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+$zemeArr = [];
+foreach ($zemeDB as $key => $z) {
+    $zemeArr[$z["sId"]] = $z;   
+}    
+$jsonData = json_encode($zemeArr);
 file_put_contents("serial_zeme.json",$jsonData,LOCK_EX);
 
 $res = $serialCol->get_all_destinace_serial();
-$destArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
-$jsonData = json_encode($destArr);
-#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("serial_destiance.json",$jsonData,LOCK_EX);
+$destDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$destArr = [];
+foreach ($destDB as $key => $d) {
+    $destArr[$d["sId"]] = $d;  
+}
+$jsonData = json_encode($zemeArr);
+file_put_contents("serial_destinace.json",$jsonData,LOCK_EX);
 
 $res = $serialCol->get_all_tour_types();
 $tourTypesDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
