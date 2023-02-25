@@ -253,11 +253,38 @@
 
 {% block javascripts %}
     <script src="../js/range.js"></script>
+    <script src="../js/defiant.min.js"></script>
     <script>        
+        //TODO: selected filters udelat pristupne zvenku = inicialni nastaveni vyhledavani
         var selected_filters = ["txt_Lo","minPrice_100","maxPrice_20000"];
         
 
         async function getData(){
+            
+            var z_res = await fetch('zeme.json');
+            var z = await z_res.json();
+            var d_res = await fetch('destinace.json');
+            var d = await d_res.json();
+            
+            var sz_res = await fetch('serial_zeme.json');
+            var sz = await sz_res.json();
+            var szSnapshot= defiant.getSnapshot(sz);
+            
+            var sd_res = await fetch('serial_destiance.json');
+            var sd = await sd_res.json();
+            var sdSnapshot= defiant.getSnapshot(sd);
+            
+            
+            
+            // this is many times faster than 'regular search'
+            found = defiant.search(szSnapshot, '//*[id_serial=22]');
+            console.log(found);
+            
+            found2 = defiant.search(sdSnapshot, '//*[id_serial=11]');
+            console.log(found2);
+
+                     
+            
             var res = await fetch('data.json');
             var data = await res.json();
             return data;

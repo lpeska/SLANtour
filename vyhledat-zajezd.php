@@ -10,7 +10,62 @@ $serialCol = new Serial_collection();
 $res = $serialCol->get_zajezdy_base();
 $zajezdyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
 $jsonData = json_encode($zajezdyArr);
+#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
 file_put_contents("data.json",$jsonData,LOCK_EX);
+
+$res = $serialCol->get_all_zeme_serial();
+$zemeArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$jsonData = json_encode($zemeArr);
+#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+file_put_contents("serial_zeme.json",$jsonData,LOCK_EX);
+
+$res = $serialCol->get_all_destinace_serial();
+$destArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$jsonData = json_encode($destArr);
+#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+file_put_contents("serial_destiance.json",$jsonData,LOCK_EX);
+
+$res = $serialCol->get_all_tour_types();
+$tourTypesDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$tourTypesArr = [];
+foreach ($tourTypesDB as $key => $tt) {
+    $tourTypesArr[$tt["id_typ"]] = $tt;
+    $tourTypesArr[$tt["id_typ"]]["counter"] = 0;
+}
+$jsonData = json_encode($tourTypesArr);
+#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+file_put_contents("tour_types.json",$jsonData,LOCK_EX);
+
+$res = $serialCol->get_all_zeme();
+$zemeDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$zemeArr = [];
+foreach ($zemeDB as $key => $z) {
+    $zemeArr[$z["id_zeme"]] = $z;
+    $zemeArr[$z["id_zeme"]]["counter"] = 0;
+}
+$jsonData = json_encode($zemeArr);
+#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+file_put_contents("zeme.json",$jsonData,LOCK_EX);
+
+$res = $serialCol->get_all_destinace();
+$destinaceDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$destinaceArr = [];
+foreach ($destinaceDB as $key => $d) {
+    $destinaceArr[$d["id_destinace"]] = $d;
+    $destinaceArr[$d["id_destinace"]]["counter"] = 0;
+}
+$jsonData = json_encode($destinaceArr);
+#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+file_put_contents("destinace.json",$jsonData,LOCK_EX);
+
+
+
+# process zajezdyArr to get initial statistics on all available data
+$tours = [];
+foreach ($zajezdyArr as $key => $zajezdIdx) {
+    
+}
+
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
