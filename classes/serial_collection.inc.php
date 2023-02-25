@@ -17,6 +17,81 @@ class Serial_collection extends Generic_list {
     function execQuery(){                
         $this->data = $this->database->query($this->create_query()) or $this->chyba("Chyba při dotazu do databáze");
     }
+    
+    
+    function get_all_zeme() {
+        $query = 
+                "select * from `zeme` ";
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }       
+    
+    function get_all_destinace() {
+        $query = 
+                "select * from `destinace` ";
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }       
+    
+    
+    function get_all_zeme_serial() {
+        $query = 
+                "select distinct `zeme_serial`.* from `zeme_serial` 
+                    join (`serial` join zajezd on 
+                            (zajezd.id_serial = serial.id_serial and 
+                            zajezd.do >= '".Date("Y-m-d")."' and
+                            zajezd.nezobrazovat_zajezd <> 1)    
+                         )
+                         on (zeme_serial.id_serial = serial.id_serial and
+                            serial.nezobrazovat <> 1)
+                         ";
+        
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }      
+    
+    function get_all_destinace_serial() {
+        $query = 
+                "select distinct `destinace_serial`.* from `destinace_serial` 
+                    join (`serial` join zajezd on 
+                            (zajezd.id_serial = serial.id_serial and 
+                            zajezd.do >= '".Date("Y-m-d")."' and
+                            zajezd.nezobrazovat_zajezd <> 1)    
+                         )
+                         on (destinace_serial.id_serial = serial.id_serial and
+                            serial.nezobrazovat <> 1)
+                         ";
+        
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }     
+    
+    function get_tour_type_for_nazev_web($nazev) {
+        $query = 
+                "select * from `typ_serial` where nazev_typ_web == '".$nazev."' ";
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }      
+
+    
+    function get_all_tour_types() {
+        $query = 
+                "select * from `typ_serial` ";
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }        
 
     function get_zajezdy_base() {
         $query = 
