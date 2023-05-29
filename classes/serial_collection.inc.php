@@ -76,7 +76,7 @@ class Serial_collection extends Generic_list {
     
     function get_tour_type_for_nazev_web($nazev) {
         $query = 
-                "select * from `typ_serial` where nazev_typ_web == '".$nazev."' ";
+                "select * from `typ_serial` where nazev_typ_web = '".$nazev."' ";
         #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         

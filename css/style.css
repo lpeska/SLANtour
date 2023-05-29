@@ -3962,7 +3962,7 @@ a.box_feat h3 {
   min-height: 300px;
 }
 #list_sidebar .box_list figure {
-  min-height: 300px;
+  min-height: 323px;
 }
 @media (max-width: 991px) {
   #list_sidebar .box_list figure {
@@ -3972,7 +3972,7 @@ a.box_feat h3 {
   }
 }
 #list_sidebar .box_list figure a img {
-  height: 350px;
+  height: 370px;
 }
 @media (max-width: 991px) {
   #list_sidebar .box_list figure a img {

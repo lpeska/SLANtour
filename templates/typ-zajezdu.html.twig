@@ -31,47 +31,9 @@
 
             <!-- End Map -->
         </section>
-        <!-- /section -->
-        <section class="add_bottom_45">
-            <div class="main_title_3">
-                <span><em></em></span>
-                <h2>Zájezdy</h2>
-            </div>
-            <div class="row">
-                {% for tour in tours %}
-                <div class="col-xl-3 col-lg-6 col-md-6">
-                    <a href="../../zajezd.php" class="grid_item">
-                        <figure>
-                            <div class="price">
-                                od {{tour.price}} Kč
-                            </div>
-    
-                            {% if tour.priceDiscount > 0 %}
-                            <div class="price_discount">{{tour.priceOriginal}} Kč</div>
-                            <div class="price_discount_tag">
-                                -{{tour.priceDiscount}}%
-                            </div>
-    
-                            {% endif %}
-    
-                            <img src="{{ tour.image }}" class="img-fluid" alt="">
-                            <div class="info">
-                                <h3>{{tour.name}}</h3>
-                                <em>{{tour.nights}} nocí - {{tour.meals}}</em>
-                            </div>
-                            <div class="info-right">
-                                <em>{{tour.destination}}</em>
-                            </div>
-                        </figure>
-                    </a>
-                </div>
-                <!-- /grid_item -->
-                {% endfor %}
-            </div>
-            <!-- /row -->
-            <a href="hotels-grid-isotope.html"><strong>Zobrazit Více (157) <i class="arrow_carrot-right"></i></strong></a>
-        </section>
-        <!-- /section -->
+
+        {% include "_tour-lists.html.twig" %}
+        
     </div>
     <!-- /container -->
 </div>

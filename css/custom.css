@@ -590,7 +590,7 @@ figure .price_discount_tag {
     overflow: hidden;
     hyphens: auto;
     text-align: var(--align, left); 
-    margin-bottom: 15px;
+    margin-bottom: 0;
 }
 
 .tour_destination{
