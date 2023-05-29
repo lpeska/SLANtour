@@ -1,3 +1,4 @@
+{% if popularTours|length > 0 %}
 <section class="add_bottom_45">
     <div class="main_title_3">
         <span><em></em></span>
@@ -46,8 +47,10 @@
     <!-- /row -->
     <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
 </section>
+{% endif %}
 <!-- /section -->
 
+{% if discountTours|length > 0 %}
 <section class="add_bottom_45">
     <div class="main_title_3">
         <span><em></em></span>
@@ -96,11 +99,13 @@
     </div>
     <!-- /row -->
     <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}} dodelat) <i
-                class="arrow_carrot-right"></i></strong></a>
+    class="arrow_carrot-right"></i></strong></a>
 </section>
+{% endif %}
 <!-- /section -->
 
 
+{% if newTours|length > 0 %}
 <section class="add_bottom_45">
     <div class="main_title_3">
         <span><em></em></span>
@@ -150,4 +155,5 @@
     <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i
                 class="arrow_carrot-right"></i></strong></a>
 </section>
+{% endif %}
 <!-- /section -->
