@@ -1085,7 +1085,8 @@ class Serial_list extends Generic_list {
                                 `foto` on (`foto_serial`.`id_foto` = `foto`.`id_foto`) )
                             on (`foto_serial`.`id_serial` = `serial`.`id_serial` and `foto_serial`.`zakladni_foto`=1)                                
 
-                    WHERE `serial`.`nezobrazovat`<>1
+                    WHERE `serial`.`nezobrazovat`<>1 and
+                    " .  $where_typ  . " 1
                     GROUP BY `serial`.`id_serial`
                     HAVING `pocet` > 1
                     ORDER BY `pocet` desc    
@@ -2267,7 +2268,7 @@ function order_by_subquery($vstup) {
                     `serial` join
                     `zajezd` on ( `serial`.`id_serial` = `zajezd`.`id_serial` ) join                    
                     `cena_zajezd` on ( `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 ) join
-                    `cena` on ( `cena`.`id_cena` = `cena_zajezd`.`id_cena` and `cena`.`id_serial` = " . $this->get_id_serial() . " and (`cena`.`zakladni_cena`=1 or `cena`.`typ_ceny`=1 or `cena`.`typ_ceny`=2))
+                    `cena` on ( `cena`.`id_cena` = `cena_zajezd`.`id_cena` and `cena`.`id_serial` = " . $this->get_id_serial() . " and (`cena`.`zakladni_cena`=1))
                     where `serial`.`id_serial` = " . $this->get_id_serial() . " and `zajezd`.`nezobrazovat_zajezd`<>1
                        and " . $this->global_od . $this->global_do . " 1
                     group by `zajezd`.`id_zajezd`
@@ -2275,7 +2276,7 @@ function order_by_subquery($vstup) {
                     order by `od`, `do`
                     limit 20
 
-                ";
+                ";// or `cena`.`typ_ceny`=1 or `cena`.`typ_ceny`=2))
             //echo $sql;
             $data = mysqli_query($GLOBALS["core"]->database->db_spojeni,$sql);
             $pocet = mysqli_num_rows($data);

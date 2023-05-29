@@ -583,7 +583,26 @@ class Menu_katalog extends Generic_list{
                 return $row;                          
             }
         }
-        
+
+        function get_typ_pobytu($tour_type){
+            $ret="";
+            while($this->get_next_radek()){
+                echo $this->radek["nazev_typ_web"];
+                if ($this->radek["nazev_typ_web"] == $tour_type) {
+                    echo "-true";
+                    $this->radek["description"] = $this->description[$this->radek["nazev_typ_web"]];
+                    $this->radek["foto_url"] = "https://slantour.cz/foto/full/".$this->radek["foto_url"];
+                    $tourData = $this->get_tour_data($this->radek["nazev_typ_web"]);
+                    
+                    $this->radek["tourCount"] = $tourData["countSerial"];
+                    $this->radek["tourPrice"] = $tourData["min_cena"];
+                    $ret = $this->radek;  
+                    break;
+                }
+                echo "</br>";
+            }
+            return $ret;
+        } 
         
         function show_destinace($typ_zobrazeni = "obrazkove"){
             $ret="";

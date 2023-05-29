@@ -15,6 +15,7 @@ $typy = $menu->get_typy_pobytu();
 //print_r($typy);
 
 $types_for_twig = array();
+$totalTours = 0;
 foreach ($typy as $typ) {
     switch ($typ["id_typ"]) {
         case 1:
@@ -38,8 +39,9 @@ foreach ($typy as $typ) {
     
     $t = new TourType($typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $typ["description"], "/zajezdy/typ-zajezdu/".$typ["nazev_typ_web"]);
     $types_for_twig[$typ["id_typ"]] = $t;
+    $totalTours += $typ["tourCount"];
 }
-
+echo $totalTours;
 
 /*Loading tours_slevy*/
 $discountTours = array();
@@ -162,6 +164,7 @@ echo $twig->render('index.html.twig', [
     'popularTours' => $popularTours,
     'discountTours' => $discountTours,
     "totalDiscountedTours" => 157,
+    "totalTours" => $totalTours,
     'newTours' => $newTours,
     'news' => array(
         new News('Peking 2022', 'V únoru příštího roku se budou konat Zimní olympijské hry v Peking.', '5.', 'Únor','img/sport.png'),

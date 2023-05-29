@@ -155,6 +155,12 @@ foreach ($novinky_poradi as $key => $val) {
     }
 }
 
+$menu = new Menu_katalog("dotaz_typy","", "", "");
+$typ = $menu->get_typ_pobytu($typeName);
+$totalTours = $typ["tourCount"];
+echo $totalTours;
+//print_r($typy);
+
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
@@ -165,6 +171,7 @@ echo $twig->render('typ-zajezdu.html.twig', [
     'type' => $type,
     'popularTours' => $popularTours,
     'discountTours' => $discountTours,
+    'totalTours' => $totalTours,
     "totalDiscountedTours" => 157,
     'newTours' => $newTours,
     'breadcrumbs' => array(
