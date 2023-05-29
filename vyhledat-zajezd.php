@@ -7,35 +7,45 @@ require_once "./classes/serial_collection.inc.php"; //seznam serialu
 $serialCol = new Serial_collection();
 
 #get portion of data with zajezdy
-$res = $serialCol->get_zajezdy_base();
-$zajezdyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
-$jsonData = json_encode($zajezdyArr);
+$resZ = $serialCol->get_zajezdy_base();
+$zajezdyArr = mysqli_fetch_all($resZ, MYSQLI_ASSOC);
+$jsonDataZ = json_encode($zajezdyArr);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("data.json",$jsonData,LOCK_EX);
+file_put_contents("data.json",$jsonDataZ,LOCK_EX);
 
-$res = $serialCol->get_all_zeme_serial();
-$zemeArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
-$jsonData = json_encode($zemeArr);
+$resZZ = $serialCol->get_all_zeme_serial();
+$zemeDB = mysqli_fetch_all($resZZ, MYSQLI_ASSOC);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("serial_zeme.json",$jsonData,LOCK_EX);
+$zemeArr = [];
+foreach ($zemeDB as $key => $z) {
+    $zemeArr[$z["sId"]] = $z;    
+}    
+$jsonDataZZ = json_encode($zemeArr);
+file_put_contents("serial_zeme.json",$jsonDataZZ,LOCK_EX);
 
-$res = $serialCol->get_all_destinace_serial();
-$destArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
-$jsonData = json_encode($destArr);
-#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("serial_destiance.json",$jsonData,LOCK_EX);
+$resD = $serialCol->get_all_destinace_serial();
+$destDB = mysqli_fetch_all($resD, MYSQLI_ASSOC);
+$destArr = [];
+foreach ($destDB as $key => $d) {
+    $destArr[$d["sId"]] = $d;  
+}
+$jsonDataD = json_encode($destArr);
+file_put_contents("serial_destinace.json",$jsonDataD,LOCK_EX);
 
-$res = $serialCol->get_all_tour_types();
-$tourTypesDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
+
+
+$resT = $serialCol->get_all_tour_types();
+$tourTypesDB = mysqli_fetch_all($resT, MYSQLI_ASSOC);
 $tourTypesArr = [];
 foreach ($tourTypesDB as $key => $tt) {
     $tourTypesArr[$tt["id_typ"]] = $tt;
-    $tourTypesArr[$tt["id_typ"]]["counter"] = 0;
 }
-$jsonData = json_encode($tourTypesArr);
+$jsonDataT = json_encode($tourTypesArr);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("tour_types.json",$jsonData,LOCK_EX);
+file_put_contents("tour_types.json",$jsonDataT,LOCK_EX);
 
+
+/*
 $res = $serialCol->get_all_zeme();
 $zemeDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
 $zemeArr = [];
@@ -58,7 +68,7 @@ $jsonData = json_encode($destinaceArr);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
 file_put_contents("destinace.json",$jsonData,LOCK_EX);
 
-
+*/
 
 # process zajezdyArr to get initial statistics on all available data
 $tours = [];
@@ -84,22 +94,17 @@ $description = 'Zájezd nás zavede do oblasti, kde se prolíná historie v podo
 která utváří ráz této jedinečné oblasti Itálie. Navštívíme historické skvosty často zařazené do seznamu UNESCO, např. 
 Assisi, ale i další půvabná městečka s úžasnou atmosférou. Poznávání kulturních zajímavostí proložíme koupáním na italské adriatické riviéře.';
 
+$typesTwig = [];
+foreach ($tourTypesArr as $key => $tt) {
+    $typesTwig[] = new TourType($tt["id_typ"], $tt["nazev_typ"], 0, 0, "/img/".$tt["nazev_typ_web"].".png");
+}
+
 echo $twig->render('vyhledat-zajezd.html.twig', [
-    'types' => array(
-        new TourType(2,'Poznávací', 139, 9900, 'img/poznavaci.png'),
-        new TourType(29,'Eurovíkendy', 62, 15900, 'img/eurovikendy.png'),
-        new TourType(1,'Dovolená u moře', 140, 7900, 'img/dovolena.png'),
-        new TourType(3,'Lázně & Wellness', 79, 3900, 'img/lazne.png'),
-        new TourType(4,'Sport', 32, 7900, 'img/sport.png'),
-       // new TourType(0,'Tuzemské pobyty', 139, 9900, 'img/poznavaci.png'),
-        new TourType(30,'Fly and Drive', 140, 7900, 'img/dovolena.png'),
-        new TourType(8,'Exotické zájezdy', 79, 3900, 'img/lazne.png'),
-        new TourType(6,'Jednodenní zájezdy', 32, 7900, 'img/sport.png'),
-    ),
+    'types' => $typesTwig,
     'transports' => array(3=>'Letecky', 4=>'Vlakem', 2=>'Autokar', 1=>'Vlastní', 5=>'Vlastní nebo autobus'),
     'foods' => array(5=>'All-inclusive', 4=>'Plná penze', 3=>'Polopenze', 2=>'Snídaně', 1=>"Bez stravy"),
     'sales' => array('Akční nabídky', 'Slevy', 'Last Minute'),
-    'tourLenght' => array('Jednodenní', '1-7 nocí', '7-14 nocí', '> 14 nocí'),
+    'tourLengths' => array("variabilni"=>'Variabilní', "jednodenni"=>'Jednodenní', "1-5noci"=>'1-5 nocí', "6-10noci"=>'6-10 nocí', "nad10noci"=>">10 nocí"),
     'tours' => array(
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 'Poznávací', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', $features, $description),
         new Tour('Víkend v Budapešti - vlakem', 'Eurovíkendy', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', $features, $description),

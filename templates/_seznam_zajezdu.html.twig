@@ -1,0 +1,55 @@
+                <div class="isotope-wrapper">
+                    {% for tour in tours %}
+                        <div class="box_list isotope-item popular">
+                            <div class="row no-gutters">
+                                <div class="col-lg-5">
+                                    <figure>
+                                        <small>{{tour.type}}</small>
+                                        <a href="../zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}">
+                                            <img src="{{tour.image}}" class="img-fluid" alt="" width="800" height="533">
+
+                                            {% if tour.priceDiscount > 0 %}
+                                                <div class="price_discount_tag">
+                                                    -{{tour.priceDiscount}}%
+                                                </div>
+                                            
+                                            {% endif %}
+
+                                            <div class="read_more"><span>Detail zájezdu</span></div>
+                                        </a>
+                                    </figure>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="wrapper">
+                                        <a href="#0" class="wish_bt"></a>
+                                        <h3><a href="/zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}">{{tour.name}}</a></h3>
+                                        <p class="tour_destination">{{tour.destination}}</p>
+                                        {# <p class="dates">12. - 14.6. 2023 <small>(+5 dalších termínů)</small></p> #}
+                                        <div class="tour_list_feat2">
+                                            <ul>
+                                                {% for feature in tour.features %}
+                                                    <li>
+                                                        <span><i class="fas {{feature.icon}}"></i>{{feature.text|raw}}</span>
+                                                    </li>
+                                                {% endfor %}
+                                            
+                                            </ul>
+                                        </div>
+                                        <p class="tour_description">{{tour.description}}</p>
+                                    </div>
+                                    <ul class="footer">
+                                        <li>
+                                            {% if tour.priceDiscount > 0 %}
+                                                <div class="price_discount">{{tour.priceOriginal}} Kč</div>
+                                            {% endif %}
+                                            <span class="price"><strong>{{tour.price}} Kč</strong> / os.</span>
+                                            <span class="dates">12. - 14.6. 2023 <a href="">(+5 dalších termínů)</a></span>
+                                        <li>
+                                            <a href="../zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}" class="btn_1">Detail zájezdu</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+

@@ -88,7 +88,7 @@
                             <ul>
                                 {% for key,food in foods %}
                                 <li>
-                                    <label class="container_check filter" id="foodFilter_{{key}}">{{food}} <small>(945)</small>
+                                    <label class="container_check filter" id="foodFilter_{{key}}">{{food}} <small>(0)</small>
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
@@ -100,9 +100,9 @@
                         <div class="filter_type" id="tour_length_filter">
                             <h6>Délka pobytu</h6>
                             <ul>
-                                {% for len in tourLenght %}
+                                {% for key,len in tourLengths %}
                                 <li>
-                                    <label class="container_check">{{len}} <small>(945)</small>
+                                    <label class="container_check filter" id="durGroupFilter_{{key}}">{{len}} <small>(0)</small>
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
@@ -115,7 +115,7 @@
                             <ul>
                                 {% for sale in sales %}
                                 <li>
-                                    <label class="container_check">{{sale}} <small>(945)</small>
+                                    <label class="container_check">{{sale}} <small>(0)</small>
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
@@ -148,7 +148,7 @@
 
                 </div>
 
-                <div class="isotope-wrapper">
+                <div class="isotope-wrapper" id="tours_container">
                     {% for tour in tours %}
                         <div class="box_list isotope-item popular">
                             <div class="row no-gutters">
@@ -253,7 +253,6 @@
 
 {% block javascripts %}
     <script src="../js/range.js"></script>
-    <script src="../js/defiant.min.js"></script>
     <script>        
         //TODO: selected filters udelat pristupne zvenku = inicialni nastaveni vyhledavani
         var selected_filters = ["txt_Lo","minPrice_100","maxPrice_20000"];
@@ -261,32 +260,64 @@
 
         async function getData(){
             
-            var z_res = await fetch('zeme.json');
-            var z = await z_res.json();
-            var d_res = await fetch('destinace.json');
-            var d = await d_res.json();
-            
             var sz_res = await fetch('serial_zeme.json');
             var sz = await sz_res.json();
-            var szSnapshot= defiant.getSnapshot(sz);
             
-            var sd_res = await fetch('serial_destiance.json');
+            var sd_res = await fetch('serial_destinace.json');
             var sd = await sd_res.json();
-            var sdSnapshot= defiant.getSnapshot(sd);
             
-            
-            
-            // this is many times faster than 'regular search'
-            found = defiant.search(szSnapshot, '//*[id_serial=22]');
-            console.log(found);
-            
-            found2 = defiant.search(sdSnapshot, '//*[id_serial=11]');
-            console.log(found2);
-
-                     
-            
+            var t_res = await fetch('tour_types.json');
+            var t = await t_res.json();
+                                 
             var res = await fetch('data.json');
             var data = await res.json();
+            data.forEach(function(elem,index,arr){
+                let sID = parseInt(elem["id_serial"]);
+                if (sz[sID]!= undefined){
+                    data[index].zName = sz[sID]["zName"];
+                }else{
+                    data[index].zName = "";
+                }
+                if (sd[sID]!= undefined){
+                    data[index].dName = sd[sID]["dName"];
+                }else{
+                    data[index].dName = "";
+                }
+                
+                let tID = parseInt(elem["id_typ"]);
+                if (t[tID]!= undefined){
+                    data[index].tName = t[tID]["nazev_typ"];
+                }else{
+                    data[index].tName = "";
+                }      
+                
+                if(elem["dlouhodobe_zajezdy"]=="1"){
+                    data[index].durNights = -1;
+                    data[index].durGroup = "variabilni";
+                }else if(elem["od"] == elem["do"]){
+                    data[index].durNights = 0;
+                    data[index].durGroup = "jednodenni";
+                }else{
+                    var terminOd = new Date(elem["od"]);
+                    var terminDo = new Date(elem["do"]);     
+                    var diffDays = (terminDo.getTime() - terminOd.getTime()) / (1000 * 3600 * 24);
+                    data[index].durNights = diffDays;
+                    if(diffDays < 8){
+                        data[index].durGroup = "1-5noci";
+                    }else if(diffDays < 15){
+                        data[index].durGroup = "6-10noci";                        
+                    }else{
+                        data[index].durGroup = "nad10noci";                        
+                    }
+                }
+
+                
+                //let zeme_ids = defiant.search(szSnapshot, '//*[id_serial='+id_serial+']/id_zeme');
+                //let destinace_ids = defiant.search(szSnapshot, '//*[id_serial='+id_serial+']/id_destinace');
+                //console.log(zeme_ids);
+                
+            });
+            //TODO: data attribution nefunguje... mozna externi akumulator? nebo spatne props?
             return data;
         }
         
@@ -314,7 +345,7 @@
         }
                                               
         async function filterData(data,selected_filters){
-            var filters = {tourTypeFilter:[],transportFilter:[],foodFilter:[],txt:[],minPrice:[],maxPrice:[]}
+            var filters = {tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
                 filters[arr[0]].push(arr[1]);
@@ -329,6 +360,10 @@
             }
             if( filters.foodFilter.length >0){
                 classFilters["strava"] = filters.foodFilter;
+            }
+            
+            if( filters.durGroupFilter.length >0){
+                classFilters["durGroup"] = filters.durGroupFilter;
             }
             
             var filteredData = await data
@@ -362,7 +397,13 @@
                             size: 10,
                             conjunction: false,
                             sort: "key",
-                          },    
+                          },   
+                          durGroup: {
+                            title: 'Délka pobytu',
+                            size: 10,
+                            conjunction: false,
+                            sort: "key",
+                          },                             
                           ubytovani: {
                             title: 'Typ ubytování',
                             size: 10,
@@ -370,7 +411,7 @@
                             sort: "key",
                           }
                         },
-                        searchableFields: ['nazev', 'nazev_ubytovani']
+                        searchableFields: ['nazev', 'nazev_ubytovani',"zName","dName","tName"]
                     }))
                     .then(ijs => ijs.search(
                     {
@@ -380,7 +421,7 @@
                         query: filters.txt[0],
                         filters: classFilters,
                         filter: function(item) {
-                            return item.castka >= parseInt(filters.minPrice[0]) && item.castka <= parseInt(filters.maxPrice[0]) && item.od >= "2022-11-01";
+                            return item.castka >= parseInt(filters.minPrice[0]) && item.castka <= parseInt(filters.maxPrice[0]) && item.do >= "2022-11-01";
                         }
 
                     }));
@@ -441,7 +482,7 @@
         
         
         async function showData(filteredData,selected_filters){ 
-            var filters = {tourTypeFilter:[],transportFilter:[],foodFilter:[],txt:[],minPrice:[],maxPrice:[]}
+            var filters = {tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
                 filters[arr[0]].push(arr[1]);
@@ -453,10 +494,33 @@
                 fd.data.aggregations.strava.buckets.forEach(el => updateEnumElement(el,"foodFilter"));
                 fd.data.aggregations.doprava.buckets.forEach(el => updateEnumElement(el,"transportFilter"));
                 fd.data.aggregations.id_typ.buckets.forEach(el => updateEnumElement(el,"tourTypeFilter"));
+                fd.data.aggregations.durGroup.buckets.forEach(el => updateEnumElement(el,"durGroupFilter"));
                 updatePrice(filters.minPrice,filters.maxPrice);
                 updateTextSearch(filters.txt);
                 updateTotalTours(fd.pagination.total);
                 console.dir(fd);
+                
+                //load corresponding data and show them on appropriate location
+                var dataAnchor = $("#tours_container");
+                var toursToDisplay = fd.data.items;
+                var ttdIDs = []
+                var sIDs = []
+                toursToDisplay.forEach(function(elem){
+                    ttdIDs.push(elem.id_zajezd);
+                    sIDs.push(elem.id_serial);
+                });
+                
+                const formData = new FormData();
+                formData.append("zajezdIDs", ttdIDs);  
+                formData.append("serialIDs", sIDs);
+                fetch("/ajax-load-data-for-vyhledat-zajezd.php", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then((response) => response.text())
+                .then((text) => {
+                    dataAnchor.html(text);
+                });
             }        
             );
         }
