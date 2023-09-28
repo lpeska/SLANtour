@@ -21,6 +21,8 @@ require_once "./classes/zajezd_topologie.inc.php"; //seznam serialu
 require_once "./classes/rezervace_dotaz.inc.php"; //seznam serialu	
 
 require_once "./classes/blackdays_list.inc.php"; //black days
+require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
+$tourTypes = getAllTourTypes();
 /* vytvoreni instance serialu (nebo serialu se zajezdem) */
 
 
@@ -94,6 +96,9 @@ $destinace_nazev = $serial->get_destinace();
 $destinace_nazev_web = Serial_list::nazev_web_static($serial->get_destinace()); //might be necessary for breadcrumb links - search
 
 $location = $zeme_nazev;
+
+//$breadCrumbs = array(new Breadcrumb($type->name, $type->url));
+//TODO breadcrumbs
 
 if($destinace_nazev){
     $location .= ", " . $destinace_nazev;
@@ -268,6 +273,7 @@ $twig = new \Twig\Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('zajezd.html.twig', [
+    'typesOfTours' => $tourTypes,
     'dateID' => $_GET["id_zajezd"],
     'name' => $nazev,
     'priceFrom' => $minPrice,
@@ -322,71 +328,6 @@ echo $twig->render('zajezd.html.twig', [
 ]);
 
 
-class Feature {
-    public string $icon;
-    public string $text;
-
-    public function __construct(string $icon, string $text) {
-        $this->icon = $icon;
-        $this->text = $text;
-    }
-}
-
-class Foto {
-    public string $url;
-    public string $description;
-
-    public function __construct(string $url, string $description) {
-        $this->url = $url;
-        $this->description = $description;
-    }
-}
-
-class Program {
-    public string $title;
-    public string $description;
-    public string $image;
-
-    public function __construct(string $title, string $description, string $image) {
-        $this->title = $title;
-        $this->description = $description;
-        $this->image = $image;
-    }
-}
-
-class TourDate {
-    public int $dateID;
-    public string $date;
-    public int $price;
-    public string $discount;
-    public string $details;
-    public array $services;
-    public array $extraFees;
-    public array $pickupSpots;
-
-    public function __construct(int $dateID, string $date, int $price, string $discount, string $details, array $services, array $extraFees, array $pickupSpots) {
-        $this->dateID = $dateID;
-        $this->date = $date;
-        $this->price = $price;
-        $this->discount = $discount;
-        $this->details = $details;
-        $this->services = $services;
-        $this->extraFees = $extraFees;
-        $this->pickupSpots = $pickupSpots;
-    }    
-}
-
-class Service {
-    public string $title;
-    public string $capacity;
-    public int $price;
-
-    public function __construct(string $title, string $capacity, int $price) {
-        $this->title = $title;
-        $this->capacity = $capacity;
-        $this->price = $price;
-    }
-}
 
 /*
 priklady ikon

@@ -4,6 +4,8 @@ require_once 'vendor/autoload.php';
 
 require_once "./core/load_core.inc.php"; 
 require_once "./classes/serial_collection.inc.php"; //seznam serialu
+require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
+$tourTypes = getAllTourTypes();
 $serialCol = new Serial_collection();
 
 #get portion of data with zajezdy
@@ -96,94 +98,27 @@ Assisi, ale i další půvabná městečka s úžasnou atmosférou. Poznávání
 
 $typesTwig = [];
 foreach ($tourTypesArr as $key => $tt) {
-    $typesTwig[] = new TourType($tt["id_typ"], $tt["nazev_typ"], 0, 0, "/img/".$tt["nazev_typ_web"].".png");
+    $typesTwig[] = new TourType($tt["id_typ"], $tt["nazev_typ"], 0, 0, "/img/".$tt["nazev_typ_web"].".png", "", "");
 }
 
 echo $twig->render('vyhledat-zajezd.html.twig', [
+    'typesOfTours' => $tourTypes,
     'types' => $typesTwig,
     'transports' => array(3=>'Letecky', 4=>'Vlakem', 2=>'Autokar', 1=>'Vlastní', 5=>'Vlastní nebo autobus'),
     'foods' => array(5=>'All-inclusive', 4=>'Plná penze', 3=>'Polopenze', 2=>'Snídaně', 1=>"Bez stravy"),
     'sales' => array('Akční nabídky', 'Slevy', 'Last Minute'),
     'tourLengths' => array("variabilni"=>'Variabilní', "jednodenni"=>'Jednodenní', "1-5noci"=>'1-5 nocí', "6-10noci"=>'6-10 nocí', "nad10noci"=>">10 nocí"),
     'tours' => array(
-        new Tour('Hotel Esprit***, Špindlerův Mlýn', 'Poznávací', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', $features, $description),
-        new Tour('Víkend v Budapešti - vlakem', 'Eurovíkendy', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', $features, $description),
-        new Tour('Jordánsko s pobytem u Rudého moře', 'Dovolená u moře', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', $features, $description),
-        new Tour('Villa Dino, Mariánské Lázně', 'Sport', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', $features, $description),
-        new Tour('Hotel Esprit***, Špindlerův Mlýn', 'Poznávací', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', $features, $description),
-        new Tour('Víkend v Budapešti - vlakem', 'Exotické zájezdy', 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', $features, $description),
-        new Tour('Jordánsko s pobytem u Rudého moře', 'Lázně & Wellness', 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', $features, $description),
-        new Tour('Villa Dino, Mariánské Lázně', 'Lázně & Wellness', 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', $features, $description)
+        new Tour('Hotel Esprit***, Špindlerův Mlýn', "", 'Poznávací', 0, 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', null, $features, $description),
+        new Tour('Víkend v Budapešti - vlakem', "", 'Eurovíkendy', 0, 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', null, $features, $description),
+        new Tour('Jordánsko s pobytem u Rudého moře', "", 'Dovolená u moře', 0, 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', null, $features, $description),
+        new Tour('Villa Dino, Mariánské Lázně', "", 'Sport', 0, 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', null, $features, $description),
+        new Tour('Hotel Esprit***, Špindlerův Mlýn', "", 'Poznávací', 0, 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', null, $features, $description),
+        new Tour('Víkend v Budapešti - vlakem', "", 'Exotické zájezdy', 0, 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', null, $features, $description),
+        new Tour('Jordánsko s pobytem u Rudého moře', "", 'Lázně & Wellness', 0, 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', null, $features, $description),
+        new Tour('Villa Dino, Mariánské Lázně', "", 'Lázně & Wellness', 0, 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', null, $features, $description)
     ),
     'breadcrumbs' => array(
         new Breadcrumb('Zájezdy', '../vyhledat-zajezd.php')
     )
 ]);
-
-class Breadcrumb {
-    public string $label;
-    public string $link;
-
-    public function __construct(string $label, string $link) {
-        $this->label = $label;
-        $this->link = $link;
-    }
-}
-
-class Tour
-{
-    public string $name;
-    public string $type;
-    public int $price;
-    public int $priceDiscount;
-    public int $priceOriginal;
-    public int $nights;
-    public string $meals;
-    public string $destination;
-    public string $image;
-    public array $features;
-    public string $description;
-
-    public function __construct( string $name, string $type, int $price, int $priceDiscount, int $priceOriginal, int $nights, string $meals, string $destination, string $image, array $features, string $description)
-    {
-        $this->name = $name;
-        $this->type = $type;
-        $this->price = $price;
-        $this->priceDiscount = $priceDiscount;
-        $this->priceOriginal = $priceOriginal;
-        $this->nights = $nights;
-        $this->meals = $meals;
-        $this->destination = $destination;
-        $this->image = $image;
-        $this->features = $features;
-        $this->description = $description;
-    }
-}
-
-class TourType
-{
-    public int $id;
-    public string $name;
-    public int $numberOfTours;
-    public int $priceFrom;
-    public string $image;
-
-    public function __construct(string $id, string $name, int $numberOfTours, int $priceFrom, string $image)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->numberOfTours = $numberOfTours;
-        $this->priceFrom = $priceFrom;
-        $this->image = $image;
-    }
-}
-
-class Feature {
-    public string $icon;
-    public string $text;
-
-    public function __construct(string $icon, string $text) {
-        $this->icon = $icon;
-        $this->text = $text;
-    }
-}

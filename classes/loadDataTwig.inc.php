@@ -49,7 +49,7 @@ function getDiscountTours(String $typeName)
             $currTour = $slevy_array[$key];
             $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
             if ($k <= 4) {
-                $discountTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"],  $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+                $discountTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "");
             } else {
                 break;
             }
@@ -79,7 +79,7 @@ function getPopularTours($typeName)
         //$currTour = $novinky_array[$key];
         $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
         if ($k <= 4) {
-            $popularTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+            $popularTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "");
         } else {
             break;
         }
@@ -113,7 +113,7 @@ function getNewTours($typeName)
         $currTour = $novinky_array[$key];
         $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
         if ($k <= 4) {
-            $newTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"]);
+            $newTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "");
         } else {
             break;
         }
@@ -128,7 +128,7 @@ function getTourType($typeName)
 
     //setup img for type
     $foto = getTypeImage($typ["id_typ"], $typ["foto_url"]);
-    $type = new TourType($typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $typ["description"], "/zajezdy/typ-zajezdu/" . $typ["nazev_typ_web"]);
+    $type = new TourType($typ["id_typ"], $typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $typ["description"], "/zajezdy/typ-zajezdu/" . $typ["nazev_typ_web"]);
     return $type;
 }
 
@@ -142,14 +142,23 @@ function getAllTourTypes()
     $tourTypes = array();
     foreach ($typy as $typ) {
         $foto = getTypeImage($typ["id_typ"], $typ["foto_url"]);
-        $t = new TourType($typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $typ["description"], "/zajezdy/typ-zajezdu/" . $typ["nazev_typ_web"]);
+        $t = new TourType(
+            $typ["id_typ"],
+            $typ["nazev_typ"],
+            $typ["tourCount"],
+            $typ["tourPrice"],
+            $foto,
+            $typ["description"],
+            "/zajezdy/typ-zajezdu/" . $typ["nazev_typ_web"]
+        );
+
         $tourTypes[$typ["id_typ"]] = $t;
     }
     return $tourTypes;
 }
 
-function getTotalTours (array $tourTypes)
-{   
+function getTotalTours(array $tourTypes)
+{
     $totalTours = 0;
     foreach ($tourTypes as $type) {
         $totalTours += $type->numberOfTours;
@@ -157,7 +166,7 @@ function getTotalTours (array $tourTypes)
     return $totalTours;
 }
 
-function getTypeImage ($typeId, $defaultFoto)
+function getTypeImage($typeId, $defaultFoto)
 {
     switch ($typeId) {
         case 1:
@@ -198,6 +207,7 @@ class Tour
 {
     public string $name;
     public string $escapedName;
+    public string $type;
     public int $id_zajezd;
     public int $price;
     public  $priceDiscount;
@@ -207,11 +217,14 @@ class Tour
     public string $destination;
     public string $image;
     public $terminy;
+    public array $features;
+    public string $description;
 
-    public function __construct(string $name, string $escapedName, int $id_zajezd, int $price,  $priceDiscount,  $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy = "")
+    public function __construct(string $name, string $escapedName, string $type, int $id_zajezd, int $price,  $priceDiscount,  $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy = "", array $features, string $description)
     {
         $this->name = $name;
         $this->escapedName = $escapedName;
+        $this->type = $type;
         $this->id_zajezd = $id_zajezd;
         $this->price = $price;
         $this->priceDiscount = $priceDiscount;
@@ -221,20 +234,24 @@ class Tour
         $this->destination = $destination;
         $this->image = $image;
         $this->terminy = $terminy;
+        $this->features = $features;
+        $this->description = $description;
     }
 }
 
 class TourType
 {
+    public int $id;
     public string $name;
     public int $numberOfTours;
     public int $priceFrom;
     public string $image;
-    public  $description;
-    public string $url;
+    public $description;
+    public $url;
 
-    public function __construct(string $name, int $numberOfTours, int $priceFrom, string $image, $description, $url)
+    public function __construct(int $id, string $name, int $numberOfTours, int $priceFrom, string $image, $description, $url)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->numberOfTours = $numberOfTours;
         $this->priceFrom = $priceFrom;
@@ -244,18 +261,100 @@ class TourType
     }
 }
 
-class News {
+class News
+{
     public string $title;
     public string $description;
-    public string $date;
+    public string $day;
     public string $month;
     public string $image;
 
-    public function __construct(string $title, string $description, string $day, string $month, string $image) {
-        $this->title= $title;
+    public function __construct(string $title, string $description, string $day, string $month, string $image)
+    {
+        $this->title = $title;
         $this->description = $description;
         $this->day = $day;
         $this->month = $month;
         $this->image = $image;
     }
+}
+
+class Destination
+{
+    public string $name;
+    public string $image;
+
+    public function __construct(string $name, string $image)
+    {
+        $this->name = $name;
+        $this->image = $image;
+    }
+}
+
+class Feature
+{
+    public string $icon;
+    public string $text;
+
+    public function __construct(string $icon, string $text)
+    {
+        $this->icon = $icon;
+        $this->text = $text;
+    }
+}
+
+class Foto {
+    public string $url;
+    public string $description;
+
+    public function __construct(string $url, string $description) {
+        $this->url = $url;
+        $this->description = $description;
+    }
+}
+
+class Program {
+    public string $title;
+    public string $description;
+    public string $image;
+
+    public function __construct(string $title, string $description, string $image) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->image = $image;
+    }
+}
+
+class Service {
+    public string $title;
+    public string $capacity;
+    public int $price;
+
+    public function __construct(string $title, string $capacity, int $price) {
+        $this->title = $title;
+        $this->capacity = $capacity;
+        $this->price = $price;
+    }
+}
+
+class TourDate {
+    public int $dateID;
+    public string $date;
+    public int $price;
+    public string $discount;
+    public string $details;
+    public array $services;
+    public array $extraFees;
+    public array $pickupSpots;
+
+    public function __construct(int $dateID, string $date, int $price, string $discount, string $details, array $services, array $extraFees, array $pickupSpots) {
+        $this->dateID = $dateID;
+        $this->date = $date;
+        $this->price = $price;
+        $this->discount = $discount;
+        $this->details = $details;
+        $this->services = $services;
+        $this->extraFees = $extraFees;
+        $this->pickupSpots = $pickupSpots;
+    }    
 }

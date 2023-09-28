@@ -1,5 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
+require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
+$tourTypes = getAllTourTypes();
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
@@ -8,6 +10,7 @@ $twig = new \Twig\Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('destinace.html.twig', [
+    'typesOfTours' => $tourTypes,
     'destination' => new Destination('Španělsko', 'img/dovolena.png'),
     'tours' => array(
         new Tour('Hotel Esprit***, Špindlerův Mlýn', 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', 'img/lazne.png'),
@@ -20,49 +23,3 @@ echo $twig->render('destinace.html.twig', [
         new Breadcrumb('Španělsko', '/destinace.php')
     )
 ]);
-
-class Breadcrumb {
-    public string $label;
-    public string $link;
-
-    public function __construct(string $label, string $link) {
-        $this->label = $label;
-        $this->link = $link;
-    }
-}
-
-class Tour
-{
-    public string $name;
-    public int $price;
-    public int $priceDiscount;
-    public int $priceOriginal;
-    public int $nights;
-    public string $meals;
-    public string $destination;
-    public string $image;
-
-    public function __construct(string $name, int $price, int $priceDiscount, int $priceOriginal, int $nights, string $meals, string $destination, string $image)
-    {
-        $this->name = $name;
-        $this->price = $price;
-        $this->priceDiscount = $priceDiscount;
-        $this->priceOriginal = $priceOriginal;
-        $this->nights = $nights;
-        $this->meals = $meals;
-        $this->destination = $destination;
-        $this->image = $image;
-    }
-}
-
-class Destination
-{
-    public string $name;
-    public string $image;
-
-    public function __construct(string $name, string $image)
-    {
-        $this->name = $name;
-        $this->image = $image;
-    }
-}
