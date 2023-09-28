@@ -587,9 +587,9 @@ class Menu_katalog extends Generic_list{
         function get_typ_pobytu($tour_type){
             $ret="";
             while($this->get_next_radek()){
-                echo $this->radek["nazev_typ_web"];
+                //echo $this->radek["nazev_typ_web"];
                 if ($this->radek["nazev_typ_web"] == $tour_type) {
-                    echo "-true";
+                    // "-true";
                     $this->radek["description"] = $this->description[$this->radek["nazev_typ_web"]];
                     $this->radek["foto_url"] = "https://slantour.cz/foto/full/".$this->radek["foto_url"];
                     $tourData = $this->get_tour_data($this->radek["nazev_typ_web"]);
@@ -599,7 +599,7 @@ class Menu_katalog extends Generic_list{
                     $ret = $this->radek;  
                     break;
                 }
-                echo "</br>";
+                //echo "</br>";
             }
             return $ret;
         } 

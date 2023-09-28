@@ -124,79 +124,16 @@
 				</li>
 				<li><span><a href="/typy-zajezdu.php">Typy zájezdů <i class="fas fa-caret-down"></i></a></span>
 					<ul class="megamenu types">
+						{% for tourType in typesOfTours %}
 						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
+							<a href="{{ tourType.url }}">
 								<span class="preview">
-									<img src="/img/poznavaci.jpeg" />
-									<span>Poznávací<br><small>356 zájezdů</small></span>
+									<img src="{{ tourType.image }}" alt="{{ tourType.name }} - {{ tourType.description }}"/>
+									<span>{{ tourType.name }}<br><small>{{ tourType.numberOfTours }} zájezdů</small></span>
 								</span>
 							</a>
 						</li>
-						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
-								<span class="preview">
-									<img src="/img/eurovikendy.jpeg" />
-									<span>Eurovíkendy<br><small>30 zájezdů</small></span>
-								</span>
-							</a>
-						</li>
-						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
-								<span class="preview">
-									<img src="/img/dovolena.jpg" />
-									<span>Dovolená u moře <br><small>30 zájezdů</small></span>
-								</span>
-							</a>
-						</li>
-						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
-								<span class="preview">
-									<img src="/img/lazne.jpeg" />
-									<span>Lázně a Wellness<br><small>30 zájezdů</small></span>
-								</span>
-							</a>
-						</li>
-						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
-								<span class="preview">
-									<img src="/img/sport.jpeg" />
-									<span>Sport<br><small>30 zájezdů</small></span>
-								</span>
-							</a>
-						</li>
-						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
-								<span class="preview">
-									<img src="/img/dovolena.jpg" />
-									<span>Tuzemské pobyty<br><small>30 zájezdů</small></span>
-								</span>
-							</a>
-						</li>
-						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
-								<span class="preview">
-									<img src="/img/eurovikendy.jpeg" />
-									<span>Fly and Drive <br><small>30 zájezdů</small></span>
-								</span>
-							</a>
-						</li>
-						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
-								<span class="preview">
-									<img src="/img/dovolena.jpg" />
-									<span>Exotika<br><small>30 zájezdů</small></span>
-								</span>
-							</a>
-						</li>
-						<li class="megamenu-item">
-							<a href="../typ-zajezdu.php">
-								<span class="preview">
-									<img src="/img/poznavaci.jpeg" />
-									<span>Jednodenní<br><small>30 zájezdů</small></span>
-								</span>
-							</a>
-						</li>
-												
+						{% endfor %}
 					</ul>
 				</li>
 				
