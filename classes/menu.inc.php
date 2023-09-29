@@ -391,6 +391,26 @@ class Menu_katalog extends Generic_list{
 					ORDER BY `typ_serial`.`id_typ` , `cross_zeme`.`nazev_zeme` 
 					";			
 		//echo $dotaz;			
+		}else if( $typ=="dotaz_zeme_list"){
+			// vsechny zeme s aktivnim zajezdem s foto
+				$dotaz="
+                    SELECT DISTINCT  `cross_zeme`.`id_zeme`,  `cross_zeme`.`nazev_zeme` , `cross_zeme`.`nazev_zeme_web` , foto.foto_url
+                    FROM 
+                    `zeme_serial` AS `cross_zeme_serial` 
+                    JOIN `zeme` AS `cross_zeme`  ON ( `cross_zeme_serial`.`id_zeme` = `cross_zeme`.`id_zeme` )                                                
+                    join `serial` AS `cross_serial`  ON ( `cross_serial`.`id_serial` = `cross_zeme_serial`.`id_serial` and `cross_serial`.`jazyk` != \"english\" and `cross_serial`.`nezobrazovat`<>1)
+                    join `zajezd` AS `cross_zajezd` ON ( `cross_serial`.`id_serial` = `cross_zajezd`.`id_serial` and `cross_zajezd`.`nezobrazovat_zajezd`<>1 and  (`cross_zajezd`.`od` >=\"".Date("Y-m-d")."\" or (`cross_serial`.`dlouhodobe_zajezdy`=1 and `cross_zajezd`.`do` >=\"".Date("Y-m-d")."\") )) 
+                                            
+                    left join (
+                                `informace` join
+                                foto_informace on (`informace`.`id_informace` = `foto_informace`.`id_informace` and `foto_informace`.`zakladni_foto` = 1) join
+                                foto on (`foto_informace`.`id_foto` = `foto`.`id_foto`)
+                            ) on (`informace`.`id_informace` = `cross_zeme`.`id_info`)
+                    WHERE cross_zeme.geograficka_zeme = 1
+                    ORDER BY `cross_zeme`.`nazev_zeme`;
+					";			
+		//echo "<br><br>";			
+		//echo $dotaz;			
 		}else if($typ=="dotaz_typy"){
 			//nemam ani nazev typu ani zeme
                             if($this->nazev_zeme!=""){
@@ -540,8 +560,46 @@ class Menu_katalog extends Generic_list{
 		
 		//echo $dotaz;
 		return $dotaz;
-	}		     
+	}		  
         
+        function get_zeme_list(){
+            $ret="";
+            $i=0;            
+            $ret = [];
+            while($this->get_next_radek()){
+                //echo $this->radek["nazev_zeme_web"];
+                $this->radek["foto_url"] = "https://slantour.cz/foto/full/".$this->radek["foto_url"];
+                $tourData = $this->get_country_data($this->radek["id_zeme"]);
+                
+                $this->radek["tourCount"] = $tourData["countSerial"];
+                $this->radek["tourPrice"] = $tourData["min_cena"];
+                
+                $ret[$this->radek["nazev_zeme_web"]] = $this->radek;  
+                //echo "</br>";
+            }
+            return $ret;
+        } 
+
+        function get_country_data($id_zeme){
+            $query = "
+                select count(distinct `serial`.`id_serial`) as countSerial, min(`cena_zajezd`.`castka`) as min_cena
+                from zeme_serial join 
+                `serial` on (`serial`.`id_serial` = `zeme_serial`.`id_serial`)  join
+                `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`) join
+                `cena` on (`cena`.`id_serial` = `serial`.`id_serial` and `cena`.`zakladni_cena`=1) join
+                `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd`  and `cena_zajezd`.`nezobrazovat`!=1 and `cena_zajezd`.`castka`>100) 
+                where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and
+                    (`zajezd`.`od` >='".Date("Y-m-d")."' or (`zajezd`.`do` >'".Date("Y-m-d")."' and `serial`.`dlouhodobe_zajezdy`=1 ) ) 
+                        and zeme_serial.id_zeme = '".$id_zeme."' 
+            ";
+            
+            $data = $this->database->query($query)
+		 or $this->chyba("Chyba při dotazu do databáze");
+            if ($row = mysqli_fetch_array($data)){
+                return $row;                          
+            }
+        }
+
         function get_typy_pobytu(){
             $ret="";
             $i=0;            

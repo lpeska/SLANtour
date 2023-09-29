@@ -13,7 +13,7 @@
     <img src="../img/poznavaci.png" alt="Slide background">
     <div class="wrapper">
         <div class="container">
-            <h1 class="fadeInUp"><span></span>Typy zájezdů</h1>
+            <h1 class="fadeInUp"><span></span>Země</h1>
         </div>
     </div>
 </section>
@@ -25,14 +25,14 @@
 
     <div class="container margin_35_35">
         <div class="row">
-			{% for type in typesOfTours %}
+			{% for country in countries %}
 			<div class="col-xl-3 col-lg-6 col-md-6">
-				<a href="{{ type.url }}" class="grid_item">
+				<a href="{{ country.url }}" class="grid_item">
 					<figure>
-						<img src="{{ type.image }}" class="img-fluid" alt="">
+						<img src="{{ country.image }}" class="img-fluid" alt="">
 						<div class="info">
-							<h3>{{type.name}}</h3>
-							{{type.numberOfTours}} zájezdů od {{type.priceFrom}} Kč
+							<h3>{{country.name}}</h3>
+							{{country.numberOfTours}} zájezdů od {{country.priceFrom}} Kč
 						</div>
 					</figure>
 				</a>

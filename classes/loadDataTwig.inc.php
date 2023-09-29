@@ -1,8 +1,9 @@
 <?php
-require_once "./core/load_core.inc.php"; 
+require_once "./core/load_core.inc.php";
 require_once "./classes/menu.inc.php"; //seznam serialu
 require_once "./classes/serial_lists.inc.php"; //seznam serialu
 require_once "./classes/destinace_list.inc.php"; //menu katalogu
+require_once "./classes/informace_zeme.inc.php"; //seznam informaci katalogu
 
 function getDiscountTours(String $typeName)
 {
@@ -158,6 +159,46 @@ function getAllTourTypes()
     return $tourTypes;
 }
 
+function getCountry($countryName)
+{
+    echo $countryName;
+    echo "</br></br>";    
+    $zemeDB = new Informace_zeme("zeme", "", $countryName, "", 0, "random", 1);
+    $zemeDB->get_next_radek();
+    echo print_r($zemeDB);
+    echo "</br></br>";
+    echo "Nazev zeme: " . $zemeDB->get_nazev_zeme();
+//     echo "</br></br>";
+//     echo "Popis: " . $zemeDB->get_popis();
+//     echo "</br></br>";
+//     echo "Typ: " . $zemeDB->get_typ();
+//     echo "</br></br>";
+//     echo "Nazev: " . $zemeDB->get_nazev();
+}
+
+function getAllCountries()
+{
+    /*Loading countries*/
+    $menu = new Menu_katalog("dotaz_zeme_list", "", "", "");
+    $countriesDB = $menu->get_zeme_list();
+    //echo print_r($countriesDB);
+
+    $countries = array();
+    foreach ($countriesDB as $country) {
+        $c = new Country(
+            $country["id_zeme"],
+            $country["nazev_zeme"],
+            $country["tourCount"],
+            $country["tourPrice"],
+            $country["foto_url"],
+            "/zeme/" . $country["nazev_zeme_web"]
+        );
+
+        $countries[$country["id_zeme"]] = $c;
+    }
+    return $countries;
+}
+
 function getTotalTours(array $tourTypes)
 {
     $totalTours = 0;
@@ -280,15 +321,23 @@ class News
     }
 }
 
-class Destination
+class Country
 {
+    public int $id;
     public string $name;
+    public int $numberOfTours;
+    public int $priceFrom;
     public string $image;
+    public $url;
 
-    public function __construct(string $name, string $image)
+    public function __construct(int $id, string $name, int $numberOfTours, int $priceFrom, string $image, $url)
     {
+        $this->id = $id;
         $this->name = $name;
+        $this->numberOfTours = $numberOfTours;
+        $this->priceFrom = $priceFrom;
         $this->image = $image;
+        $this->url = $url;
     }
 }
 
@@ -304,41 +353,48 @@ class Feature
     }
 }
 
-class Foto {
+class Foto
+{
     public string $url;
     public string $description;
 
-    public function __construct(string $url, string $description) {
+    public function __construct(string $url, string $description)
+    {
         $this->url = $url;
         $this->description = $description;
     }
 }
 
-class Program {
+class Program
+{
     public string $title;
     public string $description;
     public string $image;
 
-    public function __construct(string $title, string $description, string $image) {
+    public function __construct(string $title, string $description, string $image)
+    {
         $this->title = $title;
         $this->description = $description;
         $this->image = $image;
     }
 }
 
-class Service {
+class Service
+{
     public string $title;
     public string $capacity;
     public int $price;
 
-    public function __construct(string $title, string $capacity, int $price) {
+    public function __construct(string $title, string $capacity, int $price)
+    {
         $this->title = $title;
         $this->capacity = $capacity;
         $this->price = $price;
     }
 }
 
-class TourDate {
+class TourDate
+{
     public int $dateID;
     public string $date;
     public int $price;
@@ -348,7 +404,8 @@ class TourDate {
     public array $extraFees;
     public array $pickupSpots;
 
-    public function __construct(int $dateID, string $date, int $price, string $discount, string $details, array $services, array $extraFees, array $pickupSpots) {
+    public function __construct(int $dateID, string $date, int $price, string $discount, string $details, array $services, array $extraFees, array $pickupSpots)
+    {
         $this->dateID = $dateID;
         $this->date = $date;
         $this->price = $price;
@@ -357,5 +414,5 @@ class TourDate {
         $this->services = $services;
         $this->extraFees = $extraFees;
         $this->pickupSpots = $pickupSpots;
-    }    
+    }
 }

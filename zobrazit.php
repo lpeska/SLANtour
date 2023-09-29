@@ -97,9 +97,6 @@ $destinace_nazev_web = Serial_list::nazev_web_static($serial->get_destinace()); 
 
 $location = $zeme_nazev;
 
-//$breadCrumbs = array(new Breadcrumb($type->name, $type->url));
-//TODO breadcrumbs
-
 if($destinace_nazev){
     $location .= ", " . $destinace_nazev;
     
@@ -118,6 +115,12 @@ $pozn = $serial->get_poznamky();
 if ($zobrazit_zajezd) {
     $pozn .= $serial->get_poznamky_zajezd();
 }
+
+$breadcrumbs = array(
+    new Breadcrumb($typ_serial, "/zajezdy/typ-zajezdu/" . $typ_serial_web),
+    new Breadcrumb($zeme_nazev, "/zajezdy/katalog/" . $zeme_nazev_web),
+    new Breadcrumb($serial_nazev, "/zajezdy/zobrazit/" . $serial_nazev_web)
+);
 
 //var_dump($serial);
 
@@ -319,6 +322,7 @@ echo $twig->render('zajezd.html.twig', [
         new Program('Soho a China Town', 'Dopoledne se můžete vydáte k  návštěvě těch míst a muzeí, které jste během prvních dní ještě navštívit nestihli  (v doprovodu průvodce či samostatně). Navštívit můžete muzeum voskových figurín Madame Tussaud´s případně  rozsáhlé Britské muzeum. Nebo si na Baker Street zajdete na návštěvu k Sherlocku Holmesovi (zda bude doma nemůžeme garantovat).  Projdete se rovněž pro proslulé Oxford Street a nevynecháte ani pověstné Soho a Čínskou čtvrť. Odpoledne odjezd na letiště a odlet  zpět do Prahy.', '/img/dovolena.jpg')
     ),*/
     'dates'  => $dates,
+    'breadcrumbs' => $breadcrumbs
     /*array(
         new TourDate('22.04. - 25.04.2022', 16900, 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.'), 
         new TourDate('11.05. - 16.05.2022', 15900, 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.'), 

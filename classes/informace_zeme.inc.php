@@ -23,7 +23,7 @@ class Informace_zeme extends Generic_list{
 	protected $database; //trida pro odesilani dotazu	
 	
 //------------------- KONSTRUKTOR  -----------------	
-	/**konstruktor podle specifikovaného filtru na typ, podtyp a zemi*/
+	/**konstruktor podle specifikovanï¿½ho filtru na typ, podtyp a zemi*/
 	function __construct($typ, $podtyp, $nazev_zeme, $id_destinace, $zacatek, $order_by, $pocet_zaznamu=POCET_ZAZNAMU){
 		//trida pro odesilani dotazu
 		$this->database = Database::get_instance();
@@ -39,9 +39,9 @@ class Informace_zeme extends Generic_list{
 		
 		
 		if($this->nazev_zeme){
-		//ziskani nazvu zemì
+		//ziskani nazvu zemï¿½
 			$data_zeme = $this->database->query( $this->create_query("get_nazev_zeme") )
-		 		or $this->chyba("Chyba pøi dotazu do databáze!");
+		 		or $this->chyba("Chyba pï¿½i dotazu do databï¿½ze!");
 			$zeme = mysqli_fetch_array($data_zeme);
 			$this->nazev_zeme_cz = $zeme["nazev_zeme"];		
 		}
@@ -49,7 +49,7 @@ class Informace_zeme extends Generic_list{
 
 	//ziskani seznamu z databaze	
 		$this->data=$this->database->query( $this->create_query("select_seznam") )
-		 	or $this->chyba("Chyba pøi dotazu do databáze");
+		 	or $this->chyba("Chyba pï¿½i dotazu do databï¿½ze");
 		
 	//kontrola zda jsme ziskali nejake zajezdy
 		$this->pocet_zajezdu = mysqli_num_rows($this->data);
@@ -130,7 +130,7 @@ class Informace_zeme extends Generic_list{
                         }			
 			
 					
-			//echo $dotaz;
+			echo $dotaz;
 			return $dotaz;
 			
 
@@ -141,7 +141,7 @@ class Informace_zeme extends Generic_list{
 				where `nazev_zeme_web` = '".$this->nazev_zeme."'
 				limit 1
 				";
-			//echo $dotaz;
+			echo $dotaz;
 			return $dotaz;				
 		}
 	}	
@@ -219,7 +219,7 @@ class Informace_zeme extends Generic_list{
 		}
 		
 		//odkaz na prvni stranku
-		$vypis = "<div class=\"strankovani\"><a href=\"?str=0\" title=\"první stránka zájezdù\">&lt;&lt;</a> &nbsp;"; 
+		$vypis = "<div class=\"strankovani\"><a href=\"?str=0\" title=\"prvnï¿½ strï¿½nka zï¿½jezdï¿½\">&lt;&lt;</a> &nbsp;"; 
 		
 		//odkaz na dalsi stranky z rozsahu
 		while( ($act_str <= $this->pocet_zajezdu) and ($act_str <= $this->zacatek + (10*$this->pocet_zaznamu) ) ){
@@ -233,7 +233,7 @@ class Informace_zeme extends Generic_list{
 		
 		//odkaz na posledni stranku
 		$posl_str=$this->pocet_zaznamu*floor($this->pocet_zajezdu/$this->pocet_zaznamu);
-			$vypis = $vypis." &nbsp; <a href=\"?str=".$posl_str."\" title=\"poslední stránka zájezdù\">&gt;&gt;</a></div>";	
+			$vypis = $vypis." &nbsp; <a href=\"?str=".$posl_str."\" title=\"poslednï¿½ strï¿½nka zï¿½jezdï¿½\">&gt;&gt;</a></div>";	
 		
 		return $vypis;
 	}	
@@ -243,11 +243,11 @@ class Informace_zeme extends Generic_list{
 
 		//tvorba vypisu titulku
 		if($this->nazev_zeme_cz!=""){
-			return $this->nazev_zeme_cz." | Informace a zajímavosti";
+			return $this->nazev_zeme_cz." | Informace a zajï¿½mavosti";
 		}else if($this->nazev_typ!=""){
-			return $this->nazev_typ." | Informace a zajímavosti";
+			return $this->nazev_typ." | Informace a zajï¿½mavosti";
 		}else{
-			return " Informace a zajímavosti";
+			return " Informace a zajï¿½mavosti";
 		}
 	}
 	
@@ -255,11 +255,11 @@ class Informace_zeme extends Generic_list{
 	function show_nadpis(){
 		//tvorba vypisu titulku
 		if( $this->nazev_zeme_cz!=""){
-			return $this->nazev_zeme_cz." -  Informace a zajímavosti";
+			return $this->nazev_zeme_cz." -  Informace a zajï¿½mavosti";
 		}else if($this->nazev_typ!=""){
-			return $this->nazev_typ." -  Informace a zajímavosti";
+			return $this->nazev_typ." -  Informace a zajï¿½mavosti";
 		}else{
-			return " Informace a zajímavosti";
+			return " Informace a zajï¿½mavosti";
 		}
 	}	
 	
@@ -267,11 +267,11 @@ class Informace_zeme extends Generic_list{
 	function show_keyword(){
 		//tvorba vypisu titulku
 		if($this->nazev_zeme_cz!=""){
-			return $this->nazev_zeme_cz.",  Informace, zajímavosti, pobytová místa";
+			return $this->nazev_zeme_cz.",  Informace, zajï¿½mavosti, pobytovï¿½ mï¿½sta";
 		}else if($this->nazev_typ!=""){
-			return $this->nazev_typ.", Katalog zájezdù";
+			return $this->nazev_typ.", Katalog zï¿½jezdï¿½";
 		}else{
-			return " Informace, zajímavosti,pobytová místa,";
+			return " Informace, zajï¿½mavosti,pobytovï¿½ mï¿½sta,";
 		}
 	}	
 
@@ -279,11 +279,11 @@ class Informace_zeme extends Generic_list{
 	function show_description(){
 		//tvorba vypisu titulku
 		if($this->nazev_zeme_cz!=""){
-			return $this->nazev_zeme_cz.",Informace, zajímavosti,pobytová místa,";
+			return $this->nazev_zeme_cz.",Informace, zajï¿½mavosti,pobytovï¿½ mï¿½sta,";
 		}else if($this->nazev_typ!=""){
-			return $this->nazev_typ.", Informace, zajímavosti,pobytová místa,";
+			return $this->nazev_typ.", Informace, zajï¿½mavosti,pobytovï¿½ mï¿½sta,";
 		}else{
-			return "Informace, zajímavosti,pobytová místa,";
+			return "Informace, zajï¿½mavosti,pobytovï¿½ mï¿½sta,";
 		}
 	}	
 		
