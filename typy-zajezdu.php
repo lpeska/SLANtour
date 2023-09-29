@@ -1,5 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
+require_once "./core/load_core.inc.php"; 
 require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
 $tourTypes = getAllTourTypes();
 

@@ -1,4 +1,5 @@
 <?php
+require_once "./core/load_core.inc.php"; 
 require_once "./classes/menu.inc.php"; //seznam serialu
 require_once "./classes/serial_lists.inc.php"; //seznam serialu
 require_once "./classes/destinace_list.inc.php"; //menu katalogu
