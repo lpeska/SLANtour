@@ -10,7 +10,18 @@ $path = explode('/',$values['path']);
 
 $countryName = $path[count($path) - 1];
 
-getCountry($countryName);
+$country = getCountry($countryName);
+
+$breadCrumbs = array(
+    new Breadcrumb('Země', '/zeme-seznam.php'),
+    new Breadcrumb($country->name, $country->url)
+);
+
+$discountTours = getDiscountTours("", $countryName);
+
+$popularTours = getPopularTours("", $countryName);
+
+$newTours = getNewTours("", $countryName);
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
@@ -20,10 +31,11 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('zeme.html.twig', [
     'typesOfTours' => $tourTypes,
-    'destination' => new Country('Španělsko', 'img/dovolena.png'),
-    
-    'breadcrumbs' => array(
-        new Breadcrumb('Pobytové zájezdy', '/zajezdy/typ-zajezdu/poznavaci-zajezdy'),
-        new Breadcrumb('Španělsko', '/destinace.php')
-    )
+    'destination' => $country,
+    'popularTours' => $popularTours,
+    'discountTours' => $discountTours,
+    'totalTours' => $country->numberOfTours,
+    "totalDiscountedTours" => 157,
+    'newTours' => $newTours,
+    'breadcrumbs' => $breadCrumbs
 ]);

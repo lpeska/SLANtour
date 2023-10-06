@@ -17,11 +17,11 @@ $breadCrumbs = array(
     new Breadcrumb($type->name, $type->url)
 );
 
-$discountTours = getDiscountTours($typeName);
+$discountTours = getDiscountTours($typeName, "");
 
-$popularTours = getPopularTours($typeName);
+$popularTours = getPopularTours($typeName, "");
 
-$newTours = getNewTours($typeName);
+$newTours = getNewTours($typeName, "");
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [

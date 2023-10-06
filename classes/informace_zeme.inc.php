@@ -130,7 +130,7 @@ class Informace_zeme extends Generic_list{
                         }			
 			
 					
-			echo $dotaz;
+			//echo $dotaz;
 			return $dotaz;
 			
 
@@ -141,7 +141,7 @@ class Informace_zeme extends Generic_list{
 				where `nazev_zeme_web` = '".$this->nazev_zeme."'
 				limit 1
 				";
-			echo $dotaz;
+			//echo $dotaz;
 			return $dotaz;				
 		}
 	}	
@@ -288,6 +288,7 @@ class Informace_zeme extends Generic_list{
 	}	
 		
 	/*metody pro pristup k parametrum*/
+	function get_id_zeme() { return $this->radek["id_zeme"];}
 	function get_id_informace() { return $this->radek["id_informace"];}
 	function get_nazev() { return $this->radek["nazev"];}
 	function get_nazev_web() { return $this->radek["nazev_web"];}

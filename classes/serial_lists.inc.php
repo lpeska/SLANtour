@@ -1086,7 +1086,7 @@ class Serial_list extends Generic_list {
                             on (`foto_serial`.`id_serial` = `serial`.`id_serial` and `foto_serial`.`zakladni_foto`=1)                                
 
                     WHERE `serial`.`nezobrazovat`<>1 and
-                    " .  $where_typ  . " 1
+                    " .  $where_typ  . $where_zeme . " 1
                     GROUP BY `serial`.`id_serial`
                     HAVING `pocet` > 1
                     ORDER BY `pocet` desc    

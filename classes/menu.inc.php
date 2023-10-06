@@ -563,8 +563,6 @@ class Menu_katalog extends Generic_list{
 	}		  
         
         function get_zeme_list(){
-            $ret="";
-            $i=0;            
             $ret = [];
             while($this->get_next_radek()){
                 //echo $this->radek["nazev_zeme_web"];
@@ -576,6 +574,24 @@ class Menu_katalog extends Generic_list{
                 
                 $ret[$this->radek["nazev_zeme_web"]] = $this->radek;  
                 //echo "</br>";
+            }
+            return $ret;
+        } 
+
+        function get_zeme($nazev_zeme_web){
+            $ret = [];
+            while($this->get_next_radek()){
+                // echo $this->radek["nazev_zeme_web"];
+                if ($this->radek["nazev_zeme_web"] == $nazev_zeme_web) {
+                    $this->radek["foto_url"] = "https://slantour.cz/foto/full/".$this->radek["foto_url"];
+                    $tourData = $this->get_country_data($this->radek["id_zeme"]);
+                    $this->radek["tourCount"] = $tourData["countSerial"];
+                    $this->radek["tourPrice"] = $tourData["min_cena"];
+                    
+                    $ret = $this->radek;
+                    break;
+                }
+                // echo " </br>";
             }
             return $ret;
         } 

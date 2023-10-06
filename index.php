@@ -14,9 +14,9 @@ require_once "./classes/destinace_list.inc.php"; //menu katalogu
 $tourTypes = getAllTourTypes();
 $totalTours = getTotalTours($tourTypes);
 
-$discountTours = getDiscountTours("");
-$popularTours = getPopularTours("");
-$newTours = getNewTours("");
+$discountTours = getDiscountTours("", "");
+$popularTours = getPopularTours("", "");
+$newTours = getNewTours("", "");
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [

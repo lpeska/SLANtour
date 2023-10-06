@@ -5,12 +5,12 @@ require_once "./classes/serial_lists.inc.php"; //seznam serialu
 require_once "./classes/destinace_list.inc.php"; //menu katalogu
 require_once "./classes/informace_zeme.inc.php"; //seznam informaci katalogu
 
-function getDiscountTours(String $typeName)
+function getDiscountTours(String $typeName, $countryName)
 {
     $discountTours = array();
     $slevy_array = array();
     $slevy_poradi = array();
-    $slevy_list = new Serial_list($typeName, "", "", "", "", "", "", "", "", "random", 40, "select_slevy");
+    $slevy_list = new Serial_list($typeName, $countryName, "", "", "", "", "", "", "", "random", 40, "select_slevy");
     while ($slevy_list->get_next_radek()) {
         $slevyObj = $slevy_list->show_list_item("slevy_list");
 
@@ -60,11 +60,11 @@ function getDiscountTours(String $typeName)
     return $discountTours;
 }
 
-function getPopularTours($typeName)
+function getPopularTours($typeName, $countryName)
 {
     $popularTours = array();
     $popular_array = array();
-    $popular_zajezdy = new Serial_list($typeName, "", "", "", "", "", "", "", "", "random", 10, "select_vahy");
+    $popular_zajezdy = new Serial_list($typeName, $countryName, "", "", "", "", "", "", "", "random", 10, "select_vahy");
     $i = 0;
     while ($popular_zajezdy->get_next_radek()) {
         $i++;
@@ -89,11 +89,11 @@ function getPopularTours($typeName)
     return $popularTours;
 }
 
-function getNewTours($typeName)
+function getNewTours($typeName, $countryName)
 {
     $newTours = array();
     $novinky_array = array();
-    $novinky_zajezdy = new Serial_list($typeName, "", "", "", "", "", "", "", "", "random", 20, "select_nove_zajezdy");
+    $novinky_zajezdy = new Serial_list($typeName, $countryName, "", "", "", "", "", "", "", "random", 20, "select_nove_zajezdy");
     $i = 0;
     while ($novinky_zajezdy->get_next_radek()) {
         $i++;
@@ -161,19 +161,21 @@ function getAllTourTypes()
 
 function getCountry($countryName)
 {
-    echo $countryName;
-    echo "</br></br>";    
-    $zemeDB = new Informace_zeme("zeme", "", $countryName, "", 0, "random", 1);
-    $zemeDB->get_next_radek();
-    echo print_r($zemeDB);
-    echo "</br></br>";
-    echo "Nazev zeme: " . $zemeDB->get_nazev_zeme();
-//     echo "</br></br>";
-//     echo "Popis: " . $zemeDB->get_popis();
-//     echo "</br></br>";
-//     echo "Typ: " . $zemeDB->get_typ();
-//     echo "</br></br>";
-//     echo "Nazev: " . $zemeDB->get_nazev();
+    $menu = new Menu_katalog("dotaz_zeme_list", "", "", "");
+    $countryDB = $menu->get_zeme($countryName);
+    $infoDB = new Informace_zeme("zeme", "", $countryName, "", 0, "random", 1);
+    $infoDB->get_next_radek();
+
+    $country = new Country(
+        $infoDB->get_id_zeme(),
+        $infoDB->get_nazev_zeme(),
+        $infoDB->get_popisek(),
+        $countryDB["tourCount"],
+        $countryDB["tourPrice"],
+        "https://slantour.cz/foto/full/".$infoDB->get_foto_url(),
+        "/zeme/" . $infoDB->get_nazev_web()
+    );
+    return $country;
 }
 
 function getAllCountries()
@@ -188,6 +190,7 @@ function getAllCountries()
         $c = new Country(
             $country["id_zeme"],
             $country["nazev_zeme"],
+            "no description",
             $country["tourCount"],
             $country["tourPrice"],
             $country["foto_url"],
@@ -325,15 +328,17 @@ class Country
 {
     public int $id;
     public string $name;
+    public string $description;
     public int $numberOfTours;
     public int $priceFrom;
     public string $image;
     public $url;
 
-    public function __construct(int $id, string $name, int $numberOfTours, int $priceFrom, string $image, $url)
+    public function __construct(int $id, string $name, string $description, int $numberOfTours, int $priceFrom, string $image, $url)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->description = $description;
         $this->numberOfTours = $numberOfTours;
         $this->priceFrom = $priceFrom;
         $this->image = $image;

@@ -16,6 +16,6 @@ echo $twig->render('zeme-seznam.html.twig', [
     'typesOfTours' => $tourTypes,
     'countries' => $countries,
     'breadcrumbs' => array(
-        new Breadcrumb('Destinace', '/destinace-seznam.php')
+        new Breadcrumb('Země', '/zeme-seznam.php')
     )
 ]);
