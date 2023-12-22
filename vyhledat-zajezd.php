@@ -46,6 +46,7 @@ $jsonDataT = json_encode($tourTypesArr);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
 file_put_contents("tour_types.json",$jsonDataT,LOCK_EX);
 
+echo memory_get_peak_usage(true);
 
 /*
 $res = $serialCol->get_all_zeme();
