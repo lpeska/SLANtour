@@ -95,17 +95,30 @@ class Serial_collection extends Generic_list {
         return $data;
     }      
 
+    function get_all_sales_vol() {
+        $query = 
+                "select id_serial, count(id_objednavka) as pocet, sum(celkova_cena) as suma from `objednavka` 
+                    where datum_rezervace >= '".Date("Y-m-d",strtotime("-18 months"))."'
+                    group by id_serial
+                    ";
+        echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }       
     
     function get_all_tour_types() {
         $query = 
-                "select * from `typ_serial` 
-                    join (`serial` join zajezd on 
-                            (zajezd.id_serial = serial.id_serial and 
-                            zajezd.do >= '".Date("Y-m-d")."' and
-                            zajezd.nezobrazovat_zajezd <> 1)    
-                         )
-                         on (typ_serial.id_typ = serial.id_typ and
-                            serial.nezobrazovat <> 1)    
+                "select distinct `typ_serial`.id_typ, nazev_typ, nazev_typ_web from `typ_serial` 
+                                    join (`serial` join zajezd on 
+                                            (zajezd.id_serial = serial.id_serial and 
+                                            `zajezd`.`nezobrazovat_zajezd`<>1 and 
+                                            `serial`.`nezobrazovat`<>1 and 
+                                            (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1))
+                                            )    
+                                         )
+                                         on (typ_serial.id_typ = serial.id_typ and
+                                            serial.nezobrazovat <> 1);                   
                     ";
         #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
@@ -114,6 +127,7 @@ class Serial_collection extends Generic_list {
     }        
 
     function get_zajezdy_base() {
+        //`objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`, `serial`.`nazev_web`,
         $query = 
                 "select 
                     `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
@@ -135,6 +149,21 @@ class Serial_collection extends Generic_list {
         return $data;
     }         
 
+    function get_all_dates_for_id_serial($id_serial) {
+        $id_serial = intval($id_serial);
+        $query = 
+                "select 
+                    count(`id_zajezd`) as `pocet`
+                from `serial` join
+                    `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)
+                where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and `serial`.`id_serial` =  $id_serial 
+                 ";
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }  
+    
     function get_full_data_from_zajezdIDs($zajezdIDs) {
         $query = 
                 "select 
@@ -473,6 +502,32 @@ class Serial_collection extends Generic_list {
         }
     }
 
+    static function get_dates($radek) {
+        $from = explode("-",$radek["od"]);
+        $to = explode("-",$radek["do"]);
+        
+        if($from[0] == $to[0]){
+            if($from[1] == $to[1]){
+                if($from[2] == $to[2]){
+                    return $from[2].".".$from[1].". ".$from[0];
+                }else{
+                    return $from[2].". - ".$to[2].".".$from[1].". ".$from[0];
+                }
+            }else{
+                return $from[2].".".$from[1].". - ".$to[2].".".$to[1].". ".$from[0];
+            }
+        }else{
+            return $from[2].".".$from[1].". ".$from[0]." - ".$to[2].".".$to[1].". ".$to[0];
+        }
+        
+        if($radek["id_sablony_zobrazeni"] != 12){
+            return $radek["nazev"];
+        }else if ($radek["nazev_ubytovani"]) {
+            return $radek["nazev_ubytovani"] . ", " . $radek["nazev"];
+        }
+    }
+
+    
 
     function get_description($radek) {
         return strip_tags($radek["popisek"].$radek["popisek_ubytovani"], "<b><strong><a><br><br/>");

@@ -43,7 +43,11 @@
                                                 <div class="price_discount">{{tour.priceOriginal}} Kč</div>
                                             {% endif %}
                                             <span class="price"><strong>{{tour.price}} Kč</strong> / os.</span>
-                                            <span class="dates">12. - 14.6. 2023 <a href="">(+5 dalších termínů)</a></span>
+                                            <span class="dates">{{tour.dates}}<a href="">
+                                                {% if tour.totalOtherDates > 0 %}    
+                                                    (+ {{tour.totalOtherDates }}  dalších termínů)
+                                                {% endif %}
+                                                </a></span>
                                         <li>
                                             <a href="../zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}" class="btn_1">Detail zájezdu</a>
                                         </li>

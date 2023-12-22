@@ -1,5 +1,8 @@
 <?php
+
+
 require_once 'vendor/autoload.php';
+
 
 
 require_once "./core/load_core.inc.php"; 
@@ -8,12 +11,18 @@ require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, men
 $tourTypes = getAllTourTypes();
 $serialCol = new Serial_collection();
 
+
+
+
 #get portion of data with zajezdy
 $resZ = $serialCol->get_zajezdy_base();
 $zajezdyArr = mysqli_fetch_all($resZ, MYSQLI_ASSOC);
 $jsonDataZ = json_encode($zajezdyArr);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
 file_put_contents("data.json",$jsonDataZ,LOCK_EX);
+unset($jsonDataZ);
+
+
 
 $resZZ = $serialCol->get_all_zeme_serial();
 $zemeDB = mysqli_fetch_all($resZZ, MYSQLI_ASSOC);
@@ -22,8 +31,12 @@ $zemeArr = [];
 foreach ($zemeDB as $key => $z) {
     $zemeArr[$z["sId"]] = $z;    
 }    
+unset($zemeDB);
 $jsonDataZZ = json_encode($zemeArr);
 file_put_contents("serial_zeme.json",$jsonDataZZ,LOCK_EX);
+unset($jsonDataZZ);
+
+
 
 $resD = $serialCol->get_all_destinace_serial();
 $destDB = mysqli_fetch_all($resD, MYSQLI_ASSOC);
@@ -31,8 +44,10 @@ $destArr = [];
 foreach ($destDB as $key => $d) {
     $destArr[$d["sId"]] = $d;  
 }
+unset($destDB);
 $jsonDataD = json_encode($destArr);
 file_put_contents("serial_destinace.json",$jsonDataD,LOCK_EX);
+unset($jsonDataD);
 
 
 
@@ -42,11 +57,12 @@ $tourTypesArr = [];
 foreach ($tourTypesDB as $key => $tt) {
     $tourTypesArr[$tt["id_typ"]] = $tt;
 }
+unset($tourTypesDB);
 $jsonDataT = json_encode($tourTypesArr);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
 file_put_contents("tour_types.json",$jsonDataT,LOCK_EX);
-
-echo memory_get_peak_usage(true);
+unset($jsonDataT);
+//echo memory_get_peak_usage(true)."/".memory_get_usage(true)."\n";
 
 /*
 $res = $serialCol->get_all_zeme();
@@ -110,15 +126,7 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
     'sales' => array('Akční nabídky', 'Slevy', 'Last Minute'),
     'tourLengths' => array("variabilni"=>'Variabilní', "jednodenni"=>'Jednodenní', "1-5noci"=>'1-5 nocí', "6-10noci"=>'6-10 nocí', "nad10noci"=>">10 nocí"),
     'tours' => array(
-        new Tour('Hotel Esprit***, Špindlerův Mlýn', "", 'Poznávací', 0, 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', null, $features, $description),
-        new Tour('Víkend v Budapešti - vlakem', "", 'Eurovíkendy', 0, 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', null, $features, $description),
-        new Tour('Jordánsko s pobytem u Rudého moře', "", 'Dovolená u moře', 0, 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', null, $features, $description),
-        new Tour('Villa Dino, Mariánské Lázně', "", 'Sport', 0, 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', null, $features, $description),
-        new Tour('Hotel Esprit***, Špindlerův Mlýn', "", 'Poznávací', 0, 1470, 29, 2070, 4, 'Polopenze', 'Krkonoše', '/img/lazne.png', null, $features, $description),
-        new Tour('Víkend v Budapešti - vlakem', "", 'Exotické zájezdy', 0, 3590, 0, 3590, 4, 'bez stravy', 'Maďarsko', '/img/dovolena.png', null, $features, $description),
-        new Tour('Jordánsko s pobytem u Rudého moře', "", 'Lázně & Wellness', 0, 29990, 25, 39986, 7, 'All-inclusive', 'Jordánsko', '/img/poznavaci.png', null, $features, $description),
-        new Tour('Villa Dino, Mariánské Lázně', "", 'Lázně & Wellness', 0, 4790, 0, 4790, 4, 'Polopenze', 'Mariánské Lázně', '/img/lazne.png', null, $features, $description)
-    ),
+      ),
     'breadcrumbs' => array(
         new Breadcrumb('Zájezdy', '../vyhledat-zajezd.php')
     )
