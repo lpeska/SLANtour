@@ -1,4 +1,4 @@
-                <div class="isotope-wrapper">
+          
                     {% for tour in tours %}
                         <div class="box_list isotope-item popular">
                             <div class="row no-gutters">
@@ -35,19 +35,23 @@
                                             
                                             </ul>
                                         </div>
-                                        <p class="tour_description">{{tour.description}}</p>
+                                        <p class="tour_description">{{tour.description|raw}}</p>
                                     </div>
                                     <ul class="footer">
                                         <li>
                                             {% if tour.priceDiscount > 0 %}
-                                                <div class="price_discount">{{tour.priceOriginal}} Kč</div>
+                                                {% if (tour.priceOriginal - tour.price) > 0 %}
+                                                    <div class="price_discount">{{tour.priceOriginal}} Kč</div>
+                                                {% endif %}
                                             {% endif %}
                                             <span class="price"><strong>{{tour.price}} Kč</strong> / os.</span>
-                                            <span class="dates">{{tour.dates}}<a href="">
-                                                {% if tour.totalOtherDates > 0 %}    
-                                                    (+ {{tour.totalOtherDates }}  dalších termínů)
+                                            
+                                            
+                                            <span class="dates">{{ tour.dates }} 
+                                                {% if tour.totalOtherDates > 0 %}
+                                                    <a href="">(+ {{ tour.totalOtherDates }} dalších termínů)</a>
                                                 {% endif %}
-                                                </a></span>
+                                            </span>
                                         <li>
                                             <a href="../zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}" class="btn_1">Detail zájezdu</a>
                                         </li>

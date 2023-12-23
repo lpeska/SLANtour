@@ -62,7 +62,9 @@ foreach ($zajezdIDs as $key => $zID) {
         }
         
 
-        $tours[] = new Tour(
+        
+        try{
+            $tours[] = new Tour(
                 Serial_collection::get_nazev($row), 
                 $row["nazev_web"],
                 $row["nazev_typ"], 
@@ -80,6 +82,10 @@ foreach ($zajezdIDs as $key => $zID) {
                 "//slantour.cz/foto/full/".$row["foto_url"], 
                 $features, 
                 Serial_collection::get_description($row));
+        } catch(TypeError $e){
+            //echo "wrong tour".$row["id_zajezd"];   
+            //tohle by melo zachytit spatne vyplnene zajezdy
+        }
     }
 }
 

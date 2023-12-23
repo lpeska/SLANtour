@@ -24,7 +24,7 @@ unset($jsonDataZ);
 
 
 
-$resZZ = $serialCol->get_all_zeme_serial();
+$resZZ = $serialCol->get_main_zeme_serial();
 $zemeDB = mysqli_fetch_all($resZZ, MYSQLI_ASSOC);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
 $zemeArr = [];
@@ -64,18 +64,19 @@ file_put_contents("tour_types.json",$jsonDataT,LOCK_EX);
 unset($jsonDataT);
 //echo memory_get_peak_usage(true)."/".memory_get_usage(true)."\n";
 
-/*
+
 $res = $serialCol->get_all_zeme();
 $zemeDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
-$zemeArr = [];
+$countries = [];
 foreach ($zemeDB as $key => $z) {
-    $zemeArr[$z["id_zeme"]] = $z;
-    $zemeArr[$z["id_zeme"]]["counter"] = 0;
+    $countries[$z["id_zeme"]] = array("id_zeme"=>$z["id_zeme"],"nazev"=>$z["nazev_zeme"],"nazev_web"=>$z["nazev_zeme_web"]);
 }
-$jsonData = json_encode($zemeArr);
+unset($zemeDB);
+$jsonDataZM = json_encode($zemeArr);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("zeme.json",$jsonData,LOCK_EX);
-
+file_put_contents("zeme.json",$jsonDataZM,LOCK_EX);
+unset($jsonDataZM);
+/*
 $res = $serialCol->get_all_destinace();
 $destinaceDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
 $destinaceArr = [];
@@ -95,6 +96,26 @@ foreach ($zajezdyArr as $key => $zajezdIdx) {
     
 }
 
+$initFilters = array();
+$keywords = array("txt","dates","minPrice","maxPrice");
+$keywordsArrays = array("tourTypeFilter","transportFilter","foodFilter","durGroupFilter","countryFilter","akceFilter");
+
+foreach ($keywords as $k) {
+   if(isset($_GET[$k])){
+       $strVal = htmlspecialchars(strip_tags($_GET[$k]));
+       $initFilters[] = $k."_".$strVal;       
+   } 
+}
+foreach ($keywordsArrays as $k) {
+   if(isset($_GET[$k])){
+       foreach($_GET[$k] as $val){ 
+            $strVal = htmlspecialchars(strip_tags($val));
+            $initFilters[] = $k."_".$strVal;  
+       }
+   } 
+}
+
+echo "txt".json_encode($initFilters);
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
@@ -121,6 +142,7 @@ foreach ($tourTypesArr as $key => $tt) {
 echo $twig->render('vyhledat-zajezd.html.twig', [
     'typesOfTours' => $tourTypes,
     'types' => $typesTwig,
+    'countries' => $countries,
     'transports' => array(3=>'Letecky', 4=>'Vlakem', 2=>'Autokar', 1=>'Vlastní', 5=>'Vlastní nebo autobus'),
     'foods' => array(5=>'All-inclusive', 4=>'Plná penze', 3=>'Polopenze', 2=>'Snídaně', 1=>"Bez stravy"),
     'sales' => array('Akční nabídky', 'Slevy', 'Last Minute'),
@@ -129,5 +151,6 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
       ),
     'breadcrumbs' => array(
         new Breadcrumb('Zájezdy', '../vyhledat-zajezd.php')
-    )
+    ),
+    'initFilters' => json_encode($initFilters)
 ]);

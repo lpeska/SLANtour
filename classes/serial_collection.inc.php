@@ -21,7 +21,21 @@ class Serial_collection extends Generic_list {
     
     function get_all_zeme() {
         $query = 
-                "select * from `zeme` ";
+                "select distinct zeme.id_zeme, zeme.nazev_zeme, zeme.nazev_zeme_web                     
+                    from 
+                    `zeme` join
+                    `zeme_serial` on `zeme_serial`.id_zeme = `zeme`.id_zeme
+                    join (`serial` join zajezd on 
+                                            (zajezd.id_serial = serial.id_serial and 
+                                            `zajezd`.`nezobrazovat_zajezd`<>1 and 
+                                            `serial`.`nezobrazovat`<>1 and 
+                                            (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1))
+                         ))
+                         on (zeme_serial.id_serial = serial.id_serial and
+                            serial.nezobrazovat <> 1)
+                    
+                     where zeme.geograficka_zeme=1 order by nazev_zeme ";
+        
         #echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
@@ -36,7 +50,32 @@ class Serial_collection extends Generic_list {
         
         return $data;
     }       
+
     
+    function get_main_zeme_serial() {
+        $query = 
+            "select 
+                distinct
+                serial.id_serial as sId,
+                `zeme_serial`.id_zeme as zId,
+                `zeme`.nazev_zeme as zName
+                from `zeme_serial` 
+                    join zeme on `zeme_serial`.id_zeme = `zeme`.id_zeme
+                    join (`serial` join zajezd on 
+                            (zajezd.id_serial = serial.id_serial and 
+                            zajezd.do >= '".Date("Y-m-d")."' and
+                            zajezd.nezobrazovat_zajezd <> 1)    
+                         )
+                         on (zeme_serial.id_serial = serial.id_serial and
+                            serial.nezobrazovat <> 1)
+                    
+                where `zeme_serial`.zakladni_zeme = 1";
+        
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }        
     
     function get_all_zeme_serial() {
         $query = 
@@ -496,7 +535,7 @@ class Serial_collection extends Generic_list {
 
     static function get_nazev($radek) {
         if($radek["id_sablony_zobrazeni"] != 12){
-            return $radek["nazev"];
+            return "".$radek["nazev"];
         }else if ($radek["nazev_ubytovani"]) {
             return $radek["nazev_ubytovani"] . ", " . $radek["nazev"];
         }
@@ -530,7 +569,7 @@ class Serial_collection extends Generic_list {
     
 
     function get_description($radek) {
-        return strip_tags($radek["popisek"].$radek["popisek_ubytovani"], "<b><strong><a><br><br/>");
+        return strip_tags($radek["popisek"].$radek["popisek_ubytovani"]); //, "<b><strong><a><br><br/>"
     }
 
     function get_cena_pred_akci($radek) {

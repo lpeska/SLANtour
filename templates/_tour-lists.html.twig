@@ -45,7 +45,13 @@
         {% endfor %}
     </div>
     <!-- /row -->
-    <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% if (type.id > 0) %}
+        <a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}
+    
+    {% if (destination.id > 0) %}
+        <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}    
 </section>
 {% endif %}
 <!-- /section -->
@@ -98,8 +104,13 @@
         {% endfor %}
     </div>
     <!-- /row -->
-    <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}} dodelat) <i
-    class="arrow_carrot-right"></i></strong></a>
+    {% if (type.id > 0) %}
+        <a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}
+    
+    {% if (destination.id > 0) %}
+        <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}  
 </section>
 {% endif %}
 <!-- /section -->
@@ -152,8 +163,13 @@
         {% endfor %}
     </div>
     <!-- /row -->
-    <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i
-                class="arrow_carrot-right"></i></strong></a>
+    {% if (type.id > 0) %}
+        <a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}
+    
+    {% if (destination.id > 0) %}
+        <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}  
 </section>
 {% endif %}
 <!-- /section -->
