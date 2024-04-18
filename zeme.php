@@ -10,7 +10,7 @@ $values = parse_url($url);
 $path = explode('/',$values['path']);
 
 $countryName = $path[count($path) - 1];
-
+//echo $countryName;
 $country = getCountry($countryName);
 
 $breadCrumbs = array(

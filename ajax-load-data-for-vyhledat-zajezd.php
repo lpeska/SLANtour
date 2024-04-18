@@ -13,50 +13,80 @@ foreach ($zajezdIDs as $key => $zID) {
 }     
 
 $res = $serialCol->get_full_data_from_zajezdIDs($zajezdIDsInt);
-$zajezdyArr = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$zajezdyA = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$zajezdyArr = [];
+
+foreach ($zajezdyA as $key => $row) {
+    $zajezdyArr[$row["id_zajezd"]] = $row;
+}
+
 //print_r($zajezdyArr);
 $tours = [];
-foreach ($zajezdyArr as $key => $row) {
-    $trID = $row["doprava"];
-    $trText = Serial_library::get_typ_dopravy($row["doprava"]-1);
-    switch($trID) {
-        case "1":
-            $d = new Feature('fa-car', $trText);
-            break;
-        case "2":
-            $d = new Feature('fa-bus', $trText);
-            break;
-        case "3":
-            $d = new Feature('fa-plane', $trText);
-            break;
-        case "4":
-            $d = new Feature('fa-train', $trText);
-            break;        
-        default:
-            $d = new Feature('fa-car', $trText);
-            break;
+foreach ($zajezdIDs as $key => $zID) {
+    $row = $zajezdyArr[$zID];
+    if(is_array($row)){
+        $trID = $row["doprava"];
+        $trText = Serial_library::get_typ_dopravy($row["doprava"]-1);
+        switch($trID) {
+            case "1":
+                $d = new Feature('fa-car', $trText);
+                break;
+            case "2":
+                $d = new Feature('fa-bus', $trText);
+                break;
+            case "3":
+                $d = new Feature('fa-plane', $trText);
+                break;
+            case "4":
+                $d = new Feature('fa-train', $trText);
+                break;        
+            default:
+                $d = new Feature('fa-car', $trText);
+                break;
+        }
+        $features = array(
+            $d,         
+            new Feature('fa-hotel', Serial_library::get_typ_ubytovani($row["ubytovani"]-1)), 
+            new Feature('fa-bed', Serial_collection::get_nights($row)), 
+            new Feature('fa-utensils', Serial_library::get_typ_stravy($row["strava"]-1))
+        );
+        $totalDatesRes = $serialCol->get_all_dates_for_id_serial($row["id_serial"]);
+        $totalDatesArr = mysqli_fetch_all($totalDatesRes, MYSQLI_ASSOC);
+        //echo "<br/>Dates"; print_r($totalDatesArr);
+        $totalDates = intval($totalDatesArr[0]["pocet"]);
+        if($totalDates >= 1){
+            $totalDates = $totalDates - 1;
+
+        }else{
+            $totalDates = 0;
+        }
+        
+
+        
+        try{
+            $tours[] = new Tour(
+                Serial_collection::get_nazev($row), 
+                $row["nazev_web"],
+                $row["nazev_typ"], 
+                $row["id_zajezd"], 
+                Serial_collection::get_dates($row), 
+                $totalDates, 
+                $row["min_castka"], // TODO: jedno z tech dvou je spatne, ale mozna se to lisi dle typu slevy... zjistit
+                $row["final_max_sleva"],
+                $row["min_castka"],
+                Serial_collection::get_nights($row), 
+                Serial_library::get_typ_stravy($row["strava"]-1), 
+                Serial_library::get_typ_dopravy($row["doprava"]-1), 
+                Serial_library::get_typ_ubytovani($row["ubytovani"]-1),             
+                Serial_collection::get_destinace($row),
+                "//slantour.cz/foto/full/".$row["foto_url"], 
+                $features, 
+                Serial_collection::get_description($row));
+        } catch(TypeError $e){
+            //echo "wrong tour".$row["id_zajezd"];   
+            //tohle by melo zachytit spatne vyplnene zajezdy
+        }
     }
-    $features = array(
-        $d,         
-        new Feature('fa-hotel', Serial_library::get_typ_ubytovani($row["ubytovani"]-1)), 
-        new Feature('fa-bed', Serial_collection::get_nights($row)), 
-        new Feature('fa-utensils', Serial_library::get_typ_stravy($row["strava"]-1))
-    );
-    
-    $tours[] = new Tour(
-            Serial_collection::get_nazev($row), 
-            $row["nazev_typ"], 
-            $row["min_castka"], // TODO: jedno z tech dvou je spatne, ale mozna se to lisi dle typu slevy... zjistit
-            $row["final_max_sleva"],
-            $row["min_castka"],
-            Serial_collection::get_nights($row), 
-            Serial_library::get_typ_stravy($row["strava"]-1), 
-            Serial_library::get_typ_dopravy($row["doprava"]-1), 
-            Serial_library::get_typ_ubytovani($row["ubytovani"]-1),             
-            Serial_collection::get_destinace($row),
-            "//slantour.cz/foto/full/".$row["foto_url"], 
-            $features, 
-            Serial_collection::get_description($row));
 }
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
@@ -86,10 +116,13 @@ class Tour
 {
     public string $name;
     public string $type;
+    public string $nights;
+    public string $dates;
+    public int $totalOtherDates;
+    public int $id_zajezd;
     public int $price;
     public int $priceDiscount;
     public int $priceOriginal;
-    public string $nights;
     public string $meals;
     public string $transport;
     public string $accomodation;
@@ -98,10 +131,14 @@ class Tour
     public array $features;
     public string $description;
 
-    public function __construct( string $name, string $type, int $price, int $priceDiscount, int $priceOriginal, string $nights, string $meals,string $transport,string $accomodation, string $destination, string $image, array $features, string $description)
+    public function __construct( string $name, string $escapedName, string $type, int $id_zajezd, string $dates, int $totalOtherDates, int $price, int $priceDiscount, int $priceOriginal, string $nights, string $meals,string $transport,string $accomodation, string $destination, string $image, array $features, string $description)
     {
         $this->name = $name;
+        $this->escapedName = $escapedName;
         $this->type = $type;
+        $this->id_zajezd = $id_zajezd;
+        $this->dates = $dates;
+        $this->totalOtherDates = $totalOtherDates;
         $this->price = $price;
         $this->priceDiscount = $priceDiscount;
         $this->priceOriginal = $priceOriginal;

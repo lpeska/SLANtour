@@ -165,10 +165,19 @@ function getCountry($countryName)
     $countryDB = $menu->get_zeme($countryName);
     $infoDB = new Informace_zeme("zeme", "", $countryName, "", 0, "random", 1);
     $infoDB->get_next_radek();
+    
+    if(strlen($infoDB->get_popisek())>0){
+        $popisek = $infoDB->get_popisek();        
+    }else{
+        $popisek = "";
+    }
+    
+    print_r($countryDB);
+
     $country = new Country(
         $countryDB["id_zeme"],
         $countryDB["nazev_zeme"],
-        $infoDB->get_popisek(),
+        $popisek,
         $countryDB["tourCount"],
         $countryDB["tourPrice"],
         "https://slantour.cz/foto/full/".$infoDB->get_foto_url(),

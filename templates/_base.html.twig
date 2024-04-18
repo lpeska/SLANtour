@@ -260,6 +260,8 @@
 				});
 				$('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
 					$(this).val(picker.startDate.format('DD/MM/YY') + ' > ' + picker.endDate.format('DD/MM/YY'));
+                                        
+                                        
 				});
 
 				$('input[name="dates"]').on('cancel.daterangepicker', function (ev, picker) {
