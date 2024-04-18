@@ -252,7 +252,7 @@ Author URI: http://themeforest.net/user/Ansonika/
     padding-left: 15px;
     padding-right: 15px;
     border-right: 1px solid #ededed;
-    min-width: 150px;
+    min-width: 200px;
   }
   .main-menu .types .megamenu-item:nth-child(3n){
     border-right: none;
@@ -335,6 +335,11 @@ Author URI: http://themeforest.net/user/Ansonika/
   }
   .main-menu ul.megamenu-list{
     width: 100%;
+  }
+  .main-menu ul.europe{
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    columns: 2;
   }
   .main-menu ul.megamenu-list li a {
     font-size: 12px;

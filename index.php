@@ -12,6 +12,7 @@ require_once "./classes/destinace_list.inc.php"; //menu katalogu
 
 
 $tourTypes = getAllTourTypes();
+$countriesMenu = getCountriesMenu();
 $totalTours = getTotalTours($tourTypes);
 
 $discountTours = getDiscountTours("", "");
@@ -26,6 +27,7 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('index.html.twig', [
     'typesOfTours' => $tourTypes,
+    'countriesMenu' => $countriesMenu,
     'popularTours' => $popularTours,
     'discountTours' => $discountTours,
     "totalDiscountedTours" => 157,

@@ -6,6 +6,7 @@ require_once "./core/load_core.inc.php";
 require_once "./classes/serial_collection.inc.php"; //seznam serialu
 require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
 $tourTypes = getAllTourTypes();
+$countriesMenu = getCountriesMenu();
 $serialCol = new Serial_collection();
 
 #get portion of data with zajezdy
@@ -103,6 +104,7 @@ foreach ($tourTypesArr as $key => $tt) {
 
 echo $twig->render('vyhledat-zajezd.html.twig', [
     'typesOfTours' => $tourTypes,
+    'countriesMenu' => $countriesMenu,
     'types' => $typesTwig,
     'transports' => array(3=>'Letecky', 4=>'Vlakem', 2=>'Autokar', 1=>'Vlastní', 5=>'Vlastní nebo autobus'),
     'foods' => array(5=>'All-inclusive', 4=>'Plná penze', 3=>'Polopenze', 2=>'Snídaně', 1=>"Bez stravy"),

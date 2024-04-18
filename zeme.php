@@ -3,6 +3,7 @@ require_once 'vendor/autoload.php';
 require_once "./core/load_core.inc.php"; 
 require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
 $tourTypes = getAllTourTypes();
+$countriesMenu = getCountriesMenu();
 
 $url = "$_SERVER[REQUEST_URI]";
 $values = parse_url($url);
@@ -31,6 +32,7 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('zeme.html.twig', [
     'typesOfTours' => $tourTypes,
+    'countriesMenu' => $countriesMenu,
     'destination' => $country,
     'popularTours' => $popularTours,
     'discountTours' => $discountTours,

@@ -11,6 +11,7 @@ $typeName = $path[count($path) - 1];
 
 $type = getTourType($typeName);
 $tourTypes = getAllTourTypes();
+$countriesMenu = getCountriesMenu();
 
 $breadCrumbs = array(
     new Breadcrumb('Typy zájezdů', '/typy-zajezdu.php'),
@@ -31,6 +32,7 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('typ-zajezdu.html.twig', [
     'typesOfTours' => $tourTypes,
+    'countriesMenu' => $countriesMenu,
     'type' => $type,
     'popularTours' => $popularTours,
     'discountTours' => $discountTours,

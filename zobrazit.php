@@ -23,6 +23,7 @@ require_once "./classes/rezervace_dotaz.inc.php"; //seznam serialu
 require_once "./classes/blackdays_list.inc.php"; //black days
 require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
 $tourTypes = getAllTourTypes();
+$countriesMenu = getCountriesMenu();
 /* vytvoreni instance serialu (nebo serialu se zajezdem) */
 
 
@@ -277,6 +278,7 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('zajezd.html.twig', [
     'typesOfTours' => $tourTypes,
+    'countriesMenu' => $countriesMenu,
     'dateID' => $_GET["id_zajezd"],
     'name' => $nazev,
     'priceFrom' => $minPrice,

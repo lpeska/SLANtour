@@ -3,6 +3,7 @@ require_once 'vendor/autoload.php';
 require_once "./core/load_core.inc.php"; 
 require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
 $tourTypes = getAllTourTypes();
+$countriesMenu = getCountriesMenu();
 
 $countries = getAllCountries();
 
@@ -14,6 +15,7 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 echo $twig->render('zeme-seznam.html.twig', [
     'typesOfTours' => $tourTypes,
+    'countriesMenu' => $countriesMenu,
     'countries' => $countries,
     'breadcrumbs' => array(
         new Breadcrumb('Země', '/zeme-seznam.php')

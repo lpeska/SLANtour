@@ -165,15 +165,14 @@ function getCountry($countryName)
     $countryDB = $menu->get_zeme($countryName);
     $infoDB = new Informace_zeme("zeme", "", $countryName, "", 0, "random", 1);
     $infoDB->get_next_radek();
-
     $country = new Country(
-        $infoDB->get_id_zeme(),
-        $infoDB->get_nazev_zeme(),
+        $countryDB["id_zeme"],
+        $countryDB["nazev_zeme"],
         $infoDB->get_popisek(),
         $countryDB["tourCount"],
         $countryDB["tourPrice"],
         "https://slantour.cz/foto/full/".$infoDB->get_foto_url(),
-        "/zeme/" . $infoDB->get_nazev_web()
+        "/zeme/" . $countryDB["nazev_zeme_web"]
     );
     return $country;
 }
@@ -200,6 +199,80 @@ function getAllCountries()
         $countries[$country["id_zeme"]] = $c;
     }
     return $countries;
+}
+
+function getCountriesMenu()
+{
+    /*Loading countries*/
+    $menu = new Menu_katalog("dotaz_zeme_list", "", "", "");
+    $countriesDB = $menu->get_zeme_list();
+    //echo print_r($countriesDB);
+
+    $countries = array();
+    $euCountries = array();
+    $worldCountries = array();
+    $sportCountries = array();
+    foreach ($countriesDB as $country) {
+        // echo $country["nazev_zeme_web"];
+        // echo "</br>";
+        // echo "isEu: " . isEurope($country["nazev_zeme_web"]);
+        // echo "</br>";
+        $c = new Country(
+            $country["id_zeme"],
+            $country["nazev_zeme"],
+            "no description",
+            $country["tourCount"],
+            $country["tourPrice"],
+            $country["foto_url"],
+            "/zeme/" . $country["nazev_zeme_web"]
+        );
+
+        if( isEurope($country["nazev_zeme_web"])) {
+            $euCountries[$country["id_zeme"]] = $c;
+        } else {
+            $worldCountries[$country["id_zeme"]] = $c;
+        }
+    }
+
+    $countries = array_merge(getTopCountries($euCountries, 10), getTopCountries($worldCountries, 5));  
+    // echo "</br>";
+    // echo "</br>";
+    // echo "merged";
+    // echo "</br>";
+    // echo printCountries($countries);
+    // echo "</br>";
+    // echo "</br>";
+    
+    return $countries;
+}
+
+function getTopCountries($countries, $count)
+{
+    // echo "start";
+    // echo "</br>";
+    // echo printCountries($countries);
+    // echo "</br>";
+    // echo "</br>";
+    // echo "sorted";
+    // echo "</br>";
+    usort($countries, fn($a, $b) => $b->numberOfTours - $a->numberOfTours);
+    // echo printCountries($countries);
+    // echo "</br>";
+    // echo "</br>";
+    // echo "sliced";
+    // echo "</br>";
+    // echo printCountries(array_slice($countries, 0, $count));
+    return array_slice($countries, 0, $count);
+}
+
+function printCountries($array)
+{
+    echo "size: " . sizeof($array);
+    echo "</br>";
+    foreach ($array as $c) {
+        echo print_r($c);
+        echo "</br>";
+    }
 }
 
 function getTotalTours(array $tourTypes)
@@ -233,6 +306,39 @@ function getTypeImage($typeId, $defaultFoto)
             $foto = $defaultFoto;
     }
     return $foto;
+}
+
+function isEurope($countryNameWeb) {
+     $euCountries = array(
+        "anglie",
+        "belgie",
+        "ceska-republika",
+        "estonsko",
+        "finsko",
+        "francie",
+        "holandsko",
+        "chorvatsko",
+        "irsko",
+        "island",
+        "italie",
+        "madarsko",
+        "monako",
+        "nemecko",
+        "norsko",
+        "polsko",
+        "portugalsko",
+        "rakousko",
+        "recko",
+        "severni-irsko",
+        "skotsko",
+        "slovensko",
+        "slovinsko",
+        "spanelsko",
+        "svedsko",
+        "svycarsko",
+        "turecko"
+     );
+    return in_array($countryNameWeb, $euCountries);
 }
 
 class Breadcrumb
