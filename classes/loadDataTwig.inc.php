@@ -172,8 +172,6 @@ function getCountry($countryName)
         $popisek = "";
     }
     
-    print_r($countryDB);
-
     $country = new Country(
         $countryDB["id_zeme"],
         $countryDB["nazev_zeme"],
