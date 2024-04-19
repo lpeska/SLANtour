@@ -219,6 +219,9 @@ function getCountriesMenu()
     $euCountries = array();
     $worldCountries = array();
     $sportCountries = array();
+    $euCount = 0;
+    $worldCount = 0;
+    $sportCount = 0;
     foreach ($countriesDB as $country) {
         // echo $country["nazev_zeme_web"];
         // echo "</br>";
@@ -241,7 +244,31 @@ function getCountriesMenu()
         }
     }
 
-    $countries = array_merge(getTopCountries($euCountries, 10), getTopCountries($worldCountries, 5));  
+    $menuSport = new Menu_katalog("dotaz_mozne_sporty", "", "", ""); 
+    $topSportsDB = $menuSport->get_top_sports();
+
+    foreach ($topSportsDB as $topSport) {
+        // echo $topSport["nazev_zeme_web"];
+        // echo "</br>";
+        // echo "isEu: " . isEurope($topSport["nazev_zeme_web"]);
+        // echo "</br>";
+        $c = new Country(
+            $topSport["id_zeme"],
+            $topSport["nazev_zeme"],
+            "no description",
+            0,
+            0,
+            $topSport["foto_url"],
+            "/zeme/" . $topSport["nazev_zeme_web"]
+        );
+        $sportCountries[$topSport["id_zeme"]] = $c;
+    }
+
+    $euCount = count($euCountries);
+    $worldCount = count($worldCountries);
+    $sportCount = count($sportCountries);
+
+    $countries = array_merge(getTopCountries($euCountries, 10), getTopCountries($worldCountries, 5), array_slice($sportCountries, 0, 5));  
     // echo "</br>";
     // echo "</br>";
     // echo "merged";
@@ -250,7 +277,7 @@ function getCountriesMenu()
     // echo "</br>";
     // echo "</br>";
     
-    return $countries;
+    return new CountryMenu($countries, $euCount, $worldCount, $sportCount);
 }
 
 function getTopCountries($countries, $count)
@@ -456,6 +483,22 @@ class Country
         $this->priceFrom = $priceFrom;
         $this->image = $image;
         $this->url = $url;
+    }
+}
+
+class CountryMenu
+{
+    public array $countries;
+    public int $euCount;
+    public int $worldCount;
+    public int $sportCount;
+
+    public function __construct(array $countries, int $euCount, int $worldCount, int $sportCount)
+    {
+        $this->countries = $countries;
+        $this->euCount = $euCount;
+        $this->worldCount = $worldCount;
+        $this->sportCount = $sportCount;
     }
 }
 

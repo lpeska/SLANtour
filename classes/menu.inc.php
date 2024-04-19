@@ -491,7 +491,7 @@ class Menu_katalog extends Generic_list{
 			//nemam ani nazev typu ani zeme
                     $datum_rezervace=(Date("Y")-2)."-".Date("m")."-".Date("d");
                     $dotaz = "
-                        SELECT sum( `celkova_cena` ) as `pocet` , `zeme`.`nazev_zeme`, `zeme`.`id_zeme`, `zeme`.`nazev_zeme_web`
+                        SELECT sum( `celkova_cena` ) as `pocet`, `zeme`.`nazev_zeme`, `zeme`.`id_zeme`, `zeme`.`nazev_zeme_web`, `foto`.`foto_url`
                         FROM `serial`
                         JOIN `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)
                         JOIN `objednavka` ON ( `objednavka`.`id_serial` = `serial`.`id_serial` and `objednavka`.`id_zajezd` = `zajezd`.`id_zajezd` )
@@ -501,6 +501,11 @@ class Menu_katalog extends Generic_list{
                             `destinace_serial`
                             join `destinace` on (`destinace`.`id_destinace` = `destinace_serial`.`id_destinace`)
                         )  on (`serial`.`id_serial` = `destinace_serial`.`id_serial`)
+                        left join (
+                                `informace` join
+                                foto_informace on (`informace`.`id_informace` = `foto_informace`.`id_informace` and `foto_informace`.`zakladni_foto` = 1) join
+                                foto on (`foto_informace`.`id_foto` = `foto`.`id_foto`)
+                            ) on (`informace`.`id_informace` = `zeme`.`id_info`)
                         WHERE `objednavka`.`rezervace_do` > \"".$datum_rezervace."\" and                             
                             `serial`.`id_typ` = 4 and (`destinace`.`id_destinace` is NULL or `zeme`.`id_zeme` not in (54,57,59)) and `zeme`.`geograficka_zeme`=0
                         GROUP BY `zeme`.`id_zeme`
@@ -676,7 +681,21 @@ class Menu_katalog extends Generic_list{
                 //echo "</br>";
             }
             return $ret;
-        } 
+        }
+
+        function get_top_sports()
+        {
+            $sporty = array();
+            // echo "fresh fetch </br>";
+            $sportyDotaz = $this->database->query($this->create_query("dotaz_top_sporty_zeme"));
+            while ($sport = mysqli_fetch_array($sportyDotaz)) {
+                // echo print_r($sport);
+                // echo "</br>";
+                // echo "</br>";
+                $sporty[$sport["id_zeme"]] = $sport;
+            }
+            return $sporty;
+        }
         
         function show_destinace($typ_zobrazeni = "obrazkove"){
             $ret="";
