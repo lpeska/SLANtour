@@ -526,14 +526,14 @@ class Foto
     }
 }
 
-class Program
-{
+class Program {
+    public string $day;
     public string $title;
     public string $description;
     public string $image;
 
-    public function __construct(string $title, string $description, string $image)
-    {
+    public function __construct(string $day, string $title, string $description, string $image) {
+        $this->day = $day;
         $this->title = $title;
         $this->description = $description;
         $this->image = $image;

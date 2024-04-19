@@ -119,7 +119,7 @@ if ($zobrazit_zajezd) {
 
 $breadcrumbs = array(
     new Breadcrumb($typ_serial, "/zajezdy/typ-zajezdu/" . $typ_serial_web),
-    new Breadcrumb($zeme_nazev, "/zajezdy/katalog/" . $zeme_nazev_web),
+    new Breadcrumb($zeme_nazev, "/zeme/" . $zeme_nazev_web),
     new Breadcrumb($serial_nazev, "/zajezdy/zobrazit/" . $serial_nazev_web)
 );
 

@@ -65,71 +65,79 @@ echo $twig->render('zajezd.html.twig', [
     ),
     'dates'  => array(
         new TourDate(
+            1,
             '22.04. - 25.04.2022', 
             16900, 
+            0, 
             'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.',
-            array(new Service('cena za osobu', 16900, 'Volno', 'Služby')),
+            array(new Service('cena za osobu', 'Volno', 16900)),
             array(
-                new Service('příplatek: pokoj 1/1', 9990, 'Volno', 'Příplatky'),
-                new Service('příplatek za zajištění ESTA / os.', 500, 'Volno', 'Příplatky'),
-                new Service('příplatek: komplexní pojištění - Kooperativa', 350, 'Volno', 'Příplatky'),
-                new Service('transfer z letiště JFK na Manhattan od', 4300, 'Volno', 'Příplatky'),
-                new Service('zavazadlo k odbavení', 1990, 'Volno', 'Příplatky')
+                new Service('příplatek: pokoj 1/1', 'Volno', 9990),
+                new Service('příplatek za zajištění ESTA / os.', 'Volno', 500),
+                new Service('příplatek: komplexní pojištění - Kooperativa', 'Volno', 350),
+                new Service('transfer z letiště JFK na Manhattan od', 'Volno', 4300),
+                new Service('zavazadlo k odbavení', 'Volno', 1990)
             ),
             array(
-                new Service('odlet z Prahy (základní cena)', 0, 'Volno', 'Odjezdová Místa'),
-                new Service('odlet z Vídně', 0, 'Volno', 'Odjezdová Místa')
+                new Service('odlet z Prahy (základní cena)', 'Volno', 0),
+                new Service('odlet z Vídně', 'Volno', 0)
             )
         ), 
         new TourDate(
+            2,
             '11.05. - 16.05.2022', 
             15900, 
+            0, 
             'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.',
-            array(new Service('cena za osobu', 15900, 'Volno', 'Služby')),
+            array(new Service('cena za osobu', 'Volno', 15900)),
             array(
-                new Service('příplatek: pokoj 1/1', 9990, 'Volno', 'Příplatky'),
-                new Service('příplatek za zajištění ESTA / os.', 500, 'Volno', 'Příplatky'),
-                new Service('příplatek: komplexní pojištění - Kooperativa', 350, 'Volno', 'Příplatky'),
-                new Service('transfer z letiště JFK na Manhattan od', 4300, 'Volno', 'Příplatky'),
-                new Service('zavazadlo k odbavení', 1990, 'Volno', 'Příplatky')
+                new Service('příplatek: pokoj 1/1', 'Volno', 9990),
+                new Service('příplatek za zajištění ESTA / os.', 'Volno', 500),
+                new Service('příplatek: komplexní pojištění - Kooperativa', 'Volno', 350),
+                new Service('transfer z letiště JFK na Manhattan od', 'Volno', 4300),
+                new Service('zavazadlo k odbavení', 'Volno', 1990)
             ),
             array(
-                new Service('odlet z Prahy (základní cena)', 0, 'Volno', 'Odjezdová Místa'),
-                new Service('odlet z Vídně', 0, 'Volno', 'Odjezdová Místa')
+                new Service('odlet z Prahy (základní cena)', 'Volno', 0),
+                new Service('odlet z Vídně', 'Volno', 0)
             )
         ), 
         new TourDate(
+            3,
             '22.07. - 25.07.2022', 
             17900, 
+            0,
             'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.',
-            array(new Service('cena za osobu', 17900, 'Volno', 'Služby')),
+            array(new Service('cena za osobu', 'Volno', 17900)),
             array(
-                new Service('příplatek: pokoj 1/1', 9990, 'Volno', 'Příplatky'),
-                new Service('příplatek za zajištění ESTA / os.', 500, 'Volno', 'Příplatky'),
-                new Service('příplatek: komplexní pojištění - Kooperativa', 350, 'Volno', 'Příplatky'),
-                new Service('transfer z letiště JFK na Manhattan od', 4300, 'Volno', 'Příplatky'),
-                new Service('zavazadlo k odbavení', 1990, 'Volno', 'Příplatky')
+                new Service('příplatek: pokoj 1/1', 'Volno', 9990),
+                new Service('příplatek za zajištění ESTA / os.', 'Volno', 500),
+                new Service('příplatek: komplexní pojištění - Kooperativa', 'Volno', 350),
+                new Service('transfer z letiště JFK na Manhattan od', 'Volno', 4300),
+                new Service('zavazadlo k odbavení', 'Volno', 1990)
             ),
             array(
-                new Service('odlet z Prahy (základní cena)', 0, 'Volno', 'Odjezdová Místa'),
-                new Service('odlet z Vídně', 0, 'Volno', 'Odjezdová Místa')
+                new Service('odlet z Prahy (základní cena)', 'Volno', 0),
+                new Service('odlet z Vídně', 'Volno', 0)
             )
         ), 
         new TourDate(
+            4,
             '22.08. - 25.08.2022', 
-            17900, 
+            17900,  
+            0,
             'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.',
-            array(new Service('cena za osobu', 17900, 'Volno', 'Služby')),
+            array(new Service('cena za osobu', 'Volno', 17900)),
             array(
-                new Service('příplatek: pokoj 1/1', 9990, 'Volno', 'Příplatky'),
-                new Service('příplatek za zajištění ESTA / os.', 500, 'Volno', 'Příplatky'),
-                new Service('příplatek: komplexní pojištění - Kooperativa', 350, 'Volno', 'Příplatky'),
-                new Service('transfer z letiště JFK na Manhattan od', 4300, 'Volno', 'Příplatky'),
-                new Service('zavazadlo k odbavení', 1990, 'Volno', 'Příplatky')
+                new Service('příplatek: pokoj 1/1', 'Volno', 9990),
+                new Service('příplatek za zajištění ESTA / os.', 'Volno', 500),
+                new Service('příplatek: komplexní pojištění - Kooperativa', 'Volno', 350),
+                new Service('transfer z letiště JFK na Manhattan od', 'Volno', 4300),
+                new Service('zavazadlo k odbavení', 'Volno', 1990)
             ),
             array(
-                new Service('odlet z Prahy (základní cena)', 0, 'Volno', 'Odjezdová Místa'),
-                new Service('odlet z Vídně', 0, 'Volno', 'Odjezdová Místa')
+                new Service('odlet z Prahy (základní cena)', 'Volno', 0),
+                new Service('odlet z Vídně', 'Volno', 0)
             )
         )
     ),
@@ -139,72 +147,6 @@ echo $twig->render('zajezd.html.twig', [
         new Breadcrumb('Hotel Busignani ***, Rimini Rivabella', '/zajezd.php')
     )
 ]);
-
-class Breadcrumb {
-    public string $label;
-    public string $link;
-
-    public function __construct(string $label, string $link) {
-        $this->label = $label;
-        $this->link = $link;
-    }
-}
-
-class Feature {
-    public string $icon;
-    public string $text;
-
-    public function __construct(string $icon, string $text) {
-        $this->icon = $icon;
-        $this->text = $text;
-    }
-}
-
-class Program {
-    public string $day;
-    public string $title;
-    public string $description;
-    public string $image;
-
-    public function __construct(string $day, string $title, string $description, string $image) {
-        $this->day = $day;
-        $this->title = $title;
-        $this->description = $description;
-        $this->image = $image;
-    }
-}
-
-class TourDate {
-    public string $date;
-    public int $price;
-    public string $details;
-    public array $services;
-    public array $extraFees;
-    public array $pickupSpots;
-
-    public function __construct(string $date, int $price, string $details, array $services, array $extraFees, array $pickupSpots) {
-        $this->date = $date;
-        $this->price = $price;
-        $this->details = $details;
-        $this->services = $services;
-        $this->extraFees = $extraFees;
-        $this->pickupSpots = $pickupSpots;
-    }
-}
-
-class Service {
-    public string $title;
-    public int $price;
-    public string $capacity;
-    public string $type;
-
-    public function __construct(string $title, int $price, string $capacity, string $type) {
-        $this->title = $title;
-        $this->price = $price;
-        $this->capacity = $capacity;
-        $this->type = $type;
-    }
-}
 
 /*
 priklady ikon
