@@ -434,7 +434,20 @@
 	// Order date select value changed
 	$('#orderDate').change(function(){
 		const price = $('.price .price_span');
+		
+		$('#orderTour')[0].disabled = false;
 		price.text(this[this.value].dataset.price + " Kč");
+	});
+
+	// Order button clicked
+	$('#orderTour').click(function (event) {
+		const orderForm = $('#orderForm')[0];
+		const valid = orderForm.reportValidity();
+		if (valid) {
+			const datePicker = $('#orderDate')[0];
+			const dateId = datePicker[datePicker.value].dataset.dateid;
+			window.location.href = "https://slantour.cz/objednavka-proces/index.php?page=zobrazit&src_web=slantour.cz&id_zajezd=" + dateId;
+		}
 	});
 
 	// date selected from terminy

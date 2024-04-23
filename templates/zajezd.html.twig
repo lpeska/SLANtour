@@ -481,30 +481,31 @@
                 <div class="box_detail booking">
                     <div class="price">
                         <span class="price_span"><small>od</small> {{priceFrom}} Kč</span>
-                        <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div>
+                        {# <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div> #}
                     </div>
                     
-                    
-                    <label for="orderDate"><i class="fas fa-calendar-days"></i> Termín</label>
-                    <select id="orderDate" class="form-select form-control form-group" required aria-label="Select tour date">
-                        <option value="" disabled selected>Vyberte termín...</option>
-                        {% for tourDate in dates %}
-                        <option value="{{loop.index}}" data-price="{{tourDate.price}}">{{tourDate.date}} ({{tourDate.price}} Kč)</option>
-                    
-                        {% endfor %} 
-                    </select>
-                    <label for="orderPerson"><i class="fas fa-user"></i> Počet osob</label>
-                    <input class="form-control form-group" type="number" name="orderPerson" id="orderPerson" value="1" min="1">
-                    
-                    <a href="cart-1.html" class="btn_1 full-width purchase"><i class="fas fa-cart-shopping"></i> Objednat</a>
-                    <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a>
+                    <form id="orderForm">
+
+                        <label for="orderDate"><i class="fas fa-calendar-days"></i> Termín</label>
+                        <select id="orderDate" class="form-select form-control form-group" required aria-label="Select tour date">
+                            <option value="" disabled selected>Vyberte termín...</option>
+                            {% for tourDate in dates %}
+                            <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}">{{tourDate.date}} ({{tourDate.price}} Kč)</option>
+                            
+                            {% endfor %} 
+                        </select>
+                        <label for="orderPerson"><i class="fas fa-user"></i> Počet osob</label>
+                        <input class="form-control form-group" type="number" name="orderPerson" id="orderPerson" value="1" min="1">
+                        <button id="orderTour" class="btn_1 full-width purchase" type="button"><i class="fas fa-cart-shopping"></i> Objednat</button>
+                    </form>
+                    {# <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a> #}
                     
                 </div>
-                <ul class="share-buttons">
+                {# <ul class="share-buttons">
                     <li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
                     <li><a class="twitter-share" href="#0"><i class="social_twitter"></i> Tweet</a></li>
                     <li><a class="gplus-share" href="#0"><i class="social_googleplus"></i> Share</a></li>
-                </ul>
+                </ul> #}
             </aside>
         </div>
         <!-- /row -->

@@ -831,6 +831,15 @@ a.btn_1.full-width.purchase:hover,
 .btn_1.full-width.purchase:hover {
   background-color: #0054a6;
 }
+a.btn_1.full-width.purchase:disabled,
+.btn_1.full-width.purchase:disabled {
+  background-color: #6e6e6e;
+  margin-top: 25px;
+}
+a.btn_1.full-width.purchase:hover,
+.btn_1.full-width.purchase:hover {
+  background-color: #0054a6;
+}
 a.btn_1.full-width.wishlist,
 .btn_1.full-width.wishlist {
   border-color: #555;
