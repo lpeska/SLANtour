@@ -161,8 +161,10 @@ function getAllTourTypes()
 
 function getCountry($countryName)
 {
-    $menu = new Menu_katalog("dotaz_zeme_list", "", "", "");
+    $menu = new Menu_katalog("dotaz_zeme_from_nazev", "", $countryName, "");
     $countryDB = $menu->get_zeme($countryName);
+    // echo print_r($countryDB);
+    //tady poresit chybu kdyz se data o zemi nenajdou...
     $infoDB = new Informace_zeme("zeme", "", $countryName, "", 0, "random", 1);
     $infoDB->get_next_radek();
     
@@ -177,7 +179,7 @@ function getCountry($countryName)
         $countryDB["nazev_zeme"],
         $popisek,
         $countryDB["tourCount"],
-        $countryDB["tourPrice"],
+        $countryDB["tourPrice"], //tady nastane chyba ze cena neexistuje pokud zeme nema platny zajezd
         "https://slantour.cz/foto/full/".$infoDB->get_foto_url(),
         "/zeme/" . $countryDB["nazev_zeme_web"]
     );
@@ -244,9 +246,9 @@ function getCountriesMenu()
         }
     }
 
-    $menuSport = new Menu_katalog("dotaz_mozne_sporty", "", "", ""); 
-    $topSportsDB = $menuSport->get_top_sports();
-
+    $menuSport = new Menu_katalog("dotaz_sport_list", "", "", ""); 
+    $topSportsDB = $menuSport->get_zeme_list();
+    // print_r($topSportsDB);
     foreach ($topSportsDB as $topSport) {
         // echo $topSport["nazev_zeme_web"];
         // echo "</br>";

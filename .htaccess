@@ -17,6 +17,9 @@ RewriteRule    zajezdy$   /index.php     [L,QSA]
 RewriteRule    zeme/(.*)/(.*)$   /destinace.php?zeme=$1&nazev_destinace=$2     [L,QSA]
 RewriteRule    zeme/(.*)$   /zeme.php?zeme=$1     [L,QSA]
 
+RewriteRule    zeme-seznam/(.*)$   /zeme-seznam.php?kontinent=$1     [L,QSA]
+RewriteRule    zeme-seznam$   /zeme-seznam.php     [L,QSA]
+
 RewriteRule    typ/(.*)/(.*)/(.*)$   /destinace.php?typ=$1&zeme=$2&nazev_destinace=$3     [L,QSA]
 RewriteRule    typ/(.*)/(.*)$   /zeme.php?typ=$1&zeme=$2     [L,QSA]
 RewriteRule    typ/(.*)$   /index.php?typ=$1     [L,QSA]

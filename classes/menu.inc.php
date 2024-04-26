@@ -408,7 +408,44 @@ class Menu_katalog extends Generic_list{
                             ) on (`informace`.`id_informace` = `cross_zeme`.`id_info`)
                     WHERE cross_zeme.geograficka_zeme = 1
                     ORDER BY `cross_zeme`.`nazev_zeme`;
-					";			
+					";	
+        }else if( $typ=="dotaz_sport_list"){
+                    // vsechny zeme s aktivnim zajezdem s foto
+                        $dotaz="
+                            SELECT DISTINCT  `cross_zeme`.`id_zeme`,  `cross_zeme`.`nazev_zeme` , `cross_zeme`.`nazev_zeme_web` , foto.foto_url
+                            FROM 
+                            `zeme_serial` AS `cross_zeme_serial` 
+                            JOIN `zeme` AS `cross_zeme`  ON ( `cross_zeme_serial`.`id_zeme` = `cross_zeme`.`id_zeme` )                                                
+                            join `serial` AS `cross_serial`  ON ( `cross_serial`.`id_serial` = `cross_zeme_serial`.`id_serial` and `cross_serial`.`jazyk` != \"english\" and `cross_serial`.`nezobrazovat`<>1)
+                            join `zajezd` AS `cross_zajezd` ON ( `cross_serial`.`id_serial` = `cross_zajezd`.`id_serial` and `cross_zajezd`.`nezobrazovat_zajezd`<>1 and  (`cross_zajezd`.`od` >=\"".Date("Y-m-d")."\" or (`cross_serial`.`dlouhodobe_zajezdy`=1 and `cross_zajezd`.`do` >=\"".Date("Y-m-d")."\") )) 
+                                                    
+                            left join (
+                                        `informace` join
+                                        foto_informace on (`informace`.`id_informace` = `foto_informace`.`id_informace` and `foto_informace`.`zakladni_foto` = 1) join
+                                        foto on (`foto_informace`.`id_foto` = `foto`.`id_foto`)
+                                    ) on (`informace`.`id_informace` = `cross_zeme`.`id_info`)
+                            WHERE cross_zeme.geograficka_zeme = 0 and `cross_serial`.`id_typ` = 4 and  `cross_zajezd`.`nezobrazovat_zajezd`<>1 and `cross_serial`.`nezobrazovat`<>1
+                            ORDER BY `cross_zeme`.`nazev_zeme`
+                            ";	
+                            // echo $dotaz;                    
+
+
+        }else if( $typ=="dotaz_zeme_from_nazev"){
+                    // zeme z nazev_zeme_web
+                        $dotaz="
+                            SELECT DISTINCT  `cross_zeme`.`id_zeme`,  `cross_zeme`.`nazev_zeme` , `cross_zeme`.`nazev_zeme_web` , foto.foto_url
+                            FROM 
+                            `zeme_serial` AS `cross_zeme_serial` 
+                            JOIN `zeme` AS `cross_zeme`  ON ( `cross_zeme_serial`.`id_zeme` = `cross_zeme`.`id_zeme` )                                                
+                                                                                
+                            left join (
+                                        `informace` join
+                                        foto_informace on (`informace`.`id_informace` = `foto_informace`.`id_informace` and `foto_informace`.`zakladni_foto` = 1) join
+                                        foto on (`foto_informace`.`id_foto` = `foto`.`id_foto`)
+                                    ) on (`informace`.`id_informace` = `cross_zeme`.`id_info`)
+                            WHERE cross_zeme.nazev_zeme_web = \"".$this->nazev_zeme."\"
+                            ORDER BY `cross_zeme`.`nazev_zeme`
+                            ";	                    
 		//echo "<br><br>";			
 		//echo $dotaz;			
 		}else if($typ=="dotaz_typy"){
@@ -557,7 +594,7 @@ class Menu_katalog extends Generic_list{
                             (`zajezd`.`od` >='".Date("Y-m-d")."' or (`zajezd`.`do` >'".Date("Y-m-d")."' and `serial`.`dlouhodobe_zajezdy`=1 ) ) and
                             `serial`.`id_typ` = 4 and  `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1  and `zeme`.`geograficka_zeme`=0                                              
                     ";
-               // echo $dotaz;
+               echo $dotaz;
             return $dotaz;				
 		}
 		
