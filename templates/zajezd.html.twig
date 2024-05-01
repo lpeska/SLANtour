@@ -163,8 +163,18 @@
                                             <i class="fa" aria-hidden="true"></i>
                                         </div>
                                         <div class="date_date">{{ tourDate.date}}</div> 
-                                        <div class="date_price">{{ tourDate.price}} Kč</div>
+                                        {% if tourDate.price == -1 %}
+                                        <div class="date_price soldout">
+                                            Vyprodáno!    
+                                        </div>
+                                        {% else %}
+                                        <div class="date_price">
+                                            {{ tourDate.price}} Kč
+                                        </div>
+                                        {% endif %}
+                                        {% if tourDate.price > 0 %}
                                         <a class="date_select" data-dateindex="{{loop.index}}"><strong>Vybrat Termín <i class="arrow_carrot-right"></i></strong></a>
+                                        {% endif %}
                                         
                                     </button>
                                 </h2>
@@ -490,8 +500,11 @@
                         <select id="orderDate" class="form-select form-control form-group" required aria-label="Select tour date">
                             <option value="" disabled selected>Vyberte termín...</option>
                             {% for tourDate in dates %}
-                            <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}">{{tourDate.date}} ({{tourDate.price}} Kč)</option>
-                            
+                                {% if tourDate.price == -1 %}
+                                    <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}">{{tourDate.date}} (vyprodáno)</option>
+                                {% else %}
+                                    <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}">{{tourDate.date}} ({{tourDate.price}} Kč)</option>
+                                {% endif %}
                             {% endfor %} 
                         </select>
                         <label for="orderPerson"><i class="fas fa-user"></i> Počet osob</label>

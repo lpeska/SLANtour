@@ -433,10 +433,15 @@
 
 	// Order date select value changed
 	$('#orderDate').change(function(){
-		const price = $('.price .price_span');
+		const priceSpan = $('.price .price_span');
 		
 		$('#orderTour')[0].disabled = false;
-		price.text(this[this.value].dataset.price + " Kč");
+		const price = this[this.value].dataset.price;
+		if (price == -1) {
+			priceSpan.text("Vyprodáno!");
+		} else {
+			priceSpan.text(this[this.value].dataset.price + " Kč");
+		}
 	});
 
 	// Order button clicked

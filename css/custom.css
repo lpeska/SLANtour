@@ -623,6 +623,12 @@ figure .price_discount_tag {
     font-weight: 600;
 }
 
+.accordion-header .date_price.soldout{
+    font-size: 18px;
+    font-weight: 400;
+    color: firebrick;
+}
+
 .accordion-header button .date_select {
     position: absolute;
     top: 27px;

@@ -169,7 +169,9 @@ while ($serial->get_zajezdy()->get_next_radek()) {
 function minPrice($dates) {
     $prices = array();
     foreach ($dates as $dt) {
-        $prices[] = intval($dt->price);
+        if ($dt->price > 0) {
+            $prices[] = intval($dt->price);
+        }
     }
     return min($prices);
 }
