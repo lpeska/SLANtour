@@ -5,7 +5,17 @@ require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, men
 $tourTypes = getAllTourTypes();
 $countriesMenu = getCountriesMenu();
 
-$countries = getAllCountries();
+$url = "$_SERVER[REQUEST_URI]";
+$values = parse_url($url);
+$path = explode('/',$values['path']);
+$continentName = $path[count($path) - 1];
+
+if ($continentName == "sport") {
+    $countries = getSportCountries();
+
+} else {
+    $countries = getAllCountries($continentName);
+}
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
@@ -17,7 +27,8 @@ echo $twig->render('zeme-seznam.html.twig', [
     'typesOfTours' => $tourTypes,
     'countriesMenu' => $countriesMenu,
     'countries' => $countries,
+    'continentName' => $continentName,
     'breadcrumbs' => array(
-        new Breadcrumb('Země', '/zeme-seznam.php')
+        new Breadcrumb('Země', '/zeme-seznam')
     )
 ]);

@@ -62,10 +62,10 @@
 		</a>
 		<nav id="menu" class="main-menu">
 			<ul>
-				<li><span><a href="/zeme-seznam.php">Země <i class="fas fa-caret-down"></i></a></span>
+				<li><span><a href="/zeme-seznam">Země <i class="fas fa-caret-down"></i></a></span>
 					<ul class="megamenu">
 						<li class="megamenu-item">
-							<span class="megamenu-title"><a href="/destinace.php">Evropa</a></span>
+							<span class="megamenu-title"><a href="/zeme-seznam/evropa">Evropa</a></span>
 							<ul class="megamenu-list europe">
 								{% for country in countriesMenu.countries %}
 									{% if loop.index0 <= 9 %}
@@ -74,29 +74,32 @@
 								{% endfor %}
 							</ul>
 							<ul class="megamenu-list">
-								<li class="megamenu-listitem show_all"><a href="/zeme-seznam.php">Zobrazit vše ({{countriesMenu.euCount}})</a></li>
+								<li class="megamenu-listitem show_all"><a href="/zeme-seznam/evropa">Zobrazit vše ({{countriesMenu.euCount}})</a></li>
 							</ul>
 						</li>
 						<li class="megamenu-item">
-							<span class="megamenu-title"><a href="/destinace.php">Svět</a></span>
+							<span class="megamenu-title"><a href="/zeme-seznam/svet">Svět</a></span>
 							<ul class="megamenu-list">
 								{% for country in countriesMenu.countries %}
 									{% if loop.index0 > 9 and loop.index0 <= 14 %}
 										<li class="megamenu-listitem"><a href="{{ country.url }}">{{ country.name }}</a></li>
 									{% endif %}
 								{% endfor %}
-								<li class="megamenu-listitem show_all"><a href="/zeme-seznam.php">Zobrazit vše ({{countriesMenu.worldCount}})</a></li>
+								<li class="megamenu-listitem show_all"><a href="/zeme-seznam/svet">Zobrazit vše ({{countriesMenu.worldCount}})</a></li>
 							</ul>
 						</li>
 						<li class="megamenu-item">
-							<span class="megamenu-title"><a href="/typ-zajezdu.php">Sport</a></span>
+							<span class="megamenu-title"><a href="/zeme-seznam/sport">Sport</a></span>
 							<ul class="megamenu-list">
 								{% for country in countriesMenu.countries %}
 									{% if loop.index0 > 14 and loop.index0 <= 19 %}
 										<li class="megamenu-listitem"><a href="{{ country.url }}">{{ country.name }}</a></li>
 									{% endif %}
 								{% endfor %}
-								<li class="megamenu-listitem show_all"><a href="/zeme-seznam.php">Zobrazit vše ({{countriesMenu.sportCount}})</a></li>
+								{% if countriesMenu.countries|length <= 19 %}
+									<li class="megamenu-listitem">placeholder</li>
+								{% endif %}
+								<li class="megamenu-listitem show_all"><a href="/zeme-seznam/sport">Zobrazit vše ({{countriesMenu.sportCount}})</a></li>
 							</ul>
 						</li>
 						

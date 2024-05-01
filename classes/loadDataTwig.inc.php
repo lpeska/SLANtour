@@ -186,7 +186,7 @@ function getCountry($countryName)
     return $country;
 }
 
-function getAllCountries()
+function getAllCountries($continent)
 {
     /*Loading countries*/
     $menu = new Menu_katalog("dotaz_zeme_list", "", "", "");
@@ -204,8 +204,13 @@ function getAllCountries()
             $country["foto_url"],
             "/zeme/" . $country["nazev_zeme_web"]
         );
-
-        $countries[$country["id_zeme"]] = $c;
+        if ($continent == "zeme-seznam") {
+            $countries[$country["id_zeme"]] = $c;
+        } else if ($continent == "evropa" && isEurope($country["nazev_zeme_web"])) {
+            $countries[$country["id_zeme"]] = $c;
+        } else if ($continent == "svet" && !isEurope($country["nazev_zeme_web"])) {
+            $countries[$country["id_zeme"]] = $c;
+        }
     }
     return $countries;
 }
@@ -246,6 +251,19 @@ function getCountriesMenu()
         }
     }
 
+    $sportCountries = getSportCountries();
+
+    $euCount = count($euCountries);
+    $worldCount = count($worldCountries);
+    $sportCount = count($sportCountries);
+
+    $countries = array_merge(getTopCountries($euCountries, 10), getTopCountries($worldCountries, 5), getTopCountries($sportCountries, 5));  
+    
+    return new CountryMenu($countries, $euCount, $worldCount, $sportCount);
+}
+
+function getSportCountries()
+{
     $menuSport = new Menu_katalog("dotaz_sport_list", "", "", ""); 
     $topSportsDB = $menuSport->get_zeme_list();
     // print_r($topSportsDB);
@@ -258,29 +276,16 @@ function getCountriesMenu()
             $topSport["id_zeme"],
             $topSport["nazev_zeme"],
             "no description",
-            0,
-            0,
+            $topSport["tourCount"],
+            $topSport["tourPrice"],
             $topSport["foto_url"],
             "/zeme/" . $topSport["nazev_zeme_web"]
         );
         $sportCountries[$topSport["id_zeme"]] = $c;
     }
-
-    $euCount = count($euCountries);
-    $worldCount = count($worldCountries);
-    $sportCount = count($sportCountries);
-
-    $countries = array_merge(getTopCountries($euCountries, 10), getTopCountries($worldCountries, 5), array_slice($sportCountries, 0, 5));  
-    // echo "</br>";
-    // echo "</br>";
-    // echo "merged";
-    // echo "</br>";
-    // echo printCountries($countries);
-    // echo "</br>";
-    // echo "</br>";
-    
-    return new CountryMenu($countries, $euCount, $worldCount, $sportCount);
+    return $sportCountries;
 }
+
 
 function getTopCountries($countries, $count)
 {

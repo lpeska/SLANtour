@@ -1,6 +1,17 @@
 {% extends "_base.html.twig" %}
 
-{% block title %}SLANtour - Typy Zájezdů{% endblock title %}
+{% block title %}SLANtour - 
+	{% if continentName == "evropa" %}
+		Evropské země
+    {% elseif continentName == "svet" %}
+        Svět
+    {% elseif continentName == "sport" %}
+        Sporty
+	{% elseif continentName == "zeme-seznam" %}
+		Země
+    {% endif %}
+
+{% endblock title %}
 
 {% block stylesheets %}
 
@@ -10,10 +21,20 @@
 
 
 <section class="hero_in tour_list">
-    <img src="../img/poznavaci.png" alt="Slide background">
+    <img src="../img/dovolena.png" alt="Slide background">
     <div class="wrapper">
         <div class="container">
-            <h1 class="fadeInUp"><span></span>Země</h1>
+            <h1 class="fadeInUp"><span></span>
+				{% if continentName == "evropa" %}
+					Evropské země
+                {% elseif continentName == "svet" %}
+                    Svět
+                {% elseif continentName == "sport" %}
+                    Sporty
+				{% elseif continentName == "zeme-seznam" %}
+					Země
+                {% endif %}
+			</h1>
         </div>
     </div>
 </section>
