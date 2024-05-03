@@ -24,11 +24,14 @@
     {% include "_breadcrumbs.html.twig" %}
 
     <div class="container margin_35_35">
+        {% if destination.description %}
+        
         <section>
             <h2>Popis země</h2>
-            <p>{{ destination.description }}</p>
+            <p>{{ destination.description|raw }}</p>
 
         </section>
+        {% endif %}
         <!-- /section -->
         {% include "_tour-lists.html.twig" %}
     </div>
