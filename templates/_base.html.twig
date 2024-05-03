@@ -48,9 +48,8 @@
 			</a>
 		</div>
 		<ul id="top_menu">
-			<li><a href="/html-template/cart-1.html" class="cart-menu-btn" title="Cart"><strong>4</strong></a></li>
-			<li><a href="/html-template/#sign-in-dialog" id="sign-in" class="login" title="Sign In">Sign In</a></li>
-			<li><a href="/html-template/wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>
+
+			<li><a href="#sign-in-dialog" id="sign-in" class="search-header fas fa-search" title="Vyhledat zájezdy">Vyhledat zájezdy</a></li>
 		</ul>
 		<!-- /top_menu -->
 		<a href="#menu" class="btn_mobile">
@@ -205,6 +204,28 @@
 	<!--/footer-->
 	</div>
 	<!-- page -->
+
+	<!-- Sign In Popup -->
+	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
+			<h3>Vyhledat zájezdy</h3>
+			<form action="../vyhledat-zajezd.php">
+				<div class="custom-search-input-2">
+					<div class="form-group">
+						<input class="form-control" type="text" placeholder="Kamkoliv" id="autocomplete">
+						<i class="icon_pin_alt"></i>
+					</div>
+					<div class="form-group">
+						<input class="form-control" type="text" name="dates" placeholder="Kdykoliv">
+						<i class="icon_calendar"></i>
+					</div>
+					<div class="form-group text-right">
+						<input type="submit" class="btn_search" value="Vyhledat">
+					</div>
+				</div>
+				<!-- /row -->
+			</form>
+	</div>
+	<!-- /Sign In Popup -->
 	
 	<div id="toTop"></div><!-- Back to top button -->
 	

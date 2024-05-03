@@ -1039,11 +1039,6 @@ ul#top_menu li:last-child {
     margin: 0 0 0 10px;
   }
 }
-@media (max-width: 767px) {
-  ul#top_menu li:first-child {
-    display: none;
-  }
-}
 ul#top_menu li a {
   color: #fff;
 }
@@ -1051,12 +1046,15 @@ ul#top_menu li a:hover {
   color: #fff;
   opacity: 0.7;
 }
-ul#top_menu li a.login, ul#top_menu li a.wishlist_bt_top, ul#top_menu li a.cart-menu-btn {
+.sticky ul#top_menu li a.search-header:hover:before {
+  color: #fc5b62;
+}
+ul#top_menu li a.login, ul#top_menu li a.search-header {
   display: block;
   width: 22px;
   height: 23px;
   position: relative;
-  top: 8px;
+  top: 16px;
   -moz-transition: opacity 0.5s ease;
   -o-transition: opacity 0.5s ease;
   -webkit-transition: opacity 0.5s ease;
@@ -1064,31 +1062,28 @@ ul#top_menu li a.login, ul#top_menu li a.wishlist_bt_top, ul#top_menu li a.cart-
   transition: opacity 0.5s ease;
 }
 @media (max-width: 991px) {
-  ul#top_menu li a.login, ul#top_menu li a.wishlist_bt_top, ul#top_menu li a.cart-menu-btn {
+  ul#top_menu li a.login, ul#top_menu li a.search-header {
     top: 2px;
   }
 }
-ul#top_menu li a.login:before, ul#top_menu li a.wishlist_bt_top:before, ul#top_menu li a.cart-menu-btn:before {
-  font-family: 'Glyphter';
-  font-size: 21px;
-  font-size: 1.3125rem;
+ul#top_menu li a.login:before, ul#top_menu li a.search-header:before {
+  
+  font-size: 14px;
+  font-size: 0.875rem;
   color: #fff;
   text-indent: 0;
   position: absolute;
   left: 0;
   top: 0;
-  font-weight: normal;
   line-height: 1;
 }
-.sticky ul#top_menu li a.login:before, .sticky ul#top_menu li a.wishlist_bt_top:before, .sticky ul#top_menu li a.cart-menu-btn:before {
+.sticky ul#top_menu li a.login:before, .sticky ul#top_menu li a.search-header:before {
   color: #444;
 }
-ul#top_menu li a.wishlist_bt_top {
+ul#top_menu li a.search-header {
   text-indent: -9999px;
 }
-ul#top_menu li a.wishlist_bt_top:before {
-  content: '\0043';
-}
+
 ul#top_menu li a.login {
   text-indent: -9999px;
 }
@@ -6727,7 +6722,7 @@ header.header.map_view {
     padding: 15px 15px 5px 15px;
   }
 }
-header.header.map_view ul#top_menu li a.login:before, header.header.map_view ul#top_menu li a.wishlist_bt_top:before, header.header.map_view ul#top_menu li a.cart-menu-btn:before {
+header.header.map_view ul#top_menu li a.login:before, header.header.map_view ul#top_menu li a.search-header:before, header.header.map_view ul#top_menu li a.cart-menu-btn:before {
   color: #444;
 }
 header.header.map_view .main-menu > ul > li span > a {
@@ -8742,10 +8737,9 @@ ul.list_ok li:before {
 /*-------- 3.7 Sing In Modal --------*/
 #sign-in-dialog {
   background: #fff;
-  padding: 30px;
-  padding-top: 0;
+  padding: 20px 30px 10px 30px;
   text-align: left;
-  max-width: 400px;
+  max-width: 450px;
   margin: 40px auto;
   position: relative;
   box-sizing: border-box;
@@ -8764,7 +8758,7 @@ ul.list_ok li:before {
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   border-radius: 50%;
-  top: 12px;
+  top: 20px;
   right: 20px;
   width: 32px;
   height: 32px;
@@ -8781,6 +8775,10 @@ ul.list_ok li:before {
   font-size: 24px;
   font-family: 'ElegantIcons';
   content: "\4d";
+}
+
+#sign-in-dialog h3 {
+  margin-bottom: 30px;
 }
 
 .small-dialog-header {
@@ -8804,31 +8802,6 @@ ul.list_ok li:before {
   font-size: 18px;
   font-size: 1.125rem;
   font-weight: 500;
-}
-
-#sign-in-dialog .form-group {
-  position: relative;
-}
-
-#sign-in-dialog .form-group input.form-control {
-  padding-left: 40px;
-}
-
-#sign-in-dialog .form-group i {
-  font-size: 21px;
-  font-size: 1.3125rem;
-  position: absolute;
-  left: 12px;
-  top: 34px;
-  color: #ccc;
-  width: 25px;
-  height: 25px;
-  display: block;
-  font-weight: 400 !important;
-}
-
-#sign-in-dialog .form-group i.icon_lock_alt {
-  top: 36px;
 }
 
 .my-toggle {
