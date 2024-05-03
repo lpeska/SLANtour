@@ -130,7 +130,9 @@ function getTourType($typeName)
 
     //setup img for type
     $foto = getTypeImage($typ["id_typ"], $typ["foto_url"]);
-    $type = new TourType($typ["id_typ"], $typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $typ["description"], "/zajezdy/typ-zajezdu/" . $typ["nazev_typ_web"]);
+    $description = getTypeDescription($typ["nazev_typ_web"]);
+    $type = new TourType($typ["id_typ"], $typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $description, "/zajezdy/typ-zajezdu/" . $typ["nazev_typ_web"]);
+    // print_r($type);
     return $type;
 }
 
@@ -380,6 +382,65 @@ function isEurope($countryNameWeb) {
         "turecko"
      );
     return in_array($countryNameWeb, $euCountries);
+}
+
+function getTypeDescription($typeName) {
+    $tourDescriptions = array(
+        "poznavaci-zajezdy" => "<p>Máme pro vás nezapomenutelná dobrodružství plná kultury, historie a úžasných zážitků. S námi se stanete cestovatelem, ne jen turistou. 
+        Naše poznávací zájezdy vás zavedou do srdce destinací, kde se ponoříte do místních tradic, poznáte fascinující příběhy a ochutnáte autentickou kuchyni.</p>
+        <p class='list'>Co vás čeká: </p>
+        <ul>
+        <li>Návštěva historických památek a muzeí, které vám otevřou okno do minulosti</li> 
+        <li>Procházky malebnými městy a vesnicemi s průvodcem znalým místní kultury </li> 
+        <li>Příležitost objevit skryté poklady a krásy destinací</li> 
+        <li>Degustace místních specialit a vín</li> 
+        </ul>
+        
+        <p>Připravte se na dobrodružství, která vás obohatí a přinesou vám nové zážitky a přátelství. Objevujte krásy světa spolu s námi!</p>",
+
+        "za-sportem" => "<p>Naše zájezdy za sportem jsou tady pro všechny nadšené sportovní fanoušky, kterým nestačí sportovní atmosféra jen u televize.</p>",
+
+        "pobytove-zajezdy" => "<p>Užijte si vaši dovolenou u nás i v cizině.</p>",
+
+        "lazenske-pobyty" => "<p>Nabízíme široký výběr jak tradičních lázní, tak i lázní termálních či oblíbených wellness hotelů.
+        Nyní máte jedinečnou příležitost načerpat novou energii a revitalizovat svou mysl a tělo v nádherném prostředí lázeňských destinací.</p>",
+
+        "jednodenni-zajezdy" => "<p>Není třeba čekat na dovolenou - připojte se k nám na jednodenních zájezdech a zažijte jedinečné zážitky každý víkend.</p>",
+
+        "pobyty-hory" => "<p>Vydejte se do  výšek a objevte krásu hor! Naše zájezdy do hor vás zavedou do rozličných  horských  krajin, 
+        kde se budete moci těšit na nezapomenutelné dobrodružství, čistý vzduch  i překrásné výhledy.</p>",
+
+        "exotika" => "<p>Čekají na vás sluneční paprsky, nádherné pláže, jemný písek a teplé moře.</p>",
+
+        "fly-and-drive" => "<p>Prozkoumejte svět zcela novým způsobem - s volností a nezávislostí, kterou nabízí automobil. Od hory po oceán, od města k městu, 
+        budete mít kontrolu nad každým kilometrem svého dobrodružství.</p>
+        <p class='list'>Co vás čeká: </p>
+        <ul>
+        <li>Výběr z nekonečných tras a cílů po celém světě </li> 
+        <li>Možnost objevovat tajemná místa, která nejsou turisticky přeplněná </li> 
+        <li>Rezervace ubytování přizpůsobeného vašim preferencím </li> 
+        <li>Lokální gastronomické zážitky na cestě </li> 
+        <li>Itinerář, vytvořený podle vašich zájmů a časového plánu</li> 
+        </ul>
+        
+        <p>Náš Fly and Drive balíček vám umožní naplánovat si cestu dle svých představ a zároveň vám poskytne bezstarostný zážitek s podporou 
+        našeho týmu odborníků na cestování. Stačí  objednat auto, naložit si zavazadla a vydat se na cestu, na kterou budete vzpomínat po zbytek života.
+        Nemáme pro vás jen zájezdy - máme pro vás nezapomenutelná dobrodružství, která vám umožní prozkoumat svět jako nikdy předtím. 
+        S Fly and Drive zájezdy máte svět na dosah ruky.</p>
+        ",
+ 
+        "eurovikendy" => "<p>Přestaňte snít a začněte plánovat svůj nezapomenutelný Eurovíkend! Do evropských i světových metropolí s námi 
+        můžete zamířit nejen letecky, ale také vlakem.</p>
+        <p class='list'>Co můžete očekávat: </p>
+        <ul>
+        <li>Procházky historickými uličkami starobylých měst </li> 
+        <li>Degustace nejlepších evropských vín a gastronomických lahůdek </li> 
+        <li>Návštěvy světově proslulých muzeí a galerií </li> 
+        <li>Nakupování v luxusních obchodech i na trzích s místními poklady </li> 
+        <li>Noci plné zábavy a tance v nejlepších evropských klubech</li> 
+        </ul>"
+    );
+    return $tourDescriptions[$typeName];
 }
 
 class Breadcrumb

@@ -756,3 +756,18 @@ figure .price_discount_tag {
 .price_inputs span {
     padding: 0 10px;
 }
+
+section.description p {
+    margin-bottom: 20px;
+}
+
+section.description p.list {
+    margin-bottom: 5px;
+}
+
+section.description ul {
+    list-style: circle;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
