@@ -40,7 +40,7 @@
 	<header class="header menu_fixed">
 		<div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
 		<div id="logo">
-			<a href="/index.php">
+			<a href="/">
 				<img src="/img/logo_slan-light.png" height="36" alt="" class="logo_normal">
 				<span class="title logo_normal">SLAN tour</span> 
 				<img src="/img/logo_slan-dark.png" height="36" alt="" class="logo_sticky">
@@ -104,7 +104,7 @@
 						
 					</ul>
 				</li>
-				<li><span><a href="/typy-zajezdu.php">Typy zájezdů <i class="fas fa-caret-down"></i></a></span>
+				<li><span><a href="/typy-zajezdu">Typy zájezdů <i class="fas fa-caret-down"></i></a></span>
 					<ul class="megamenu types">
 						{% for tourType in typesOfTours %}
 						<li class="megamenu-item">
@@ -121,10 +121,11 @@
 				
 				<li><span><a>O Nás <i class="fas fa-caret-down"></i></a></span>
 					<ul class="menu">
-						<li><a href="/onas.php">O nás</a></li>
-						<li><a href="/kontakty.php">Kontakty</a></li>
-						<li><a href="/kontakty.php">Ohlasy klientů</a></li>
-						<li><a href="/slevy.php">Slevy</a></li>
+						<li><a href="/onas">O nás</a></li>
+						<li><a href="/kontakty">Kontakty</a></li>
+						<li><a href="/kontakty">Ohlasy klientů</a></li>
+						<li><a href="/faq">Časté dotazy</a></li>
+						<li><a href="/slevy">Slevy</a></li>
 					</ul>
 				</li>
 
@@ -161,10 +162,10 @@
 				<div class="col-lg-3 col-md-6 ml-lg-auto">
 					<h5>Užitečné odkazy</h5>
 					<ul class="links">
-						<li><a href="/info-prodejci.php">Info pro prodejce</a></li>
-						<li><a href="/poukazy.php">Slevové karty a poukazy</a></li>
+						<li><a href="/info-prodejci">Info pro prodejce</a></li>
+						<li><a href="/poukazy">Slevové karty a poukazy</a></li>
 						<li><a href="">Katalogy</a></li>
-						<li><a href="/faq.php">Časté dotazy</a></li>
+						<li><a href="/faq">Časté dotazy</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-3 col-md-6">
@@ -208,7 +209,7 @@
 	<!-- Sign In Popup -->
 	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
 			<h3>Vyhledat zájezdy</h3>
-			<form action="../vyhledat-zajezd.php">
+			<form action="../vyhledat-zajezd">
 				<div class="custom-search-input-2">
 					<div class="form-group">
 						<input class="form-control" type="text" placeholder="Kamkoliv" id="autocomplete">
