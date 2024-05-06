@@ -19,6 +19,8 @@ $discountTours = getDiscountTours("", "");
 $popularTours = getPopularTours("", "");
 $newTours = getNewTours("", "");
 
+$reviews = getOhlasy(4);
+
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
@@ -33,6 +35,7 @@ echo $twig->render('index.html.twig', [
     "totalDiscountedTours" => 157,
     "totalTours" => $totalTours,
     'newTours' => $newTours,
+    'reviews' => $reviews,
     'news' => array(
         new News('Peking 2022', 'V únoru příštího roku se budou konat Zimní olympijské hry v Peking.', '5.', 'Únor','img/sport.png'),
         new News('NHL - Boston Bruins letecky', 'V současné chvíli rozšiřujeme naši nabídku leteckých zájezdů na NHL o zápasy Boston Bruins,...', '28.', 'Leden','img/sport.png'),

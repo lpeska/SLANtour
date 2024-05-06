@@ -4,6 +4,7 @@ require_once "./classes/menu.inc.php"; //seznam serialu
 require_once "./classes/serial_lists.inc.php"; //seznam serialu
 require_once "./classes/destinace_list.inc.php"; //menu katalogu
 require_once "./classes/informace_zeme.inc.php"; //seznam informaci katalogu
+require_once "./classes/ohlasy_list.inc.php"; //seznam ohlasu
 
 function getDiscountTours(String $typeName, $countryName)
 {
@@ -306,6 +307,24 @@ function getTopCountries($countries, $count)
     // echo "</br>";
     // echo printCountries(array_slice($countries, 0, $count));
     return array_slice($countries, 0, $count);
+}
+
+function getOhlasy(int $limit) 
+{
+    $ohlasy_list = new Ohlasy_list($limit);
+    $ohlasyDB = $ohlasy_list->get_ohlasy_list();
+    $ohlasy = array();
+    foreach ($ohlasyDB as $ohlas) {
+        $review = new Review(
+            $ohlas["id_ohlasu"],
+            $ohlas["nadpis"],
+            $ohlas["kr_popis"],
+            $ohlas["foto_url"],
+        );
+        // print_r($review);
+        $ohlasy[$ohlas["id_ohlasu"]] = $review;
+    }
+    return $ohlasy;
 }
 
 function printCountries($array)
@@ -643,5 +662,21 @@ class TourDate
         $this->services = $services;
         $this->extraFees = $extraFees;
         $this->pickupSpots = $pickupSpots;
+    }
+}
+
+class Review
+{
+    public int $id;
+    public string $title;
+    public string $description;
+    public string $image;
+
+    public function __construct(int $id, string $title, string $description, string $image)
+    {
+        $this->id = $id;
+        $this->title = $title;
+        $this->description = $description;
+        $this->image = $image;
     }
 }

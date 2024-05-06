@@ -3007,8 +3007,16 @@ a.box_news {
   display: block;
   padding-left: 230px;
   color: #555;
-  margin-bottom: 30px;
   min-height: 150px;
+}
+.review{
+  padding: 20px;
+}
+.review.first {
+  padding: 0 20px 20px 20px;
+}
+.review.gray{
+  background-color: #f8f8f8;
 }
 @media (max-width: 767px) {
   a.box_news {

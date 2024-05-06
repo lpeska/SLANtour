@@ -1,0 +1,13 @@
+{% for review in reviews %}
+<div class="row">
+    <div
+        class="col-lg-12 review {% if loop.index is even %} gray {% endif %} {% if loop.index0 == 0 %} first {% endif %}">
+        <a class="box_news" href="/ohlasy">
+            <figure><img src="{{ review.image }}" alt=""></figure>
+            <h4>{{ review.title }}</h4>
+            <p>{{ review.description|raw }}</p>
+        </a>
+    </div>
+    <!-- /box_news -->
+</div>
+{% endfor %}

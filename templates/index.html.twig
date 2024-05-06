@@ -277,37 +277,13 @@
 	<div class="container margin_80_0">
 		<div class="main_title_2">
 			<span><em></em></span>
-			<h3>Přečtěte si</h3>
-			<p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+			<h3>Ohlasy klientů</h3>
+			<p>Naše zájezdy ohodnotilo 1234 klientů. Podívejte se, co o nás napsali.</p>
 		</div>
-		<div class="row">
-			{% for newsItem in news %}
-			<div class="col-lg-6">
-				<a class="box_news" href="#0">
-					<figure><img src="{{ newsItem.image }}" alt=""></figure>
-					<ul>
-						<li>
-							<span>
-								<i class="fas fa-user"></i>
-							</span>
-							Mark Twain
-						</li>
-						<li>
-							<span>
-								<i class="fas fa-calendar-alt"></i>
-							</span>
-							20.11.2017
-						</li>
-					</ul>
-					<h4>{{ newsItem.title }}</h4>
-					<p>{{ newsItem.description }}</p>
-				</a>
-			</div>
-			<!-- /box_news -->
-			{% endfor %}
-		</div>
-		<!-- /row -->
-		<p class="btn_home_align"><a href="blog.html" class="btn_1 rounded">Zobrazit další články</a></p>
+		
+		{% include "_reviews.html.twig" %}
+
+		<p class="btn_home_align add_top_15"><a href="/ohlasy" class="btn_1 rounded">Zobrazit další ohlasy</a></p>
 	</div>
 
 	<div class="container margin_80_55">
@@ -326,7 +302,7 @@
 					<div class="counter_item_figure">
 						<div class="counter">
 							<div class="counter_number years"></div>
-							<h5 class="counter_title">Let Zkušeností</h5>
+							<h5 class="counter_title">Let zkušeností</h5>
 						</div>
 					</div>
 				</article>
@@ -337,7 +313,7 @@
 					<div class="counter_item_figure">
 						<div class="counter">
 							<div class="counter_number tours"></div>
-							<h5 class="counter_title">Úžasných Zájezdů</h5>
+							<h5 class="counter_title">Úžasných zájezdů</h5>
 						</div>
 					</div>
 				</article>
@@ -348,7 +324,7 @@
 					<div class="counter_item_figure">
 						<div class="counter">
 							<div class="counter_number clients"></div>
-							<h5 class="counter_title">Spokojených Klientů</h5>
+							<h5 class="counter_title">Spokojených klientů</h5>
 						</div>
 					</div>
 				</article>
