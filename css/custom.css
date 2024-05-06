@@ -757,19 +757,24 @@ figure .price_discount_tag {
     padding: 0 10px;
 }
 
-section.description p {
+section.main_description p {
     margin-bottom: 20px;
 }
 
-section.description p.list {
+section.main_description p.list {
     margin-bottom: 5px;
 }
 
-section.description ul {
+section.main_description ul {
     list-style: circle;
     margin-top: 0;
     margin-bottom: 1rem;
     padding-left: 2rem;
+}
+
+.main_description {
+    font-size: 16px;
+    font-size: 1rem;
 }
 
 #faq ul {
