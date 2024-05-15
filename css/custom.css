@@ -802,11 +802,3 @@ section.main_description ul {
 .shop ul {
     margin: 0 0 5px 0;
 }
-
-.shop ul li a {
-    color: #555;
-}
-  
-.shop ul li a:hover {
-    color: #fc5b62;
-}

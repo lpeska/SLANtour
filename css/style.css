@@ -1373,7 +1373,7 @@ header.sticky .hamburger-inner, header.sticky .hamburger-inner::before, header.s
   background-color: rgba(0, 0, 0, 0.6);
 }
 .hero_in.contacts:before {
-  background: url(../img/poznavaci.jpeg) center center no-repeat;
+  background: url(../img/slantour.png) center center no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
