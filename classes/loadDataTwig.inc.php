@@ -273,7 +273,8 @@ function getSportCountries()
     foreach ($topSportsDB as $topSport) {
         // echo $topSport["nazev_zeme_web"];
         // echo "</br>";
-        // echo "isEu: " . isEurope($topSport["nazev_zeme_web"]);
+        // print_r($topSport);
+        // echo "</br>";
         // echo "</br>";
         $c = new Country(
             $topSport["id_zeme"],

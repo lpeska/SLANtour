@@ -611,6 +611,9 @@ class Menu_katalog extends Generic_list{
                 $this->radek["foto_url"] = "https://slantour.cz/foto/full/".$this->radek["foto_url"];
                 $tourData = $this->get_country_data($this->radek["id_zeme"]);
                 
+                if ($tourData["min_cena"] == null) {
+                    $tourData["min_cena"] = 0;
+                }
                 $this->radek["tourCount"] = $tourData["countSerial"];
                 $this->radek["tourPrice"] = $tourData["min_cena"];
                 
@@ -627,6 +630,9 @@ class Menu_katalog extends Generic_list{
                 if ($this->radek["nazev_zeme_web"] == $nazev_zeme_web) {
                     $this->radek["foto_url"] = "https://slantour.cz/foto/full/".$this->radek["foto_url"];
                     $tourData = $this->get_country_data($this->radek["id_zeme"]);
+                    if ($tourData["min_cena"] == null) {
+                        $tourData["min_cena"] = 0;
+                    }
                     $this->radek["tourCount"] = $tourData["countSerial"];
                     $this->radek["tourPrice"] = $tourData["min_cena"];
                     
