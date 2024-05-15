@@ -790,3 +790,23 @@ section.main_description ul {
 #faq p {
     margin-bottom: 1rem;
 }
+
+.opening_days td{
+    padding-right: 20px;
+}
+
+.shop:not(:first-child){
+    margin-top: 45px;
+}
+
+.shop ul {
+    margin: 0 0 5px 0;
+}
+
+.shop ul li a {
+    color: #555;
+}
+  
+.shop ul li a:hover {
+    color: #fc5b62;
+}
