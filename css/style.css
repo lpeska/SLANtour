@@ -8229,7 +8229,7 @@ ul.share-buttons li i {
 #toTop {
   position: fixed;
   right: 25px;
-  bottom: 25px;
+  bottom: 100px;
   z-index: 9999;
   width: 46px;
   height: 46px;

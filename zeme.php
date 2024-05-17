@@ -14,7 +14,7 @@ $countryName = $path[count($path) - 1];
 $country = getCountry($countryName);
 
 $breadCrumbs = array(
-    new Breadcrumb('Země', '/zeme-seznam.php'),
+    new Breadcrumb('Země', '/zeme-seznam'),
     new Breadcrumb($country->name, $country->url)
 );
 

@@ -658,6 +658,10 @@ figure .price_discount_tag {
     animation: target-fade 2s 1;
 }
 
+.tour-html-block {
+    margin-bottom: 30px;
+}
+
 .tour-html-block p{
     margin-bottom: 0;
 }

@@ -209,6 +209,31 @@ if ($serial->create_foto_ubytovani()) {
     }
 }
 
+$doprava = Serial_library::get_typ_dopravy($serial->serial["doprava"]-1);
+
+if ($doprava == 'letecky') {
+    $icon = 'fa-plane';
+} else if ($doprava == 'autokar') {
+    $icon = 'fa-bus-simple';
+} else if ($doprava == 'vlastní nebo autobus') {
+    $icon = 'fa-bus-simple';
+} else if ($doprava == 'vlakem') {
+    $icon = 'fa-train';
+} else {
+    $icon = 'fa-car';
+}
+
+$features = array(
+    new Feature($icon, Serial_library::get_typ_dopravy($serial->serial["doprava"]-1)), 
+    new Feature('fa-hotel', Serial_library::get_typ_ubytovani($serial->serial["ubytovani"]-1)),         
+    new Feature('fa-utensils', Serial_library::get_typ_stravy($serial->serial["strava"]-1)),
+    //new Feature('fa-bed', '4 noci'), 
+    //new Feature('fa-umbrella-beach', 'Na pláži'),
+    //new Feature('fa-person-swimming', 'Bazén'),
+    //new Feature('fa-wifi', 'Wifi')
+    //To zakomentovane zatim neumime na nic namapovat - mozna pres $serial->get_highlights(), ale tam aktualne chybi mapovani na ikony
+);
+
 //var_dump($fotos);
 /*end of basic logic*/
 
@@ -285,24 +310,14 @@ echo $twig->render('zajezd.html.twig', [
     'name' => $nazev,
     'priceFrom' => $minPrice,
     'priceDiscount' => $maxDiscount,
-    'nights' => 4, //TODO: tohle bude u serialu slozitejsi - pocet noci muze byt v ramci terminu variabilni - pro zajezd to zvladnu urcit z terminu
     'accomodation' => Serial_library::get_typ_ubytovani($serial->serial["ubytovani"]-1),
     'meals' => Serial_library::get_typ_stravy($serial->serial["strava"]-1),
     'destination' => $location,
     'trans' => Serial_library::get_typ_dopravy($serial->serial["doprava"]-1),
     'imageMain' => $foto,
     'images' => $fotos,
-    'features' => array(
-        new Feature('fa-plane', Serial_library::get_typ_dopravy($serial->serial["doprava"]-1)), 
-        new Feature('fa-hotel', Serial_library::get_typ_ubytovani($serial->serial["ubytovani"]-1)),         
-        new Feature('fa-utensils', Serial_library::get_typ_stravy($serial->serial["strava"]-1)),
-        //new Feature('fa-bed', '4 noci'), 
-        //new Feature('fa-umbrella-beach', 'Na pláži'),
-        //new Feature('fa-person-swimming', 'Bazén'),
-        //new Feature('fa-wifi', 'Wifi')
-        //To zakomentovane zatim neumime na nic namapovat - mozna pres $serial->get_highlights(), ale tam aktualne chybi mapovani na ikony
-    ),
-    'descriptionMain' => strip_tags($serial->get_popisek()),  //TODO: tady by to spis chtelo ty tagy umoznit normalne zobrazit, stale dela problem treba &nbsp;
+    'features' => $features,
+    'descriptionMain' => $serial->get_popisek(),
     'descriptionMeals' => $serial->get_popis_stravovani(),
     'descriptionAccomodation' => $serial->get_popis_ubytovani(),
     'descriptionDetails' => $serial->get_popis(),

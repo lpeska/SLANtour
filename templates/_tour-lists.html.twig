@@ -27,11 +27,11 @@
                         <h3>{{tour.name}}</h3>
                         <em>
                             {% if tour.nights > 4 %}
-                            {{tour.nights}} nocí -
+                            {{tour.nights + 1}} dní, 
                             {% elseif tour.nights > 1 %}
-                            {{tour.nights}} noci -
+                            {{tour.nights + 1}} dny, 
                             {% elseif tour.nights > 0 %}
-                            {{tour.nights}} noc
+                            {{tour.nights + 1}} den, 
                             {% endif %}
                             {{tour.meals}}</em>
                     </div>
@@ -51,7 +51,12 @@
     
     {% if (destination.id > 0) %}
         <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
-    {% endif %}    
+    {% endif %}   
+    
+    {% if (type.id is not defined and destination.id is not defined) %}
+        <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}
+
 </section>
 {% endif %}
 <!-- /section -->
@@ -86,11 +91,11 @@
                         <h3>{{tour.name}}</h3>
                         <em>
                             {% if tour.nights > 4 %}
-                            {{tour.nights}} nocí -
+                            {{tour.nights + 1}} dní, 
                             {% elseif tour.nights > 1 %}
-                            {{tour.nights}} noci -
+                            {{tour.nights + 1}} dny, 
                             {% elseif tour.nights > 0 %}
-                            {{tour.nights}} noc
+                            {{tour.nights + 1}} den, 
                             {% endif %}
                             {{tour.meals}}</em>
                     </div>
@@ -111,6 +116,10 @@
     {% if (destination.id > 0) %}
         <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}  
+
+    {% if (type.id is not defined and destination.id is not defined) %}
+        <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}
 </section>
 {% endif %}
 <!-- /section -->
@@ -145,11 +154,11 @@
                         <h3>{{tour.name}}</h3>
                         <em>
                             {% if tour.nights > 4 %}
-                            {{tour.nights}} nocí -
+                            {{tour.nights + 1}} dní, 
                             {% elseif tour.nights > 1 %}
-                            {{tour.nights}} noci -
+                            {{tour.nights + 1}} dny, 
                             {% elseif tour.nights > 0 %}
-                            {{tour.nights}} noc
+                            {{tour.nights + 1}} den, 
                             {% endif %}
                             {{tour.meals}}</em>
                     </div>
@@ -170,6 +179,11 @@
     {% if (destination.id > 0) %}
         <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}  
+
+    {% if (type.id is not defined and destination.id is not defined) %}
+        <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+    {% endif %}
+    
 </section>
 {% endif %}
 <!-- /section -->

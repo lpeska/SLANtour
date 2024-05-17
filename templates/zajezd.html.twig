@@ -55,8 +55,8 @@
                            
                         </ul>
                     </div>
-                    <h2>Popis Zájezdu</h2>
-                    <p class="tour-html-block">{{ descriptionMain }}</p>
+                    <h2>Popis zájezdu</h2>
+                    <div class="tour-html-block">{{ descriptionMain|raw}}</div>
 
                     <div class="pictures_grid magnific-gallery clearfix">
                         {% for image in images %}
@@ -85,21 +85,9 @@
                     </div>
                     <!-- /pictures -->
 
-                    {% if descriptionAccomodation is not empty %}
-                    <h3>Ubytování</h3>
-                    <p class="tour-html-block">{{ descriptionAccomodation|raw }}</p>
-                    {% endif %}
-
-                    {% if descriptionMeals is not empty %}
-                    <h3>Stravování</h3>
-                    <p class="tour-html-block">{{ descriptionMeals|raw }}</p>
-                    {% endif %}
-                    
-                    <hr>
-                    
                     {% if descriptionProgram is not empty or program is not empty %}
-                    <h3>Program <small>{{nights}} nocí</small></h3>
-                    <p class="tour-html-block">{{ descriptionProgram|raw }}</p>
+                    <h3>Program</h3>
+                    <div class="tour-html-block">{{ descriptionProgram|raw }}</div>
                     <ul class="cbp_tmtimeline">
                         {% for day in program %}
                         <li>
@@ -123,12 +111,25 @@
                     </ul>
                     <hr>
                     {% endif %}
+
+                    {% if descriptionAccomodation is not empty %}
+                    <h3>Ubytování</h3>
+                    <div class="tour-html-block">{{ descriptionAccomodation|raw }}</div>
+                    {% endif %}
+
+                    {% if descriptionMeals is not empty %}
+                    <h3>Stravování</h3>
+                    <div class="tour-html-block">{{ descriptionMeals|raw }}</div>
+                    {% endif %}
                     
+                    {% if descriptionAccomodation is not empty or descriptionMeals is not empty %}
+                    <hr>
+                    {% endif %}
                     
                     <div class="row margin_0_30">
                         {% if included is not empty %}
                         <div class="col-lg-6">
-                            <h3>Cena Zahrnuje</h3>
+                            <h3>Cena zahrnuje</h3>
                             <div class="bullets positive">
                                 {{included[0]|raw}}
                             </div>
@@ -138,7 +139,7 @@
                         
                         {% if notIncluded is not empty %}
                         <div class="col-lg-6">
-                            <h3>Cena Nezahrnuje</h3>
+                            <h3>Cena nezahrnuje</h3>
                             <div class="bullets negative">
                                 {{notIncluded[0]|raw}}
                             </div>
@@ -152,13 +153,13 @@
                 <!-- /section -->
 
                 <section id="dates">
-                    <h2>Termíny</h2>
+                    <h2>Termíny a ceny</h2>
 
                     <div class="accordion" id="accordionDates">
                         {% for tourDate in dates %}
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading{{loop.index}}">
-                                    <button class="accordion-button collapsed" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
+                                    <button class="accordion-button{% if loop.index > 1 %} collapsed{% endif %}" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
                                         <div>
                                             <i class="fa" aria-hidden="true"></i>
                                         </div>
@@ -173,12 +174,12 @@
                                         </div>
                                         {% endif %}
                                         {% if tourDate.price > 0 %}
-                                        <a class="date_select" data-dateindex="{{loop.index}}"><strong>Vybrat Termín <i class="arrow_carrot-right"></i></strong></a>
+                                        <a class="date_select" data-dateindex="{{loop.index}}"><strong>Vybrat termín <i class="arrow_carrot-right"></i></strong></a>
                                         {% endif %}
                                         
                                     </button>
                                 </h2>
-                                <div id="collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="heading{{loop.index}}"
+                                <div id="collapse{{loop.index}}" class="accordion-collapse{% if loop.index > 1 %} collapse{% endif %}" aria-labelledby="heading{{loop.index}}"
                                     data-bs-parent="#accordionDates">
                                     <div class="accordion-body">
                                         {% if tourDate.details is not empty %}
@@ -509,7 +510,7 @@
                         </select>
                         <label for="orderPerson"><i class="fas fa-user"></i> Počet osob</label>
                         <input class="form-control form-group" type="number" name="orderPerson" id="orderPerson" value="1" min="1">
-                        <button id="orderTour" class="btn_1 full-width purchase" type="button"><i class="fas fa-cart-shopping"></i> Objednat</button>
+                        <button id="orderTour" class="btn_1 full-width purchase" type="button"><i class="fas fa-cart-shopping"></i> Přejít k objednávce</button>
                     </form>
                     {# <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a> #}
                     
