@@ -29,11 +29,11 @@
             <aside class="col-lg-3">
                 <div class="custom-search-input-2 inner-2">
                     <div class="form-group">
-                        <input class="form-control" type="text" placeholder="Kamkoliv" id="autocomplete">
+                        <input class="form-control" type="text" placeholder="Kamkoliv" id="autocomplete" value="{{ txt }}">
                         <i class="icon_pin_alt"></i>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="text" id="datesInput" name="dates" placeholder="Kdykoliv">
+                        <input class="form-control" type="text" id="datesInput" name="dates" placeholder="Kdykoliv" value="{{ dates }}">
                         <i class="icon_calendar"></i>
                     </div>
                     <input type="submit" class="btn_search" id="toursVolume" value="Ukázat 0 zájezdů">
@@ -60,7 +60,7 @@
                         
                         <div class="filter_type" id="price_filter">
                             <h6>Cena</h6>
-                            <input type="text" id="range" name="range" value="">
+                            <!--<input type="text" id="range" name="range" value="">-->
                             <div class="price_inputs">
                                 <input class="form-control" type="text" id="range-min">
                                 <span> - </span>
@@ -110,6 +110,20 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                        
+                        <div class="filter_type" id="sales_filter">
+                            <h6>Akce a slevy</h6>
+                            <ul>
+                                {% for sale in sales %}
+                                <li>
+                                    <label class="container_check">{{sale}} <small>(0)</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                             
                         <div class="filter_type" id="country_filter">
                             <h6>Cílová země</h6>
@@ -125,19 +139,7 @@
                             </ul>
                         </div>
                             
-                        <div class="filter_type" id="sales_filter">
-                            <h6>Akce a slevy</h6>
-                            <ul>
-                                {% for sale in sales %}
-                                <li>
-                                    <label class="container_check">{{sale}} <small>(0)</small>
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                        
                     </div>
                     <!--/collapse -->
                 </div>
@@ -159,9 +161,9 @@
                         <input type="radio" id="latest" name="listing_filter" value="latest" class="sorting-control" data-filter=".latest">
                         <label for="latest">Nově přidané</label>
                     </div>
-                    <a class="btn_map" data-toggle="collapse" href="#collapseMap" aria-expanded="false"
+                   <!-- <a class="btn_map" data-toggle="collapse" href="#collapseMap" aria-expanded="false"
                         aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View on
-                        map</a>
+                        map</a> -->
 
                 </div>
 
@@ -296,11 +298,21 @@
             
             var sv_res = await fetch('sales_vol.json');
             var sv = await sv_res.json();
-                                 
-            var res = await fetch('data.json');
+            /*var res = await fetch('data_group.json');*/                     
+            var res = await fetch('data_group.json');
             var data = await res.json();
             data.forEach(function(elem,index,arr){
-                data[index].castka = parseInt(data[index].castka);
+                data[index].castka = JSON.parse(data[index].castka);
+                let numberArray = data[index].castka.map(Number);
+                data[index].castka = numberArray;
+                
+                data[index].castkaMin = Math.min(...data[index].castka) /*.toString().padStart(6, '0')*/;
+                data[index].id_zajezd = JSON.parse(data[index].id_zajezd);
+                data[index].od = data[index].od.split(",");
+                data[index].do = data[index].do.split(",");
+                
+                data[index].zajezdData = Array.prototype.map.call( data[index].od, function(e,i){return [e, data[index].do[i], data[index].castka[i], data[index].id_zajezd[i]];})
+                                
                 
                 /*if (data[index].id_typ == "3" && data[index].nazev_ubytovani_web != undefined && data[index].nazev_ubytovani_web.length > 0){
                     data[index].escapedName = data[index].nazev_ubytovani_web + "-" + data[index].nazev_web;                    
@@ -339,12 +351,12 @@
                 if(elem["dlouhodobe_zajezdy"]=="1"){
                     data[index].durNights = -1;
                     data[index].durGroup = "variabilni";
-                }else if(elem["od"] == elem["do"]){
+                }else if(elem["od"][0] == elem["do"][0]){
                     data[index].durNights = 0;
                     data[index].durGroup = "jednodenni";
                 }else{
-                    var terminOd = new Date(elem["od"]);
-                    var terminDo = new Date(elem["do"]);     
+                    var terminOd = new Date(elem["od"][0]);
+                    var terminDo = new Date(elem["do"][0]);     
                     var diffDays = (terminDo.getTime() - terminOd.getTime()) / (1000 * 3600 * 24);
                     data[index].durNights = diffDays;
                     if(diffDays < 6){
@@ -388,6 +400,57 @@
             
             return selected_filters;
         }
+        
+        
+        function filterZajezd(item){
+            var dates = $("#datesInput").val();
+            var minPrice = removeCurrency($("#range-min").val());
+            var maxPrice = removeCurrency($("#range-max").val());
+
+            var filteredZajezd = item.zajezdData
+            if((typeof minPrice !== "undefined") && (typeof maxPrice !== "undefined") && parseInt(minPrice) > 0 && parseInt(maxPrice) > 0){
+                let minP = parseInt(minPrice);
+                let maxP = parseInt(maxPrice);
+                filteredZajezd = filteredZajezd.filter((x) => x[2] >= minP && x <= maxP);
+                /*priceCheck = item.castka >= parseInt(filters.minPrice[0]) && item.castka <= parseInt(filters.maxPrice[0])*/
+
+
+            }else if((typeof minPrice !== "undefined") && parseInt(minPrice) > 0){
+                /*priceCheck = item.castka >= parseInt(filters.minPrice[0])*/
+
+                let minP = parseInt(minPrice);
+                filteredZajezd = filteredZajezd.filter((x) => x[2] >= minP);
+
+            }else if((typeof maxPrice !== "undefined") && parseInt(maxPrice) > 0){
+                /*priceCheck = item.castka <= parseInt(filters.maxPrice[0])*/                                            
+                let maxP = parseInt(maxPrice);
+                filteredZajezd = filteredZajezd.filter((x) => x[2] <= maxP);
+            }  
+
+            if(dates != ""){
+                //add dates filter
+                var datesArr = dates.split(" > ");
+                var dateFrom = datesArr[0].split("/");
+                var dateTo = datesArr[1].split("/");
+                var dateFromEng = "20"+dateFrom[2]+"-"+dateFrom[1]+"-"+dateFrom[0];
+                var dateToEng = "20"+dateTo[2]+"-"+dateTo[1]+"-"+dateTo[0];
+
+                if(item.durNights == -1){                                                
+                    filteredZajezd = filteredZajezd.filter((x) => x[1] >= dateFromEng && x[0] <= dateToEng);
+                    /*datesCheck = item.do >= dateFromEng && item.od <= dateToEng;*/
+                }else{   
+                    filteredZajezd = filteredZajezd.filter((x) => x[0] >= dateFromEng && x[1] <= dateToEng);
+                    /*datesCheck = item.od >= dateFromEng && item.do <= dateToEng;*/
+                } 
+            }
+            
+            if(filteredZajezd.length > 0){
+                return filteredZajezd[0][3];
+            }else{
+                return false;
+            }                                   
+        }
+        
                                               
         async function filterData(data, selected_filters, page){
             var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[]}
@@ -439,11 +502,11 @@
                             order: 'desc'
                           },
                           price_asc: {
-                            field: 'castka',
+                            field: 'castkaMin',
                             order: 'asc'
                           },
                           price_desc: {
-                            field: 'castka',
+                            field: 'castkaMin',
                             order: 'desc'
                           },     
                           zajezd_id_asc: {
@@ -505,9 +568,7 @@
                     }))
                     .then(function(ijs){ 
                         
-                        if (typeof filters.txt[0] !== "undefined"){
-                        }
-                           return ijs.search(                                      
+                        return ijs.search(                                      
                                 {
                                     per_page: 20,
                                     page: page,
@@ -515,13 +576,31 @@
                                     query: (typeof filters.txt[0] !== "undefined")? filters.txt[0]:"",
                                     filters: classFilters,
                                     filter: function(item) {
+
                                         var dates = $("#datesInput").val();
                                         var priceCheck = 1;
                                         var datesCheck = 1;
-                                        
-                                        if((typeof filters.minPrice[0] !== "undefined") && (typeof filters.maxPrice[0] !== "undefined") && parseInt(filters.maxPrice[0]) > 0){
-                                            priceCheck = item.castka >= parseInt(filters.minPrice[0]) && item.castka <= parseInt(filters.maxPrice[0])
-                                        }
+                                        var filteredZajezd = item.zajezdData
+                                        if((typeof filters.minPrice[0] !== "undefined") && (typeof filters.maxPrice[0] !== "undefined") && parseInt(filters.minPrice[0]) > 0 && parseInt(filters.maxPrice[0]) > 0){
+                                            let minP = parseInt(filters.minPrice[0]);
+                                            let maxP = parseInt(filters.maxPrice[0]);
+                                            priceCheck = item.zajezdData.some((x) => x[2] >= minP && x <= maxP);
+                                            filteredZajezd = filteredZajezd.filter((x) => x[2] >= minP && x <= maxP);
+                                            
+                                            
+                                        }else if((typeof filters.minPrice[0] !== "undefined") && parseInt(filters.minPrice[0]) > 0){
+                                            
+                                            
+                                            let minP = parseInt(filters.minPrice[0]);
+                                            priceCheck = item.zajezdData.some((x) => x[2] >= minP);
+                                            filteredZajezd = filteredZajezd.filter((x) => x[2] >= minP);
+                                            
+                                        }else if((typeof filters.maxPrice[0] !== "undefined") && parseInt(filters.maxPrice[0]) > 0){
+                                                                            
+                                            let maxP = parseInt(filters.maxPrice[0]);
+                                            priceCheck = item.zajezdData.some((x) => x[2] <= maxP);
+                                            filteredZajezd = filteredZajezd.filter((x) => x[2] <= maxP);
+                                        }  
                                         
                                         if(dates != ""){
                                             //add dates filter
@@ -531,18 +610,24 @@
                                             var dateFromEng = "20"+dateFrom[2]+"-"+dateFrom[1]+"-"+dateFrom[0];
                                             var dateToEng = "20"+dateTo[2]+"-"+dateTo[1]+"-"+dateTo[0];
 
-                                            if(item.durNights == -1){
-                                                datesCheck = item.do >= dateFromEng && item.od <= dateToEng;
-                                            }else{                                    
-                                                datesCheck = item.od >= dateFromEng && item.do <= dateToEng;
+                                            if(item.durNights == -1){                                                
+                                                datesCheck = item.zajezdData.some((x) => x[1] >= dateFromEng && x[0] <= dateToEng);
+                                                filteredZajezd = filteredZajezd.filter((x) => x[1] >= dateFromEng && x[0] <= dateToEng);
+                                                
+                                            }else{   
+                                                datesCheck = item.zajezdData.some((x) => x[0] >= dateFromEng && x[1] <= dateToEng);
+                                                filteredZajezd = filteredZajezd.filter((x) => x[0] >= dateFromEng && x[1] <= dateToEng);
+                                                
                                             } 
                                         }
+                                        if(filteredZajezd.length > 0){
+                                            return true;
+                                        }else{
+                                            return false;
+                                        }
                                         
-                                        return datesCheck && priceCheck;
-                                        
-                                        //31/03/23 > 30/04/23
-                                        //return item.castka >= parseInt(filters.minPrice[0]) && item.castka <= parseInt(filters.maxPrice[0]) && item.do >= "2022-11-01";
-                                    }
+                                       
+                                       }
 
                                 });                                
                                 
@@ -633,7 +718,7 @@
                 var ttdIDs = []
                 var sIDs = []
                 toursToDisplay.forEach(function(elem){
-                    ttdIDs.push(elem.id_zajezd);
+                    ttdIDs.push(filterZajezd(elem));
                     sIDs.push(elem.id_serial);
                 });
                 

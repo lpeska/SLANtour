@@ -14,6 +14,13 @@ $serialCol = new Serial_collection();
 
 
 
+#get portion of data with zajezdy_group
+$resZ = $serialCol->get_zajezdy_group();
+$zajezdyArr = mysqli_fetch_all($resZ, MYSQLI_ASSOC);
+$jsonDataZG = json_encode($zajezdyArr);
+#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+file_put_contents("data_group.json",$jsonDataZG,LOCK_EX);
+unset($jsonDataZG);
 
 #get portion of data with zajezdy
 $resZ = $serialCol->get_zajezdy_base();
@@ -101,10 +108,20 @@ $initFilters = array();
 $keywords = array("txt","dates","minPrice","maxPrice");
 $keywordsArrays = array("tourTypeFilter","transportFilter","foodFilter","durGroupFilter","countryFilter","akceFilter");
 
+$filter_txt = "";
+$filter_dates = "";
+
 foreach ($keywords as $k) {
    if(isset($_GET[$k])){
        $strVal = htmlspecialchars(strip_tags($_GET[$k]));
-       $initFilters[] = $k."_".$strVal;       
+       $initFilters[] = $k."_".$strVal;     
+       
+       if($k=="txt"){
+           $filter_txt = $strVal;
+       }else if($k=="dates"){
+           $filter_dates = $_GET[$k];
+       }
+       
    } 
 }
 foreach ($keywordsArrays as $k) {
@@ -116,7 +133,7 @@ foreach ($keywordsArrays as $k) {
    } 
 }
 
-echo "txt".json_encode($initFilters);
+//echo "txt".json_encode($initFilters);
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
@@ -154,5 +171,7 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
     'breadcrumbs' => array(
         new Breadcrumb('Zájezdy', '../vyhledat-zajezd.php')
     ),
+    'dates' => $filter_dates,
+    'txt' => $filter_txt,
     'initFilters' => json_encode($initFilters)
 ]);

@@ -186,18 +186,52 @@ class Serial_collection extends Generic_list {
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
         return $data;
+    }   
+    
+    function get_zajezdy_group() {
+        //`objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`, `serial`.`nazev_web`,
+        $query = 
+                "select 
+                    `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
+                    `objekt_ubytovani`.`nazev_ubytovani`,
+                    concat(\"[\",GROUP_CONCAT( `zajezd`.`id_zajezd` ORDER BY `zajezd`.`id_zajezd` SEPARATOR ','),\"]\")  as `id_zajezd`, 
+                    GROUP_CONCAT( `zajezd`.`od` ORDER BY `zajezd`.`id_zajezd` SEPARATOR ',')  as `od` ,
+                    GROUP_CONCAT( `zajezd`.`do` ORDER BY `zajezd`.`id_zajezd` SEPARATOR ',')  as `do` ,
+                    concat(\"[\",GROUP_CONCAT( `cena_zajezd`.castka ORDER BY `zajezd`.`id_zajezd` SEPARATOR ','),\"]\")  as `castka` 
+
+                from `serial` left join
+                 (`objekt_serial` join
+                    `objekt` on (`objekt`.`typ_objektu`= 1 and `objekt`.`id_objektu` = `objekt_serial`.`id_objektu`) join
+                    `objekt_ubytovani` on (`objekt`.`id_objektu` = `objekt_ubytovani`.`id_objektu`)
+                    ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial`)   join
+                `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`) join                    
+                `cena` on (`cena`.`id_serial` = `zajezd`.`id_serial` and `cena`.`zakladni_cena` = 1) join
+                `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1 )   
+                
+                where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1 ) )                    
+                group by `serial`.`id_serial`
+
+                ";
+        //echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
     }         
+
 
     function get_all_dates_for_id_serial($id_serial) {
         $id_serial = intval($id_serial);
         $query = 
                 "select 
-                    count(`id_zajezd`) as `pocet`
+                    `zajezd`.`id_zajezd`, od, do, nazev_zajezdu, castka, vyprodano
                 from `serial` join
-                    `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)
+                    `zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`) join
+                    `cena` on (`cena`.`id_serial` = `serial`.`id_serial` and `cena`.`zakladni_cena`=1) join
+                    `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd` and `cena_zajezd`.`nezobrazovat`!=1) 
                 where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and `serial`.`id_serial` =  $id_serial 
+                    and (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1 ) )
                  ";
-        #echo $query;
+        //echo $query;
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
         return $data;
