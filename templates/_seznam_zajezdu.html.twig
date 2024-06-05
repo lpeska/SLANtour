@@ -52,6 +52,27 @@
                                                     <a href="">(+ {{ tour.totalOtherDates }} dalších termínů)</a>
                                                 {% endif %}
                                             </span>
+                                            
+                                            {% if tour.totalOtherDates > 0 %}
+                                            <div class="tour_list_additionalDates hidden">
+                                                <table>
+                                                    {% for date in tour.allDates %}
+                                                        <tr>
+                                                            <td><span class="dates">{{date.dates}}</span> 
+                                                            <td> 
+                                                            {% if date.vyprodano > 0 %}
+                                                                <span>Vyprodáno!</span> 
+                                                            {% else %}
+                                                                <strong>{{date.castka}} Kč</strong> / os.
+                                                            {% endif %}
+                                                            <td><a href="../zajezdy/zobrazit/{{tour.escapedName}}/{{date.id_zajezd}}">Detail termínu</a>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                            {% endif %}    
+                                        
+                                            
                                         <li>
                                             <a href="../zajezdy/zobrazit/{{tour.escapedName}}/{{tour.id_zajezd}}" class="btn_1">Detail zájezdu</a>
                                         </li>

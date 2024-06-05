@@ -50,10 +50,15 @@ foreach ($zajezdIDs as $key => $zID) {
             new Feature('fa-bed', Serial_collection::get_nights($row)), 
             new Feature('fa-utensils', Serial_library::get_typ_stravy($row["strava"]-1))
         );
-        $totalDatesRes = $serialCol->get_all_dates_for_id_serial($row["id_serial"]);
-        $totalDatesArr = mysqli_fetch_all($totalDatesRes, MYSQLI_ASSOC);
-        //echo "<br/>Dates"; print_r($totalDatesArr);
-        $totalDates = intval($totalDatesArr[0]["pocet"]);
+        $allDatesRes = $serialCol->get_all_dates_for_id_serial($row["id_serial"]);                
+        $allDates = mysqli_fetch_all($allDatesRes, MYSQLI_ASSOC);
+        
+        foreach ($allDates as $key => $value) {
+            $allDates[$key]["dates"] = Serial_collection::get_dates($value);
+        }
+        
+        $totalDates = count($allDates);    
+                
         if($totalDates >= 1){
             $totalDates = $totalDates - 1;
 
@@ -71,6 +76,7 @@ foreach ($zajezdIDs as $key => $zID) {
                 $row["id_zajezd"], 
                 Serial_collection::get_dates($row), 
                 $totalDates, 
+                $allDates,
                 $row["min_castka"], // TODO: jedno z tech dvou je spatne, ale mozna se to lisi dle typu slevy... zjistit
                 $row["final_max_sleva"],
                 $row["min_castka"],
@@ -119,6 +125,7 @@ class Tour
     public string $nights;
     public string $dates;
     public int $totalOtherDates;
+    public array $allDates;
     public int $id_zajezd;
     public int $price;
     public int $priceDiscount;
@@ -131,7 +138,7 @@ class Tour
     public array $features;
     public string $description;
 
-    public function __construct( string $name, string $escapedName, string $type, int $id_zajezd, string $dates, int $totalOtherDates, int $price, int $priceDiscount, int $priceOriginal, string $nights, string $meals,string $transport,string $accomodation, string $destination, string $image, array $features, string $description)
+    public function __construct( string $name, string $escapedName, string $type, int $id_zajezd, string $dates, int $totalOtherDates, array $allDates, int $price, int $priceDiscount, int $priceOriginal, string $nights, string $meals,string $transport,string $accomodation, string $destination, string $image, array $features, string $description)
     {
         $this->name = $name;
         $this->escapedName = $escapedName;
@@ -139,6 +146,7 @@ class Tour
         $this->id_zajezd = $id_zajezd;
         $this->dates = $dates;
         $this->totalOtherDates = $totalOtherDates;
+        $this->allDates = $allDates;
         $this->price = $price;
         $this->priceDiscount = $priceDiscount;
         $this->priceOriginal = $priceOriginal;
