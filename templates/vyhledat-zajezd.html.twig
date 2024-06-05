@@ -114,9 +114,9 @@
                         <div class="filter_type" id="sales_filter">
                             <h6>Akce a slevy</h6>
                             <ul>
-                                {% for sale in sales %}
+                                {% for key,sale in sales %}
                                 <li>
-                                    <label class="container_check">{{sale}} <small>(0)</small>
+                                    <label class="container_check" id="akceFilter_{{key}}">{{sale}} <small>(0)</small>
                                         <input type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>

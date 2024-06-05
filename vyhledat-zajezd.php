@@ -164,7 +164,7 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
     'countries' => $countries,
     'transports' => array(3=>'Letecky', 4=>'Vlakem', 2=>'Autokar', 1=>'Vlastní', 5=>'Vlastní nebo autobus'),
     'foods' => array(5=>'All-inclusive', 4=>'Plná penze', 3=>'Polopenze', 2=>'Snídaně', 1=>"Bez stravy"),
-    'sales' => array('Akční nabídky', 'Slevy', 'Last Minute'),
+    'sales' => array(1=>'Akční nabídky', 2=>'Slevy', 3=>'Last Minute'),
     'tourLengths' => array("variabilni"=>'Variabilní', "jednodenni"=>'Jednodenní', "1-5noci"=>'1-5 nocí', "6-10noci"=>'6-10 nocí', "nad10noci"=>">10 nocí"),
     'tours' => array(
       ),
