@@ -439,6 +439,8 @@
 		const price = this[this.value].dataset.price;
 		if (price == -1) {
 			priceSpan.text("Vyprodáno!");
+		} else if (price <= 1) {
+			//TODO check for predbezna registrace (currently do nothing)
 		} else {
 			priceSpan.text(this[this.value].dataset.price + " Kč");
 		}

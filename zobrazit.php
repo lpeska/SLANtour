@@ -173,7 +173,12 @@ function minPrice($dates) {
             $prices[] = intval($dt->price);
         }
     }
-    return min($prices);
+    if(sizeof($prices)>0){
+        return min($prices);
+    }else{
+        return 0;
+        
+    }
 }
 
 function maxDiscount($dates) {
@@ -296,6 +301,12 @@ if(!$valid_zajezd){
 if ($serial->get_id_sablony_zobrazeni() != 8) {...}
  *  */
 /*konec Zatim neni zahrnuto v sablone, ale mohlo by*/
+$predbeznaRegistrace = 0;
+if ($serial->get_id_sablony_zobrazeni() == 8) {
+    $predbeznaRegistrace = 1;
+    
+}
+
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
@@ -322,7 +333,7 @@ echo $twig->render('zajezd.html.twig', [
     'descriptionAccomodation' => $serial->get_popis_ubytovani(),
     'descriptionDetails' => $serial->get_popis(),
     'descriptionNotes' => $pozn,
-    
+    'predbeznaRegistrace' => $predbeznaRegistrace,
     'notIncluded' => array($serial->get_cena_nezahrnuje()), //tady je to mapovano zatim dost nedokonale (v originale je to proste textove pole, casem muzem zkusit text-based mapovani)
         /*array('autokarová doprava', 'Pobytová taxa - 2 Euro/osoba/den. (osoby starší 14 let)', 'neco dalsiho', 'neco dalsiho ale delsiho', 'neco jeste jineho', 'neco jeste jineho 2', 'neco jeste jineho 3'),*/
     'included' => array($serial->get_cena_zahrnuje()),

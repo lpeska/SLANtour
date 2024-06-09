@@ -36,13 +36,19 @@
                                         <p class="tour_description">{{tour.description|raw}}</p>
                                     </div>
                                     <ul class="footer">
-                                        <li>
+                                        {% if tour.predbeznaRegistrace < 1 %}
+                                            <li>
                                             {% if tour.priceDiscount > 0 %}
                                                 {% if (tour.priceOriginal - tour.price) > 0 %}
                                                     <div class="price_discount">{{tour.priceOriginal}} Kč</div>
                                                 {% endif %}
                                             {% endif %}
-                                            <span class="price"><strong>{{tour.price}} Kč</strong> / os.</span>
+                                            <span class="price"><strong>{{tour.price}} Kč</strong> / os.</span>                                            
+                                        {% else %}                                                
+                                            <li>
+                                            <span class="price"><strong>Předběžná registrace</strong></span>                                            
+                                        {% endif %}
+
                                             
                                             
                                             <span class="dates">{{ tour.dates }} 
