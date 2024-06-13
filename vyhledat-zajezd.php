@@ -32,12 +32,17 @@ unset($jsonDataZ);
 
 
 
-$resZZ = $serialCol->get_main_zeme_serial();
+//$resZZ = $serialCol->get_main_zeme_serial();
+$resZZ = $serialCol->get_all_zeme_serial();
 $zemeDB = mysqli_fetch_all($resZZ, MYSQLI_ASSOC);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
 $zemeArr = [];
 foreach ($zemeDB as $key => $z) {
-    $zemeArr[$z["sId"]] = $z;    
+    $ids = explode(",", $z["zId"]);
+    $names = explode(",", $z["zName"]);
+    
+    $zemeArr[$z["sId"]] = ["zId"=>$ids, "zName"=>$names];    
+    //$zemeArr[$z["sId"]] =  $z
 }    
 unset($zemeDB);
 $jsonDataZZ = json_encode($zemeArr);
@@ -84,6 +89,17 @@ $jsonDataZM = json_encode($zemeArr);
 #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
 file_put_contents("zeme.json",$jsonDataZM,LOCK_EX);
 unset($jsonDataZM);
+
+
+$res = $serialCol->get_all_sport_zeme();
+$zemeDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
+$sports = [];
+foreach ($zemeDB as $key => $z) {
+    $sports[$z["id_zeme"]] = array("id_zeme"=>$z["id_zeme"],"nazev"=>$z["nazev_zeme"],"nazev_web"=>$z["nazev_zeme_web"]);
+}
+unset($zemeDB);
+
+
 /*
 $res = $serialCol->get_all_destinace();
 $destinaceDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -162,6 +178,7 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
     'countriesMenu' => $countriesMenu,
     'types' => $typesTwig,
     'countries' => $countries,
+    'sports' => $sports,
     'transports' => array(3=>'Letecky', 4=>'Vlakem', 2=>'Autokar', 1=>'Vlastní', 5=>'Vlastní nebo autobus'),
     'foods' => array(5=>'All-inclusive', 4=>'Plná penze', 3=>'Polopenze', 2=>'Snídaně', 1=>"Bez stravy"),
     'sales' => array(1=>'Akční nabídky', 2=>'Slevy', 3=>'Last Minute'),

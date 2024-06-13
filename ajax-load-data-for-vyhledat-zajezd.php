@@ -66,6 +66,12 @@ foreach ($zajezdIDs as $key => $zID) {
             $totalDates = 0;
         }
         
+        $predbeznaRegistrace = 0;
+        if ($row["id_sablony_zobrazeni"] == 8){
+            //jde o predbeznou registraci, musi se upravit prezentace zajezdu
+            $predbeznaRegistrace = 1;                        
+        }
+        
 
         
         try{
@@ -87,7 +93,10 @@ foreach ($zajezdIDs as $key => $zID) {
                 Serial_collection::get_destinace($row),
                 "//slantour.cz/foto/full/".$row["foto_url"], 
                 $features, 
-                Serial_collection::get_description($row));
+                Serial_collection::get_description($row),
+                $predbeznaRegistrace
+                    
+                    );
         } catch(TypeError $e){
             //echo "wrong tour".$row["id_zajezd"];   
             //tohle by melo zachytit spatne vyplnene zajezdy
@@ -137,8 +146,9 @@ class Tour
     public string $image;
     public array $features;
     public string $description;
+    public int $predbeznaRegistrace;
 
-    public function __construct( string $name, string $escapedName, string $type, int $id_zajezd, string $dates, int $totalOtherDates, array $allDates, int $price, int $priceDiscount, int $priceOriginal, string $nights, string $meals,string $transport,string $accomodation, string $destination, string $image, array $features, string $description)
+    public function __construct( string $name, string $escapedName, string $type, int $id_zajezd, string $dates, int $totalOtherDates, array $allDates, int $price, int $priceDiscount, int $priceOriginal, string $nights, string $meals,string $transport,string $accomodation, string $destination, string $image, array $features, string $description, int $predbeznaRegistrace)
     {
         $this->name = $name;
         $this->escapedName = $escapedName;
@@ -158,6 +168,7 @@ class Tour
         $this->image = $image;
         $this->features = $features;
         $this->description = $description;
+        $this->predbeznaRegistrace = $predbeznaRegistrace;
     }
 }
 

@@ -111,6 +111,7 @@
                             </ul>
                         </div>
                         
+                            <!--
                         <div class="filter_type" id="sales_filter">
                             <h6>Akce a slevy</h6>
                             <ul>
@@ -124,6 +125,8 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                            -->
+                        
                             
                         <div class="filter_type" id="country_filter">
                             <h6>Cílová země</h6>
@@ -138,6 +141,22 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                            
+                        <div class="filter_type" id="country_filter">
+                            <h6>Tematické zájezdy</h6>
+                            <ul>
+                                {% for key,sport in sports %}
+                                <li>
+                                    <label class="container_check filter" id="countryFilter_{{key}}">{{sport.nazev}} <small>(0)</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>    
+                            
+
                             
                         
                     </div>
@@ -453,7 +472,7 @@
         
                                               
         async function filterData(data, selected_filters, page){
-            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[]}
+            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
                 filters[arr[0]].push(arr[1]);

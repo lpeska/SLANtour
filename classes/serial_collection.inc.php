@@ -42,6 +42,31 @@ class Serial_collection extends Generic_list {
         return $data;
     }       
     
+    
+    function get_all_sport_zeme() {
+        $query = 
+                "select distinct zeme.id_zeme, zeme.nazev_zeme, zeme.nazev_zeme_web                     
+                    from 
+                    `zeme` join
+                    `zeme_serial` on `zeme_serial`.id_zeme = `zeme`.id_zeme
+                    join (`serial` join zajezd on 
+                                            (zajezd.id_serial = serial.id_serial and 
+                                            `zajezd`.`nezobrazovat_zajezd`<>1 and 
+                                            `serial`.`nezobrazovat`<>1 and 
+                                            (`zajezd`.`od` >='" . Date("Y-m-d") . "' or (`zajezd`.`do` >'" . Date("Y-m-d") . "' and `serial`.`dlouhodobe_zajezdy`=1))
+                         ))
+                         on (zeme_serial.id_serial = serial.id_serial and
+                            serial.nezobrazovat <> 1)
+                    
+                     where zeme.geograficka_zeme<>1 order by nazev_zeme ";
+        
+        #echo $query;
+        $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
+        
+        return $data;
+    }       
+    
+    
     function get_all_destinace() {
         $query = 
                 "select * from `destinace` ";
@@ -75,7 +100,9 @@ class Serial_collection extends Generic_list {
         $data = $this->database->query($query) or $this->chyba("Chyba při dotazu do databáze");
         
         return $data;
-    }        
+    }    
+
+     
     
     function get_all_zeme_serial() {
         $query = 
