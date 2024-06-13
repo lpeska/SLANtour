@@ -2289,16 +2289,6 @@ function order_by_subquery($vstup) {
 
             while ($row = mysqli_fetch_array($data)) {
                 $k++;
-
-                echo "row: ";
-                echo "</br>";
-                print_r($row);
-                echo "</br>";
-                echo "this.radek: ";
-                echo "</br>";
-                print_r($this->radek);
-                echo "</br>";
-
                 if($row["cena_pred_akci"]>0){
                     $act_sleva = round(( 1 - ($row["akcni_cena"] / $row["cena_pred_akci"]) ) * 100);  
                     $akcni_cena = $row["akcni_cena"];
