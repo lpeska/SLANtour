@@ -3,15 +3,15 @@
 * library_classes.inc.php - obsahuje definice knihovnich trid
 */
 
-/** trida pro staticka data, ktera souvisi s objektem seriál (typ ubytování, typ dopravy,...)*/
+/** trida pro staticka data, ktera souvisi s objektem seriï¿½l (typ ubytovï¿½nï¿½, typ dopravy,...)*/
 //private kostruktor + final class zarucuje, ze trida nebude instancovana
 final class Serial_library{
-	static private $doprava = array("vlastní","autokar","letecky");
-	static private $strava = array("bez stravy","snídanì","polopenze","plná penze","all inclusive");
-	static private $ubytovani = array("bez ubytování","stan","chatky","apartmány","penzion","hotel","hotel 2*","hotel 3*","hotel 4*","hotel 5*");
-	static private $typ_ceny = array("cena","last minute","sleva","pøíplatek");
+	static private $doprava = array("vlastnÃ­ doprava","autokar","letecky","vlakem", "vlastnÃ­ nebo autobus");
+	static private $strava = array("bez stravy","snï¿½danï¿½","polopenze","plnï¿½ penze","all inclusive");
+	static private $ubytovani = array("bez ubytovï¿½nï¿½","stan","chatky","apartmï¿½ny","penzion","hotel","hotel 2*","hotel 3*","hotel 4*","hotel 5*");
+	static private $typ_ceny = array("cena","last minute","sleva","pï¿½ï¿½platek");
 	
-	//privátní konstruktor
+	//privï¿½tnï¿½ konstruktor
 	private function __construct(){
 	
 	}
@@ -52,10 +52,10 @@ final class Serial_library{
 	}		
 }
 
-/** trida pro statické metody validace poloek formuláøe*/
+/** trida pro statickï¿½ metody validace poloï¿½ek formulï¿½ï¿½e*/
 //private kostruktor + final class zarucuje, ze trida nebude instancovana
 final class Validace{
-	//privátní konstruktor
+	//privï¿½tnï¿½ konstruktor
 	private function __construct(){
 	
 	}
@@ -69,7 +69,7 @@ final class Validace{
 		}
 	}
 
-	/**kontrola data ve formátu ISO*/
+	/**kontrola data ve formï¿½tu ISO*/
 	static function datum_en($vstup){
 		if( ereg ("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$", $vstup) ){
 			return true;
@@ -78,7 +78,7 @@ final class Validace{
 		}
 	}	
 	
-	/**kontrola èeského formátu data*/
+	/**kontrola ï¿½eskï¿½ho formï¿½tu data*/
 	static function datum_cz($vstup){
 		if( ereg ("^[0-9]{1,2} ?\.[0-9]{1,2} ?\.[0-9]{4}$", $vstup) ){
 			return true;
@@ -104,7 +104,7 @@ final class Validace{
 			return false;
 		}
 	}
-	/**kontrola integeru s omezením minimální hodnoty*/
+	/**kontrola integeru s omezenï¿½m minimï¿½lnï¿½ hodnoty*/
 	static function int_min($vstup,$min){
 		if( preg_match("[0-9]+$",$vstup) and $vstup >= $min ){
 			return true;
@@ -112,7 +112,7 @@ final class Validace{
 			return false;
 		}
 	}	
-	/** kontrola integeru s omezením minimální i maximální hodnoty*/
+	/** kontrola integeru s omezenï¿½m minimï¿½lnï¿½ i maximï¿½lnï¿½ hodnoty*/
 	static function int_min_max($vstup,$min,$max){
 		if( preg_match("[0-9]+$",$vstup) and $vstup >= $min and $vstup <= $max ){
 			return true;
@@ -122,10 +122,10 @@ final class Validace{
 	}		
 }
 
-/** trida pro staticke funkce parsování pøíchozích poadavkù (viz bc práce, tvary adres 3 a 2)*/
+/** trida pro staticke funkce parsovï¿½nï¿½ pï¿½ï¿½chozï¿½ch poï¿½adavkï¿½ (viz bc prï¿½ce, tvary adres 3 a 2)*/
 //private kostruktor + final class zarucuje, ze trida nebude instancovana
 final class Parameter_parser{
-	//privátní konstruktor
+	//privï¿½tnï¿½ konstruktor
 	private function __construct(){
 	
 	}
@@ -147,9 +147,9 @@ final class Parameter_parser{
 /** trida pro staticka data, ktera souvisi s objektem informace*/
 //private kostruktor + final class zarucuje, ze trida nebude instancovana
 final class Informace_library{
-	static private $typ_informace = array("popis zemì","popis destinace","informace");
+	static private $typ_informace = array("popis zemï¿½","popis destinace","informace");
 
-	//privátní konstruktorobyèejná informace
+	//privï¿½tnï¿½ konstruktorobyï¿½ejnï¿½ informace
 	private function __construct(){
 	
 	}
@@ -168,8 +168,8 @@ final class Informace_library{
 //private kostruktor + final class zarucuje, ze trida nebude instancovana
 final class Rezervace_library{
 	//stavy zmeneny
-	//static private $stav_rezervace = array("pøedbìná poptávka","poadavek na rezervaci","opce","rezervace","záloha","zaplaceno","odbaveno","storno");
-	static private $stav_rezervace = array("pøedbìná poptávka","poadavek na rezervaci","opce","rezervace","záloha","prodáno","odbaveno","storno");
+	//static private $stav_rezervace = array("pï¿½edbï¿½nï¿½ poptï¿½vka","poï¿½adavek na rezervaci","opce","rezervace","zï¿½loha","zaplaceno","odbaveno","storno");
+	static private $stav_rezervace = array("pï¿½edbï¿½nï¿½ poptï¿½vka","poï¿½adavek na rezervaci","opce","rezervace","zï¿½loha","prodï¿½no","odbaveno","storno");
     static private $stav_rezervace_styl = array("stav-predb","stav-pozad","stav-opce","stav-rez","stav-zal","stav-prodano","stav-odbav","stav-storno");
     static public $STAV_PREDBEZNA_POPTAVKA = 1;
     static public $STAV_POZADAVEK_NA_REZERVACI = 2;
@@ -180,7 +180,7 @@ final class Rezervace_library{
     static public $STAV_ODBAVENO = 7;
     static public $STAV_STORNO = 8;
 
-	//privátní konstruktor obyèejná informace
+	//privï¿½tnï¿½ konstruktor obyï¿½ejnï¿½ informace
 	private function __construct(){
 	
 	}

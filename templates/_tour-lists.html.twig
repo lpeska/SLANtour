@@ -26,14 +26,20 @@
                     <div class="info">
                         <h3>{{tour.name}}</h3>
                         <em>
-                            {% if tour.nights > 4 %}
+                            {% if tour.nights + 1 > 4 %}
                             {{tour.nights + 1}} dní, 
-                            {% elseif tour.nights > 1 %}
+                            {% elseif tour.nights + 1 > 1 %}
                             {{tour.nights + 1}} dny, 
-                            {% elseif tour.nights > 0 %}
+                            {% elseif tour.nights + 1 > 0 %}
                             {{tour.nights + 1}} den, 
                             {% endif %}
-                            {{tour.meals}}</em>
+                            
+                            {% if tour.id_typ == 1 or tour.id_typ == 3 or tour.id_typ == 5 or tour.id_typ == 7 or tour.id_typ == 8%}
+                                {{tour.meals}}
+                            {% else %}
+                                {{tour.transport}}
+                            {% endif %}
+                           </em>
                     </div>
                     <div class="info-right">
                         <em>{{tour.destination}}</em>
@@ -90,14 +96,20 @@
                     <div class="info">
                         <h3>{{tour.name}}</h3>
                         <em>
-                            {% if tour.nights > 4 %}
+                            {% if tour.nights + 1 > 4 %}
                             {{tour.nights + 1}} dní, 
-                            {% elseif tour.nights > 1 %}
+                            {% elseif tour.nights + 1 > 1 %}
                             {{tour.nights + 1}} dny, 
-                            {% elseif tour.nights > 0 %}
+                            {% elseif tour.nights + 1 > 0 %}
                             {{tour.nights + 1}} den, 
                             {% endif %}
-                            {{tour.meals}}</em>
+
+                            {% if tour.id_typ == 1 or tour.id_typ == 3 or tour.id_typ == 5 or tour.id_typ == 7 or tour.id_typ == 8%}
+                                {{tour.meals}}
+                            {% else %}
+                                {{tour.transport}}
+                            {% endif %}
+                            </em>
                     </div>
                     <div class="info-right">
                         <em>{{tour.destination}}</em>
@@ -153,14 +165,20 @@
                     <div class="info">
                         <h3>{{tour.name}}</h3>
                         <em>
-                            {% if tour.nights > 4 %}
+                            {% if tour.nights + 1 > 4 %}
                             {{tour.nights + 1}} dní, 
-                            {% elseif tour.nights > 1 %}
+                            {% elseif tour.nights + 1 > 1 %}
                             {{tour.nights + 1}} dny, 
-                            {% elseif tour.nights > 0 %}
+                            {% elseif tour.nights + 1 > 0 %}
                             {{tour.nights + 1}} den, 
                             {% endif %}
-                            {{tour.meals}}</em>
+
+                            {% if tour.id_typ == 1 or tour.id_typ == 3 or tour.id_typ == 5 or tour.id_typ == 7 or tour.id_typ == 8%}
+                                {{tour.meals}}
+                            {% else %}
+                                {{tour.transport}}
+                            {% endif %}
+                        </em>
                     </div>
                     <div class="info-right">
                         <em>{{tour.destination}}</em>

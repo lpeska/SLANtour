@@ -620,7 +620,7 @@ class Serial_list extends Generic_list {
             //pokud chceme pouze spočítat vsechny odpovídající záznamy
                $select = "select distinct        
                              max(`slevy`.`castka`) as `sleva_castka`,`slevy`.`mena` as `sleva_mena`,`slevy`.`zkraceny_nazev`  as `sleva_nazev`,	
-                            `serial`.`id_serial`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`dlouhodobe_zajezdy`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,                            
+                            `serial`.`id_serial`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`dlouhodobe_zajezdy`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`, `serial`.`id_typ`,                            
                           `serial`.`id_sablony_zobrazeni`,
                             `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`,`objekt_ubytovani`.`popis_poloha` as `popisek_ubytovani`,
                             `objekt_ubytovani`.`posX` , `objekt_ubytovani`.`posY`,
@@ -1061,7 +1061,7 @@ class Serial_list extends Generic_list {
                     count(distinct `objednavka`.id_objednavka) as `pocet_objednavek`,
                     sum(`objednavka`.`pocet_osob`) as `pocet_osob`, 
                         `serial`.`nazev` , `objekt_ubytovani`.`nazev_ubytovani` , `serial`.`id_serial`, `serial`.`nazev_web`, `serial`.`id_sablony_zobrazeni`,
-                        `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`, serial.strava, serial.doprava,
+                        `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`, serial.strava, serial.doprava, `serial`.`id_typ`,
                         
                     `zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`,destinace.nazev_destinace,
                     `foto`.`foto_url`,`foto`.`id_foto`,`foto`.`nazev_foto`,`foto`.`popisek_foto`
@@ -1097,7 +1097,7 @@ class Serial_list extends Generic_list {
         } else if ($typ_pozadavku == "select_slevy") {
             //pokud chceme pouze spočítat vsechny odpovídající záznamy
             $select = "select distinct `serial`.`id_serial`,`serial`.`id_sablony_zobrazeni`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
-                            `serial`.`podtyp`, `serial`.`highlights`,
+                            `serial`.`podtyp`, `serial`.`highlights`, `serial`.`id_typ`,
                             
                             `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`,
                         
@@ -2247,11 +2247,13 @@ function order_by_subquery($vstup) {
                 "id_serial" => $this->get_id_serial(),
                 "nazev" => $this->get_nazev(),
                 "nazev_web" => $this->get_nazev_web(),
+                "id_typ" => $this->radek["id_typ"],
                 "url" => "zajezdy/zobrazit/" . $this->get_nazev_web(),
                 "best_zajezd" => $best_zajezd,
                 "foto_url" => "https://slantour.cz/foto/full/".$this->get_foto_url(),
                 "lokace" => $lokace,
                 "strava" => Serial_library::get_typ_stravy($this->radek["strava"] - 1),
+                "doprava" => Serial_library::get_typ_dopravy($this->radek["doprava"] - 1),
                 "terminy" => $terminy                
                 );
             
@@ -2287,6 +2289,16 @@ function order_by_subquery($vstup) {
 
             while ($row = mysqli_fetch_array($data)) {
                 $k++;
+
+                echo "row: ";
+                echo "</br>";
+                print_r($row);
+                echo "</br>";
+                echo "this.radek: ";
+                echo "</br>";
+                print_r($this->radek);
+                echo "</br>";
+
                 if($row["cena_pred_akci"]>0){
                     $act_sleva = round(( 1 - ($row["akcni_cena"] / $row["cena_pred_akci"]) ) * 100);  
                     $akcni_cena = $row["akcni_cena"];
@@ -2331,11 +2343,13 @@ function order_by_subquery($vstup) {
                 "id_serial" => $this->get_id_serial(),
                 "nazev" => $this->get_nazev(),
                 "nazev_web" => $this->get_nazev_web(),
+                "id_typ" => $this->radek["id_typ"],
                 "url" => "zajezdy/zobrazit/" . $this->get_nazev_web(),
                 "best_zajezd" => $best_zajezd,
                 "foto_url" => "https://slantour.cz/foto/full/".$this->get_foto_url(),
                 "lokace" => $lokace,
                 "strava" => Serial_library::get_typ_stravy($this->radek["strava"] - 1),
+                "doprava" => Serial_library::get_typ_dopravy($this->radek["doprava"] - 1),
                 "terminy" => $terminy                
                 );
             

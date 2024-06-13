@@ -52,7 +52,7 @@ function getDiscountTours(String $typeName, $countryName)
             $currTour = $slevy_array[$key];
             $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
             if ($k <= 4) {
-                $discountTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "");
+                $discountTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "", $currTour["doprava"], $currTour["id_typ"]);
             } else {
                 break;
             }
@@ -80,9 +80,13 @@ function getPopularTours($typeName, $countryName)
     foreach ($popular_array as $key => $currTour) {
         $k++;
         //$currTour = $novinky_array[$key];
+        // print_r($currTour);
+        // echo "</br>";
+        
+        // $doprava = Serial_library::get_typ_dopravy($serial->serial["doprava"]-1);
         $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
         if ($k <= 4) {
-            $popularTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "");
+            $popularTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "", $currTour["doprava"], $currTour["id_typ"]);
         } else {
             break;
         }
@@ -116,7 +120,7 @@ function getNewTours($typeName, $countryName)
         $currTour = $novinky_array[$key];
         $bestTermin = $currTour["terminy"][$currTour["best_zajezd"]];
         if ($k <= 4) {
-            $newTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "");
+            $newTours[] = new Tour($currTour["nazev"], $currTour["nazev_web"], "", $bestTermin["id_zajezd"], $bestTermin["akcni_cena"], $bestTermin["sleva"], $bestTermin["cena_pred_akci"], $bestTermin["pocet_dni"] - 1, $currTour["strava"], $currTour["lokace"], $currTour["foto_url"], $currTour["terminy"], array(), "", $currTour["doprava"], $currTour["id_typ"]);
         } else {
             break;
         }
@@ -482,6 +486,7 @@ class Tour
     public string $escapedName;
     public string $type;
     public int $id_zajezd;
+    public int $id_typ;
     public int $price;
     public  $priceDiscount;
     public  $priceOriginal;
@@ -492,8 +497,9 @@ class Tour
     public $terminy;
     public array $features;
     public string $description;
+    public string $transport;
 
-    public function __construct(string $name, string $escapedName, string $type, int $id_zajezd, int $price,  $priceDiscount,  $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy = "", array $features, string $description)
+    public function __construct(string $name, string $escapedName, string $type, int $id_zajezd, int $price,  $priceDiscount,  $priceOriginal, $nights, string $meals, string $destination, string $image, $terminy = "", array $features, string $description, string $transport, int $id_typ)
     {
         $this->name = $name;
         $this->escapedName = $escapedName;
@@ -509,6 +515,8 @@ class Tour
         $this->terminy = $terminy;
         $this->features = $features;
         $this->description = $description;
+        $this->transport = $transport;
+        $this->id_typ = $id_typ;
     }
 }
 
