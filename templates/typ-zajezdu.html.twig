@@ -24,10 +24,10 @@
     {% include "_breadcrumbs.html.twig" %}
 
     <div class="container margin_35_35">
-        <section class="main_description">
+        <section class="main_description add_bottom_45">
             {{ type.description|raw }}
 
-            <!-- End Map -->
+            <p class="btn_tours_align"><a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}" class="btn_1 rounded">Zobrazit všechny zájezdy ({{totalTours}})</a></p>
         </section>
 
         {% include "_tour-lists.html.twig" %}
