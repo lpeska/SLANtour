@@ -32,7 +32,13 @@
         <div class="container">
             <ul class="clearfix">
                 <li><a href="#description" class="active">Zájezd</a></li>
-                <li><a href="#dates">Termíny</a></li>
+                <li><a href="#dates">
+                    {% if longTour %}
+                    Období
+                    {% else %}
+                    Termíny
+                    {% endif %}
+                </a></li>
                 <li><a href="#sidebar">Objednávka</a></li> 
             </ul>
         </div>
@@ -152,7 +158,12 @@
                 <!-- /section -->
 
                 <section id="dates">
-                    <h2>Termíny a ceny</h2>
+                    <h2> 
+                    {% if longTour %}
+                    Období
+                    {% else %}
+                    Termíny
+                    {% endif %} a ceny</h2>
 
                     <div class="accordion" id="accordionDates">
                         {% for tourDate in dates %}
@@ -177,7 +188,16 @@
                                         </div>
                                         {% endif %}
                                         {% if tourDate.price > 0 %}
-                                        <a class="date_select" data-dateindex="{{loop.index}}"><strong>Vybrat termín <i class="arrow_carrot-right"></i></strong></a>
+                                        <a class="date_select" data-dateindex="{{loop.index}}">
+                                            <strong>
+                                                Vybrat 
+                                                {% if longTour %}
+                                                období
+                                                {% else %}
+                                                termíny
+                                                {% endif %} <i class="arrow_carrot-right"></i>
+                                            </strong>
+                                        </a>
                                         {% endif %}
                                         
                                     </button>
@@ -527,9 +547,23 @@
                     
                     <form id="orderForm">
 
-                        <label for="orderDate"><i class="fas fa-calendar-days"></i> Termín</label>
+                        <label for="orderDate">
+                            <i class="fas fa-calendar-days"></i> 
+                            {% if longTour %}
+                            Období
+                            {% else %}
+                            Termín
+                            {% endif %}
+                        </label>
                         <select id="orderDate" class="form-select form-control form-group" required aria-label="Select tour date">
-                            <option value="" disabled selected>Vyberte termín...</option>
+                            <option value="" disabled selected>
+                                Vyberte 
+                                {% if longTour %}
+                                období
+                                {% else %}
+                                termín
+                                {% endif %}...
+                            </option>
                             {% for tourDate in dates %}
                                 {% if tourDate.price == -1 %}
                                     <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}"> {{tourDate.date}} (vyprodáno)</option>
