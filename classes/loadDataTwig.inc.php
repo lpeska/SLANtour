@@ -193,10 +193,11 @@ function getCountry($countryName)
     return $country;
 }
 
-function getAllCountries($continent)
+function getAllCountries($continent, $typ = "")
 {
     /*Loading countries*/
-    $menu = new Menu_katalog("dotaz_zeme_list", "", "", "");
+    echo "typ do hledani: " . $typ;
+    $menu = new Menu_katalog("dotaz_zeme_list", $typ, "", "");
     $countriesDB = $menu->get_zeme_list();
     //echo print_r($countriesDB);
 
@@ -211,7 +212,7 @@ function getAllCountries($continent)
             $country["foto_url"],
             "/zeme/" . $country["nazev_zeme_web"]
         );
-        if ($continent == "zeme-seznam") {
+        if ($continent == "zeme-seznam" || $continent == "") {
             $countries[$country["id_zeme"]] = $c;
         } else if ($continent == "evropa" && isEurope($country["nazev_zeme_web"])) {
             $countries[$country["id_zeme"]] = $c;
