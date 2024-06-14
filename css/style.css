@@ -4212,7 +4212,7 @@ a.boxed_list:hover i {
 .secondary_nav ul li:last-child a:hover {
   background-color: #0054a6;
 }
-@media (max-width: 575px) {
+@media (max-width: 991px) {
   .secondary_nav ul li:last-child {
     display: inline-block;
     float: right;

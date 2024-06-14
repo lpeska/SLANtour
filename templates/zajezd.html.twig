@@ -170,41 +170,53 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading{{loop.index}}">
                                     <button class="accordion-button{% if loop.index > 1 %} collapsed{% endif %}" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
-                                        <div>
-                                            <i class="fa" aria-hidden="true"></i>
+                                        <div class="col-md-7 col-sm-9">
+                                            <div class="date_date"> <i class="fa" aria-hidden="true"></i> {{ tourDate.date}}</div> 
                                         </div>
-                                        <div class="date_date">{{ tourDate.date}}</div> 
-                                        {% if tourDate.price == -1 %}
-                                        <div class="date_price soldout">
-                                            Vyprodáno!    
+                                        <div class="col-md-3 col-sm-3">
+                                            {% if tourDate.price == -1 %}
+                                            <div class="date_price soldout">
+                                                Vyprodáno!    
+                                            </div>
+                                            {% else %}
+                                            <div class="date_price">
+                                                {% if predbeznaRegistrace < 1 %}
+                                                    {{ tourDate.price}} Kč
+                                                {% else %}    
+                                                    Předběžná registrace
+                                                {% endif %} 
+                                            </div>
+                                            {% endif %}
+                                            {% if tourDate.price > 0 %}
+                                            {% endif %}
+                                            
                                         </div>
-                                        {% else %}
-                                        <div class="date_price">
-                                            {% if predbeznaRegistrace < 1 %}
-                                                {{ tourDate.price}} Kč
-                                            {% else %}    
-                                                Předběžná registrace
-                                            {% endif %} 
-                                        </div>
-                                        {% endif %}
-                                        {% if tourDate.price > 0 %}
-                                        <a class="date_select" data-dateindex="{{loop.index}}">
+                                            <a class="date_select header" data-dateindex="{{loop.index}}">
+                                                <strong>
+                                                    Vybrat 
+                                                    {% if longTour %}
+                                                    období
+                                                    {% else %}
+                                                    termín
+                                                    {% endif %} <i class="arrow_carrot-right"></i>
+                                                </strong>
+                                            </a>
+                                        
+                                    </button>
+                                </h2>
+                                <div id="collapse{{loop.index}}" class="accordion-collapse collapse {% if loop.index == 1 %} show {% endif %}" aria-labelledby="heading{{loop.index}}"
+                                    data-bs-parent="#accordionDates">
+                                    <div class="accordion-body">
+                                        <a href="#sidebar" class="date_select body" data-dateindex="{{loop.index}}">
                                             <strong>
                                                 Vybrat 
                                                 {% if longTour %}
                                                 období
                                                 {% else %}
-                                                termíny
+                                                termín
                                                 {% endif %} <i class="arrow_carrot-right"></i>
                                             </strong>
                                         </a>
-                                        {% endif %}
-                                        
-                                    </button>
-                                </h2>
-                                <div id="collapse{{loop.index}}" class="accordion-collapse{% if loop.index > 1 %} collapse{% endif %}" aria-labelledby="heading{{loop.index}}"
-                                    data-bs-parent="#accordionDates">
-                                    <div class="accordion-body">
                                         {% if tourDate.details is not empty %}
                                         <div class="tour-html-block margin_0_30">
                                             {{ tourDate.details|raw }}

@@ -464,7 +464,6 @@
 		dateSelect[0].value = dateIndex;
 		dateSelect.change();
 		event.stopPropagation();
-
 		addTargetingClass();
 		
 		setTimeout(function() {
