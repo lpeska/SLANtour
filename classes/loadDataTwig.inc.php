@@ -196,7 +196,6 @@ function getCountry($countryName)
 function getAllCountries($continent, $typ = "")
 {
     /*Loading countries*/
-    echo "typ do hledani: " . $typ;
     $menu = new Menu_katalog("dotaz_zeme_list", $typ, "", "");
     $countriesDB = $menu->get_zeme_list();
     //echo print_r($countriesDB);
@@ -425,7 +424,7 @@ function getTypeDescription($typeName) {
 
         "za-sportem" => "<p>Naše zájezdy za sportem jsou tady pro všechny nadšené sportovní fanoušky, kterým nestačí sportovní atmosféra jen u televize.</p>",
 
-        "pobytove-zajezdy" => "<p>Užijte si vaši dovolenou u nás i v cizině.</p>",
+        "pobytove-zajezdy" => "<p>Užijte si vaši dovolenou u nás i v cizině. Na plážích u moře či na jezerech a přehradách v tuzemsku či na Slovensku.</p>",
 
         "lazenske-pobyty" => "<p>Nabízíme široký výběr jak tradičních lázní, tak i lázní termálních či oblíbených wellness hotelů.
         Nyní máte jedinečnou příležitost načerpat novou energii a revitalizovat svou mysl a tělo v nádherném prostředí lázeňských destinací.</p>",
