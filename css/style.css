@@ -1038,7 +1038,7 @@ ul#top_menu li {
   float: left;
   margin: 0;
   line-height: 1;
-  margin-right: 15px;
+  margin-right: 20px;
 }
 ul#top_menu li:last-child {
   margin-right: 0;
@@ -1047,7 +1047,7 @@ ul#top_menu li:last-child {
 }
 @media (max-width: 991px) {
   ul#top_menu li {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 20px;
   }
 }
 ul#top_menu li a {
@@ -1057,8 +1057,11 @@ ul#top_menu li a:hover {
   color: #fff;
   opacity: 0.7;
 }
-.sticky ul#top_menu li a.search-header:hover:before {
+.sticky ul#top_menu li a.search-header:hover, .sticky ul#top_menu li a.phone:hover:before {
   color: #fc5b62;
+}
+.sticky ul#top_menu li a.phone, .sticky ul#top_menu li a.search-header:before {
+  color: #444;
 }
 ul#top_menu li a.login, ul#top_menu li a.search-header {
   display: block;
@@ -1072,8 +1075,23 @@ ul#top_menu li a.login, ul#top_menu li a.search-header {
   -ms-transition: opacity 0.5s ease;
   transition: opacity 0.5s ease;
 }
+ul#top_menu li a.phone {
+  position: relative;
+  top: 16px;
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  -moz-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  -webkit-transition: opacity 0.5s ease;
+  -ms-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
+}
+ul#top_menu li a.phone i {
+  padding-right: 5px;
+}
 @media (max-width: 991px) {
-  ul#top_menu li a.login, ul#top_menu li a.search-header {
+  ul#top_menu li a.phone, ul#top_menu li a.search-header {
     top: 2px;
   }
 }
@@ -1088,16 +1106,11 @@ ul#top_menu li a.login:before, ul#top_menu li a.search-header:before {
   top: 0;
   line-height: 1;
 }
-.sticky ul#top_menu li a.login:before, .sticky ul#top_menu li a.search-header:before {
-  color: #444;
-}
+
 ul#top_menu li a.search-header {
   text-indent: -9999px;
 }
 
-ul#top_menu li a.login {
-  text-indent: -9999px;
-}
 ul#top_menu li a.login:before {
   content: '\0042';
 }
