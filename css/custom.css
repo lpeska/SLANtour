@@ -606,21 +606,31 @@ figure .price_discount_tag {
     text-align: left;
     position: relative;
     width: 100%;
-    min-height: 70px;
+    min-height: 50px;
+}
+
+.accordion-header i {
+    padding-right: 5px;
 }
 
 .accordion-header button > div{
-    display: inline-block;
+    /* display: inline-block; */
     padding-right: 10px;
 }
 
 .accordion-header .date_date{
-    width: 200px;
+    /* width: 520px; */
 }
 
 .accordion-header .date_price{
     font-size: 18px;
     font-weight: 600;
+}
+
+@media (max-width:767px) {
+    .accordion-header .date_price {
+        text-align: right;
+    }
 }
 
 .accordion-header .date_price.soldout{
@@ -629,12 +639,29 @@ figure .price_discount_tag {
     color: firebrick;
 }
 
-.accordion-header button .date_select {
+.accordion-header button .date_select.header {
     position: absolute;
-    top: 27px;
+    top: 20px;
     right: 15px;
     z-index: 9;
     font-size: 14px;
+}
+
+@media (max-width:767px) {
+    .accordion-header button .date_select.header {
+        display: none;
+    }
+}
+
+.date_select.body {
+    display: none;
+}
+
+@media (max-width:767px) {
+    .date_select.body {
+        display: block;
+        padding-bottom: 10px;
+    }
 }
 
 .accordion-button::after{
@@ -742,7 +769,7 @@ figure .price_discount_tag {
     margin: 0 15px 15px;
 }
 
-.list-header h3{
+.list-header h4{
     flex-grow: 1;
 }
 

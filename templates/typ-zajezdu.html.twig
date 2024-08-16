@@ -24,14 +24,45 @@
     {% include "_breadcrumbs.html.twig" %}
 
     <div class="container margin_35_35">
-        <section class="main_description">
+        <section class="main_description add_bottom_45">
             {{ type.description|raw }}
 
-            <!-- End Map -->
+            <p class="btn_tours_align"><a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"
+                    class="btn_1 rounded">Zobrazit všechny zájezdy ({{totalTours}})</a>
+            </p>
         </section>
 
         {% include "_tour-lists.html.twig" %}
-        
+
+        <hr>
+
+        <section class="add_bottom_45">
+            <div class="main_title_3">
+                <h2>Země</h2>
+            </div>
+            <div class="row">
+                {% for country in countries %}
+                <div class="col-xl-3 col-lg-6 col-md-6">
+                    <a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}&countryFilter[]={{ country.id }}"
+                        class="grid_item">
+                        <figure>
+                            <img src="{{ country.image }}" class="img-fluid" alt="">
+                            <div class="info">
+                                <h3>{{country.name}}</h3>
+                                {{country.numberOfTours}} zájezdů od {{country.priceFrom}} Kč
+                            </div>
+                        </figure>
+                    </a>
+                </div>
+                <!-- /grid_item -->
+                {% endfor %}
+            </div>
+        </section>
+
+        <p class="btn_tours_align"><a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"
+                class="btn_1 rounded">Zobrazit všechny zájezdy ({{totalTours}})</a>
+        </p>
+
     </div>
     <!-- /container -->
 </div>

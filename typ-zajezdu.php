@@ -24,6 +24,8 @@ $popularTours = getPopularTours($typeName, "");
 
 $newTours = getNewTours($typeName, "");
 
+$countries = getAllCountries($continentName, $typeName);
+
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
@@ -39,5 +41,6 @@ echo $twig->render('typ-zajezdu.html.twig', [
     'totalTours' => $type->numberOfTours,
     "totalDiscountedTours" => 157,
     'newTours' => $newTours,
+    'countries' => $countries,
     'breadcrumbs' => $breadCrumbs
 ]);

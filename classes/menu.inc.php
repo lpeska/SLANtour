@@ -8,6 +8,7 @@ class Menu_katalog extends Generic_list{
 	//vstupni parametry
     protected $typ_pozadavku;
 	protected $typ;
+	protected $id_typ;
 	protected $nazev_zeme;
         protected $last_ubytovani;
 	protected $nazev_serialu; 
@@ -50,6 +51,7 @@ class Menu_katalog extends Generic_list{
 		$this->limit = intval($limit);
                 $this->last_ubytovani = "";
                 $this->last_destinace = "";
+                $this->id_typ = "";
 	//ziskani serialu z databaze	
                 if($this->typ_pozadavku == "dotaz_top_zeme"){
                     //nedelam nic
@@ -75,6 +77,7 @@ class Menu_katalog extends Generic_list{
 			$data_typ=$this->database->query($dotaz_typ);
 			$zaznam_typ=mysqli_fetch_array($data_typ);
 			$id_typ=$zaznam_typ["id_typ"];
+            $this->id_typ = $id_typ;
 		}
 		if($this->nazev_zeme!=""){
 			//ziskam id země
@@ -392,6 +395,11 @@ class Menu_katalog extends Generic_list{
 					";			
 		//echo $dotaz;			
 		}else if( $typ=="dotaz_zeme_list"){
+            if($id_typ != ""){
+                $where_typ = " AND `cross_serial`.`id_typ` =".$id_typ."";
+            }else{
+                $where_typ = " ";
+            }
 			// vsechny zeme s aktivnim zajezdem s foto
 				$dotaz="
                     SELECT DISTINCT  `cross_zeme`.`id_zeme`,  `cross_zeme`.`nazev_zeme` , `cross_zeme`.`nazev_zeme_web` , foto.foto_url
@@ -406,7 +414,7 @@ class Menu_katalog extends Generic_list{
                                 foto_informace on (`informace`.`id_informace` = `foto_informace`.`id_informace` and `foto_informace`.`zakladni_foto` = 1) join
                                 foto on (`foto_informace`.`id_foto` = `foto`.`id_foto`)
                             ) on (`informace`.`id_informace` = `cross_zeme`.`id_info`)
-                    WHERE cross_zeme.geograficka_zeme = 1
+                    WHERE cross_zeme.geograficka_zeme = 1 ".$where_typ." 
                     ORDER BY `cross_zeme`.`nazev_zeme`;
 					";	
         }else if( $typ=="dotaz_sport_list"){
@@ -645,6 +653,11 @@ class Menu_katalog extends Generic_list{
         } 
 
         function get_country_data($id_zeme){
+            if($this->id_typ != ""){
+                $where_typ = " AND `serial`.`id_typ` =".$this->id_typ."";
+            }else{
+                $where_typ = " ";
+            }
             $query = "
                 select count(distinct `serial`.`id_serial`) as countSerial, min(`cena_zajezd`.`castka`) as min_cena
                 from zeme_serial join 
@@ -654,7 +667,7 @@ class Menu_katalog extends Generic_list{
                 `cena_zajezd` on (`cena`.`id_cena` = `cena_zajezd`.`id_cena` and `zajezd`.`id_zajezd` = `cena_zajezd`.`id_zajezd`  and `cena_zajezd`.`nezobrazovat`!=1 and `cena_zajezd`.`castka`>100) 
                 where `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`nezobrazovat`<>1 and
                     (`zajezd`.`od` >='".Date("Y-m-d")."' or (`zajezd`.`do` >'".Date("Y-m-d")."' and `serial`.`dlouhodobe_zajezdy`=1 ) ) 
-                        and zeme_serial.id_zeme = '".$id_zeme."' 
+                        and zeme_serial.id_zeme = '".$id_zeme."' ".$where_typ."
             ";
             
             $data = $this->database->query($query)

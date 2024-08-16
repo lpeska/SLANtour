@@ -913,6 +913,17 @@ a.btn_1.outline:focus,
   }
 }
 
+.btn_tours_align {
+  text-align: left;
+  margin-bottom: 25px;
+}
+@media (max-width: 767px) {
+  .btn_tours_align {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+}
+
 a.btn_map {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -4045,8 +4056,6 @@ a.box_feat h3 {
   min-width: 70px;
   color: rgba(0, 0, 0, 0.5);
   font-weight: 600;
-  font-size: 12px;
-  font-size: 0.75rem;
   text-align: center;
   text-shadow: none;
   padding: 10px 12px 8px 12px;
@@ -4201,7 +4210,7 @@ a.boxed_list:hover i {
 .secondary_nav ul li:last-child a:hover {
   background-color: #0054a6;
 }
-@media (max-width: 575px) {
+@media (max-width: 991px) {
   .secondary_nav ul li:last-child {
     display: inline-block;
     float: right;
