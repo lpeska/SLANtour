@@ -339,13 +339,16 @@
                     data[index].escapedName = data[index].nazev_web;
                 }*/
                 
+                if (data[index].nazev_ubytovani == undefined){
+                    data[index].nazev_ubytovani = "";
+                }
                 let sID = parseInt(elem["id_serial"]);
                 if (sz[sID]!= undefined){
                     data[index].country = sz[sID]["zId"];
                     data[index].zName = sz[sID]["zName"];
                 }else{
                     data[index].country = -1;
-                    data[index].zName = "";
+                    data[index].zName = [""];
                 }
                 if (sv[sID]!= undefined){
                     var popularity = parseInt(sv[sID]["pocet"]) + Math.log2(sv[sID]["suma"]/1000)
@@ -357,7 +360,7 @@
                 if (sd[sID]!= undefined){
                     data[index].dName = sd[sID]["dName"];
                 }else{
-                    data[index].dName = "";
+                    data[index].dName = [""];
                 }
                 
                 let tID = parseInt(elem["id_typ"]);
@@ -386,6 +389,12 @@
                         data[index].durGroup = "nad10noci";                        
                     }
                 }
+                //vytvorit varianty bez diakritiky
+                data[index].zNameNorm = data[index].zName.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                data[index].dNameNorm = data[index].dName.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                data[index].nazevNorm = data[index].nazev.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                data[index].nazevUbytovaniNorm = data[index].nazev_ubytovani.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                data[index].tNameNorm = data[index].tName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
                 
                 //let zeme_ids = defiant.search(szSnapshot, '//*[id_serial='+id_serial+']/id_zeme');
@@ -583,7 +592,7 @@
                             sort: "key",
                           }
                         },
-                        searchableFields: ['nazev', 'nazev_ubytovani',"zName","dName","tName"]
+                        searchableFields: ['nazevNorm', 'nazevUbytovaniNorm',"zNameNorm","dNameNorm","tNameNorm"]
                     }))
                     .then(function(ijs){ 
                         
@@ -592,7 +601,7 @@
                                     per_page: 20,
                                     page: page,
                                     sort: sortPar,
-                                    query: (typeof filters.txt[0] !== "undefined")? filters.txt[0]:"",
+                                    query: (typeof filters.txt[0] !== "undefined")? filters.txt[0].normalize("NFD").replace(/[\u0300-\u036f]/g, ""):"",
                                     filters: classFilters,
                                     filter: function(item) {
 
