@@ -84,5 +84,10 @@
                                 </div>
                             </div>
                         </div>
+                        {% if tour.posX != "" %}
+                            <script>
+                                tourLocations[{{tour.id_zajezd}}] = {"lat":{{tour.posY}},"long":{{tour.posX}},"title":'{{tour.name}}'};
+                            </script>
+                        {% endif %}  
                     {% endfor %}
 

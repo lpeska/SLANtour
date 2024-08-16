@@ -72,6 +72,18 @@ foreach ($zajezdIDs as $key => $zID) {
             $predbeznaRegistrace = 1;                        
         }
         
+        //get tour coordinates
+        if($row["gps_lat"]!=""){
+            $posY = $row["gps_lat"];
+            $posX = $row["gps_long"];
+        }else if($row["posX"]!=""){
+            $posX = $row["posX"];
+            $posY = $row["posY"];            
+        }else{
+            $posX = "";
+            $posY = "";            
+        }
+        
 
         
         try{
@@ -94,7 +106,8 @@ foreach ($zajezdIDs as $key => $zID) {
                 "//slantour.cz/foto/full/".$row["foto_url"], 
                 $features, 
                 Serial_collection::get_description($row),
-                $predbeznaRegistrace
+                $predbeznaRegistrace,
+                $posX, $posY
                     
                     );
         } catch(TypeError $e){
@@ -147,8 +160,11 @@ class Tour
     public array $features;
     public string $description;
     public int $predbeznaRegistrace;
+    public $posX;
+    public $posY;
+            
 
-    public function __construct( string $name, string $escapedName, string $type, int $id_zajezd, string $dates, int $totalOtherDates, array $allDates, int $price, int $priceDiscount, int $priceOriginal, string $nights, string $meals,string $transport,string $accomodation, string $destination, string $image, array $features, string $description, int $predbeznaRegistrace)
+    public function __construct( string $name, string $escapedName, string $type, int $id_zajezd, string $dates, int $totalOtherDates, array $allDates, int $price, int $priceDiscount, int $priceOriginal, string $nights, string $meals,string $transport,string $accomodation, string $destination, string $image, array $features, string $description, int $predbeznaRegistrace, $posX, $posY)
     {
         $this->name = $name;
         $this->escapedName = $escapedName;
@@ -169,6 +185,8 @@ class Tour
         $this->features = $features;
         $this->description = $description;
         $this->predbeznaRegistrace = $predbeznaRegistrace;
+        $this->posX = $posX;
+        $this->posY = $posY;
     }
 }
 
