@@ -481,10 +481,15 @@
         
                                               
         async function filterData(data, selected_filters, page){
-            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[]}
+            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
-                filters[arr[0]].push(arr[1]);
+                if(arr.length >= 2){
+                    filters[arr[0]].push(arr[1]);
+                }else{
+                    console.log(f);
+                }
+                    
             
             });
             classFilters = {}
@@ -721,10 +726,14 @@
         
         
         async function showData(filteredData,selected_filters,append){ 
-            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[]}
+            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
-                filters[arr[0]].push(arr[1]);
+                if(arr.length >= 2){
+                    filters[arr[0]].push(arr[1]);
+                }else{
+                    console.log(f);
+                }
             
             });
             
