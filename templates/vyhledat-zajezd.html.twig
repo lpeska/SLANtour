@@ -7,6 +7,8 @@
 {% endblock stylesheets %}
 
 {% block main %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
 <script src="/node_modules/itemsjs/dist/itemsjs.js"></script>
 <section class="hero_in tour_list search">
@@ -36,7 +38,7 @@
                         <input class="form-control" type="text" id="datesInput" name="dates" placeholder="Kdykoliv" value="{{ dates }}">
                         <i class="icon_calendar"></i>
                     </div>
-                    <input type="submit" class="btn_search" id="toursVolume" value="Ukázat 0 zájezdů">
+                    <input type="submit" class="btn_search" id="toursVolume" value="Načítání dat...">
                 </div>
                 <!-- /custom-search-input-2 -->
                 <div id="filters_col">
@@ -180,9 +182,8 @@
                         <input type="radio" id="latest" name="listing_filter" value="latest" class="sorting-control" data-filter=".latest">
                         <label for="latest">Nově přidané</label>
                     </div>
-                   <!-- <a class="btn_map" data-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                        aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View on
-                        map</a> -->
+                   <a class="btn_map" data-toggle="collapse" href="#collapseMap" aria-expanded="false"
+                        aria-controls="collapseMap" data-text-swap="Zavřít mapu" data-text-original="Zobrazit na mapě">Zobrazit na mapě</a>
 
                 </div>
 
@@ -299,9 +300,11 @@
 
 {% block javascripts %}
     <script src="../js/range.js"></script>
+    <script src="../js/map_hotels.js"></script>
     <script>        
         //TODO: selected filters udelat pristupne zvenku = inicialni nastaveni vyhledavani
-        /*var selected_filters = ["txt_Lo","minPrice_100","maxPrice_20000"];*/        
+        /*var selected_filters = ["txt_Lo","minPrice_100","maxPrice_20000"];*/  
+        var tourLocations = {};
         var selected_filters = JSON.parse('{{initFilters|raw }}');
         var page = 1;
         async function getData(){
@@ -339,13 +342,16 @@
                     data[index].escapedName = data[index].nazev_web;
                 }*/
                 
+                if (data[index].nazev_ubytovani == undefined){
+                    data[index].nazev_ubytovani = "";
+                }
                 let sID = parseInt(elem["id_serial"]);
                 if (sz[sID]!= undefined){
                     data[index].country = sz[sID]["zId"];
                     data[index].zName = sz[sID]["zName"];
                 }else{
                     data[index].country = -1;
-                    data[index].zName = "";
+                    data[index].zName = [""];
                 }
                 if (sv[sID]!= undefined){
                     var popularity = parseInt(sv[sID]["pocet"]) + Math.log2(sv[sID]["suma"]/1000)
@@ -357,7 +363,7 @@
                 if (sd[sID]!= undefined){
                     data[index].dName = sd[sID]["dName"];
                 }else{
-                    data[index].dName = "";
+                    data[index].dName = [""];
                 }
                 
                 let tID = parseInt(elem["id_typ"]);
@@ -386,6 +392,12 @@
                         data[index].durGroup = "nad10noci";                        
                     }
                 }
+                //vytvorit varianty bez diakritiky
+                data[index].zNameNorm = data[index].zName.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                data[index].dNameNorm = data[index].dName.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                data[index].nazevNorm = data[index].nazev.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                data[index].nazevUbytovaniNorm = data[index].nazev_ubytovani.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                data[index].tNameNorm = data[index].tName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
                 
                 //let zeme_ids = defiant.search(szSnapshot, '//*[id_serial='+id_serial+']/id_zeme');
@@ -472,10 +484,15 @@
         
                                               
         async function filterData(data, selected_filters, page){
-            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[]}
+            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
-                filters[arr[0]].push(arr[1]);
+                if(arr.length >= 2){
+                    filters[arr[0]].push(arr[1]);
+                }else{
+                    console.log(f);
+                }
+                    
             
             });
             classFilters = {}
@@ -583,7 +600,7 @@
                             sort: "key",
                           }
                         },
-                        searchableFields: ['nazev', 'nazev_ubytovani',"zName","dName","tName"]
+                        searchableFields: ['nazevNorm', 'nazevUbytovaniNorm',"zNameNorm","dNameNorm","tNameNorm"]
                     }))
                     .then(function(ijs){ 
                         
@@ -592,7 +609,7 @@
                                     per_page: 20,
                                     page: page,
                                     sort: sortPar,
-                                    query: (typeof filters.txt[0] !== "undefined")? filters.txt[0]:"",
+                                    query: (typeof filters.txt[0] !== "undefined")? filters.txt[0].normalize("NFD").replace(/[\u0300-\u036f]/g, ""):"",
                                     filters: classFilters,
                                     filter: function(item) {
 
@@ -712,10 +729,14 @@
         
         
         async function showData(filteredData,selected_filters,append){ 
-            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[]}
+            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
-                filters[arr[0]].push(arr[1]);
+                if(arr.length >= 2){
+                    filters[arr[0]].push(arr[1]);
+                }else{
+                    console.log(f);
+                }
             
             });
             
@@ -753,6 +774,7 @@
                     if(append){
                        dataAnchor.append(text); 
                     }else{
+                       tourLocations = {};
                        dataAnchor.html(text); 
                     }
                     

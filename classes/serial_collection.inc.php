@@ -268,6 +268,7 @@ class Serial_collection extends Generic_list {
         $query = 
                 "select 
                     `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`nazev_web`,`serial`.`popisek`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,`serial`.`id_sablony_zobrazeni`,
+                    `serial`.`gps_lat` , `serial`.`gps_long`,
                     `objekt_ubytovani`.`nazev_ubytovani`, `objekt_ubytovani`.`nazev_web` as `nazev_ubytovani_web`,`objekt_ubytovani`.`popis_poloha` as `popisek_ubytovani`,`objekt_ubytovani`.`posX` , `objekt_ubytovani`.`posY`,
                     `zajezd`.`id_zajezd`,`zajezd`.`nazev_zajezdu`,`zajezd`.`od`,`zajezd`.`do`,`zajezd`.`cena_pred_akci`,`zajezd`.`akcni_cena`,
                     `zeme`.`nazev_zeme`,`zeme`.`nazev_zeme_web`, coalesce(`destinace`.`nazev_destinace`) as nazev_destinace,

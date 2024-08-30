@@ -1,4 +1,4 @@
-	(function(A) {
+/*	(function(A) {
 
 	if (!Array.prototype.forEach)
 		A.forEach = A.forEach || function(action, that) {
@@ -371,4 +371,7 @@
 			});
 
 
-		};
+		};*/
+
+
+

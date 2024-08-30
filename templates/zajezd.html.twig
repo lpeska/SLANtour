@@ -328,10 +328,10 @@
                     </div>
                     
                     {% if mapContent is not empty %}
-                        <hr>
-                        {{ mapContent|raw  }}
+                        <hr>                        
                         <h3>Lokace</h3>
                         <div  id="mapid" style="width:100%; height:350px;"> </div>
+                        {{ mapContent|raw  }}
                     {% endif %}
                     
                     <!--<div id="map" class="map map_single add_bottom_30"></div>
