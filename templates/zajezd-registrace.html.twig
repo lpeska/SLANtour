@@ -132,7 +132,7 @@
                     {% endif %}
                     
                     <div class="row margin_0_30">
-                        {% if included is not empty %}
+                        {% if included[0] is not empty %}
                         <div class="col-lg-6">
                             <h3>Cena zahrnuje</h3>
                             <div class="bullets positive">
@@ -142,7 +142,7 @@
                         {% endif %}
                         
                         
-                        {% if notIncluded is not empty %}
+                        {% if notIncluded[0] is not empty %}
                         <div class="col-lg-6">
                             <h3>Cena nezahrnuje</h3>
                             <div class="bullets negative">
@@ -151,9 +151,6 @@
                         </div>
                         {% endif %}
                     </div>
-                    
-
-
                 </section>
                 <!-- /section -->
 
