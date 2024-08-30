@@ -1,0 +1,266 @@
+{% extends "_base.html.twig" %}
+
+{% block title %}SLANtour - {{ name }}{% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+<section class="hero_in tours_detail">
+    <img src="{{ imageMain.url }}" alt="{{ imageMain.description }}">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>{{ name }} </h1>
+        </div>
+        <span class="magnific-gallery">
+            {% for image in images %}
+                {% if loop.index0 == 0 %}
+                    <a href="{{ image.url }}" class="btn_photos" title="{{ image.description }}" data-effect="mfp-zoom-in"><i class="fas fa-camera"></i> Galerie</a>
+                {% else %}
+                    <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"></a>
+                {% endif %}
+            {% endfor %}
+        </span>
+    </div>
+</section>
+<!--/hero_in-->
+
+<div class="bg_color_1">
+    <nav class="secondary_nav sticky_horizontal">
+        <div class="container">
+            <ul class="clearfix">
+                <li><a href="#description" class="active">Zájezd</a></li>
+                <li><a href="#dates">
+                    {% if longTour %}
+                    Období
+                    {% else %}
+                    Termíny
+                    {% endif %}
+                </a></li>
+                <li><a href="#sidebar">Objednávka</a></li> 
+            </ul>
+        </div>
+    </nav>
+    
+    {% include "_breadcrumbs.html.twig" %}
+
+    <div class="container margin_30_95">
+        <div class="row">
+            <div class="col-lg-8">
+                <section id="description">
+                    <!--features-->
+                    <div class="tour_feat">
+                        <ul>
+                            {% for feature in features %}
+                                <li><span><i class="fas {{feature.icon}}"></i></span>{{feature.text|raw}}</li>
+                                
+                            {% endfor %}
+                           
+                        </ul>
+                    </div>
+                    <h2>Popis</h2>
+                    <div class="tour-html-block">{{ descriptionMain|raw}}</div>
+
+                    <div class="pictures_grid magnific-gallery clearfix">
+                        {% for image in images %}
+                            {% if loop.index0 <= 3 %}
+                                <figure>
+                                    <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"><img src="{{ image.url }}" alt=""></a>
+                                </figure>
+                            {% elseif loop.index0 == 4 %}
+                                {% if loop.last %}
+                                    <figure>
+                                        <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"><img src="{{ image.url }}" alt=""></a>
+                                    </figure>
+                                {% else %}
+                                    <figure>
+                                        <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in">
+                                            <span class="d-flex align-items-center justify-content-center">+{{ loop.length - 4}}</span>
+                                            <img src="{{ image.url }}" alt="">
+                                        </a>
+                                    </figure>
+                                {% endif %}
+                            {% else %}
+                                <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"></a>
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                    <!-- /pictures -->
+
+                    {% if descriptionProgram is not empty or program is not empty %}
+                    <h3>Program</h3>
+                    <div class="tour-html-block">{{ descriptionProgram|raw }}</div>
+                    <ul class="cbp_tmtimeline">
+                        {% for day in program %}
+                        <li>
+                            <div class="cbp_tmicon">
+                                {{ day.day }}. 
+                                <br><span>den</span>
+                            </div>
+                            <div class="cbp_tmlabel">
+                                {% if day.image %}
+                                <div class="hidden-xs">
+                                    <img src="{{ day.image }}" alt="" class="rounded-circle thumb_visit">
+                                </div>
+                                {% endif %}
+                                <h4>{{ day.title }}</h4>
+                                <p class="tour-html-block">
+                                    {{ day.description|raw }}
+                                </p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <hr>
+                    {% endif %}
+
+                    {% if descriptionAccomodation is not empty %}
+                    <h3>Ubytování</h3>
+                    <div class="tour-html-block">{{ descriptionAccomodation|raw }}</div>
+                    {% endif %}
+
+                    {% if descriptionMeals is not empty %}
+                    <h3>Stravování</h3>
+                    <div class="tour-html-block">{{ descriptionMeals|raw }}</div>
+                    {% endif %}
+                    
+                    {% if descriptionAccomodation is not empty or descriptionMeals is not empty %}
+                    <hr>
+                    {% endif %}
+                    
+                    <div class="row margin_0_30">
+                        {% if included is not empty %}
+                        <div class="col-lg-6">
+                            <h3>Cena zahrnuje</h3>
+                            <div class="bullets positive">
+                                {{included[0]|raw}}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        
+                        {% if notIncluded is not empty %}
+                        <div class="col-lg-6">
+                            <h3>Cena nezahrnuje</h3>
+                            <div class="bullets negative">
+                                {{notIncluded[0]|raw}}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+
+
+                </section>
+                <!-- /section -->
+
+            </div>
+            <!-- /col -->
+
+            <aside class="col-lg-4" id="sidebar">
+                <div class="box_detail booking">
+                    <div class="price">
+                        <span class="price_span">Předběžná registrace</span>
+                    </div>
+                    
+                    <form id="registrationForm" autocomplete="on">
+                        
+                        <label for="registrationDate">
+                            <i class="fas fa-calendar-days"></i> 
+                            {% if longTour %}
+                            Období
+                            {% else %}
+                            Termín
+                            {% endif %}
+                        </label>
+                        <select id="registrationDate" name="zajezdId" class="form-select form-control form-group" required aria-label="Select tour date">
+                            <option value="" disabled selected>
+                                Vyberte 
+                                {% if longTour %}
+                                období
+                                {% else %}
+                                termín
+                                {% endif %}...
+                            </option>
+                            {% for tourDate in dates %}
+                            <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}"> {{tourDate.date}} </option>
+                            {% endfor %} 
+                        </select>
+                        
+                        <label for="registrationName"><i class="fas fa-user"></i> Jméno</label>
+                        <input class="form-control form-group" name="fname" id="registrationName" required>
+                        
+                        <label for="registrationLastName"><i class="fas fa-user"></i> Příjmení</label>
+                        <input class="form-control form-group" name="lname" id="registrationLastName" required>
+                        
+                        <label for="registrationEmail"><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" class="form-control form-group" name="email" id="registrationEmail" required>
+                        
+                        <label for="registrationPhone"><i class="fas fa-phone"></i> Telefon</label>
+                        <input type="tel" class="form-control form-group" name="phone" id="registrationPhone">
+                        
+                        <label for="registrationInterest"><i class="fas fa-clipboard-list"></i> Mám zájem o:</label>
+                        
+                        <div class="form-group checkbox-group">
+                            {% for interest in regInterests %}
+                            <label for="reg{{loop.index}}">
+                                <input type="checkbox" id="reg{{loop.index}}" name="reg{{loop.index}}" value="{{interest}}" data-interests="{{regInterests|length}}">
+                                {{interest}}
+                            </label>    
+                            {% endfor %} 
+                        </div>
+                        
+                        <label for="registrationMessage"><i class="fas fa-message"></i> Zpráva</label>
+                        <textarea class="form-control form-group" name="message" id="registrationMessage" required rows="4"></textarea>
+                        
+                        <input class="form-control form-group" name="serialId" id="registrationSerialId" value="{{zajezdID}}" hidden>
+
+                        <button id="registrationTour" class="btn_1 full-width purchase" type="submit">
+                            <i class="fas fa-envelope"></i> 
+                            <div class="spinner hidden"></div>
+                            Odeslat předběžnou registraci
+                        </button>
+                    </form>
+
+
+                    <div id="registrationSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Vaše předběžná registrace byla odeslána!</span>
+                    </div>
+                    <div id="registrationError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Chyba - vaše předběžná registrace nebyla odeslána.</span>
+                    </div>
+
+                    {# <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a> #}
+                    
+                </div>
+                {# <ul class="share-buttons">
+                    <li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
+                    <li><a class="twitter-share" href="#0"><i class="social_twitter"></i> Tweet</a></li>
+                    <li><a class="gplus-share" href="#0"><i class="social_googleplus"></i> Share</a></li>
+                </ul> #}
+            </aside>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->
+
+
+
+{% endblock main %}
+
+{% block javascripts %}
+<!-- Map 
+<script src="https://maps.googleapis.com/maps/api/js"></script>-->
+<script src="/html-template/js/map_single_tour.js"></script>
+<script src="/html-template/js/infobox.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+{% endblock javascripts %}

@@ -796,7 +796,7 @@ section.main_description p.list {
     margin-bottom: 5px;
 }
 
-section.main_description ul {
+section.main_description ul , ul.list-circle{
     list-style: circle;
     margin-top: 0;
     margin-bottom: 1rem;
@@ -832,4 +832,76 @@ section.main_description ul {
 
 .shop ul {
     margin: 0 0 5px 0;
+}
+
+#registrationSuccess {
+    display: none;
+    color: green;
+    margin-top: 10px;
+    font-size: 1.2em;
+    border: 1px solid green;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e8f5e9;
+    align-items: center;
+}
+
+#registrationSuccess i {
+    margin-right: 10px;
+}
+
+#registrationError {
+    display: none;
+    color: red;
+    margin-top: 10px;
+    font-size: 1.2em;
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fbe9e7;
+    align-items: center;
+}
+
+#registrationError i {
+    margin-right: 10px;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 12px;
+    left: 13%;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none;
+}
+
+#registrationTour {
+    position: relative;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap; /* Allows checkboxes to wrap onto the next line if needed */
+    gap: 10px; /* Adds space between checkboxes */
+}
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.checkbox-group input[type="checkbox"] {
+    margin-right: 5px;
 }

@@ -180,11 +180,7 @@
                                             </div>
                                             {% else %}
                                             <div class="date_price">
-                                                {% if predbeznaRegistrace < 1 %}
-                                                    {{ tourDate.price}} Kč
-                                                {% else %}    
-                                                    Předběžná registrace
-                                                {% endif %} 
+                                                {{ tourDate.price}} Kč
                                             </div>
                                             {% endif %}
                                             {% if tourDate.price > 0 %}
@@ -238,11 +234,7 @@
                                                         <td>{{ service.title }}</td>
                                                         <td>{{ service.capacity }}</td>
                                                         
-                                                        {% if predbeznaRegistrace < 1 %}
-                                                            <td>{{ service.price }} Kč</td>
-                                                        {% else %}    
-                                                            <td>Předběžná registrace</td>
-                                                        {% endif %}
+                                                        <td>{{ service.price }} Kč</td>
                                                         
                                                         
                                                     </tr>
@@ -266,14 +258,7 @@
                                                     <tr>
                                                         <td>{{ extraFee.title }}</td>
                                                         <td>{{ extraFee.capacity }}</td>
-                                                        
-                                                        
-                                                        {% if predbeznaRegistrace < 1 %}
-                                                            <td>{{ extraFee.price }} Kč</td>
-                                                        {% else %}    
-                                                            <td>Předběžná registrace</td>
-                                                        {% endif %}                                                        
-                                                        
+                                                        <td>{{ extraFee.price }} Kč</td>
                                                     </tr>
                                                     
                                                 {% endfor %}
@@ -297,11 +282,7 @@
                                                         <td>{{ pickupSpot.capacity }}</td>
                                                         
                                                         
-                                                        {% if predbeznaRegistrace < 1 %}
-                                                            <td>{{ pickupSpot.price }} Kč</td>
-                                                        {% else %}    
-                                                            <td>Předběžná registrace</td>
-                                                        {% endif %}                                                         
+                                                        <td>{{ pickupSpot.price }} Kč</td>
                                                     </tr>
                                                     
                                                 {% endfor %}
@@ -546,13 +527,7 @@
             <aside class="col-lg-4" id="sidebar">
                 <div class="box_detail booking">
                     <div class="price">
-                        {% if predbeznaRegistrace < 1 %}
-                            <span class="price_span"><small>od</small> {{priceFrom}} Kč</span>
-                        {% else %}    
-                            <span class="price_span">Předběžná registrace</span>
-                        {% endif %} 
-
-                        
+                        <span class="price_span"><small>od</small> {{priceFrom}} Kč</span>
                         
                         {# <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div> #}
                     </div>
@@ -579,10 +554,8 @@
                             {% for tourDate in dates %}
                                 {% if tourDate.price == -1 %}
                                     <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}"> {{tourDate.date}} (vyprodáno)</option>
-                                {% elseif predbeznaRegistrace < 1 %}
-                                    <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}"> {{tourDate.date}} ({{tourDate.price}} Kč)</option>
                                 {% else %}
-                                    <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}"> {{tourDate.date}} </option>
+                                    <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}"> {{tourDate.date}} ({{tourDate.price}} Kč)</option>
                                 {% endif %}
                             {% endfor %} 
                         </select>

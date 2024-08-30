@@ -302,9 +302,22 @@ if ($serial->get_id_sablony_zobrazeni() != 8) {...}
  *  */
 /*konec Zatim neni zahrnuto v sablone, ale mohlo by*/
 $predbeznaRegistrace = 0;
+$regInterests = array();
 if ($serial->get_id_sablony_zobrazeni() == 8) {
     $predbeznaRegistrace = 1;
-    
+
+    $reg = $serial->get_predregistrace();
+    if ($reg != "") {
+        $reg_array = explode(",",  $reg);
+        
+        foreach ($reg_array as $reg_value) {
+            $reg_value = $serial->check($reg_value);
+
+            if ($reg_value != "") {
+                $regInterests[] =  $reg_value;
+            }
+        }
+    }
 }
 
 $longTour = $serial->get_dlouhodobe_zajezdy();
@@ -315,9 +328,10 @@ $twig = new \Twig\Environment($loader, [
 ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
-echo $twig->render('zajezd.html.twig', [
+echo $twig->render($predbeznaRegistrace ? 'zajezd-registrace.html.twig' : 'zajezd.html.twig', [
     'typesOfTours' => $tourTypes,
     'countriesMenu' => $countriesMenu,
+    'zajezdID' => $_GET["id_serial"],
     'dateID' => $_GET["id_zajezd"],
     'name' => $nazev,
     'priceFrom' => $minPrice,
@@ -335,6 +349,7 @@ echo $twig->render('zajezd.html.twig', [
     'descriptionDetails' => $serial->get_popis(),
     'descriptionNotes' => $pozn,
     'predbeznaRegistrace' => $predbeznaRegistrace,
+    'regInterests' => $regInterests,
     'notIncluded' => array($serial->get_cena_nezahrnuje()), //tady je to mapovano zatim dost nedokonale (v originale je to proste textove pole, casem muzem zkusit text-based mapovani)
         /*array('autokarová doprava', 'Pobytová taxa - 2 Euro/osoba/den. (osoby starší 14 let)', 'neco dalsiho', 'neco dalsiho ale delsiho', 'neco jeste jineho', 'neco jeste jineho 2', 'neco jeste jineho 3'),*/
     'included' => array($serial->get_cena_zahrnuje()),

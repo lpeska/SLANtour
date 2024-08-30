@@ -22,23 +22,15 @@ final class Send_mail{
 		$text = $this->check_with_html($text);			
 		*/
 
-			//vytvoření hlavičky
-			//úprava formátu příjemce
-			$jmeno_w1250= imap_8bit( $odesilatel_jmeno );
-			$jmeno_w1250 = "=?windows-1250?Q?".$jmeno_w1250."?="; 
-			
-			//úprava formátu předmetu
-			$predmet_w1250 = imap_8bit($predmet); 
-			$predmet_w1250 = "=?windows-1250?Q?".$predmet_w1250."?="; 
 			
 			//tvorba jednotlivých headerů		
-			$headers = "From: ".$jmeno_w1250." <".$odesilatel_email.">\n"; 
+			$headers = "From: ".$odesilatel_jmeno." <".$odesilatel_email.">\n"; 
 			$headers .= "Mime-Version: 1.0\n";
 			$headers .= "X-Mailer: PHP\n"; // mailový klient
 			$headers .= "X-Priority: 3\n"; // normální vzkaz!
-			$headers .= "Content-Type: text/html; charset=windows-1250"; 			
+			$headers .= "Content-Type: text/html;"; 			
 			
-			if( mail($prijemce_email, $predmet_w1250, $text, $headers) ){
+			if( mail($prijemce_email, $predmet, $text, $headers) ){
 				return true;
 			}else{
 				return false;

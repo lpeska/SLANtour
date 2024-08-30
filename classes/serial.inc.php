@@ -173,6 +173,10 @@ class Serial extends Generic_data_class{
 	}	
         
         function get_popis_akce() { return $this->serial["popis_akce"];}
+
+		function get_predregistrace(){
+			return $this->serial["predregistrace"];
+		}
         
         function get_cena_pred_akci() {
             return
