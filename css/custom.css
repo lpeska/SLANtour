@@ -905,3 +905,9 @@ section.main_description ul , ul.list-circle{
 .checkbox-group input[type="checkbox"] {
     margin-right: 5px;
 }
+
+.required-field::after {
+    content: "*";
+    color: red;
+    margin-left: 5px;
+}

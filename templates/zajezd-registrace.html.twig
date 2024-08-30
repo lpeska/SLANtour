@@ -165,7 +165,7 @@
                     
                     <form id="registrationForm" autocomplete="on">
                         
-                        <label for="registrationDate">
+                        <label class="required-field" for="registrationDate">
                             <i class="fas fa-calendar-days"></i> 
                             {% if longTour %}
                             Období
@@ -187,19 +187,19 @@
                             {% endfor %} 
                         </select>
                         
-                        <label for="registrationName"><i class="fas fa-user"></i> Jméno</label>
+                        <label class="required-field" for="registrationName"><i class="fas fa-user"></i> Jméno</label>
                         <input class="form-control form-group" name="fname" id="registrationName" required>
                         
-                        <label for="registrationLastName"><i class="fas fa-user"></i> Příjmení</label>
+                        <label class="required-field" for="registrationLastName"><i class="fas fa-user"></i> Příjmení</label>
                         <input class="form-control form-group" name="lname" id="registrationLastName" required>
                         
-                        <label for="registrationEmail"><i class="fas fa-envelope"></i> E-mail</label>
+                        <label class="required-field" for="registrationEmail"><i class="fas fa-envelope"></i> E-mail</label>
                         <input type="email" class="form-control form-group" name="email" id="registrationEmail" required>
                         
                         <label for="registrationPhone"><i class="fas fa-phone"></i> Telefon</label>
                         <input type="tel" class="form-control form-group" name="phone" id="registrationPhone">
                         
-                        <label for="registrationInterest"><i class="fas fa-clipboard-list"></i> Mám zájem o:</label>
+                        <label class="required-field" for="registrationInterest"><i class="fas fa-clipboard-list"></i> Mám zájem o:</label>
                         
                         <div class="form-group checkbox-group">
                             {% for interest in regInterests %}
@@ -210,10 +210,12 @@
                             {% endfor %} 
                         </div>
                         
-                        <label for="registrationMessage"><i class="fas fa-message"></i> Zpráva</label>
+                        <label class="required-field" for="registrationMessage"><i class="fas fa-message"></i> Zpráva</label>
                         <textarea class="form-control form-group" name="message" id="registrationMessage" required rows="4"></textarea>
                         
                         <input class="form-control form-group" name="serialId" id="registrationSerialId" value="{{zajezdID}}" hidden>
+
+                        <input type="hidden" id="recaptchaToken" name="recaptchaToken">
 
                         <button id="registrationTour" class="btn_1 full-width purchase" type="submit">
                             <i class="fas fa-envelope"></i> 
