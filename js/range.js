@@ -6,6 +6,7 @@
     var max = 100000;
     var from = 0;
     var to = 100000;
+    var step = 1000;
    
    function updateInputs(data) {
         from = data.from;
@@ -15,8 +16,11 @@
         $inputTo.prop("value", to + " Kč");
     }
 
+    
+
     function removeCurrency (value) {
-        return value.replace(/ Kč/g, "");
+        value += "";
+        return value === "" ? "" : value.replace(/ Kč/g, "");
     }
 
 (function ($) {
@@ -32,11 +36,14 @@
         max: max,
         from: from,
         to: to,
-        step: 1000,
+        step: step,
         postfix: " Kč",
         onStart: updateInputs,
         onChange: updateInputs,
-        onFinish: updateInputs
+        onFinish: function () {
+            console.log("slider finish");
+            $inputFrom.trigger('change');
+        }
     });
     instance = $range.data("ionRangeSlider");
 
@@ -46,17 +53,22 @@
         var val = $(this).prop("value");
 
         // validate
-        if (val < min) {
+        if (val < min || !val) {
             val = min;
         } else if (val > to) {
             val = to;
+            if (val - step >= min) {
+                val -= step;
+            }
         }
 
+        from = parseInt(removeCurrency(val));
+
         instance.update({
-            from: val
+            from: removeCurrency(val)
         });
 
-        $(this).prop("value", val + " Kč");
+        $(this).prop("value", removeCurrency(val) + " Kč");
 
     });
 
@@ -70,21 +82,37 @@
         $(this).prop("value", removeCurrency(val) + " Kč");
     });
 
+    const typingDelay = 1000;
+    let typingTimerFrom;
+
+    $inputFrom.on("input", function () {
+        clearTimeout(typingTimerFrom);   // Clear the previous timer on each keystroke
+        typingTimerFrom = setTimeout(function() {
+            // Code to execute after delay
+            $inputFrom.trigger('change'); // Trigger the event
+        }, typingDelay);
+    });
+
     $inputTo.on("change", function () {
         var val = $(this).prop("value");
 
         // validate
         if (val < from) {
             val = from;
+            if (val + step <= max) {
+                val += step;
+            }
         } else if (val > max) {
             val = max;
         }
 
+        to = parseInt(removeCurrency(val));
+
         instance.update({
-            to: val
+            to: removeCurrency(val)
         });
 
-        $(this).prop("value", val + " Kč");
+        $(this).prop("value", removeCurrency(val) + " Kč");
     });
 
     $inputTo.on("focus", function () {
@@ -95,6 +123,16 @@
     $inputTo.on("blur", function () {
         var val = $(this).prop("value");
         $(this).prop("value", removeCurrency(val) + " Kč");
+    });
+
+    let typingTimerTo;
+
+    $inputTo.on("input", function () {
+        clearTimeout(typingTimerTo);   // Clear the previous timer on each keystroke
+        typingTimerTo = setTimeout(function() {
+            // Code to execute after delay
+            $inputTo.trigger('change'); // Trigger the event
+        }, typingDelay);
     });
 
 })(window.jQuery);

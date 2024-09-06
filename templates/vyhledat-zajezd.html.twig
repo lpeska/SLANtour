@@ -62,7 +62,7 @@
                         
                         <div class="filter_type" id="price_filter">
                             <h6>Cena</h6>
-                            {# <input type="text" id="range" name="range" value=""> #}
+                            <input type="text" id="range" name="range" value="">
                             <div class="price_inputs">
                                 <input class="form-control" type="text" id="range-min">
                                 <span> - </span>
@@ -747,7 +747,7 @@
                 fd.data.aggregations.id_typ.buckets.forEach(el => updateEnumElement(el,"tourTypeFilter"));
                 fd.data.aggregations.durGroup.buckets.forEach(el => updateEnumElement(el,"durGroupFilter"));
                 fd.data.aggregations.country.buckets.forEach(el => updateEnumElement(el,"countryFilter"));
-                updatePrice(filters.minPrice,filters.maxPrice);
+                //updatePrice(filters.minPrice,filters.maxPrice);
                 updateTextSearch(filters.txt);
                 updateTotalTours(fd.pagination.total);
                 console.dir(fd);
@@ -799,14 +799,13 @@
             return true;
         }
         
-        
         $(function(){
             
             var data = getData();
             var filteredData = filterData(data,selected_filters, page);
             showData(filteredData,selected_filters,false);
             
-            setInterval(function(){
+            /*setInterval(function(){
                 var newFilters = updateFilters();
                 if (!arraysEqual(newFilters,selected_filters)){
                     //filters were modified in between
@@ -814,54 +813,58 @@
                     var filteredData = filterData(data, selected_filters, page);
                     showData(filteredData,selected_filters,false);                      
                 }
-            }, 5000);
+            }, 5000);*/
             
-            
+
+
+            function prepDataLoad() {
+                page = 1;
+                console.log("prepDataLoad");
+                selected_filters = updateFilters();
+                var filteredData = filterData(data, selected_filters, page);
+                showData(filteredData, selected_filters, false);
+            }
+
+            let typingTimerTo;
+            const typingDelay = 1000;
+
+            $("#autocomplete").on("input", function () {
+                clearTimeout(typingTimerTo);   // Clear the previous timer on each keystroke
+                typingTimerTo = setTimeout(function() {
+                    // Code to execute after delay
+                    $("#autocomplete").trigger('change'); // Trigger the event
+                }, typingDelay);
+            });
+
             $('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
-		$(this).val(picker.startDate.format('DD/MM/YY') + ' > ' + picker.endDate.format('DD/MM/YY'));
-                page = 1;
-                selected_filters = updateFilters();
-                var filteredData = filterData(data, selected_filters, page);
-                showData(filteredData,selected_filters,false);                        
-                                        
+                $(this).val(picker.startDate.format('DD/MM/YY') + ' > ' + picker.endDate.format('DD/MM/YY'));
+                prepDataLoad();
             });
-            
-            $(".form-control").change(function(){
-                page = 1;
-                selected_filters = updateFilters();
-                var filteredData = filterData(data, selected_filters, page);
-                showData(filteredData,selected_filters,false);
+
+            $(".form-control").change(function () {
+                prepDataLoad();
             });
-            
-            $(".sorting-control").change(function(){
-                page = 1;
-                selected_filters = updateFilters();
-                var filteredData = filterData(data, selected_filters, page);
-                showData(filteredData,selected_filters,false);
+
+            $(".sorting-control").change(function () {
+                prepDataLoad();
             });
-            
-            $(".filter input").change(function(){
-                page = 1;
-                selected_filters = updateFilters();
-                var filteredData = filterData(data, selected_filters, page);
-                showData(filteredData,selected_filters,false);                
+
+            $(".filter input").change(function () {
+                prepDataLoad();
             });
-            
-            $("#loadMore").click(function(){
+
+            $("#loadMore").click(function () {
                 page = page + 1;
                 selected_filters = updateFilters();
                 var filteredData = filterData(data, selected_filters, page);
-                showData(filteredData,selected_filters,true);                
+                showData(filteredData, selected_filters, true);
             });
-            
-            
 
             
+
+
             
         });
-        
-        
-
         
         
         
