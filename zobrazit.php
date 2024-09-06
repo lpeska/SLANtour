@@ -186,7 +186,7 @@ function maxDiscount($dates) {
     foreach ($dates as $dt) {
         $discounts[] = intval($dt->discount);
     }
-    return max($discounts);
+    return sizeof($discounts) > 0 ? max($discounts) : 0;;
 }
 
 $minPrice = minPrice($dates);

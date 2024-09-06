@@ -342,9 +342,6 @@
 	$(".btn_map, .btn_map_in").on("click", function () {
 		var el = $(this);
 		el.text() == el.data("text-swap") ? el.text(el.data("text-original")) : el.text(el.data("text-swap"));
-		$('html, body').animate({
-			scrollTop: $("body").offset().top +385
-		}, 600);
 	});
 	
 	// Panel Dropdown
@@ -457,65 +454,6 @@
 		}
 	});
 
-	// registration button clicked
-	document.getElementById('registrationForm').addEventListener('submit', function (event) {
-		event.preventDefault(); // Prevent the default form submission
-		const formData = new FormData(this);
-		grecaptcha.ready(function () {
-			grecaptcha.execute('6Len0DIqAAAAAJUiTV-ox-TLQ0pHRxqWTVr7WHaw', { action: 'submit' }).then(function (token) {
-				formData.set('recaptchaToken', token);
-				// Add your logic to submit to your backend server here.
-				
-				const datePicker = $('#registrationDate')[0];
-				const dateId = datePicker[datePicker.value].dataset.dateid;
-				formData.set('zajezdId', dateId);
-
-				const numberOfInterests = document.getElementById('reg1').getAttribute('data-interests');
-				var interestsString = '';
-				for (let index = 1; index <= numberOfInterests; index++) {
-					var interest = formData.get('reg' + index);
-					if (interest) {
-						if (interestsString) {
-							interestsString = interestsString + ", " + interest;
-						} else {
-							interestsString = interest;
-						}
-					}
-
-				}
-				if (interestsString) {
-					var dotazString = 'Mám předběžný zájem o:' + interestsString + ', a chci zaslat konkrétní nabídky, až budou k dispozici.' + "\n" + formData.get('message');
-					formData.set('message', dotazString);
-				}
-				const button = document.getElementById('registrationTour');
-				const spinner = document.querySelector('.spinner');
-
-				button.disabled = true; // Disable the button to prevent multiple submissions
-				spinner.classList.remove('hidden'); // Show the spinner
-				button.firstElementChild.classList.add('hidden');
-				// Send the form data using fetch
-				fetch('/dotaz.php', {
-					method: 'POST',
-					body: formData // Send the FormData object directly
-				})
-					.then(response => response.text()) // or response.json() if expecting JSON response
-					.then(data => {
-						if (data == "OK") {
-							spinner.classList.add('hidden'); // Hide the spinner
-							document.getElementById('registrationForm').style.display = 'none';
-							document.getElementById('registrationSuccess').style.display = 'flex';
-							document.getElementById('registrationError').style.display = 'none';
-						}
-					})
-					.catch(error => {
-						console.error('Error:', error);
-					});
-			});
-		});
-
-
-	});
-
 	// date selected from terminy
 	$('#accordionDates .date_select').click(function (event) {
 		const dateIndex = this.dataset.dateindex;
@@ -539,38 +477,7 @@
 		$('.box_detail.booking').removeClass('target-highlight');
 	}
 
-	// Creating map options
-	var mapOptions = {
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		maxZoom: 18,
-		id: "mapbox/streets-v11",
-		tileSize: 512,
-		zoomOffset: -1,
-		accessToken: "pk.eyJ1IjoibHBlc2thIiwiYSI6ImNrYmx5dGh4cjA3MHMycW1pdHp4Y2ZheGoifQ.e-0fQLJYoUUxsM0X6Z-gxQ"
-	};
-        
-        window.addEventListener("load", function(){
-            var slanyX = 50.230446218120264;
-            var slanyY = 14.082620927422633;
-            var slanyText = 'Cestovní kancelář Slantour';
-
-            var roudniceY = 50.423300;
-            var roudniceX = 14.255568;
-            var roudniceText = 'Prodejna Slantour - Roudnice nad Labem';  
-
-            
-            var mymap = L.map("map_contact").setView([slanyX, slanyY], 15);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              maxZoom: 19,
-              attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(mymap);                  
-
-            var slanyMarker = L.marker([slanyX,slanyY]).addTo(mymap);
-            slanyMarker.bindPopup(slanyText);
-            var roudniceMarker = L.marker([roudniceY,roudniceX]).addTo(mymap);
-            roudniceMarker.bindPopup(roudniceText);
-        });
-
+	
         
 
 })(window.jQuery); 

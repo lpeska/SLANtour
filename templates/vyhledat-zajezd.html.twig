@@ -62,7 +62,7 @@
                         
                         <div class="filter_type" id="price_filter">
                             <h6>Cena</h6>
-                            <!--<input type="text" id="range" name="range" value="">-->
+                            {# <input type="text" id="range" name="range" value=""> #}
                             <div class="price_inputs">
                                 <input class="form-control" type="text" id="range-min">
                                 <span> - </span>
@@ -698,7 +698,7 @@
         }
         
         async function updatePrice(min,max){
-            try{
+        try{
                 updateInputs({from:min, to:max});
                 instance = $range.data("ionRangeSlider");
                 instance.update({
