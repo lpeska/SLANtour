@@ -2002,7 +2002,7 @@ html[xmlns] .flexslider .slides {
   margin: 0 6px;
   display: inline-block;
   zoom: 1;
-  *display: inline;
+  display: inline;
 }
 
 /* Custom theme */
@@ -5802,7 +5802,7 @@ ul.cart_details li span {
 }
 #confirm p {
   font-size: 16px !important;
-  font-size: 16px !important/16pxrem;
+  font-size: 16px !important;
   margin-bottom: 0;
 }
 
