@@ -53,7 +53,16 @@
                                             
                                             <span class="dates">{{ tour.dates }} 
                                                 {% if tour.totalOtherDates > 0 %}
-                                                    <a href="../zajezdy/zobrazit/{{tour.escapedName}}#dates">(+ {{ tour.totalOtherDates }} dalších termínů)</a>
+                                                    <a href="../zajezdy/zobrazit/{{tour.escapedName}}#dates">(+ 
+                                                        {{ tour.totalOtherDates }} 
+                                                        {% if tour.totalOtherDates > 4 %}
+                                                        dalších termínů) 
+                                                        {% elseif tour.totalOtherDates > 1 %}	
+                                                        další termíny)
+                                                        {% else %}
+                                                        další termín)
+                                                        {% endif %} 
+                                                    </a>
                                                 {% endif %}
                                             </span>
                                             
