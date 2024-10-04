@@ -209,7 +209,18 @@
 							alt="{{ typesOfTours[2].name }} - {{ typesOfTours[2].description }}" class="img-fluid">
 						<div class="wrapper">
 							<h2>{{ typesOfTours[2].name }}</h2>
-							<p>{{ typesOfTours[2].numberOfTours }} Zájezdů od {{ typesOfTours[2].priceFrom }} Kč</p>
+							<p>
+								{{ typesOfTours[2].numberOfTours }} 
+								{% if typesOfTours[2].numberOfTours > 4 %}
+								zájezdů 
+								{% elseif typesOfTours[2].numberOfTours > 1 %}	
+								zájezdy
+								{% else %}
+								zájezd
+								{% endif %}
+								
+								od {{ typesOfTours[2].priceFrom }} Kč
+							</p>
 						</div>
 					</a>
 				</div>
@@ -219,7 +230,18 @@
 							alt="{{ typesOfTours[29].name }} - {{ typesOfTours[29].description }}" class="img-fluid">
 						<div class="wrapper">
 							<h2>{{ typesOfTours[29].name }}</h2>
-							<p>{{ typesOfTours[29].numberOfTours }} Zájezdů od {{ typesOfTours[29].priceFrom }} Kč</p>
+							<p>
+								{{ typesOfTours[29].numberOfTours }} 
+								{% if typesOfTours[29].numberOfTours > 4 %}
+								zájezdů 
+								{% elseif typesOfTours[29].numberOfTours > 1 %}	
+								zájezdy
+								{% else %}
+								zájezd
+								{% endif %}
+								
+								od {{ typesOfTours[29].priceFrom }} Kč
+							</p>
 						</div>
 					</a>
 				</div>
@@ -233,7 +255,18 @@
 							alt="{{ typesOfTours[1].name }} - {{ typesOfTours[1].description }}" class="img-fluid">
 						<div class="wrapper">
 							<h2>{{ typesOfTours[1].name }}</h2>
-							<p>{{ typesOfTours[1].numberOfTours }} Zájezdů od {{ typesOfTours[1].priceFrom }} Kč</p>
+							<p>
+								{{ typesOfTours[1].numberOfTours }} 
+								{% if typesOfTours[1].numberOfTours > 4 %}
+								zájezdů 
+								{% elseif typesOfTours[1].numberOfTours > 1 %}	
+								zájezdy
+								{% else %}
+								zájezd
+								{% endif %}
+								
+								od {{ typesOfTours[1].priceFrom }} Kč
+							</p>
 						</div>
 					</a>
 				</div>
@@ -243,7 +276,18 @@
 							alt="{{ typesOfTours[3].name }} - {{ typesOfTours[3].description }}" class="img-fluid">
 						<div class="wrapper">
 							<h2>{{ typesOfTours[3].name }}</h2>
-							<p>{{ typesOfTours[3].numberOfTours }} Zájezdů od {{ typesOfTours[3].priceFrom }} Kč</p>
+							<p>
+								{{ typesOfTours[3].numberOfTours }} 
+								{% if typesOfTours[3].numberOfTours > 4 %}
+								zájezdů 
+								{% elseif typesOfTours[3].numberOfTours > 1 %}	
+								zájezdy
+								{% else %}
+								zájezd
+								{% endif %}
+								
+								od {{ typesOfTours[3].priceFrom }} Kč
+							</p>
 						</div>
 					</a>
 				</div>
@@ -253,7 +297,18 @@
 							alt="{{ typesOfTours[4].name }} - {{ typesOfTours[4].description }}" class="img-fluid">
 						<div class="wrapper">
 							<h2>{{ typesOfTours[4].name }}</h2>
-							<p>{{ typesOfTours[4].numberOfTours }} Zájezdů od {{ typesOfTours[4].priceFrom }} Kč</p>
+							<p>
+								{{ typesOfTours[4].numberOfTours }} 
+								{% if typesOfTours[4].numberOfTours > 4 %}
+								zájezdů 
+								{% elseif typesOfTours[4].numberOfTours > 1 %}	
+								zájezdy
+								{% else %}
+								zájezd
+								{% endif %}
+								
+								od {{ typesOfTours[4].priceFrom }} Kč
+							</p>
 						</div>
 					</a>
 				</div>

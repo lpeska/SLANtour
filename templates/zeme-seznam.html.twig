@@ -53,7 +53,16 @@
 						<img src="{{ country.image }}" class="img-fluid" alt="">
 						<div class="info">
 							<h3>{{country.name}}</h3>
-							{{country.numberOfTours}} zájezdů od {{country.priceFrom}} Kč
+							{{country.numberOfTours}} 
+							{% if country.numberOfTours > 4 %}
+							zájezdů 
+							{% elseif country.numberOfTours > 1 %}	
+							zájezdy
+							{% else %}
+							zájezd
+							{% endif %}
+							
+							od {{country.priceFrom}} Kč
 						</div>
 					</figure>
 				</a>
