@@ -911,3 +911,11 @@ section.main_description ul , ul.list-circle{
     color: red;
     margin-left: 5px;
 }
+
+.clear-icon {
+    cursor: pointer;
+    display: none; /* Initially hidden */
+    position: absolute;
+    right: 0;
+    top: 0;
+}

@@ -32,7 +32,8 @@
                 <div class="custom-search-input-2 inner-2">
                     <div class="form-group">
                         <input class="form-control" type="text" placeholder="Kamkoliv" id="autocomplete" value="{{ txt }}">
-                        <i class="icon_pin_alt"></i>
+                        <i id="whereIcon" class="icon_pin_alt"></i>
+                        <span id="clearIcon" class="clear-icon"><i class="fas fa-x"></i> </span>
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="text" id="datesInput" name="dates" placeholder="Kdykoliv" value="{{ dates }}">
@@ -735,7 +736,31 @@
             let typingTimerTo;
             const typingDelay = 1000;
 
+            const searchField = document.getElementById('autocomplete');
+            const clearIcon = document.getElementById('clearIcon');
+            const whereIcon = document.getElementById('whereIcon');
+
+
+            // Clear the input when the close icon is clicked
+            clearIcon.addEventListener('click', function () {
+                searchField.value = '';
+                clearIcon.style.display = 'none';
+                whereIcon.style.display = 'block';
+
+                $("#autocomplete").trigger('change');
+                searchField.focus(); // Optionally refocus the input field
+            });
+
             $("#autocomplete").on("input", function () {
+
+                if (searchField.value.trim() !== '') {
+                    clearIcon.style.display = 'block';
+                    whereIcon.style.display = 'none';
+                } else {
+                    clearIcon.style.display = 'none';
+                    whereIcon.style.display = 'block';
+                }
+
                 clearTimeout(typingTimerTo);   // Clear the previous timer on each keystroke
                 typingTimerTo = setTimeout(function() {
                     // Code to execute after delay

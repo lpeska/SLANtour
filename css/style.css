@@ -1050,10 +1050,10 @@ ul#top_menu li:last-child {
     margin: 0 0 0 20px;
   }
 }
-ul#top_menu li a {
+ul#top_menu li a, ul#top_menu li a span {
   color: #fff;
 }
-ul#top_menu li a:hover {
+ul#top_menu li a:hover, ul#top_menu li a:hover span {
   color: #fff;
   opacity: 0.7;
 }
@@ -1062,6 +1062,11 @@ ul#top_menu li a:hover {
 }
 .sticky ul#top_menu li a.phone, .sticky ul#top_menu li a.search-header:before {
   color: #444;
+}
+@media (max-width: 575px) {
+  a.phone span {
+    display: none;
+  }
 }
 ul#top_menu li a.login, ul#top_menu li a.search-header {
   display: block;
@@ -2676,7 +2681,7 @@ a#moveDown {
   font-size: 18px;
   font-size: 1.125rem;
   position: absolute;
-  background-color: #fff;
+  /* background-color: #fff; */
   line-height: 50px;
   top: 0;
   right: 1px;
