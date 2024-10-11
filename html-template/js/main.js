@@ -432,14 +432,13 @@
 	$('#orderDate').change(function(){
 		const priceSpan = $('.price .price_span');
 		
-		$('#orderTour')[0].disabled = false;
 		const price = this[this.value].dataset.price;
 		if (price == -1) {
 			priceSpan.text("Vyprodáno!");
-		} else if (price <= 1) {
-			//TODO check for predbezna registrace (currently do nothing)
+			$('#orderTour')[0].disabled = true;
 		} else {
 			priceSpan.text(this[this.value].dataset.price + " Kč");
+			$('#orderTour')[0].disabled = false;
 		}
 	});
 
@@ -450,7 +449,9 @@
 		if (valid) {
 			const datePicker = $('#orderDate')[0];
 			const dateId = datePicker[datePicker.value].dataset.dateid;
-			window.location.href = "https://slantour.cz/objednavka-proces/index.php?page=zobrazit&src_web=slantour.cz&id_zajezd=" + dateId;
+			const persons = $('#orderPerson')[0];
+			const personsNumber = persons.value;
+			window.location.href = "https://slantour.cz/objednavka-proces/index.php?page=zobrazit&src_web=slantour.cz&id_zajezd=" + dateId + "&pocet-osob=" + personsNumber;
 		}
 	});
 
