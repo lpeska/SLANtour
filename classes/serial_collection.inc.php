@@ -612,7 +612,7 @@ class Serial_collection extends Generic_list {
                 if($from[2] == $to[2]){
                     return $from[2].".".$from[1].". ".$from[0];
                 }else{
-                    return $from[2].". - ".$to[2].".".$from[1].". ".$from[0];
+                    return $from[2].".".$from[1].". - ".$to[2].".".$from[1].". ".$from[0];
                 }
             }else{
                 return $from[2].".".$from[1].". - ".$to[2].".".$to[1].". ".$from[0];
