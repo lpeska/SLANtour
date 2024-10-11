@@ -58,7 +58,7 @@ class Seznam_zajezdu extends Generic_list{
                 $dotaz = "select `zajezd`.`id_zajezd`,`zajezd`.`od`,`zajezd`.`nazev_zajezdu`,`zajezd`.`do` ,`zajezd`.`akcni_cena` ,`zajezd`.`cena_pred_akci` 
 					from `serial` join
 					`zajezd` on (`zajezd`.`id_serial` = `serial`.`id_serial`)
-					where `zajezd`.`do` >\"".date("Y-m-d")."\" and `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`id_serial`= ".$this->id_serialu." order by `zajezd`.`od` ";
+					where ((`serial`.`dlouhodobe_zajezdy` = 1 and `zajezd`.`do` >\"".date("Y-m-d")."\") or (`serial`.`dlouhodobe_zajezdy` = 0 and `zajezd`.`od` >\"".date("Y-m-d")."\")) and `zajezd`.`nezobrazovat_zajezd`<>1 and `serial`.`id_serial`= ".$this->id_serialu." order by `zajezd`.`od` ";
 
                 
 	//ziskani zajezdu z databaze	
