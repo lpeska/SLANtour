@@ -596,10 +596,10 @@ class Serial_collection extends Generic_list {
     }
 
     static function get_nazev($radek) {
-        if($radek["id_sablony_zobrazeni"] != 12){
-            return "".$radek["nazev"];
-        }else if ($radek["nazev_ubytovani"]) {
+         if ($radek["id_sablony_zobrazeni"] == 12 && $radek["nazev_ubytovani"]) {
             return $radek["nazev_ubytovani"] . ", " . $radek["nazev"];
+        } else {
+            return "".$radek["nazev"];
         }
     }
 

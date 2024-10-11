@@ -20,10 +20,11 @@ foreach ($zajezdyA as $key => $row) {
     $zajezdyArr[$row["id_zajezd"]] = $row;
 }
 
-//print_r($zajezdyArr);
 $tours = [];
 foreach ($zajezdIDs as $key => $zID) {
     $row = $zajezdyArr[$zID];
+    // print_r($row);
+    // echo "<br><br>";
     if(is_array($row)){
         $trID = $row["doprava"];
         $trText = Serial_library::get_typ_dopravy($row["doprava"]-1);
@@ -111,7 +112,50 @@ foreach ($zajezdIDs as $key => $zID) {
                     
                     );
         } catch(TypeError $e){
-            //echo "wrong tour".$row["id_zajezd"];   
+            // echo "wrong tour ".$row["id_zajezd"];   
+            // echo "<br>";
+            // echo "nazev ". Serial_collection::get_nazev($row);
+            // echo "<br>";
+            // echo "nazev web ".$row["nazev_web"];
+            // echo "<br>";
+            // echo "nazev typ ". $row["nazev_typ"];
+            // echo "<br>";
+            // echo "id zajezd ".$row["id_zajezd"];
+            // echo "<br>";
+            // echo "get dates ".Serial_collection::get_dates($row);
+            // echo "<br>"; 
+            // echo "total dates ".$totalDates; 
+            // echo "<br>";
+            // echo "all dates ".$allDates;
+            // echo "<br>";
+            // echo "min castka ".$row["min_castka"]; // TODO: jedno z tech dvou je spatne, ale mozna se to lisi dle typu slevy... zjistit
+            // echo "<br>";
+            // echo "final sleva ".$row["final_max_sleva"];
+            // echo "<br>";
+            // echo "min castka ".$row["min_castka"];
+            // echo "<br>";
+            // echo "get nights ".Serial_collection::get_nights($row); 
+            // echo "<br>";
+            // echo "get strava ".Serial_library::get_typ_stravy($row["strava"]-1); 
+            // echo "<br>";
+            // echo "get typ dopravy ".Serial_library::get_typ_dopravy($row["doprava"]-1); 
+            // echo "<br>";
+            // echo "get typ ubytovani ".Serial_library::get_typ_ubytovani($row["ubytovani"]-1);  
+            // echo "<br>";           
+            // echo "get dstinace ".Serial_collection::get_destinace($row);
+            // echo "<br>";
+            // echo "foto url "."//slantour.cz/foto/full/".$row["foto_url"]; 
+            // echo "<br>";
+            // echo "featuress ".$features; 
+            // echo "<br>";
+            // echo "get desc ".Serial_collection::get_description($row);
+            // echo "<br>";
+            // echo "registrace ".$predbeznaRegistrace;
+            // echo "<br>";
+            // echo "posX ".$posX . $pos;
+            // echo "<br>";
+            // print_r($e);
+            // echo "<br><br>";
             //tohle by melo zachytit spatne vyplnene zajezdy
         }
     }
