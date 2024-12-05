@@ -4115,6 +4115,12 @@ a.grid_item:hover figure img {
   font-size: 0.8125rem;
 }
 
+
+#filters_col a:first-of-type {
+  border: none; /* Remove the border */
+  padding-top: 0;
+}
+
 a#filters_col_bt,a#katalog_col_bt {
   display: block;
   color: #333;
@@ -4133,6 +4139,35 @@ a#filters_col_bt:before,a#katalog_col_bt:before {
   top: 0;
   line-height: 1;
   font-weight: normal;
+}
+
+a.filter_type_header {
+  display: block;
+  color: #333;
+  border-top: 1px solid #ededed;
+  position: relative;
+  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+a.filter_type_header:before {
+  font-family: "ElegantIcons";
+  content: "\32";
+  font-size: 26px;
+  font-size: 1.625rem;
+  position: absolute;
+  right: 0;
+  top: 10;
+  line-height: 1;
+  font-weight: normal;
+}
+
+a.filter_type_header.collapsed:before {
+  font-family: "ElegantIcons";
+  content: "\33";
 }
 
 .filter_type h6 {

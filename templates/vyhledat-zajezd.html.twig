@@ -43,167 +43,150 @@
                 </div>
                 <!-- /custom-search-input-2 -->
                 <div id="filters_col">
-                    <a data-toggle="collapse" href="#collapseKatalog" aria-expanded="false"
-                        aria-controls="collapseKatalog" id="katalog_col_bt">Katalog zájezdů</a>
-                    <div class="collapse show" id="collapseKatalog">
                     
-                        <div class="filter_type" id="katalog_filter">                            
-                            <ul>
-                                {% for key_zeme,zeme in katalog %}
-                                    <li class="katalog_zeme" id="katalog_zeme_{{zeme|first|first.id_zeme}}">{{ key_zeme }}
-                                        
-                                        <ul>
-                                            {% for key_destinace,destinace in zeme %}
-                                                {% if destinace|first.id_destinace > 0 %}                                                
-                                                    <li class="katalog_destinace" id="katalog_destinace_{{destinace|first.id_destinace}}">{{ key_destinace }} 
-                                                {% else %}
-                                                    <li>
-                                                {% endif %}
-                                                    <ul>
-                                                        {% for ubyt in destinace %}
-                                                            <li class="katalog_objekt" id="katalog_objekt_{{ubyt.id_final}}">
-                                                                <img src="{{ubyt.foto_url}}" title="{{ubyt.nazev_final}}" width="30" style="float:left;clear:left">
-                                                                <label class="container_check filter" id="katalogFilter_{{ubyt.id_final}}">{{ubyt.nazev_final}}
-                                                                <input type="checkbox"> 
-                                                                <span class="checkmark"></span>
-                                                                </label>
-                                                            </li>
-                                                        {% endfor %}    
-                                                    </ul>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div> 
-                    
+                    <a data-toggle="collapse" href="#tour_type_filter" aria-expanded="false" aria-controls="tour_type_filter" class="filter_type_header">Typ Zájezdu</a>
+                    <div class="filter_type collapse show" id="tour_type_filter">
+                        <ul>
+                            {% for tourType in types %}
+                            <li>
+                                <label class="container_check filter" id="tourTypeFilter_{{tourType.id}}">{{tourType.name}} <small>(0)</small>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                    <!--/collapse -->
                     
-                    
-                    <a data-toggle="collapse" href="#collapseFilters" aria-expanded="false"
-                        aria-controls="collapseFilters" id="filters_col_bt">Filtrování zájezdů </a>
-                    <div class="collapse show" id="collapseFilters">
+                    <a data-toggle="collapse" href="#price_filter" aria-expanded="false" aria-controls="price_filter" class="filter_type_header">Cena</a>
+                    <div class="filter_type collapse show" id="price_filter">
+                        <input type="text" id="range" name="range" value="">
+                        <div class="price_inputs">
+                            <input class="form-control" type="text" id="range-min">
+                            <span> - </span>
+                            <input class="form-control" type="text" id="range-max">
 
-                        <div class="filter_type" id="tour_type_filter">
-                            <h6>Typ Zájezdu</h6>
-                            <ul>
-                                {% for tourType in types %}
-                                <li>
-                                    <label class="container_check filter" id="tourTypeFilter_{{tourType.id}}">{{tourType.name}} <small>(0)</small>
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </li>
-                                {% endfor %}
-                            </ul>
                         </div>
-                                                          
-                        
-                        <div class="filter_type" id="price_filter">
-                            <h6>Cena</h6>
-                            <input type="text" id="range" name="range" value="">
-                            <div class="price_inputs">
-                                <input class="form-control" type="text" id="range-min">
-                                <span> - </span>
-                                <input class="form-control" type="text" id="range-max">
-
-                            </div>
-                        </div>
-
-                        <div class="filter_type" id="transport_filter">
-                            <h6>Doprava</h6>
-                            <ul>
-                                {% for key,transport in transports %}
-                                <li>
-                                    <label class="container_check filter" id="transportFilter_{{key}}">{{transport}} <small>(0)</small>
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        
-                        <div class="filter_type" id="food_filter">
-                            <h6>Strava</h6>
-                            <ul>
-                                {% for key,food in foods %}
-                                <li>
-                                    <label class="container_check filter" id="foodFilter_{{key}}">{{food}} <small>(0)</small>
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-
-                        <div class="filter_type" id="tour_length_filter">
-                            <h6>Délka pobytu</h6>
-                            <ul>
-                                {% for key,len in tourLengths %}
-                                <li>
-                                    <label class="container_check filter" id="durGroupFilter_{{key}}">{{len}} <small>(0)</small>
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        
-                            <!--
-                        <div class="filter_type" id="sales_filter">
-                            <h6>Akce a slevy</h6>
-                            <ul>
-                                {% for key,sale in sales %}
-                                <li>
-                                    <label class="container_check" id="akceFilter_{{key}}">{{sale}} <small>(0)</small>
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                            -->
-                        
-                            
-                        <div class="filter_type" id="country_filter">
-                            <h6>Cílová země</h6>
-                            <ul>
-                                {% for key,zeme in countries %}
-                                <li>
-                                    <label class="container_check filter" id="countryFilter_{{key}}">{{zeme.nazev}} <small>(0)</small>
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                            
-                        <div class="filter_type" id="country_filter">
-                            <h6>Tematické zájezdy</h6>
-                            <ul>
-                                {% for key,sport in sports %}
-                                <li>
-                                    <label class="container_check filter" id="countryFilter_{{key}}">{{sport.nazev}} <small>(0)</small>
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>    
-                            
-
-                            
-                        
                     </div>
-                    <!--/collapse -->
+
+                    <a data-toggle="collapse" href="#transport_filter" aria-expanded="false" aria-controls="transport_filter" class="filter_type_header">Doprava</a>
+                    <div class="filter_type collapse show" id="transport_filter">
+                        <ul>
+                            {% for key,transport in transports %}
+                            <li>
+                                <label class="container_check filter" id="transportFilter_{{key}}">{{transport}} <small>(0)</small>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <a data-toggle="collapse" href="#food_filter" aria-expanded="false" aria-controls="food_filter" class="filter_type_header">Strava</a>
+                    <div class="filter_type collapse" id="food_filter">
+                        <ul>
+                            {% for key,food in foods %}
+                            <li>
+                                <label class="container_check filter" id="foodFilter_{{key}}">{{food}} <small>(0)</small>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <a data-toggle="collapse" href="#tour_length_filter" aria-expanded="false" aria-controls="tour_length_filter" class="filter_type_header">Délka pobytu</a>
+                    <div class="filter_type collapse" id="tour_length_filter">
+                        <ul>
+                            {% for key,len in tourLengths %}
+                            <li>
+                                <label class="container_check filter" id="durGroupFilter_{{key}}">{{len}} <small>(0)</small>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                        <!--
+                    <a data-toggle="collapse" href="#sales_filter" aria-expanded="false" aria-controls="sales_filter" class="filter_type_header">Akce a slevy</a>
+                    <div class="filter_type collapse show" id="sales_filter">
+                        <ul>
+                            {% for key,sale in sales %}
+                            <li>
+                                <label class="container_check" id="akceFilter_{{key}}">{{sale}} <small>(0)</small>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                        -->
+                    
+                    <a data-toggle="collapse" href="#country_filter" aria-expanded="false" aria-controls="country_filter" class="filter_type_header">Cílová země</a>
+                    <div class="filter_type collapse show" id="country_filter"> 
+                        <ul>
+                            {% for key,zeme in countries %}
+                            <li>
+                                <label class="container_check filter" id="countryFilter_{{key}}">{{zeme.nazev}} <small>(0)</small>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                        
+                    <a data-toggle="collapse" href="#country_filter_special" aria-expanded="false" aria-controls="country_filter_special" class="filter_type_header">Tematické zájezdy</a>
+                    <div class="filter_type collapse" id="country_filter_special">
+                        <ul>
+                            {% for key,sport in sports %}
+                            <li>
+                                <label class="container_check filter" id="countryFilter_{{key}}">{{sport.nazev}} <small>(0)</small>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>    
+
+                    <a data-toggle="collapse" href="#katalog_filter" aria-expanded="false" aria-controls="katalog_filter" class="filter_type_header">Ubytování</a>
+                    <div class="filter_type collapse" id="katalog_filter">
+                        <ul>
+                            {% for key_zeme,zeme in katalog %}
+                                <li class="katalog_zeme" id="katalog_zeme_{{zeme|first|first.id_zeme}}">{{ key_zeme }}
+                                    
+                                    <ul>
+                                        {% for key_destinace,destinace in zeme %}
+                                            {% if destinace|first.id_destinace > 0 %}                                                
+                                                <li class="katalog_destinace" id="katalog_destinace_{{destinace|first.id_destinace}}">{{ key_destinace }} 
+                                            {% else %}
+                                                <li>
+                                            {% endif %}
+                                                <ul>
+                                                    {% for ubyt in destinace %}
+                                                        <li class="katalog_objekt" id="katalog_objekt_{{ubyt.id_final}}">
+                                                            {# <img src="{{ubyt.foto_url}}" title="{{ubyt.nazev_final}}" width="30" style="float:left;clear:left"> #}
+                                                            <label class="container_check filter" id="katalogFilter_{{ubyt.id_final}}">{{ubyt.nazev_final}}
+                                                            <input type="checkbox"> 
+                                                            <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                    {% endfor %}    
+                                                </ul>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div> 
+                            
                 </div>
                 <!--/filters col-->
             </aside>
@@ -649,10 +632,16 @@
                    $("#"+prefix+"_"+el.key+" input").prop("checked",true)  
                 }
                 if(el.doc_count <= 0){
+                    if(prefix == "countryFilter"){
+                        $("#"+prefix+"_"+el.key).css("display","none");
+                    }
                     $("#"+prefix+"_"+el.key).css("font-style","italic");
                     $("#"+prefix+"_"+el.key).css("color","grey");
                     $("#"+prefix+"_"+el.key+" input").prop("disabled",true)                    
                 }else{
+                    if(prefix == "countryFilter"){
+                        $("#"+prefix+"_"+el.key).css("display","block");
+                    }
                     $("#"+prefix+"_"+el.key).css("font-style","");
                     $("#"+prefix+"_"+el.key).css("color","");
                     $("#"+prefix+"_"+el.key+" input").prop("disabled",false)                    

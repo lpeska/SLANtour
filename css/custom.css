@@ -777,6 +777,7 @@ figure .price_discount_tag {
     display: flex;
     align-items: center;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .price_inputs input {
