@@ -10,8 +10,16 @@ require_once "./classes/serial_collection.inc.php"; //seznam serialu
 require_once "./classes/loadDataTwig.inc.php"; //funkce na nacitani zajezdu, menu a classes
 $tourTypes = getAllTourTypes();
 $countriesMenu = getCountriesMenu();
+
+
 $serialCol = new Serial_collection();
 
+#get all possible katalog menu fragments - based on ubytovani
+$katalog = getKatalogMenu();
+$jsonKatalog = json_encode($katalog);
+#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+file_put_contents("data_katalog.json",$jsonKatalog,LOCK_EX);
+unset($jsonKatalog);
 
 
 #get portion of data with zajezdy_group
@@ -23,6 +31,8 @@ file_put_contents("data_group.json",$jsonDataZG,LOCK_EX);
 unset($jsonDataZG);
 
 #get portion of data with zajezdy
+/*
+
 $resZ = $serialCol->get_zajezdy_base();
 $zajezdyArr = mysqli_fetch_all($resZ, MYSQLI_ASSOC);
 $jsonDataZ = json_encode($zajezdyArr);
@@ -30,6 +40,7 @@ $jsonDataZ = json_encode($zajezdyArr);
 file_put_contents("data.json",$jsonDataZ,LOCK_EX);
 unset($jsonDataZ);
 
+*/
 
 
 //$resZZ = $serialCol->get_main_zeme_serial();
@@ -78,6 +89,8 @@ unset($jsonDataT);
 //echo memory_get_peak_usage(true)."/".memory_get_usage(true)."\n";
 
 
+
+
 $res = $serialCol->get_all_zeme();
 $zemeDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
 $countries = [];
@@ -114,11 +127,32 @@ file_put_contents("destinace.json",$jsonData,LOCK_EX);
 
 */
 
+//print_r($countriesMenu);
+
+
+
+
+
 # process zajezdyArr to get initial statistics on all available data
-$tours = [];
-foreach ($zajezdyArr as $key => $zajezdIdx) {
+
+$katalog_hier_restr = [];
+$last_id = 0;
+foreach ($katalog as $key => $kItem) {
+    if(!array_key_exists($kItem["nazev_zeme"], $katalog_hier_restr)){
+        $katalog_hier_restr[$kItem["nazev_zeme"]] = [];    
+    }
+    if(!array_key_exists($kItem["nazev_destinace"], $katalog_hier_restr[$kItem["nazev_zeme"]])){
+        $katalog_hier_restr[$kItem["nazev_zeme"]][$kItem["nazev_destinace"]] = []; 
+    }
     
+    if($last_id != $kItem["id_final"]){
+       $last_id = $kItem["id_final"]; 
+       $katalog_hier_restr[$kItem["nazev_zeme"]][$kItem["nazev_destinace"]][] = $kItem;        
+    }
 }
+
+//print_r($katalog_hier_restr);
+
 
 $initFilters = array();
 $keywords = array("txt","dates","minPrice","maxPrice");
@@ -185,6 +219,7 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
     'tourLengths' => array("variabilni"=>'Variabilní', "jednodenni"=>'Jednodenní', "1-5noci"=>'1-5 nocí', "6-10noci"=>'6-10 nocí', "nad10noci"=>">10 nocí"),
     'tours' => array(
       ),
+    'katalog' => $katalog_hier_restr,
     'breadcrumbs' => array(
         new Breadcrumb('Zájezdy', '../vyhledat-zajezd.php')
     ),

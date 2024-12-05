@@ -4115,7 +4115,7 @@ a.grid_item:hover figure img {
   font-size: 0.8125rem;
 }
 
-a#filters_col_bt {
+a#filters_col_bt,a#katalog_col_bt {
   display: block;
   color: #333;
   position: relative;
@@ -4123,7 +4123,7 @@ a#filters_col_bt {
   font-size: 1rem;
   font-weight: 600;
 }
-a#filters_col_bt:before {
+a#filters_col_bt:before,a#katalog_col_bt:before {
   font-family: "ElegantIcons";
   content: "\66";
   font-size: 26px;

@@ -269,6 +269,18 @@ function getCountriesMenu()
     return new CountryMenu($countries, $euCount, $worldCount, $sportCount);
 }
 
+
+
+function getKatalogMenu()
+{
+    /*Loading countries*/
+    $menu = new Menu_katalog("dotaz_zeme_destinace_ubytovani", "", "", "");
+    $katalogDB = $menu->get_allRows();
+    return $katalogDB;
+}
+
+
+
 function getSportCountries()
 {
     $menuSport = new Menu_katalog("dotaz_sport_list", "", "", ""); 

@@ -43,8 +43,47 @@
                 </div>
                 <!-- /custom-search-input-2 -->
                 <div id="filters_col">
+                    <a data-toggle="collapse" href="#collapseKatalog" aria-expanded="false"
+                        aria-controls="collapseKatalog" id="katalog_col_bt">Katalog zájezdů</a>
+                    <div class="collapse show" id="collapseKatalog">
+                    
+                        <div class="filter_type" id="katalog_filter">                            
+                            <ul>
+                                {% for key_zeme,zeme in katalog %}
+                                    <li class="katalog_zeme" id="katalog_zeme_{{zeme|first|first.id_zeme}}">{{ key_zeme }}
+                                        
+                                        <ul>
+                                            {% for key_destinace,destinace in zeme %}
+                                                {% if destinace|first.id_destinace > 0 %}                                                
+                                                    <li class="katalog_destinace" id="katalog_destinace_{{destinace|first.id_destinace}}">{{ key_destinace }} 
+                                                {% else %}
+                                                    <li>
+                                                {% endif %}
+                                                    <ul>
+                                                        {% for ubyt in destinace %}
+                                                            <li class="katalog_objekt" id="katalog_objekt_{{ubyt.id_final}}">
+                                                                <img src="{{ubyt.foto_url}}" title="{{ubyt.nazev_final}}" width="30" style="float:left;clear:left">
+                                                                <label class="container_check filter" id="katalogFilter_{{ubyt.id_final}}">{{ubyt.nazev_final}}
+                                                                <input type="checkbox"> 
+                                                                <span class="checkmark"></span>
+                                                                </label>
+                                                            </li>
+                                                        {% endfor %}    
+                                                    </ul>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div> 
+                    
+                    </div>
+                    <!--/collapse -->
+                    
+                    
                     <a data-toggle="collapse" href="#collapseFilters" aria-expanded="false"
-                        aria-controls="collapseFilters" id="filters_col_bt">Filters </a>
+                        aria-controls="collapseFilters" id="filters_col_bt">Filtrování zájezdů </a>
                     <div class="collapse show" id="collapseFilters">
 
                         <div class="filter_type" id="tour_type_filter">
@@ -60,6 +99,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                                                          
                         
                         <div class="filter_type" id="price_filter">
                             <h6>Cena</h6>
@@ -226,6 +266,9 @@
             var t_res = await fetch('tour_types.json');
             var t = await t_res.json();
             
+            var k_res = await fetch('data_katalog.json');
+            var k = await k_res.json();
+            
             var sv_res = await fetch('sales_vol.json');
             var sv = await sv_res.json();
             /*var res = await fetch('data_group.json');*/                     
@@ -269,8 +312,10 @@
                 }
                 
                 if (sd[sID]!= undefined){
+                    data[index].dId = sd[sID]["dId"]
                     data[index].dName = sd[sID]["dName"];
-                }else{
+                }else{                    
+                    data[index].dId = -1;
                     data[index].dName = [""];
                 }
                 
@@ -391,8 +436,8 @@
         }
         
                                               
-        async function filterData(data, selected_filters, page){
-            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
+        async function filterData(data, selected_filters, page, resultsPerPage=20){
+            var filters = {countryFilter:[],katalogFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
                 if(arr.length >= 2){
@@ -403,7 +448,8 @@
                     
             
             });
-            classFilters = {}
+            var classFilters = {}
+            var katalogFilters = {}
             if( filters.tourTypeFilter.length >0){
                 classFilters["id_typ"] = filters.tourTypeFilter;
             }
@@ -419,6 +465,9 @@
             }
             if( filters.countryFilter.length >0){
                 classFilters["country"] = filters.countryFilter;
+            }   
+            if( filters.katalogFilter.length >0){
+                katalogFilters = filters.katalogFilter;
             }            
             
             var sortParamInput = $('input[name="listing_filter"]:checked').val();
@@ -514,7 +563,7 @@
                         
                         return ijs.search(                                      
                                 {
-                                    per_page: 20,
+                                    per_page: resultsPerPage,
                                     page: page,
                                     sort: sortPar,
                                     query: (typeof filters.txt[0] !== "undefined")? filters.txt[0].normalize("NFD").replace(/[\u0300-\u036f]/g, ""):"",
@@ -524,12 +573,20 @@
                                         var dates = $("#datesInput").val();
                                         var priceCheck = 1;
                                         var datesCheck = 1;
+                                        var katalogCheck = 1;
                                         var filteredZajezd = item.zajezdData
+                                        
+                                        //katalog filter
+                                        
+                                        if(katalogFilters.length>0){
+                                            katalogCheck = Math.max(...[katalogFilters.includes(item.id_serial),katalogFilters.includes(item.id_objektu)]);    
+                                        }
+                                        //price filter
                                         if((typeof filters.minPrice[0] !== "undefined") && (typeof filters.maxPrice[0] !== "undefined") && parseInt(filters.minPrice[0]) > 0 && parseInt(filters.maxPrice[0]) > 0){
                                             let minP = parseInt(filters.minPrice[0]);
                                             let maxP = parseInt(filters.maxPrice[0]);
-                                            priceCheck = item.zajezdData.some((x) => x[2] >= minP && x <= maxP);
-                                            filteredZajezd = filteredZajezd.filter((x) => x[2] >= minP && x <= maxP);
+                                            priceCheck = item.zajezdData.some((x) => x[2] >= minP && x[2] <= maxP);
+                                            filteredZajezd = filteredZajezd.filter((x) => x[2] >= minP && x[2] <= maxP);
                                             
                                             
                                         }else if((typeof filters.minPrice[0] !== "undefined") && parseInt(filters.minPrice[0]) > 0){
@@ -546,6 +603,7 @@
                                             filteredZajezd = filteredZajezd.filter((x) => x[2] <= maxP);
                                         }  
                                         
+                                        //dates filter
                                         if(dates != ""){
                                             //add dates filter
                                             var datesArr = dates.split(" > ");
@@ -564,7 +622,7 @@
                                                 
                                             } 
                                         }
-                                        if(filteredZajezd.length > 0){
+                                        if(filteredZajezd.length > 0 && katalogCheck){
                                             return true;
                                         }else{
                                             return false;
@@ -636,8 +694,66 @@
         }  
         
         
-        async function showData(filteredData,selected_filters,append){ 
-            var filters = {countryFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
+
+        
+        async function updateKatalog(fd){
+
+            var fdRes = await fd;
+            var serialIDs = new Set([...fdRes.data.items.map(item => item.id_serial)].flat(Infinity));
+            var ubytIDs = new Set([...fdRes.data.items.map(item => item.id_objektu)].flat(Infinity));
+            var zemeIDs = new Set([...fdRes.data.items.map(item => item.country)].flat(Infinity));
+            var destinaceIDs = new Set([...fdRes.data.items.map(item => item.dId)].flat(Infinity));
+            
+            var katTours = $(".katalog_zeme");
+            katTours.each((index, k) => {
+                let zemeID = $(k).attr("id").split("_")[2];
+                if(zemeIDs.has(zemeID)){
+                    //v soucasnych vysledcich se nachazi aktualni ubytko
+                    $(k).show();
+                }else{
+                    $(k).hide();
+                }
+                
+            });
+            
+            var katTours = $(".katalog_destinace");
+            katTours.each((index, k) => {
+                let destinaceID = $(k).attr("id").split("_")[2];
+                if(destinaceIDs.has(destinaceID)){
+                    //v soucasnych vysledcich se nachazi aktualni ubytko
+                    $(k).show();
+                }else{
+                    $(k).hide();
+                }
+                
+            });
+            
+            var totalMenuItems = 0;
+            var katTours = $(".katalog_objekt");
+            katTours.each((index, k) => {
+                let ubytID = $(k).attr("id").split("_")[2];
+                if(ubytIDs.has(ubytID) || serialIDs.has(ubytID)){
+                    //v soucasnych vysledcich se nachazi aktualni ubytko
+                    $(k).show();
+                    totalMenuItems += 1;
+                }else{
+                    $(k).hide();
+                }
+                
+            }); 
+            
+            if(totalMenuItems > 30){
+                $("#collapseKatalog").removeClass("show");
+            }
+            
+            if(totalMenuItems < 20){
+                $("#collapseKatalog").addClass("show");
+            }
+        }  
+        
+        
+        async function showData(filteredData,filteredDataNoKatalog,selected_filters,append){ 
+            var filters = {countryFilter:[],katalogFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
             selected_filters.forEach(f => {
                 let arr = f.split("_");
                 if(arr.length >= 2){
@@ -648,6 +764,12 @@
             
             });
             
+            filteredDataNoKatalog.then(fdnk => 
+            {
+                    updateKatalog(fdnk);                    
+                    console.dir(fdnk);
+            });  
+            
             filteredData.then(fd => 
             {
                 fd.data.aggregations.strava.buckets.forEach(el => updateEnumElement(el,"foodFilter"));
@@ -655,10 +777,12 @@
                 fd.data.aggregations.id_typ.buckets.forEach(el => updateEnumElement(el,"tourTypeFilter"));
                 fd.data.aggregations.durGroup.buckets.forEach(el => updateEnumElement(el,"durGroupFilter"));
                 fd.data.aggregations.country.buckets.forEach(el => updateEnumElement(el,"countryFilter"));
+                    
                 //updatePrice(filters.minPrice,filters.maxPrice);
                 updateTextSearch(filters.txt);
                 updateTotalTours(fd.pagination.total);
                 console.dir(fd);
+                 
                 
                 //load corresponding data and show them on appropriate location
                 var dataAnchor = $("#tours_container");
@@ -710,8 +834,14 @@
         $(function(){
             
             var data = getData();
-            var filteredData = filterData(data,selected_filters, page);
-            showData(filteredData,selected_filters,false);
+            var selected_filters_noKatalog = selected_filters.filter((filter) => 1-filter.startsWith("katalogFilter_"));
+            var filteredDataNoKatalog = filterData(data,selected_filters_noKatalog, page, 10000);
+            
+            var filteredData = filterData(data,selected_filters, page, 20);                        
+            
+            showData(filteredData, filteredDataNoKatalog, selected_filters,false);
+            
+            
             
             /*setInterval(function(){
                 var newFilters = updateFilters();
@@ -729,8 +859,12 @@
                 page = 1;
                 console.log("prepDataLoad");
                 selected_filters = updateFilters();
-                var filteredData = filterData(data, selected_filters, page);
-                showData(filteredData, selected_filters, false);
+                
+                var selected_filters_noKatalog = selected_filters.filter((filter) => 1-filter.startsWith("katalogFilter_"));
+                var filteredDataNoKatalog = filterData(data,selected_filters_noKatalog, page, 10000);
+                
+                var filteredData = filterData(data, selected_filters, page, 20);
+                showData(filteredData, filteredDataNoKatalog, selected_filters,false);
             }
 
             let typingTimerTo;
@@ -788,8 +922,12 @@
             $("#loadMore").click(function () {
                 page = page + 1;
                 selected_filters = updateFilters();
-                var filteredData = filterData(data, selected_filters, page);
-                showData(filteredData, selected_filters, true);
+
+                var selected_filters_noKatalog = selected_filters.filter((filter) => 1-filter.startsWith("katalogFilter_"));
+                var filteredDataNoKatalog = filterData(data,selected_filters_noKatalog, page, 10000); 
+        
+                var filteredData = filterData(data, selected_filters, page, 20);                            
+                showData(filteredData, filteredDataNoKatalog, selected_filters, true);
             });
 
             

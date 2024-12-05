@@ -71,6 +71,40 @@ class Menu_katalog extends Generic_list{
 	/** vytvoreni dotazu ze zadaneho nazvu typu a zeme*/
 	function create_query($typ=""){
 		//funkce vytvori vsechny radky menu na jeden dotaz, do nej jsou pridavany tabulky podle toho, ktere parametry dostavame
+            if($typ=="dotaz_zeme_destinace_ubytovani"){                    
+			//mam nazev zeme i typu
+				$dotaz="
+					SELECT DISTINCT `foto`.`foto_url`,
+                                                        `destinace_serial`.`id_destinace` , `destinace`.`nazev_destinace`,
+                                                        `zeme`.`id_zeme`, `zeme`.`nazev_zeme`,
+                                                        `serial`.`id_typ`,`serial`.`id_serial`,`serial`.`nazev`,
+                                                        `objekt`.`id_objektu`, `objekt`.`nazev_objektu` as `nazev_ubytovani`
+					FROM 
+                                            `zeme`
+                                            join `zeme_serial` on (`zeme_serial`.`id_zeme` = `zeme`.`id_zeme` AND `zeme_serial`.`zakladni_zeme` =1)
+
+                                            join `serial` on (`serial`.`id_serial` = `zeme_serial`.`id_serial`  and `serial`.`nezobrazovat`<>1)
+                                            join `zajezd` ON ( `serial`.`id_serial` = `zajezd`.`id_serial` and `zajezd`.`nezobrazovat_zajezd`<>1 and  (`zajezd`.`od` >=\"".Date("Y-m-d")."\" or (`serial`.`dlouhodobe_zajezdy`=1 and `zajezd`.`do` >=\"".Date("Y-m-d")."\") ) )                                           
+                                                
+                                            left join (
+                                                `destinace` 
+                                                join `destinace_serial` on (`destinace_serial`.`id_destinace` = `destinace`.`id_destinace` AND `destinace_serial`.`polozka_menu` =1)
+                                            ) ON ( `zeme`.`id_zeme` = `destinace`.`id_zeme` and `serial`.`id_serial` = `destinace_serial`.`id_serial`)
+
+                                            left join
+                                                (`objekt_serial` join
+                                                 `objekt` on (`objekt`.`typ_objektu`= 1 and `objekt`.`id_objektu` = `objekt_serial`.`id_objektu`) join
+                                                 `objekt_ubytovani` on (`objekt`.`id_objektu` = `objekt_ubytovani`.`id_objektu`)
+                                                 ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial`)
+                                            left join 
+                                                (`foto_serial` join `foto` on (`foto_serial`.`id_foto` = `foto`.`id_foto` and `foto_serial`.`zakladni_foto` = 1)
+                                                )on (`foto_serial`.`id_serial` = `serial`.`id_serial`)
+
+					ORDER BY `zeme`.`nazev_zeme`, `destinace`.`nazev_destinace`, `nazev_ubytovani`, serial.nazev
+					";
+                               // echo $dotaz;
+                return $dotaz;
+            }
 		if($this->typ!=""){
 			//ziskam id typu serialu
 			$dotaz_typ= "select `id_typ` from `typ_serial` where `nazev_typ_web`=\"".$this->typ."\"";
@@ -112,7 +146,9 @@ class Menu_katalog extends Generic_list{
 					ORDER BY `destinace`.`nazev_destinace`
 					";
                                // echo $dotaz;
-        }else if($id_zeme!="" and $typ=="dotaz_destinace_serial"){
+                
+                                
+                }else if($id_zeme!="" and $typ=="dotaz_destinace_serial"){
                        if($id_typ != ""){
                         $where_typ = " AND `serial`.`id_typ` =".$id_typ."";
                     }else{
@@ -611,6 +647,26 @@ class Menu_katalog extends Generic_list{
 		//echo $dotaz;
 		return $dotaz;
 	}		  
+        
+
+        function get_allRows(){
+            $ret = [];
+            while($this->get_next_radek()){
+                $this->radek["foto_url"] = "https://slantour.cz/foto/ico/".$this->radek["foto_url"];
+                
+                if($this->radek["id_typ"] == 3 or $this->radek["id_typ"] == 7 or $this->radek["id_typ"] == 29){
+                   $this->radek["nazev_final"] = $this->radek["nazev_ubytovani"] ;
+                   $this->radek["id_final"] = $this->radek["id_objektu"]; 
+                }else{
+                   $this->radek["nazev_final"] = $this->radek["nazev"] ;
+                   $this->radek["id_final"] = $this->radek["id_serial"];  
+                }
+                    
+                    
+                $ret[] = $this->radek;  
+            }
+            return $ret;
+        }         
         
         function get_zeme_list(){
             $ret = [];

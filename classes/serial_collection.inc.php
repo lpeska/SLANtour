@@ -220,7 +220,7 @@ class Serial_collection extends Generic_list {
         $query = 
                 "select 
                     `serial`.`id_serial`,`serial`.`id_typ`,`serial`.`dlouhodobe_zajezdy`,`serial`.`nazev`,`serial`.`strava`,`serial`.`doprava`,`serial`.`ubytovani`,
-                    `objekt_ubytovani`.`nazev_ubytovani`,
+                    `objekt_ubytovani`.`nazev_ubytovani`,`objekt_ubytovani`.`id_objektu`,
                     concat(\"[\",GROUP_CONCAT( `zajezd`.`id_zajezd` ORDER BY `zajezd`.`id_zajezd` SEPARATOR ','),\"]\")  as `id_zajezd`, 
                     GROUP_CONCAT( `zajezd`.`od` ORDER BY `zajezd`.`id_zajezd` SEPARATOR ',')  as `od` ,
                     GROUP_CONCAT( `zajezd`.`do` ORDER BY `zajezd`.`id_zajezd` SEPARATOR ',')  as `do` ,

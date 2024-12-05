@@ -192,6 +192,15 @@
 			$('.collapse#collapseFilters').addClass('show');
 		};
 	});
+        
+	$(window).bind('load resize', function () {
+		var width = $(window).width();
+		if ($(this).width() < 991) {
+			$('.collapse#collapseKatalog').removeClass('show');
+		} else {
+			$('.collapse#collapseKatalog').addClass('show');
+		};
+	});        
 	
 	//Scroll to top
 	$(window).on('scroll', function () {
