@@ -221,7 +221,7 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
       ),
     'katalog' => $katalog_hier_restr,
     'breadcrumbs' => array(
-        new Breadcrumb('Zájezdy', '../vyhledat-zajezd.php')
+        new Breadcrumb('Vyhledat zájezdy', '../vyhledat-zajezd.php')
     ),
     'dates' => $filter_dates,
     'txt' => $filter_txt,

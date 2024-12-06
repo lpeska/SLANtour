@@ -4189,6 +4189,34 @@ a.filter_type_header.collapsed:before {
   margin-bottom: 0;
 }
 
+#katalog_filter li.katalog_zeme ul {
+  margin-bottom: 0;
+}
+
+#filters_col li.katalog_zeme span {
+  font-size: 15px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+#filters_col label.destinace {
+  font-size: 13px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+#filters_col .katalog_destinace {
+  margin-top: 10px;
+}
+
+.filter_type ul.ubyt {
+  margin-left: 30px;
+}
+
+/* 
+.filter_type li.no_destinace ul.ubyt {
+  margin-left: 0;
+} */
+
 a.boxed_list {
   text-align: center;
   padding: 30px;

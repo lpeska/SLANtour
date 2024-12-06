@@ -674,7 +674,13 @@ $(function(){
         prepDataLoad();
     });
 
-    $(".filter input").change(function () {
+    $(".destinace input").change(function () {
+        var checked = this.checked;
+        var destinace = this.closest('.katalog_destinace');
+        $(destinace).find('ul.ubyt input').each(function () {
+            // Perform an action on each input
+            $(this).prop("checked", checked);
+        });
         prepDataLoad();
     });
 
