@@ -130,6 +130,7 @@ function updateFilters(){
     selected_filters.push("txt_"+$("#autocomplete").val());
     selected_filters.push("minPrice_"+removeCurrency($("#range-min").val()));
     selected_filters.push("maxPrice_"+removeCurrency($("#range-max").val()));
+    selected_filters.push("dates_"+$("#datesInput").val());
     
     return selected_filters;
 }
@@ -448,8 +449,144 @@ async function updateTotalTours(toursVolume){
     }            
 }  
 
+async function updateFilterWidgets(filters) {
+    const widget = document.getElementById('selected-filters-widget');
+    const filtersList = document.getElementById('filters-list');
 
+    // Clear the current list to avoid duplicates
+    filtersList.innerHTML = '';
 
+    // Render each filter
+    filters.forEach((filter, index) => {
+        const filterItem = document.createElement('li');
+        filterItem.className = 'filter-item';
+
+        let filterArr = filter.split("_");
+        var filterTypeId = filterArr[0];
+        var filterTypeLabel = getTypeLabel(filterTypeId);
+        var filterId = filterArr[1];
+        var filterLabel = getFilterLabel(filterTypeId, filterId);
+        if (!filterLabel) {
+            return;
+        }
+
+        filterItem.innerHTML = `
+            <span>${filterTypeLabel}</span> ${filterLabel}
+            <button class="remove-filter fas fa-x" data-index="${filter}"></button>
+        `;
+
+        filtersList.appendChild(filterItem);
+    });
+
+    // Attach event listeners to the remove buttons
+    filtersList.querySelectorAll('.remove-filter').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const filterRemove = event.target.getAttribute('data-index');
+            let filterArr = filterRemove.split("_");
+            var filterTypeId = filterArr[0];
+            var filterId = filterArr[1];
+            clearFilter(filterTypeId, filterId);
+        });
+    });
+}
+
+function getFilterLabel(typeId, filterId){
+    var filterLabel = "";
+    switch (typeId) {
+        case "txt":
+            filterLabel = filterId;
+            break;
+        case "minPrice":
+            if (filterId != 0) {
+                filterLabel = filterId + " Kč";
+            }
+            break;
+        case "maxPrice":
+            if (filterId != 100000) {
+                filterLabel = filterId + " Kč";
+            }
+            break;
+        case "dates":
+            filterLabel = filterId;
+            break;
+        default:
+            // Get only the text content of the label excluding child elements
+            const textOnly =  $("#" + typeId + "_" + filterId).contents()
+                .filter(function () {
+                    return this.nodeType === Node.TEXT_NODE; // Keep only text nodes
+                })
+                .text()
+                .trim(); // Remove leading/trailing whitespace
+            filterLabel = textOnly;
+    }
+    return filterLabel;
+}
+
+function clearFilter(typeId, filterId){
+    switch (typeId) {
+        case "txt":
+            const searchField = $("#autocomplete");
+            searchField.val('');
+            searchField.trigger('change');
+            break;
+        case "minPrice":
+            const minPrice = $("#range-min");
+            minPrice.val(0);
+            minPrice.trigger('change');
+            break;
+        case "maxPrice":
+            const maxPrice = $("#range-max");
+            maxPrice.val(1000000);
+            maxPrice.trigger('change');
+            break;
+        case "dates":
+            const dateField = $("#datesInput");
+            dateField.val('');
+            dateField.trigger('change');
+            break;
+        default:
+            const filterItem = $("#"+typeId+"_"+filterId+" input");
+            filterItem.prop("checked",false);
+            filterItem.trigger('change');
+    }
+}
+
+function getTypeLabel(typeId){
+    var typeLabel = "";
+    switch (typeId) {
+        case "countryFilter":
+            typeLabel = "Země: ";
+            break;
+        case "katalogFilter":
+            typeLabel = "Ubytování: ";
+            break;
+        case "tourTypeFilter":
+            typeLabel = "Typ: ";
+            break;
+        case "transportFilter":
+            typeLabel = "Doprava: ";
+            break;
+        case "foodFilter":
+            typeLabel = "Strava: ";
+            break;
+        case "durGroupFilter":
+            typeLabel = "Délka: ";
+            break;
+        case "txt":
+            typeLabel = "Text: ";
+            break;
+        case "minPrice":
+            typeLabel = "Min cena: ";
+            break;
+        case "maxPrice":
+            typeLabel = "Max cena: ";
+            break;
+        case "dates":
+            typeLabel = "Datum: ";
+            break;
+    }
+    return typeLabel;
+}  
 
 async function updateKatalog(fd){
 
@@ -509,6 +646,7 @@ async function updateKatalog(fd){
 
 async function showData(filteredData,filteredDataNoKatalog,selected_filters,append){ 
     var filters = {countryFilter:[],katalogFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
+    var filter
     selected_filters.forEach(f => {
         let arr = f.split("_");
         if(arr.length >= 2){
@@ -518,7 +656,7 @@ async function showData(filteredData,filteredDataNoKatalog,selected_filters,appe
         }
     
     });
-    
+    updateFilterWidgets(selected_filters);
     filteredDataNoKatalog.then(fdnk => 
     {
             updateKatalog(fdnk);                    

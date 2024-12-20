@@ -920,3 +920,42 @@ section.main_description ul , ul.list-circle{
     right: 0;
     top: 0;
 }
+
+#filters-list {
+    list-style: none;
+    display: flex; /* Make the list items align horizontally */
+    flex-wrap: wrap; /* Allow wrapping onto the next line */
+    gap: 10px; /* Add spacing between items */
+    padding: 0;
+    margin: 10px 15px;
+}
+
+.filter-item {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-right: 10px; */
+    padding: 5px;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.filter-item span {
+    color: #777;
+    margin-right: 5px;
+}
+
+.remove-filter {
+    border: none;
+    background-color: transparent;
+    color: #777;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 3px 6px;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.remove-filter:hover {
+    color: #333;
+}
