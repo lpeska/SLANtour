@@ -4115,6 +4115,9 @@ a.grid_item:hover figure img {
   font-size: 0.8125rem;
 }
 
+.collapse {
+  transition: height 0.6s ease; /* Adjust the duration and easing */
+}
 
 #filters_col a:first-of-type {
   border: none; /* Remove the border */

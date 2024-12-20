@@ -588,7 +588,7 @@ function getTypeLabel(typeId){
     return typeLabel;
 }  
 
-async function updateKatalog(fd){
+async function updateKatalog(fd, expandKatalog){
 
     var fdRes = await fd;
     var serialIDs = new Set([...fdRes.data.items.map(item => item.id_serial)].flat(Infinity));
@@ -634,19 +634,21 @@ async function updateKatalog(fd){
         
     }); 
     
-    if(totalMenuItems > 30){
-        $("#collapseKatalog").removeClass("show");
+    const myCollapse = document.getElementById('katalog_filter');
+    const bsCollapse = new bootstrap.Collapse(myCollapse, { toggle: false }); // Initialize collapse without toggling
+
+    if(totalMenuItems > 20){
+        bsCollapse.hide();
     }
     
-    if(totalMenuItems < 20){
-        $("#collapseKatalog").addClass("show");
+    if(totalMenuItems <= 20 || expandKatalog){
+        bsCollapse.show();
     }
 }  
 
 
 async function showData(filteredData,filteredDataNoKatalog,selected_filters,append){ 
     var filters = {countryFilter:[],katalogFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
-    var filter
     selected_filters.forEach(f => {
         let arr = f.split("_");
         if(arr.length >= 2){
@@ -659,8 +661,9 @@ async function showData(filteredData,filteredDataNoKatalog,selected_filters,appe
     updateFilterWidgets(selected_filters);
     filteredDataNoKatalog.then(fdnk => 
     {
-            updateKatalog(fdnk);                    
-            console.dir(fdnk);
+        var expandKatalog = filters.countryFilter.length == 1 && filters.tourTypeFilter.length == 1;    
+        updateKatalog(fdnk, expandKatalog);                    
+        console.dir(fdnk);
     });  
     
     filteredData.then(fd => 
