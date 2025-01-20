@@ -27,7 +27,7 @@
         <section class="main_description add_bottom_45">
             {{ type.description|raw }}
 
-            <p class="btn_tours_align"><a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"
+            <p class="btn_tours_align"><a href="/vyhledavani?tourTypeFilter[]={{ type.id }}"
                     class="btn_1 rounded">Zobrazit všechny zájezdy ({{totalTours}})</a>
             </p>
         </section>
@@ -43,7 +43,7 @@
             <div class="row">
                 {% for country in countries %}
                 <div class="col-xl-3 col-lg-6 col-md-6">
-                    <a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}&countryFilter[]={{ country.id }}"
+                    <a href="/vyhledavani?tourTypeFilter[]={{ type.id }}&countryFilter[]={{ country.id }}"
                         class="grid_item">
                         <figure>
                             <img src="{{ country.image }}" class="img-fluid" alt="">
@@ -68,7 +68,7 @@
             </div>
         </section>
 
-        <p class="btn_tours_align"><a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"
+        <p class="btn_tours_align"><a href="/vyhledavani?tourTypeFilter[]={{ type.id }}"
                 class="btn_1 rounded">Zobrazit všechny zájezdy ({{totalTours}})</a>
         </p>
 

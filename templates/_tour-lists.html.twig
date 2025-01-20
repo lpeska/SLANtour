@@ -52,15 +52,15 @@
     </div>
     <!-- /row -->
     {% if (type.id > 0) %}
-        <a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani?tourTypeFilter[]={{ type.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}
     
     {% if (destination.id > 0) %}
-        <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}   
     
     {% if (type.id is not defined and destination.id is not defined) %}
-        <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}
 
 </section>
@@ -122,15 +122,15 @@
     </div>
     <!-- /row -->
     {% if (type.id > 0) %}
-        <a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}&akceFilter[]=1,2,3"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani?tourTypeFilter[]={{ type.id }}&akceFilter[]=1,2,3"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}
     
     {% if (destination.id > 0) %}
-        <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}&akceFilter[]=1,2,3"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani?countryFilter[]={{ destination.id }}&akceFilter[]=1,2,3"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}  
 
     {% if (type.id is not defined and destination.id is not defined) %}
-        <a href="/vyhledat-zajezd.php?akceFilter[]=1,2,3"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani?akceFilter[]=1,2,3"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}
 </section>
 {% endif %}
@@ -191,15 +191,15 @@
     </div>
     <!-- /row -->
     {% if (type.id > 0) %}
-        <a href="/vyhledat-zajezd.php?tourTypeFilter[]={{ type.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani?tourTypeFilter[]={{ type.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}
     
     {% if (destination.id > 0) %}
-        <a href="/vyhledat-zajezd.php?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani?countryFilter[]={{ destination.id }}"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}  
 
     {% if (type.id is not defined and destination.id is not defined) %}
-        <a href="/vyhledat-zajezd.php"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
+        <a href="/vyhledavani"><strong>Zobrazit další zájezdy ({{totalTours}}) <i class="arrow_carrot-right"></i></strong></a>
     {% endif %}
     
 </section>
