@@ -118,6 +118,49 @@ function checkFilter(el){
     return false;
 }
 
+function pushFiltersToHistory(selected_filters) {
+    let baseUrl = "/vyhledavani?";
+    
+    // Filters that should NOT accommodate multiple values
+    const singleValueFilters = new Set(["txt", "minPrice", "maxPrice"]);
+    
+    let params = {};
+
+    selected_filters.forEach(filter => {
+        let [key, value] = filter.split('_');
+
+        // Ignore empty values (e.g. 'txt_' or 'dates_')
+        if (value !== undefined && value !== "") {
+            if (singleValueFilters.has(key)) {
+                // For single-value filters, always overwrite the value
+                params[key] = value;
+            } else {
+                // For multi-value filters, store as an array
+                if (!params[key]) {
+                    params[key] = [];
+                }
+                params[key].push(value);
+            }
+        }
+    });
+
+    // Construct query string
+    let queryString = Object.keys(params)
+        .map(key => {
+            if (Array.isArray(params[key])) {
+                return `${key}[]=${params[key].join('&' + key + '[]=')}`;
+            } else {
+                return `${key}=${params[key]}`;
+            }
+        })
+        .join('&');
+
+    let fullUrl = baseUrl + queryString;
+
+    // Push the new URL to the browser history without reloading the page
+    history.pushState(null, "", fullUrl);
+}
+
 function updateFilters(){
     var selected_filters = [];
     $(".filter").each(function(idx,el){
@@ -132,6 +175,11 @@ function updateFilters(){
     selected_filters.push("maxPrice_"+removeCurrency($("#range-max").val()));
     selected_filters.push("dates_"+$("#datesInput").val());
     
+    console.log(selected_filters);
+
+    pushFiltersToHistory(selected_filters);
+
+
     return selected_filters;
 }
 
@@ -145,7 +193,7 @@ function filterZajezd(item){
     if((typeof minPrice !== "undefined") && (typeof maxPrice !== "undefined") && parseInt(minPrice) > 0 && parseInt(maxPrice) > 0){
         let minP = parseInt(minPrice);
         let maxP = parseInt(maxPrice);
-        filteredZajezd = filteredZajezd.filter((x) => x[2] >= minP && x <= maxP);
+        filteredZajezd = filteredZajezd.filter((x) => x[2] >= minP && x[2] <= maxP);
         /*priceCheck = item.castka >= parseInt(filters.minPrice[0]) && item.castka <= parseInt(filters.maxPrice[0])*/
 
 
@@ -450,6 +498,9 @@ async function updateTotalTours(toursVolume){
 }  
 
 async function updateFilterWidgets(filters) {
+
+
+
     const widget = document.getElementById('selected-filters-widget');
     const filtersList = document.getElementById('filters-list');
 
@@ -663,7 +714,7 @@ async function showData(filteredData,filteredDataNoKatalog,selected_filters,appe
     {
         var expandKatalog = filters.countryFilter.length == 1 && filters.tourTypeFilter.length == 1;    
         updateKatalog(fdnk, expandKatalog);                    
-        console.dir(fdnk);
+        //console.dir(fdnk);
     });  
     
     filteredData.then(fd => 
@@ -677,7 +728,7 @@ async function showData(filteredData,filteredDataNoKatalog,selected_filters,appe
         //updatePrice(filters.minPrice,filters.maxPrice);
         updateTextSearch(filters.txt);
         updateTotalTours(fd.pagination.total);
-        console.dir(fd);
+        //console.dir(fd);
          
         
         //load corresponding data and show them on appropriate location
