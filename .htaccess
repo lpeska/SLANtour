@@ -13,7 +13,6 @@ RewriteRule    zajezdy/([^/]+)$   /$1.php     [L,QSA]
 RewriteRule    zajezdy/$   /index.php     [L,QSA]
 RewriteRule    zajezdy$   /index.php     [L,QSA]
 
-
 RewriteRule    zeme/(.*)/(.*)$   /destinace.php?zeme=$1&nazev_destinace=$2     [L,QSA]
 RewriteRule    zeme/(.*)$   /zeme.php?zeme=$1     [L,QSA]
 
