@@ -1,0 +1,197 @@
+<div id="popupInput" class="popup">
+    <div class="header">Header</div>
+    <div class="body">
+        {% for sluzba in stornovaneSluzby %}
+            <div class="row">
+                <label class="long" for="sluzby-storno-undo-pocet-{{ sluzba.id_cena }}" title="{{ sluzba.nazev_ceny }}">{{ sluzba.nazev_ceny|truncate(38) }}</label>
+                <input class="smallNumber" type="text" name="sluzby-storno-undo-pocet-{{ sluzba.id_cena }}" id="sluzby-storno-undo-pocet-{{ sluzba.id_cena }}" value="1"/>
+                <label class="small" for="sluzby-storno-undo-poplatek-{{ sluzba.id_cena }}">storno poplatek</label>
+                <input class="medNumber" type="text" name="sluzby-storno-undo-poplatek-{{ sluzba.id_cena }}" id="sluzby-storno-undo-poplatek-{{ sluzba.id_cena }}" value="{{ sluzba.calcStornoPoplatek(aktualniStorno.procento) }}"/>
+                <span> Kè</span>
+                <input type="hidden" name="sluzby-storno-undo-typ-{{ sluzba.id_cena }}" value="{{ sluzba.typ }}"/>
+            </div>
+        {% else %}
+            <div class="row">
+                <span>Není stornována žádná služba, ale stále lze <br>symbolicky zpìtnì objednat úèastníka.</span>
+                <input type="hidden" name="sluzby-storno-undo-pocet-empty"/>
+            </div>
+        {% endfor %}
+        {% for sluzba in objednaneSluzby %}
+            {% if sluzba.pocet > 0 %}
+                <div class="row">
+                    <label class="long" for="sluzby-storno-pocet-{{ sluzba.id_cena }}" title="{{ sluzba.nazev_ceny }}">{{ sluzba.nazev_ceny|truncate(38) }}</label>
+                    <input class="smallNumber" type="text" name="sluzby-storno-pocet-{{ sluzba.id_cena }}" id="sluzby-storno-pocet-{{ sluzba.id_cena }}" value="1"/>
+                    <label class="small" for="sluzby-storno-poplatek-{{ sluzba.id_cena }}">storno poplatek</label>
+                    <input class="medNumber" type="text" name="sluzby-storno-poplatek-{{ sluzba.id_cena }}" id="sluzby-storno-poplatek-{{ sluzba.id_cena }}" value="{{ sluzba.calcStornoPoplatek(aktualniStorno.procento) }}"/>
+                    <span> Kè</span>
+                    <input type="hidden" name="sluzby-storno-typ-{{ sluzba.id_cena }}" value="{{ sluzba.typ }}"/>
+                </div>
+            {% else %}
+                <div class="row">
+                    <span>Není objednána žádná služba, ale stále lze <br>symbolicky stornovat úèastníka.</span>
+                    <input type="hidden" name="sluzby-storno-pocet-empty"/>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {# serial edit #}
+        <div class="row">
+            <label for="inp-edit-serial-storno-poplatek">Storno poplatek</label>
+            <input type="text" name="edit-serial-storno-poplatek" id="inp-edit-serial-storno-poplatek"/>
+        </div>
+        <div class="row">
+            <label for="inp-edit-serial">Seriál</label>
+            <input type="text" name="edit-serial" id="inp-edit-serial"/>
+            <input type="hidden" name="edit-serial-id" id="hid-edit-serial-id"/>
+        </div>
+        <div class="row">
+            <label for="select-edit-zajezd">Zájezd</label>
+            <select name="edit-zajezd" id="select-edit-zajezd">
+                <option value="0">[id] a období zájezdu</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="inp-serial-edit-termin">Termín</label>
+            <input type="text" name="serial-edit-termin" id="inp-serial-edit-termin" class="daterangepicker" style="margin: 0; display: inline-block; position: relative; top: 0; left: 0; box-shadow: none;"/>
+        </div>
+        <div id="sluzby-wrapper"></div>
+
+        <div class="row">
+            <label for="stav-stav-objednavky">Stav</label>
+            <select name="stav-stav-objednavky" id="stav-stav-objednavky">
+                {% for stav in mozneStavy %}
+                    <option value="{{ stav }}">{{ staticCall('ViewUtils', 'objednavkaStavNoToString', [stav]) }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row">
+            <label class="required" for="stav-storno-poplatek">Storno poplatek</label>
+            <input type="text" name="stav-storno-poplatek" id="stav-storno-poplatek" required/>
+        </div>
+        <div class="row">
+            <label for="stav-storno-poplatek-ck">Storno poplatek CK</label>
+            <input type="text" name="stav-storno-poplatek-ck" id="stav-storno-poplatek-ck"/>
+        </div>
+        <div class="row">
+            <label for="user-titul">Titul</label>
+            <input type="text" name="user-titul" id="user-titul"/>
+        </div>
+        <div class="row">
+            <label for="user-jmeno" class="required">Jméno</label>
+            <input type="text" name="user-jmeno" id="user-jmeno" required/>
+        </div>
+        <div class="row">
+            <label for="user-prijmeni" class="required">Pøíjmení</label>
+            <input type="text" name="user-prijmeni" id="user-prijmeni" required/>
+        </div>
+        <div class="row">
+            <label for="user-datum-narozeni">Datum narození</label>
+            <input class="calendar-ymd" type="text" name="user-datum-narozeni" id="user-datum-narozeni"/>
+        </div>
+        <div class="row">
+            <label for="user-rodne-cislo">Rodné èíslo</label>
+            <input type="text" name="user-rodne-cislo" id="user-rodne-cislo"/>
+        </div>
+        <div class="row">
+            <label for="user-email">Email</label>
+            <input type="text" name="user-email" id="user-email"/>
+        </div>
+        <div class="row">
+            <label for="user-telefon">Telefon</label>
+            <input type="text" name="user-telefon" id="user-telefon"/>`
+        </div>
+        <div class="row">
+            <label for="user-cislo-op">Èíslo OP</label>
+            <input type="text" name="user-cislo-op" id="user-cislo-op"/>
+        </div>
+        <div class="row">
+            <label for="user-cislo-pasu">Èíslo pasu</label>
+            <input type="text" name="user-cislo-pasu" id="user-cislo-pasu"/>
+        </div>
+        <div class="row">
+            <label for="user-ulice">Ulice</label>
+            <input type="text" name="user-ulice" id="user-ulice"/>
+        </div>
+        <div class="row">
+            <label for="user-mesto">Mìsto</label>
+            <input type="text" name="user-mesto" id="user-mesto"/>
+        </div>
+        <div class="row">
+            <label for="user-psc">PSÈ</label>
+            <input type="text" name="user-psc" id="user-psc"/>
+        </div>
+        <div class="row">
+            <label for="platba-cislo-dokladu">Èíslo dokladu</label>
+            <input type="text" name="platba-cislo-dokladu" id="platba-cislo-dokladu"/>
+        </div>
+        <div class="row">
+            <label for="platba-typ-dokladu" class="required">Typ dokladu</label>
+            <select name="platba-typ-dokladu" id="platba-typ-dokladu">
+                <option value="prijmovy">pøíjmový doklad</option>
+                <option value="vydajovy">výdajový doklad</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="platba-castka" class="required">Èástka</label>
+            <input type="text" name="platba-castka" id="platba-castka"/>
+        </div>
+        <div class="row">
+            <label for="platba-splatnost-do">Splatnost do</label>
+            <input class="calendar-ymd" type="text" name="platba-splatnost-do" id="platba-splatnost-do"/>
+        </div>
+        <div class="row">
+            <label for="platba-uhrazeno">Uhrazeno</label>
+            <input class="calendar-ymd" type="text" name="platba-uhrazeno" id="platba-uhrazeno"/>
+        </div>
+        <div class="row">
+            <label for="platba-zpusob-uhrady">Zpùsob úhrady</label>
+            <input type="text" name="platba-zpusob-uhrady" id="platba-zpusob-uhrady"/>
+        </div>
+        <div class="row">
+            <textarea name="ts-poznamky" id="ts-poznamky" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-tajne-poznamky" id="ts-tajne-poznamky" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-doprava-cs" id="ts-doprava-cs" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-stravovani-cs" id="ts-stravovani-cs" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-ubytovani-cs" id="ts-ubytovani-cs" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-pojisteni-cs" id="ts-pojisteni-cs" cols="60" rows="15"></textarea>
+        </div>
+
+        {# PROVIZE #}
+        <div class="row">
+            <label for="provize-castka">Výše provize</label>
+            <input type="text" name="provize-castka" id="provize-castka" value="{{ provize }}"/>
+        </div>
+
+        {# TS K UHRADE #}
+        {# ZALOHA #}
+        <div class="row">
+            <label for="ts-k-uhrade-zaloha-castka">Èástka</label>
+            <input type="text" name="ts-k-uhrade-zaloha-castka" id="ts-k-uhrade-zaloha-castka" value="{{ kUhradeZalohaCatka }}"/>
+        </div>
+        <div class="row">
+            <label for="ts-k-uhrade-zaloha-datum">Datum</label>
+            <input type="text" name="ts-k-uhrade-zaloha-datum" id="ts-k-uhrade-zaloha-datum" value="{{ kUhradeZalohaDatum }}" class="calendar-ymd"/>
+        </div>
+        {# DOPLATEK #}
+        <div class="row">
+            <label for="ts-k-uhrade-doplatek-datum">Datum</label>
+            <input type="text" name="ts-k-uhrade-doplatek-datum" id="ts-k-uhrade-doplatek-datum" value="{{ kUhradeDoplatekDatum }}" class="calendar-ymd"/>
+        </div>
+
+        {# ACTION BUTTONS #}
+        <div class="row actions">
+            <input type="button" value="Zrušit" name="cancel" class="btn-small btn-round btn-white"/>
+            <input type="button" value="Uložit" name="save" class="btn-small btn-round btn-green"/>
+        </div>
+    </div>
+</div>

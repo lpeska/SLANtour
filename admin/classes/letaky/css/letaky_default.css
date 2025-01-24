@@ -1,0 +1,90 @@
+*{
+	font-family: DejaVuSans, Helvetica, Arial,  sans-serif;
+	font-size: 11pt;
+	margin: 0;
+	padding: 0;
+	
+}
+body{
+	font-family: DejaVuSans, Helvetica, Arial,  sans-serif;
+	font-size: 11pt;
+            background: url('/admin/img/letak_background.png');
+    background-image-resize: 6;
+    background-size: cover;
+}
+table{
+	font-size: 11pt;
+}
+table.layout{
+
+    width:820px;
+    height:1210px;
+    
+}
+td{
+	padding-left:10px;
+	padding-right:10px;
+}
+th{
+	padding-left:0px;
+	padding-right:10px;
+}
+
+h1{
+	font-size: 4.6em;
+        color: #000080;
+        text-decoration: underline;
+        text-transform: uppercase;
+      //  border: 1px solid red;        
+}
+h2{
+	font-size: 2.5em;
+        color: #0000fF;
+       // border: 1px solid green;
+}
+h3{
+	font-size: 3.6em;
+       // border: 1px solid blue;
+        
+}
+h4{
+	font-size: 5em;
+        color: #FF0000; 
+       // font-style: italic;
+       // border: 1px solid violet;        
+}
+h5{
+	font-size: 2em;
+        color: #0000eF; 
+        font-style: italic;
+       // border: 1px solid black;        
+}
+h6{
+	font-size: 1.6em;    
+}
+.terminy{
+    font-size:1.1em;
+    
+}
+.ceny_terminu{
+    color:red;
+    font-weight:bold;
+}
+
+.mena{
+    font-size: 0.65em;
+    //font-weight:normal;
+}
+.prev_cena{
+    display:block;
+    color:red;
+    font-size: 0.4em;
+    margin-right:1em;
+    text-decoration: line-through;
+    font-style: italic;
+    font-weight:normal;
+}
+.foto{
+    margin-bottom:10px;
+}
+

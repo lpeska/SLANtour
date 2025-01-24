@@ -1,0 +1,2506 @@
+/* COMMON ------------------ */
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.hidden{
+    display:none;
+}
+
+input.termin_do, input.termin_od{
+    width:72px;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+a:visited, a:active, a:link {
+    color: #c1bfbe;
+}
+
+html, body, button {
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    display: table;
+}
+
+input, select {
+    margin: 0;
+}
+
+.foto {
+    position:relative;
+}
+.foto input{
+    position:absolute;
+    top: 2px;
+    left: 2px;
+}
+
+
+.float-left {
+    float: left !important;
+}
+
+.float-right {
+    float: right !important;
+}
+
+.pos-mid {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.dimm-red {
+    color: #ac0000;
+}
+
+.red {
+    color: #f00;
+}
+.nevyrazne{
+    color:grey;
+    font-style: italic;
+    font-size:0.9em;
+}
+
+table.list td.suda {
+    background-color:whitesmoke;
+}
+
+table.list td.licha {
+    background-color:lightcyan;
+}
+
+
+table.list td.darkBlue1 {
+    border-top:2px solid  #85c3ff !important;
+    border-bottom:1px solid #85c3ff !important;
+}
+table.list td.darkBlue2 {
+    border-bottom:2px solid #1B5B97 !important;
+}
+table.list td.darkBlue3 {
+    background-color:#559DE1;
+    color:white;
+    font-weight:bold;
+}
+.green {
+    color: #4ba244;
+}
+
+.added-by-hand {
+    color: #808080;
+    font-style: italic;
+}
+
+.delim-right {
+    border-right: solid 2px #ffffff;
+}
+
+.width-auto {
+    width: auto !important;
+}
+
+.width-10 {
+    width: 10% !important;
+}
+
+.width-20 {
+    width: 20% !important;
+}
+
+.width-30 {
+    width: 30% !important;
+}
+
+.width-40 {
+    width: 40% !important;
+}
+
+.width-50 {
+    width: 50% !important;
+}
+
+.width-60 {
+    width: 60% !important;
+}
+
+.width-70 {
+    width: 70% !important;
+}
+
+.width-80 {
+    width: 80% !important;
+}
+
+.width-90 {
+    width: 90% !important;
+}
+
+.width-99 {
+    width: 99% !important;
+}
+
+.width-100 {
+    width: 100% !important;
+}
+
+.width-200px {
+    width: 200px !important;
+}
+
+.width-350px {
+    width: 350px !important;
+}
+
+.width-500px {
+    width: 500px !important;
+}
+
+.height-40 {
+    height: 40px;
+}
+
+.number-2d {
+    width: 14px;
+}
+
+.offset-top-20 {
+    margin-top: 20px;
+}
+
+.offset-left-10 {
+    margin-left: 10px;
+}
+
+.offset-left-5 {
+    margin-left: 5px;
+}
+
+.offset-right-5 {
+    margin-right: 5px;
+}
+
+.offset-right-10 {
+    margin-right: 10px;
+}
+
+.ioffset-5 {
+    padding: 5px !important;
+}
+
+.ioffset-bot-10 {
+    padding-bottom: 10px !important;
+}
+
+.rotate-right-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.mouse-rotate-right-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.toggleOpen {
+    display: block;
+}
+
+.toggleClosed {
+    display: none;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.align-c {
+    text-align: center;
+}
+
+.align-l {
+    text-align: left;
+}
+
+.align-r {
+    text-align: right;
+}
+
+.align-cm {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.valign-middle {
+    vertical-align: middle;
+}
+
+.del-input {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.no-display {
+    display: none;
+}
+
+.ib-display {
+    display: inline-block;
+}
+
+.i-display {
+    display: inline;
+}
+
+.b-display {
+    display: block;
+}
+
+.lh-30 {
+    line-height: 30px;
+}
+
+.tooltip {
+    color: gray;
+}
+
+.tooltip.medium {
+    font-size: 11px;
+    font-style: italic;
+}
+
+.bg-vl-yellow {
+    background-color: #f5edc4;
+}
+
+.bg-l-red {
+    background-color: #f59f9f;
+}
+
+.bg-l-blue {
+    background-color: #9db6f6;
+}
+
+.bg-l-yellow {
+    background-color: #f6e796;
+}
+
+.bg-l-green {
+    background-color: #d3e58f;
+}
+
+.bg-l-brown {
+    background-color: #e4c89b;
+}
+
+.bg-l-gray {
+    background-color: #f2f2f2;
+}
+
+.bg-action {
+    background-color: #ecdff4;
+}
+
+.bg-important {
+    background-color: #ffffe8;
+}
+
+.bg-special {
+    background-color: #f2f2f2;
+}
+
+.r-250 {
+    right: 250px;
+}
+
+.no-border-top {
+    border-top: none !important;
+}
+
+.no-border-bot {
+    border-bottom: none !important;
+}
+
+.no-border-left {
+    border-left: none !important;
+}
+
+.no-border-right {
+    border-right: none !important;
+}
+
+.border-rad-5 {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.border-rad-rtb-5 {
+    border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
+}
+
+.required:after {
+    color: red;
+    content: ' *';
+}
+
+/* disable datepipcker in chrome */
+input[type="date"]::-webkit-input-placeholder {
+    visibility: hidden !important;
+}
+
+/* ALBATROS COMMON ORDER STATES/CENY/VYBERY ------------------ */
+
+.cena-stav {
+    padding: 1px 3px 1px 3px;
+}
+
+.stav-zal {
+    background-color: #ffb0ae;
+}
+
+.stav-prodano, .stav-odbaveno {
+    background-color: #bdffb0;
+}
+
+.stav-opce {
+    background-color: #fffdb5;
+}
+
+.stav-storno {
+    background-color: #e4c89b;
+}
+
+.stav-voucher {
+    background-color: #3df3fc;
+}
+
+
+.stav-predb {
+    background-color: #9ACBE3;
+}
+
+.stav-pozad {
+    background-color: #a69ae3;
+}
+
+.stav-rez {
+    background-color: #e396e1;
+}
+
+.vybery-zso {
+    background-color: #dfe6cf !important;
+}
+
+.vybery-zbo {
+    background-color: #e6e6e6 !important;
+}
+
+.vybery-snz {
+    background-color: #e3cce3 !important;
+}
+
+.vybery-sno {
+    background-color: #c6c6c6 !important;
+}
+
+.vybery-sso {
+    background-color: #bfd6bf !important;
+}
+
+.vybery-snaz {
+    background-color: #b8c6d9 !important;
+}
+
+.vybery-NZO {
+    background-color: #FF9B99 !important;
+}
+
+.two_digit {
+    width:20px;
+}
+
+.vybery-sak {
+    background-color: #e6dbcf !important;
+}
+
+/* ALBATROS COMMON ACTIONS ------------------ */
+
+.anchor-delete {
+    color: #b60300 !important;
+}
+
+.anchor-delete:hover {
+    color: #ff2727 !important;
+}
+
+.action-delete {
+    background-color: #ff2727 !important;
+    color: white !important;
+}
+
+.action-delete:hover {
+    background-color: #ff6b6d !important;
+}
+
+.action-warning {
+    background-color: #ff8827 !important;
+    color: white !important;
+}
+
+.action-warning:hover {
+    background-color: #ffbf6b !important;
+}
+
+.action.disabled {
+    color: gray;
+    cursor: default;
+}
+
+.action.disabled:hover {
+    color: gray;
+}
+
+/* ALBATROS LOGIN FORM ------------------ */
+
+#alb-login input {
+    font-size: 12px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid transparent;
+    background-color: #d1d2d5;
+    padding: 2px;
+    margin: 0 10px 0 10px;
+}
+
+#alb-login input[type="submit"] {
+    background-color: #66bc5f;
+    border: 1px solid #3c3c3c;
+    padding: 3px 8px 3px 8px;
+    font-weight: 500;
+    color: #3c3c3c;
+    cursor: pointer;
+}
+
+#alb-login input[type="submit"]:hover {
+    background-color: #75d86e;
+}
+
+#alb-login label {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ALBATROS HEADER ------------------ */
+
+#alb-header-wrapper {
+    display: table-row;
+    background-color: white;
+    padding-bottom: 10px;
+}
+
+#alb-header {
+    background-color: black;
+    color: #c1bfbe;
+    padding: 4px 0 8px 0;
+    margin-bottom: 20px;
+
+    -webkit-box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+#alb-header h1 {
+    float: left;
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 10px;
+    margin-right: 20px;
+}
+
+#alb-header h2 {
+    display: inline;
+}
+
+/* ALBATROS NAV GROUPS ------------------ */
+
+#alb-nav-grps {
+    float: left;
+}
+
+#alb-nav-grps ul {
+    display: inline;
+}
+
+#alb-nav-grps li {
+    display: inline-block;
+    list-style-type: none;
+    font-weight: bold;
+    font-size: 12px;
+    border-right: solid 1px #3a3a3a;
+}
+
+#alb-nav-grps li:last-child {
+    border: none;
+}
+
+#alb-nav-grps li a {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+
+#alb-nav-grps li a {
+    border-bottom: solid 5px black;
+}
+
+#alb-nav-grps li a.bof:hover {
+    border-bottom: solid 5px #6091b0;
+}
+
+#alb-nav-grps li a.web:hover {
+    border-bottom: solid 5px #c34944;
+}
+
+#alb-nav-grps li a.admin:hover {
+    border-bottom: solid 5px #c66d2a;
+}
+
+#alb-nav-grps li a.others:hover {
+    border-bottom: solid 5px #977995;
+}
+
+/* ALBATROS USER ------------------ */
+
+#alb-user {
+    float: right;
+    padding: 0;
+}
+
+#alb-user-name {
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#alb-user a {
+    vertical-align: middle;
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    background: url(logout.png) no-repeat transparent 50% 50%;
+}
+
+#alb-user a:hover {
+    background: url(logout-hover.png) no-repeat transparent 50% 50%;
+}
+
+/* ALBATROS NAV LIST ------------------ */
+
+#alb-nav-list {
+    padding-left: 6px;
+    border-top: solid 2px #c1bfbe;
+}
+
+#alb-nav-list li {
+    display: inline;
+    list-style-type: none;
+    margin: 0 2px 0 2px;
+}
+
+#alb-nav-list li a {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#alb-nav-list.bof li a:hover {
+    color: #6091b0;
+}
+
+#alb-nav-list.web li a:hover {
+    color: #c34944;
+}
+
+#alb-nav-list.admin li a:hover {
+    color: #c66d2a;
+}
+
+#alb-nav-list.others li a:hover {
+    color: #977995;
+}
+
+#alb-nav-list.bof {
+    border-top: solid 2px #6091b0;
+}
+
+#alb-nav-list.web {
+    border-top: solid 2px #c34944;
+}
+
+#alb-nav-list.admin {
+    border-top: solid 2px #c66d2a;
+}
+
+#alb-nav-list.others {
+    border-top: solid 2px #977995;
+}
+
+/* ALBATROS SELECTED MODULE ------------------ */
+
+#alb-header.bof li a.bof {
+    border-bottom: solid 5px #6091b0;
+}
+
+#alb-header.web li a.web {
+    border-bottom: solid 5px #c34944;
+}
+
+#alb-header.admin li a.admin {
+    border-bottom: solid 5px #c66d2a;
+}
+
+#alb-header.others li a.others {
+    border-bottom: solid 5px #977995;
+}
+
+#alb-header.bof #alb-nav-list {
+    border-top: solid 2px #6091b0;
+}
+
+#alb-header.web #alb-nav-list {
+    border-top: solid 2px #c34944;
+}
+
+#alb-header.admin #alb-nav-list {
+    border-top: solid 2px #c66d2a;
+}
+
+#alb-header.others #alb-nav-list {
+    border-top: solid 2px #977995;
+}
+
+#alb-header.bof #alb-nav-list li a.active, #alb-header.bof #alb-nav-list li span.highlight {
+    color: #6091b0;
+}
+
+#alb-header.web #alb-nav-list li a.active, #alb-header.web #alb-nav-list li span.highlight {
+    color: #c34944;
+}
+
+#alb-header.admin #alb-nav-list li a.active, #alb-header.admin #alb-nav-list li span.highlight {
+    color: #c66d2a;
+}
+
+#alb-header.others #alb-nav-list li a.active, #alb-header.others #alb-nav-list li span.highlight {
+    color: #977995;
+}
+
+/* ALBATROS MAIN ------------------ */
+
+div.main-wrapper {
+    display: table-row;
+}
+
+div.main {
+    padding: 0 10px 0 10px;
+    background-color: #ffffff;
+    font-size: 12px;
+    /*color: #3c3c3c;*/
+    color: #585858;
+    color: black;
+}
+
+div.main h3 {
+    /*background-color: #798FAD;*/
+    background-color: #CADFF0;
+    /*color: #c1bfbe;*/
+    /*color: #586eac;*/
+    padding: 5px;
+    font-size: 20px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-weight: 500;
+}
+
+div.main h4 {
+    background-color: #CADFF0;
+    padding: 2px 5px 2px 5px;
+    font-size: 16px;
+    margin-top: 1px;
+    margin-bottom: 2px;
+    font-weight: 500;
+}
+
+div.main > a {
+    display: inline-block;
+    background-color: #FFC700;
+    padding: 5px;
+    color: #585858;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+div.main > a:hover {
+    background-color: #FEE898;
+}
+
+div.main form {
+    background-color: #ffffff;
+}
+
+/* ALBATROS MAIN - SYS MSGS ------------------ */
+
+div.main h2 {
+    padding: 7px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+div.main h2.red {
+    background-color: #ff514d;
+    border: solid 1px #ff514d;
+    color: white;
+    margin-bottom: 10px;
+}
+
+div.main h2.green {
+    background-color: #329d32;
+    border: solid 1px #329d32;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* ALBATROS MAIN - SUBMENU ------------------ */
+
+div.main div.submenu {
+    /*background-color: #000000;*/
+    background-color: #ededed;
+    padding: 10px 10px 10px 10px;
+    /*border-top: solid 2px #d8d8d8;*/
+    border-top: solid 2px #ffffff;
+    color: #3c3c3c;
+    font-weight: bold;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+div.main div.submenu:first-of-type {
+    border: none;
+}
+
+div.main div.submenu a {
+    font-weight: 500;
+    color: #3c3c3c;
+    padding: 3px 8px 3px 8px;
+    border: 1px solid #3c3c3c;
+    background-color: #FFC700;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    margin-right: 4px;
+}
+
+div.main div.submenu a:hover {
+    background-color: #FEE898;
+}
+
+div.main div.submenu strong {
+    font-weight: bold;
+}
+
+/* ALBATROS MAIN - FILTER+BUTTONS ------------------ */
+
+div.main textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+div.main input, div.main select, div.main textarea, div.main button, div.main .button {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid transparent;
+    background-color: #d1d2d5;
+    padding: 2px;
+}
+
+div.main input[type="checkbox"], div.main input[type="radio"] {
+    vertical-align: middle;
+}
+
+div.main input[type="submit"], div.main input[type="reset"], div.main input[type="button"], div.main button, div.main .button {
+    /*margin-left: 10px;*/
+    border: 1px solid #3c3c3c;
+    padding: 3px 8px 3px 8px;
+    font-weight: 500;
+    color: #3c3c3c;
+}
+
+div.main input[type="submit"], div.main input[type="button"], div.main button, div.main .button {
+    background-color: #66bc5f;
+    background-color: #78b0e7;
+    cursor: pointer;
+    outline: 0;
+}
+
+div.main input[type="reset"] {
+    background-color: #D1D2D5;
+    cursor: pointer;
+}
+
+div.main input[type="submit"]:hover, div.main input[type="button"]:hover, div.main button:hover, div.main .button:hover {
+    background-color: #75d86e;
+    background-color: #85c3ff;
+}
+
+div.main input[type="reset"]:hover {
+    background-color: #eceef1;
+}
+
+div.main div.form_row button {
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border: 1px solid transparent;
+    background-color: #d1d2d5;
+    padding: 2px;
+    margin: 1px;
+}
+
+div.main div.form_row button:hover {
+    background-color: #eceef1;
+}
+
+div.main input.important, div.main select.important, div.main textarea.important {
+    border: 2px solid orange !important;
+}
+
+table.filtr {
+    width: 100%;
+    /*background-color: #798FAD;*/
+    background-color: #f5f5f5;
+    border-top: 1px solid #ffffff;
+}
+
+table.filtr th {
+    font-weight: 500;
+}
+
+table.filtr td, table.filtr th {
+    padding: 5px;
+}
+
+/* ALBATROS MAIN - TABLE LIST ------------------ */
+
+table.list {
+    width: 100%;
+}
+
+table.list td, table.list th {
+    border: 2px solid white;
+    border-top: none;
+    padding: 2px 5px 2px 5px;
+}
+
+table.list td:first-child, table.list th:first-child {
+    border-left: none;
+}
+
+table.list td:last-child, table.list th:last-child {
+    border-right: none;
+}
+
+table.list th {
+    /*background-color: #8C979B;*/
+    background-color: #CADFF0;
+    font-weight: bold;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+table.list tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+table.list tr:nth-child(odd) {
+    background-color: #ececec;
+}
+
+table.list tr:hover {
+    background-color: #E9F1F8 !important;
+}
+
+table.list a, .form_row a {
+    font-weight: 500;
+    color: #6d89d7;
+}
+
+table.list a:hover, .form_row a:hover {
+    color: #73a8ff;
+}
+
+table.list span.green {
+    color: #4ba244;
+}
+
+table.list span.orange {
+    color: orange;
+}
+
+table.list span.blue {
+    color: blue;
+}
+
+table.list span.red {
+    color: #af4949;
+}
+
+table.list td.green {
+    background-color: #7fcf7b;
+    color: black;
+    font-weight: bold;
+}
+
+table.list td.orange {
+    background-color: #f4b057;
+    color: black;
+    font-weight: bold;
+}
+
+table.list td.blue {
+    background-color: #71c7da;
+    color: black;
+    font-weight: bold;
+}
+
+table.list td.red {
+    background-color: #ff4538;
+    color: black;
+    font-weight: bold;
+}
+
+table.list div.sort {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+table.list div.sort a {
+    display: block;
+    width: 8px;
+    height: 5px;
+    padding: 2px 5px 2px 5px;
+}
+
+table.list div.sort a.sort-up {
+    background: url(../img/up001-white.png) no-repeat 50% 50%;
+}
+
+table.list div.sort a.sort-up:hover {
+    background: url(../img/up001-red.png) no-repeat 50% 50%;
+}
+
+table.list div.sort a.sort-down {
+    background: url(../img/down001-white.png) no-repeat 50% 50%;
+}
+
+table.list div.sort a.sort-down:hover {
+    background: url(../img/down001-red.png) no-repeat 50% 50%;
+}
+
+table.list .not-in-pdf {
+    background-color: #a9a9a9 !important;
+    color: #d1d1d1 !important;
+}
+
+table.list .superheader {
+    background-color: #b8cbdb;
+}
+
+table.list tr.subheader th, table.list tr.subheader td {
+    background-color: #dde8f0;
+}
+
+table.list td.no-space {
+    padding: 0;
+    margin: 0;
+    /* zde staci nastavit libovolnou hodnotu - protoze v tabulce, ktera v tomto TD nekde byva je nastaven height: 100% a pokud zde nezadam zadnou sirku, browser pak pocita sirku vnitrni tabulky z hodnoty null */
+    height: 1px;
+}
+
+table.list .err {
+    background-color: #ffb1ac;
+}
+
+table.list tr.picked, table.list tr.important {
+    background-color: #ffe699;
+}
+
+div.list-add {
+    margin-top: 20px;
+    width: 100%;
+}
+
+table.subtable {
+    font-size: .9em;
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+table.subtable td {
+    border: none;
+    border-right: 1px solid white;
+}
+
+/* ALBATROS MAIN - FORM ROW ------------------ */
+
+div.main form {
+    width: 100%;
+    background-color: transparent;
+}
+
+div.main form .edit_wrapper {
+    background-color: #f5f5f5;
+}
+
+div.main form .left_edit_box {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
+    float: left;
+    width: 60%;
+    border-right: 1px solid #fff;
+}
+
+div.main form .right_edit_box {
+    float: left;
+    width: 40%;
+}
+
+div.main form .form_box {
+    padding: 5px 10px;
+}
+
+div.main form .label_float_left {
+    display: inline-block;
+    vertical-align: top;
+    min-width: 400px;
+}
+
+div.main form .value {
+    vertical-align: top;
+    display: inline-block;
+}
+
+div.main form .value_row {
+    padding: 5px 0;
+}
+
+div.main form .form_row {
+    padding: 5px 10px;
+    border-bottom: solid 1px white;
+    background-color: #f5f5f5;
+}
+
+div.main form .form_row:hover {
+    background-color: #E9F1F8;
+}
+
+div.main form .form_row input, div.main form .form_row select {
+    margin-right: 5px;
+}
+
+div.main form input[type="submit"], div.main form input[type="reset"] {
+    margin: 5px;
+}
+
+/* ALBATROS MAP */
+
+.map_canvas {
+    width: 100%;
+    height: 200px;
+}
+
+/* ALBATROS - INPUTS */
+
+.inputText {
+    width: 294px !important;
+}
+
+.date {
+    width: 74px !important;
+}
+
+.smallNumber {
+    width: 25px !important;
+}
+
+.medNumber {
+    width: 54px !important;
+}
+
+.bigNumber {
+    width: 64px !important;
+}
+
+.inputTextArea {
+    width: 300px !important;
+}
+
+.datepicker {
+    width: 268px;
+    margin-right: 0 !important;
+    -webkit-border-top-right-radius: 0 !important;
+    -webkit-border-bottom-right-radius: 0 !important;
+    -moz-border-radius-topright: 0 !important;
+    -moz-border-radius-bottomright: 0 !important;
+}
+
+.inp-yellow {
+    background-color: #f7d87e !important;
+}
+
+/* ALBATROS MAIN - UI TABS ------------------ */
+
+div.tabs table td {
+    padding: 5px;
+}
+
+div.tabs a {
+    font-weight: 500;
+    color: #46588A;
+}
+
+div.tabs a:hover {
+    color: #73a8ff;
+}
+
+/* ALBATROS MAIN - HIT ZAJEZD ------------------ */
+
+div.main td.hit_zajezd strong {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+div.main td.hit_zajezd span.osoby:first-of-type {
+    border: 1px solid gray;
+}
+
+div.main td.hit_zajezd span.osoby {
+    display: inline-block;
+    width: 15px;
+    padding: 2px;
+    text-align: center;
+    border: 1px solid gray;
+    border-left: none;
+    font-size: 10px;
+}
+
+/* ALBATROS MAIN - PAGING ------------------ */
+
+div.main div.pagination {
+    margin-top: 15px;
+    text-align: center;
+    color: gray;
+}
+
+div.main div.pagination a {
+    display: inline-block;
+    width: 30px;
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #f2f2f2;
+    border: 1px solid #dddddd;
+    border-left: none;
+    color: #000000;
+}
+
+div.main div.pagination a:first-of-type {
+    border: 1px solid #dddddd;
+    border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+}
+
+div.main div.pagination a:last-of-type {
+    border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    -webkit-border-radius: 0 4px 4px 0;
+}
+
+div.main div.pagination a:hover {
+    background-color: #fafafa;
+}
+
+div.main div.pagination a.selected {
+    color: #999999;
+    cursor: default;
+    background-color: #ffffff;
+
+}
+
+div.main div.pagination a.selected:hover {
+    background-color: #ffffff;
+}
+
+div.main div.pagination a.disabled {
+    color: #999999;
+    background-color: transparent !important;
+    cursor: default;
+}
+
+/* ALBATROS MAIN - DEFAULT ATUOCOMPLETE ------------------ */
+
+.typeahead {
+    width: 404px;
+}
+
+.typeahead:focus {
+    outline: 0;
+}
+
+.tt-suggestion.tt-cursor {
+    color: #fff;
+    background-color: #6091B0;
+}
+
+.tt-dropdown-menu {
+    background: #D1D2D5;
+    width: 308px;
+    cursor: pointer;
+    margin: -4px 0 0 1px;
+    border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    border: 1px solid transparent;
+    padding: 4px;
+}
+
+.tt-suggestions {
+    border-top: 1px solid #a9a9a9;
+    border-bottom: 1px solid #a9a9a9;
+}
+
+.tt-suggestion {
+    padding: 3px;
+    font-size: 12px;
+}
+
+strong.tt-highlight {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* ALBATROS HELP ------------------ */
+
+#alb-help-spacer {
+    margin-top: 20px;
+}
+
+#alb-help-wrapper {
+    display: table-row;
+    height: 100%;
+    background-color: white;
+    padding-top: 10px;
+}
+
+#alb-help {
+    display: table-cell;
+    height: 100%;
+    color: #c1bfbe;
+    background-color: #625e58;
+    font-weight: normal;
+    font-size: 11px;
+    text-align: center;
+    -webkit-box-shadow: 0 -4px 6px 0 rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 -4px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 -4px 6px 0 rgba(0, 0, 0, 0.4);
+    padding-bottom: 30px;
+}
+
+#alb-help-header {
+    font-weight: bold;
+    font-size: 13px;
+    display: inline-block;
+    padding: 6px 150px 6px 150px;
+    border-bottom: solid 1px #6f6a66;
+}
+
+#alb-help p {
+    padding: 6px;
+    text-align: left;
+}
+
+/* ALBATROS BTNS/ICO ------------------ */
+
+.calendar-ico {
+    cursor: pointer;
+    width: 26px;
+    height: 22px;
+    margin: 0 2px 0 0;
+    padding: 4px;
+    background: url(../img/calendar-ico.png) 50% 50% no-repeat #DBDFE9;
+    border: 1px solid #b2b2b2;
+}
+
+.calendar-ico.dark {
+    background: url(../img/calendar-ico-dark.png) 50% 50% no-repeat #DBDFE9;
+}
+
+.calendar-ico.small {
+    width: 22px;
+    height: 16px;
+    margin: 0 2px 0 0;
+    padding: 4px;
+    background-size: 12px 10px;
+}
+
+.calendar-ico:hover {
+    background-color: #7f7f7f !important;
+    border: 1px solid #7f7f7f !important;
+}
+
+/* ALBATROS MAIN - topologie ------------------ */
+
+.grid {
+    position: relative;
+}
+
+.grid .seat {
+    width: 100px;
+    height: 80px;
+    position: absolute;
+    background: url(/admin/img/seat3.gif) 0 0 no-repeat white;
+    z-index: 2;
+    margin: 0;
+    padding: 0;
+}
+
+.grid .noseat {
+    width: 100px;
+    height: 80px;
+    position: absolute;
+    background: #ddd;
+    z-index: 2;
+    margin: 0;
+    padding: 0;
+}
+
+.person {
+    width: 84px;
+    margin-left: 4px;
+    text-align: center;
+    padding: 3px;
+    cursor: pointer;
+    background: #CADFF0;
+    border: 1px solid #73a8ff;
+}
+
+.new_field {
+    width: 84px;
+    margin-left: 4px;
+    text-align: center;
+    padding: 3px;
+    cursor: pointer;
+    background: orange;
+    border: 1px solid #D5592B;
+}
+
+/* ALBATROS MAIN - EDITACE OBJEDNAVKY - FRAMEWORK (note mozne pouzivat jako framework u vsech modulu) */
+
+#global-data {
+    display: none;
+}
+
+.main .section {
+    margin-top: 15px;
+    color: #3f3f3f;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: transparent;
+}
+
+.main .section.actions {
+    padding: 0 8px;
+}
+
+.main .section.actions .main-actions {
+    float: left;
+}
+
+.main .section.actions .main-actions > * {
+    margin: 0 5px 0 0;
+}
+
+.main .section.actions .specific-actions > * {
+    margin: 0 0 0 5px;
+}
+
+.main .section.actions .specific-actions {
+    float: right;
+}
+
+.section p {
+    line-height: 18px;
+}
+
+.section a {
+    border-bottom: 1px dotted #bbb;
+    color: #3f3f3f;
+}
+
+.section a:hover {
+    border-bottom: 1px dotted #000;
+}
+
+.section a.ts {
+    color: #666666;
+}
+
+.section a.ts:hover {
+    color: #000;
+}
+
+.section .math-sign {
+    padding: 0 4px;
+}
+
+.section .border-left {
+    border-left: 1px solid #000;
+}
+
+.section .header {
+    border: 1px solid #000;
+    font-size: 17px;
+    font-weight: 800;
+    vertical-align: middle;
+}
+
+.section .header.toggle {
+    cursor: pointer;
+}
+
+.section .header.toggle:hover {
+    background-color: #ffe0e6;
+}
+
+.section .header .title {
+    display: inline-block;
+    padding: 4px 8px;
+}
+
+.section .header .header-info {
+    padding: 4px 8px;
+    font-size: 12px;
+    vertical-align: middle;
+    line-height: 23px;
+}
+
+.section .row .title {
+    font-weight: 800;
+}
+
+.section .block, .section .block-thick {
+    -webkit-box-shadow: 2px 2px 5px 0 #dfdfdf;
+    -moz-box-shadow: 2px 2px 5px 0 #dfdfdf;
+    box-shadow: 2px 2px 5px 0 #dfdfdf;
+}
+
+.section .block-thick {
+    border: 1px solid #000;
+    border-top: none;
+    padding: 8px;
+}
+
+.section .block-thick .column {
+    float: left;
+}
+
+.section .block-thick .row {
+    margin-bottom: 7px;
+}
+
+.section .block-thick .row.small-space {
+    margin-bottom: 3px;
+}
+
+.section .block-thick .row .title {
+    display: inline-block;
+}
+
+.section .block {
+    width: 100%;
+}
+
+.section .block .row {
+    border: 1px solid #000;
+    border-top: none;
+    width: 100%;
+    min-height: 26px;
+    display: table;
+    background-color: #fff;
+}
+
+.section .block .row-create-action {
+    margin-top: 15px;
+    border-top: 1px solid #000;
+    padding: 4px;
+}
+
+.section .block .row-header {
+    background-color: #f2f2f2;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.section .block .row-header > div {
+    padding: 4px 8px;
+}
+
+.section .block .row-data {
+    font-size: 11px;
+    padding: 4px 8px;
+    vertical-align: middle;
+}
+
+.section .block .row .title, .section .block .row .value {
+    padding: 8px;
+}
+
+.section .block .row .title, .section .block .row .value, .section .block .row .actions {
+    vertical-align: middle;
+}
+
+.section .block .row > div {
+    display: table-cell;
+    overflow-wrap: break-word;
+}
+
+/* ALBATROS MAIN - editace objednavky - framework typeahead */
+
+.section .block .typeahead {
+
+}
+
+.section .block .typeahead:focus {
+    outline: 0;
+}
+
+.section .block .tt-suggestion.tt-cursor {
+    color: #fff;
+    background-color: #6091B0;
+}
+
+.section .block .tt-dropdown-menu {
+    background: #ede0fa;
+    width: 250px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    margin: 5px 0 0 4px;
+    padding: 4px;
+
+    border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+
+    -webkit-box-shadow: 2px 2px 3px 0 #ddd;
+    -moz-box-shadow: 2px 2px 3px 0 #ddd;
+    box-shadow: 2px 2px 3px 0 #ddd;
+}
+
+.section .block .tt-suggestions {
+    border-top: none;
+    border-bottom: none;
+}
+
+.section .block .tt-suggestion {
+    padding: 3px;
+    font-size: 11px;
+    background-color:white;
+}
+
+.section .block strong.tt-highlight {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* ALBATROS MAIN - editace objednavky - framework inputy */
+
+/* buttons */
+
+.main .section input[type=button] {
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    background-color: #ede0fa;
+    height: 20px;
+    line-height: 12px;
+    vertical-align: middle;
+    font-size: 11px;
+    margin: 3px;
+    color: #666;
+    outline: none;
+
+    -webkit-box-shadow: 2px 2px 3px 0 #ddd;
+    -moz-box-shadow: 2px 2px 3px 0 #ddd;
+    box-shadow: 2px 2px 3px 0 #ddd;
+}
+
+.main .section input[type=button].off-l-15 {
+    margin: 0 0 0 15px;
+}
+
+.main .section input[type=button]:hover {
+    background-color: #f9f2ff;
+}
+
+.main .section input[type=button].red {
+    color: #fff;
+    background-color: #FF514D;
+}
+
+.main .section input[type=button].red:hover {
+    background-color: #ff908d;
+}
+
+.main .section input[type=button].white {
+    color: #666;
+    background-color: #ffffff;
+}
+
+.main .section input[type=button].white:hover {
+    background-color: #f2f2f2;
+}
+
+.main .section input[type=button].brown {
+    background-color: #b9774d;
+}
+
+.main .section input[type=button].brown:hover {
+    background-color: #d0ad8b;
+}
+
+.section .i-num {
+    width: 36px;
+    display: inline-block;
+}
+
+.section .i-num .p-sign, .section .i-num .m-sign {
+    font-size: 12px;
+    display: inline-block;
+    background-color: #ede0fa;
+    width: 16px;
+    height: 16px;
+    line-height: 12px;
+    text-align: center;
+    cursor: pointer;
+    vertical-align: middle;
+    outline: none;
+    border: solid 1px rgba(0, 0, 0, 0.15);
+
+    -webkit-box-shadow: 2px 2px 3px 0 #ddd;
+    -moz-box-shadow: 2px 2px 3px 0 #ddd;
+    box-shadow: 2px 2px 3px 0 #ddd;
+
+    /* selectable = false */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.section .i-num .p-sign {
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    -webkit-border-radius: 0 3px 3px 0;
+}
+
+.section .i-num .m-sign {
+    border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    -webkit-border-radius: 3px 0 0 3px;
+}
+
+.section .i-num .m-sign:hover, .section .i-num .p-sign:hover {
+    background-color: #f9f2ff;
+}
+
+.section .btn-toggle {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0 0 30px 0;
+    user-select: none;
+    text-decoration: underline;
+}
+
+/* inputs */
+
+.main .section span.twitter-typeahead {
+    display: block;
+}
+
+.main .section input, .main .section select, .main .section textarea {
+    margin: 2px 5px;
+}
+
+.main .section input[type=checkbox] {
+    display: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.main .section input[type="checkbox"] + label {
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.main .section input[type="checkbox"] + label span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 4px 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+    border: solid 1px #555;
+    border-radius: 4px;
+
+    -webkit-box-shadow: 2px 2px 3px 0 #f4f4f4;
+    -moz-box-shadow: 2px 2px 3px 0 #f4f4f4;
+    box-shadow: 2px 2px 3px 0 #f4f4f4;
+}
+
+.main .section input[type="checkbox"]:checked + label span {
+    background: url(/img/check_tick.png) no-repeat 0 -2px;
+}
+
+.main .section input[type=text], .main .section select {
+    background-color: #fff;
+    border-left: solid 1px #555;
+    border-right: solid 1px #555;
+    border-radius: 4px;
+    height: 20px;
+    font-size: 10px;
+    outline: none;
+    padding: 0 8px;
+
+    -webkit-box-shadow: 2px 2px 3px 0 #f4f4f4;
+    -moz-box-shadow: 2px 2px 3px 0 #f4f4f4;
+    box-shadow: 2px 2px 3px 0 #f4f4f4;
+}
+
+.main .section input[type=text]:focus, .main .section select:focus {
+    background-color: #ede0fa;
+    /*border-left: 1px solid #ff9959;*/
+    /*border-right: 1px solid #ff9959;*/
+}
+
+.main .section input[type=text].req, .main .section select.req {
+    border-left: 1px solid #FF514D;
+    border-right: 1px solid #FF514D;
+}
+
+.main .section input[type=text].err, .main .section select.err {
+    border-bottom: 1px dotted #FF514D;
+}
+
+input[name^=pocet] {
+    width: 4.4em;
+}
+
+input[name^=castka] {
+    width: 5.2em;
+}
+
+input[name^=cislo-dokladu] {
+    width: 5.8em;
+}
+
+input[name^=vyse-slevy] {
+    width: 6.5em;
+}
+
+input[name^=zpusob-uhrady] {
+    width: 8.7em;
+}
+
+input[name^=nazev-sluzby], input[name^=nazev-slevy] {
+    width: 17em;
+}
+
+/* minimized inputs */
+
+input[name$=rodne-cislo].min {
+    width: 3.1em;
+}
+
+input[name$=psc].min {
+    width: 3.7em;
+}
+
+input[name$=titul].min {
+    width: 3.8em;
+}
+
+input[name$=ulice].min {
+    width: 4em;
+}
+
+input[name$=email].min {
+    width: 4.3em;
+}
+
+input[name$=mesto].min {
+    width: 4.6em;
+}
+
+input[name$=jmeno].min {
+    width: 4.9em;
+}
+
+input[name$=telefon].min {
+    width: 5.2em;
+}
+
+input[name$=prijmeni].min, input[name$=datum-narozeni].min {
+    width: 5.6em;
+}
+
+input[name$=cislo-op].min {
+    width: 5.6em;
+}
+
+input[name$=cislo-pasu].min {
+    width: 6.5em;
+}
+
+input[name$=psc]:focus.min {
+    width: 4.7em;
+}
+
+input[name$=titul]:focus.min {
+    width: 5em;
+}
+
+input[name$=datum-narozeni]:focus.min {
+    width: 7.2em;
+}
+
+input[name$=rodne-cislo]:focus.min {
+    width: 7.9em;
+}
+
+input[name$=jmeno]:focus.min, input[name$=prijmeni]:focus.min {
+    width: 9em;
+}
+
+input[name$=telefon]:focus.min {
+    width: 9.2em;
+}
+
+input[name$=mesto]:focus.min {
+    width: 10em;
+}
+
+input[name$=cislo-pasu]:focus.min, input[name$=cislo-op]:focus.min, input[name$=ulice]:focus.min {
+    width: 11em;
+}
+
+input[name$=email]:focus.min {
+    width: 14em;
+}
+
+/* buttons */
+
+.btn-square {
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    text-decoration: none;
+
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;;
+    border-radius: 0 !important;;
+}
+
+.btn-round {
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-xsmall {
+    padding: 0;
+    font-size: 10px;
+    line-height: 1;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.btn-small {
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.btn-medium {
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.4;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.btn-green {
+    border: 1px solid #647E29 !important;
+    color: #ffffff;
+    background-color: #93BB39 !important;
+    font-weight: bold;
+}
+
+.btn-white, .btn-white-green, .btn-white-pink, .btn-white-yellow {
+    border: 1px solid darkgray !important;
+    color: black;
+    background-color: white !important;
+    font-weight: bold;
+}
+
+.btn-green:hover, .btn-green:active, .btn-green.active {
+    color: #ffffff;
+    background-color: #abd33b !important;
+}
+
+.btn-white:hover, .btn-white:active, .btn-white.active {
+    color: black;
+    background-color: #f9f9f9 !important;
+}
+
+.btn-white-green:hover, .btn-white-green:active, .btn-white-green.active {
+    color: black;
+    background-color: #abd33b !important;
+}
+
+.btn-white-pink:hover, .btn-white-pink:active, .btn-white-pink.active {
+    color: black;
+    background-color: #ede0fa !important;
+}
+
+.btn-white-yellow:hover, .btn-white-pink:active, .btn-white-yellow.active {
+    color: black;
+    background-color: #FFC700 !important;
+}
+
+.btn-black {
+    border: 1px solid #3a3d43 !important;
+    color: white;
+    background-color: #3a3d43 !important;
+    font-weight: bold;
+}
+
+.btn-black:hover, .btn-black:focus, .btn-black:active, .btn-black.active {
+    color: white;
+    border: 1px solid #3a3d43 !important;
+    background-color: #7f7f7f !important;
+}
+
+.btn-pink {
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    color: #ffffff;
+    background-color: #ede0fa !important;
+    font-weight: bold;
+}
+
+.btn-pink:hover, .btn-pink:focus, .btn-pink:active, .btn-pink.active {
+    color: #3f3f3f;
+    background-color: #f9f2ff !important;
+}
+
+.btn-dark:hover {
+    background-color: #7f7f7f !important;
+}
+
+/* popup windows */
+
+#lightbox {
+    display: none;
+    text-indent: -200em;
+    background: #fff;
+    opacity: 0.7;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 98;
+}
+
+.popup {
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    z-index: 99;
+
+    -webkit-box-shadow: 5px 5px 14px -2px rgba(171,171,171,1);
+    -moz-box-shadow: 5px 5px 14px -2px rgba(171,171,171,1);
+    box-shadow: 5px 5px 14px -2px rgba(171,171,171,1);
+}
+
+.popup .header {
+    padding: 5px 30px;
+    border: 1px solid #ababab;
+    background-color: #fff;
+
+    font-weight: 800;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 17px;
+}
+
+.popup .body {
+    min-width: 450px;
+    padding: 25px 25px;
+    border: 1px solid #ababab;
+    border-top: none;
+    background-color: #fff;
+}
+
+.popup .body #sluzby-wrapper .row {
+    text-align: left;
+}
+
+.popup .body .row {
+    margin: 0 auto 10px auto;
+    text-align: center;
+}
+
+.popup .body .row.err {
+    background: url("../img/ico-err.png") no-repeat 0 50%;
+    padding: 0 0 0 30px;
+}
+
+.popup .body .row.actions {
+    text-align: center;
+    margin: 40px 20px 0 0;
+}
+
+.popup .body .row.actions [name=cancel] {
+    margin-right: 20px;
+}
+
+.popup .body input.err {
+    border: 1px solid red;
+}
+
+.popup .body label.err {
+    color: red;
+}
+
+.popup .body select, .popup .body input[type=text] {
+    width: 140px;
+}
+
+#popupInput .body .row label {
+    display: inline-block;
+    width: 110px;
+    height: 22px;
+    line-height: 22px;
+    text-align: right;
+    vertical-align: middle;
+    font-weight: 800;
+    margin: 0 10px 0;
+}
+
+#popupInput .body .row label.long {
+    width: 240px;
+    text-align: left;
+}
+
+#popupInput .body .row label.small {
+    width: auto;
+    margin: 0 5px;
+    text-align: left;
+}
+
+#popupInput .body .row input[type=text] {
+    display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    vertical-align: middle;
+    margin: 0 5px;
+}
+
+#popupInput .body .row textarea {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+
+/* ALBATROS MAIN - editace objednavky - transitions */
+
+.trans-200-eio {
+    -webkit-transition: all 0.20s ease-in-out;
+    -moz-transition: all 0.20s ease-in-out;
+    -ms-transition: all 0.20s ease-in-out;
+    -o-transition: all 0.20s ease-in-out;
+    transition: all 0.20s ease-in-out;
+}
+
+.trans-400-lin {
+    -webkit-transition: all 0.40s linear;
+    -moz-transition: all 0.40s linear;
+    -ms-transition: all 0.40s linear;
+    -o-transition: all 0.40s linear;
+    transition: all 0.40s linear;
+}
+
+/* ALBATROS MAIN - editace objednavky - tooltips */
+
+.tt-highlight, .tt-highlight * {
+    font-weight: bold !important;
+    color: red !important;
+}
+
+.tt-highlight::-webkit-input-placeholder {
+    font-weight: bold !important;
+    color: red !important;
+}
+
+.tt-highlight:-moz-placeholder {
+    font-weight: bold !important;
+    color: red !important;
+}
+
+.tt-highlight::-moz-placeholder {
+    font-weight: bold !important;
+    color: red !important;
+}
+
+.tt-highlight:-ms-input-placeholder {
+    font-weight: bold !important;
+    color: red !important;
+}
+
+/* ALBATROS MAIN - editace objednavky - icons */
+
+.icon-rotate-medium {
+    display: inline-block;
+    padding: 0;
+}
+
+.icon-rotate-medium .label {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.icon-rotate-medium .btn-toggle {
+    display: inline-block;
+    padding: 0 7px 26px 7px;
+    font-size: 17px;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.icon-reload {
+    padding: 4px;
+    min-width: 15px;
+    min-height: 15px;
+    background: url("../img/ico-reload.png") no-repeat center;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.icon-edit {
+    padding: 10px;
+    min-width: 15px;
+    min-height: 15px;
+    background: url("../img/ico-edit.png") no-repeat center;
+    background-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* ALBATROS MAIN - editace objednavky - individualni (note sirky sloupcu (a jine), ktere jsou individualni pro kazdou sekci) */
+
+#section-actions {
+    width: 900px;
+}
+
+#section-obecne-info {
+    width: 900px;
+}
+
+#section-osoby-organizace, #section-finance, #section-poznamky-ts, #section-sluzby-slevy {
+    width: 900px;
+}
+
+#section-sluzby {
+    width: 465px;
+}
+
+#section-slevy {
+    margin: 0 0 0 15px;
+    width: 420px;
+}
+
+#section-obecne-info #column-img img {
+    width: 160px;
+    margin: 3px 20px 0 10px;
+    border: 1px solid #555;
+}
+
+#section-obecne-info #state {
+    cursor: pointer;
+}
+
+#section-obecne-info #state:hover {
+    background-color: #ffe0e6;
+}
+
+#section-obecne-info #column-info {
+    width: 391px;
+}
+
+#section-obecne-info #column-ts {
+    width: 291px;
+}
+
+#section-obecne-info .obecne-title {
+    width: 80px;
+}
+
+#section-osoby-organizace .org-title {
+    width: 170px;
+}
+
+#section-osoby-organizace .org-actions-main {
+    width: 186px;
+}
+
+#section-osoby-organizace .org-actions-main input {
+    width: 170px;
+}
+
+#section-osoby-organizace .org-actions {
+    width: 190px;
+}
+
+#section-osoby-organizace .org-name {
+    width: 160px;
+}
+
+#section-osoby-organizace .org-born {
+    width: 200px;
+}
+
+#section-osoby-organizace .org-add {
+    width: 80px;
+}
+
+#section-sluzby .slu-price-header {
+    width: 77px;
+}
+
+#section-sluzby .slu-empty-header {
+    width: 83px;
+}
+
+#section-sluzby .slu-empty-refresh-price {
+    display: inline-block;
+    width: 18px;
+}
+
+#section-sluzby .slu-price {
+    width: 172px;
+}
+
+#section-slevy .sle-price-header {
+    width: 77px;
+}
+
+#section-slevy .sle-empty-header {
+    width: 83px;
+}
+
+#section-slevy .sle-price {
+    width: 160px;
+}
+
+#section-slevy .sle-price-small {
+    width: 90px;
+}
+
+#section-sluzby .slu-price .castka, #section-slevy .sle-price .castka, #section-slevy .sle-price-small .castka {
+    width: 60px;
+}
+
+#section-sluzby .slu-actions, #section-slevy .sle-actions {
+    width: 70px;
+}
+
+#section-sluzby .slu-add, #section-slevy .sle-add {
+    width: 54px;
+}
+
+#section-finance .finance-celkem {
+    width: 160px;
+}
+
+#section-finance .finance-storno {
+    width: 110px;
+}
+
+#section-finance .finance-storno-val {
+    width: 100px;
+}
+
+#section-finance .finance-provize {
+    width: 70px;
+}
+
+#section-finance .finance-provize-val {
+    width: 140px;
+}
+
+#section-finance .finance-provize-edit {
+    width: 20px;
+}
+
+#section-finance .finance-name {
+    width: 120px;
+}
+#section-finance .finance-multidates {
+    width: 270px;
+}
+
+
+#section-finance .finance-price {
+    width: 80px;
+}
+
+#section-finance .finance-dates {
+    width: 150px;
+}
+
+#section-finance .finance-last {
+    width: 130px;
+}
+
+#section-finance .finance-actions {
+    width: 140px;
+}
+
+#section-finance .finance-add {
+    width: 86px;
+}
+
+#section-poznamky-ts .poznamky-ts-actions {
+    display: inline-block;
+    width: 80px;
+}
+
+#section-poznamky-ts .poznamky-ts-title {
+    width: 210px;
+}
+
+#icon-rotate-label-rozbalit {
+    width: 56px;
+}
+
+#section-obecne-info #datepicker {
+    width: 150px;
+    border: none;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    color: #3f3f3f;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+/* ALBATROS MAIN - EDITACE OBJEDNAVKY - FRAMEWORK END */
+
+/*Select multiple options styling*/
+select option {
+  border: 0px solid #D1D2D5;
+}
+
+select option:active,
+select option.selected,
+select option.selected:hover
+{
+  color: white;
+  font-weight: bold;
+  border: 1px solid #1E90FF;
+}

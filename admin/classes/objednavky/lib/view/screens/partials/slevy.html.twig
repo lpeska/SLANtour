@@ -1,0 +1,134 @@
+{% set sklonovaniNocResult = staticCall('ViewUtils', 'ceskeSklonovaniPoctu', [objednavka.pocet_noci]) %}
+{% set sklonovaniOsobaResult = staticCall('ViewUtils', 'ceskeSklonovaniPoctu', [objednavka.pocet_osob]) %}
+{% set sklonovaniNoc = sklonovaniNocResult == CESKE_SKLONOVANI_1 ? ' noc' : (sklonovaniNocResult == CESKE_SKLONOVANI_2_4 ? ' noci' : ' nocí') %}
+{% set sklonovaniOsoba = sklonovaniOsobaResult == CESKE_SKLONOVANI_1 ? ' osoba' : (sklonovaniOsobaResult == CESKE_SKLONOVANI_2_4 ? ' osoby' : ' osob') %}
+{# toggle section #}
+{% set toggleSectionClass = SECTION_OBJEDNAVKA_EDIT_BLOCK_NEOBJEDNANE_SLEVY in toggleSekce ? 'toggleOpen' : 'toggleClosed' %}
+
+<div class="float-left" id="section-slevy">
+    <div class="header toggle bg-l-green">
+        <span class="btn-toggle trans-200-eio">»</span><div class="title">Objednané slevy</div>
+    </div>
+
+    {# OBJEDNANE SLEVY #}
+
+    <div class="block">
+        <div class="row row-header">
+            <div class="">Název</div>
+            <div class="sle-price-header align-r">Èástka</div>
+            <div class="sle-empty-header"></div>
+        </div>
+
+        {# OBJEDNANE ZADNE SLEVY #}
+
+        {% if not objednavka.sluzbaHolder.hasObjednanaSleva and objednavka.slevaHolder.objednaneSlevy is null %}
+            <div class="row row-data">
+                <div>Žádné objednané slevy</div>
+            </div>
+        {% endif %}
+
+        {# OBJEDNANE SLEVY TYPU SLUZBA #}
+
+        {% for sleva in objednavka.sluzbaHolder.slevy %}
+          {% if sleva.pocet != 0 %}
+            {% set slevaPriceExplenation = 'celkem: ' ~ sleva.calcCastkaFull(sleva.pocet, objednavka.pocet_noci)|number_format(0, ',', ' ') ~ ' ' ~ sleva.mena ~ ' = ' ~ sleva.castka|number_format(0, ',', ' ') ~ ' ' ~ sleva.mena ~ ' × ' ~ sleva.pocet ~ (sleva.use_pocet_noci ? ' × ' ~ objednavka.pocet_noci ~ sklonovaniNoc : '') %}
+
+            <div class="row" data-sleva-id="{{ sleva.id_cena }}" data-sleva-pocet="{{ sleva.pocet }}">
+                <div class="row-data">{{ sleva.nazev_ceny }}</div>
+                <div class="row-data sle-price">
+                    <span class="ib-display castka align-r" title="{{ slevaPriceExplenation }}">{{ sleva.castka ~ ' ' ~ sleva.mena }}</span>
+                    <span class="math-sign">×</span>
+                    <span class="ib-display number-2d offset-right-5">{{ sleva.pocet }}</span><div class="i-num"><div class="m-sign btn-slevy-minus">-</div><div class="p-sign btn-slevy-plus">+</div><div class="clearfix"></div></div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        {# OBJEDNANE OSTATNI SLEVY #}
+
+        {% for sleva in objednavka.slevaHolder.objednaneSlevy %}
+            {% set slevaCelkem = sleva.calcCelkovaCastkaSlevy(objednavka.calcZaSluzbyZakladni, objednavka.pocet_osob) %}
+            {% if sleva.mena == MENA_PERCENT %}
+                {% set slevaPriceExplenation = 'celkem: ' ~ slevaCelkem|number_format(0, ',', ' ') ~ ' Kè' ~ ' = ' ~ sleva.castka|number_format(0, ',', ' ') ~ ' ' ~ sleva.mena ~ ' ze základní ceny (' ~ objednavka.calcZaSluzbyZakladni|number_format(0, ',', ' ') ~ ' Kè)' %}
+            {% elseif sleva.mena == MENA_KC_OS %}
+                {% set slevaPriceExplenation = 'celkem: ' ~ slevaCelkem|number_format(0, ',', ' ') ~ ' Kè' ~ ' = ' ~ sleva.castka|number_format(0, ',', ' ') ~ ' ' ~ sleva.mena ~ ' × ' ~ objednavka.pocet_osob ~ sklonovaniOsoba %}
+            {% else %}
+                {% set slevaPriceExplenation = 'celkem: ' ~ slevaCelkem|number_format(0, ',', ' ') ~ ' Kè' ~ ' - fixní èástka' %}
+            {% endif %}
+
+            <div class="row" data-sleva-nazev="{{ sleva.nazev_slevy }}" data-sleva-velikost-slevy="{{ sleva.castka }}">
+                <div class="row-data">{{ sleva.nazev_slevy }}</div>
+                <div class="row-data sle-price-small">
+                    <span class="ib-display castka align-r" title="{{ slevaPriceExplenation }}">{{ slevaCelkem|number_format(0, ',', ' ') ~ ' Kè' }}</span>
+                </div>
+                <div class="border-left align-cm sle-actions"><input type="button" value="Odebrat" class="btn-slevy-remove"/></div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {# NEOBJEDNANE SLEVY #}
+
+    <div class="block {{ toggleSectionClass }}" id="block-neobjednane-slevy">
+        <div class="row row-header">
+            <div class="">Neobjednané slevy</div>
+        </div>
+
+        {# NEOBJEDNANE ZADNE SLEVY #}
+
+        {% if not objednavka.sluzbaHolder.hasNeobjednanaSleva and objednavka.slevaHolder.neobjednaneSlevy is null %}
+            <div class="row row-data">
+                <div>Žádné neobjednané slevy</div>
+            </div>
+        {% endif %}
+
+        {# NEOBJEDNANE SLEVY TYPU SLUZBA #}
+
+        {% for sleva in objednavka.sluzbaHolder.slevy %}
+          {% if sleva.pocet == 0 %}
+              <form action="">
+                  <div class="row" data-sleva-id="{{ sleva.id_cena }}">
+                      <div class="row-data">{{ sleva.nazev_ceny }}</div>
+                      <div class="row-data sle-price">
+                          <span class="ib-display castka align-r">{{ sleva.castka|number_format(0, ',', ' ') ~ ' ' ~ sleva.mena }}</span>
+                          <span class="math-sign">×</span>
+                          <input class="min trans-400-lin" type="text" name="pocet" placeholder="Poèet" title="Poèet">
+                      </div>
+                      <div class="border-left align-cm sle-actions"><input type="button" value="Pøidat" class="btn-slevy-sluzba-add"/></div>
+                  </div>
+              </form>
+          {% endif %}
+      {% endfor %}
+
+        {# NEOBJEDNANE OSTATNI SLEVY #}
+
+        {% for sleva in objednavka.slevaHolder.neobjednaneSlevy %}
+            <div class="row" data-sleva-nazev="{{ sleva.nazev_slevy }}" data-sleva-velikost-slevy="{{ sleva.castka }}" data-sleva-mena="{{ sleva.mena }}">
+                <div class="row-data">{{ sleva.nazev_slevy }}</div>
+                <div class="row-data sle-price-small">
+                    <span class="ib-display castka align-r">{{ sleva.castka|number_format(0, ',', ' ') ~ ' ' ~ sleva.mena }}</span>
+                </div>
+                <div class="border-left align-cm sle-actions"><input type="button" value="Pøidat" class="btn-slevy-add"/></div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {# VYTVORENI NOVE SLEVY #}
+
+    <div class="block">
+        <form method="post" action="/admin/objednavky.php?page=slevy&action=create&idObjednavka={{ objednavka.id }}" id="frm-slevy-create">
+            <div class="row row-create-action">
+                <input type="text" name="nazev-slevy" placeholder="Název slevy" title="Název slevy" class="req trans-400-lin"/>
+                <input type="text" name="vyse-slevy" placeholder="Výše slevy" title="Výše slevy" class="req trans-400-lin"/>
+                <select title="Typ slevy" name="typ-slevy" class="req trans-400-lin">
+                    <option value="Kè">Kè</option>
+                    <option value="%">%</option>
+                    <option value="Kè/osoba">Kè/osoba</option>
+                </select>
+
+                <div class="sle-add">
+                    <input type="button" value="Pøidat" id="btn-slevy-create"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

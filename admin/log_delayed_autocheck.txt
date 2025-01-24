@@ -1,0 +1,8 @@
+2025-01-23 11:55:34
+
+ Zacinam provadet automatickou kontrolu, ke zpracovani 0 zaznamu
+
+
+
+ ------ KONTROLA USPESNE DOKONCENA ------ 
+2025-01-23 11:55:34
