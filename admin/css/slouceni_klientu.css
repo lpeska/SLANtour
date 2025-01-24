@@ -1,0 +1,60 @@
+.main-data {
+    padding: 20px 0 20px 0;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.clear-float {
+    clear: both;
+}
+
+.filter-input-div {
+    margin-right: 10px;; line-height: 20px;
+}
+
+.filter-btn-div {
+    padding-top: 18px;
+}
+
+.btn {
+    padding: 1px 5px 1px 5px;
+}
+
+.max-width1 {
+    max-width: 300px;
+}
+
+.small-text {
+    font-size: 10px;
+}
+
+.align-center {
+    text-align: center;
+}
+
+tr.picked {
+    background-color: orange !important;
+}
+
+.top-offset1 {
+    margin-top: 10px;
+}
+
+.right-offset1 {
+    margin-right: 10px;
+}
+
+.checkbox {
+    float: left;
+    margin-right: 10px;
+}
+
+.diff {
+    background-color: #ea9d9d !important;
+}

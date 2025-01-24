@@ -1,0 +1,105 @@
+{# prodejce #}
+{% set prodejce = objednavka.prodejce %}
+{% set prodejceAdresa = prodejce.adresaHolder.adresy[0] %}
+{% set prodejceAdresa = prodejceAdresa ? (prodejceAdresa.stat ? ', ' ~ prodejceAdresa.stat : '') ~ ', ' ~ prodejceAdresa.ulice ~ ', ' ~ prodejceAdresa.mesto ~ ' ' ~ prodejceAdresa.psc : '' %}
+{# objednavajici #}
+{% set objednavajici = objednavka.objednavajici %}
+{% set objednavajiciDatumNarozeni = objednavajici.datum_narozeni ? ', * ' ~ objednavajici.datum_narozeni|date(CZECH_DATE_FORMAT) : '' %}
+{% set objednavajiciAdresa = (objednavajici.adresa.ulice ? objednavajici.adresa.ulice ~ ', ' : '') ~ objednavajici.adresa.mesto ~ (objednavajici.adresa.psc ? ' ' ~ objednavajici.adresa.psc : '') %}
+{# objednavajici organizace #}
+{% set objednavajiciOrganizace = objednavka.objednavajiciOrganizace %}
+{% set objednavajiciOrganizaceAdresa = objednavajiciOrganizace.adresaHolder.adresy[0] %}
+{% set objednavajiciOrganizaceAdresa = objednavajiciOrganizaceAdresa ? ', ' ~ objednavajiciOrganizaceAdresa.ulice ~ ', ' ~ objednavajiciOrganizaceAdresa.mesto ~ ' ' ~ objednavajiciOrganizaceAdresa.psc : '' %}
+{# toggle section #}
+{% set toggleSectionClass = SECTION_OBJEDNAVKA_EDIT_BLOCK_UCASTNICI in toggleSekce ? 'toggleOpen' : 'toggleClosed' %}
+
+<div class="section" id="section-osoby-organizace">
+    <div class="header toggle bg-l-blue"><span class="btn-toggle trans-200-eio">»</span><div class="title">Osoby / Organizace</div></div>
+
+    {# PROVIZNI AGENTURA/PRODEJCE #}
+
+    <div class="block">
+        <div class="row">
+            <div class="title org-title bg-important">Provizní agentura</div>
+            <div class="value bg-important"><a target="_blank" href="organizace.php?id_organizace={{ prodejce.id }}&typ=organizace&pozadavek=edit">{{ prodejce.nazev }}</a>{{ prodejceAdresa }}</div>
+            <div class="actions org-actions-main bg-important"><input type="text" placeholder="Zmìna p. agentury - Název/Id" class="trans-400-lin" title="Zmìna p. agentury - Název/Id" id="inp-provizni-agentura"/></div>
+        </div>
+        <div class="row">
+            <div class="title org-title bg-important">Objednávající osoba</div>
+            <div class="value bg-important">
+                {% if(objednavajici) %}
+                    <a target="_blank" href="klienti.php?id_klient={{ objednavajici.id }}&typ=klient&pozadavek=edit">{{ objednavajici.jmeno ~ ' ' ~ objednavajici.prijmeni }}</a>{{ objednavajiciDatumNarozeni ~ ', ' ~ objednavajiciAdresa }}
+                {% else %}
+                    -
+                {% endif %}
+            </div>
+            <div class="actions org-actions-main bg-important"><input type="text" placeholder="Zmìna o. osoby - Název/Id" class="trans-400-lin" title="Zmìna o. osoby - Název/Id" id="inp-objednavajici-osoba"/></div>
+        </div>
+        <div class="row">
+            <div class="title org-title bg-important">Objednávající organizace</div>
+            <div class="value bg-important">{{ objednavajiciOrganizace ? objednavajiciOrganizace.nazev ~ objednavajiciOrganizaceAdresa : '-' }}</div>
+            <div class="actions org-actions-main bg-important"><input type="text" placeholder="Zmìna o. organizace - Název/Id" class="trans-400-lin" title="Zmìna o. organizace - Název/Id" id="inp-objednavajici-organizace"/></div>
+        </div>
+    </div>
+
+    <div class="block-group {{ toggleSectionClass }}" id="block-ucastnici" >
+
+        {# UCASTNICI #}
+
+        <div class="block">
+            <div class="row row-header">
+                <div class="org-name">Jméno úèastníka</div>
+                <div class="org-born">Narozen</div>
+                <div>Kontakt</div>
+                <div class="border-left org-actions">Edit</div>
+            </div>
+            {% for ucastnik in objednavka.ucastnikHolder.klienti %}
+                {% set ucastnikPlneJmeno = ucastnik.titul ~ ' ' ~ ucastnik.jmeno ~ ' ' ~ ucastnik.prijmeni %}
+                {% set ucastnikKontakt = ucastnik.adresa.ulice ? ucastnik.adresa.ulice ~ ', ' ~ ucastnik.adresa.mesto ~ ' ' ~ ucastnik.adresa.psc ~ (ucastnik.email ? ', ' ~ ucastnik.email : '') ~ (ucastnik.telefon ? ', ' ~ ucastnik.telefon : '') : '' %}
+                {% set ucastnikStornoClass = ucastnik.storno ? 'bg-vl-yellow' : '' %}
+
+                <div class="row" data-user-id="{{ ucastnik.id }}" data-user-name="{{ ucastnikPlneJmeno }}">
+                    <div class="row-data org-name {{ ucastnikStornoClass }}" title="{{ 'è. op: ' ~ ucastnik.cislo_op ~ ', è. pasu: ' ~ ucastnik.cislo_pasu }}"><a target="_blank" href="klienti.php?id_klient={{ ucastnik.id }}&typ=klient&pozadavek=edit">{{ ucastnikPlneJmeno }}</a></div>
+                    <div class="row-data org-born {{ ucastnikStornoClass }}">{{ ucastnik.datum_narozeni == '0000-00-00' ? '-' : ucastnik.datum_narozeni|date(CZECH_DATE_FORMAT) }} {{ ucastnik.rodne_cislo ? '(' ~ ucastnik.rodne_cislo ~ ')' : '' }}</div>
+                    <div class="row-data {{ ucastnikStornoClass }}">{{ ucastnikKontakt }}</div>
+                    <div class="actions border-left org-actions align-cm {{ ucastnikStornoClass }}">
+                        
+                            <input type="button" value="Upravit" class="btn-ucastnik-edit"/>
+                            <input type="button" class="btn-ucastnik-remove" value="Odebrat"/>
+                            {% if ucastnik.storno %}
+                                <input class="white btn-ucastnik-storno-undo" type="button" value="Storno"/>
+                            {% else %}
+                                <input class="red btn-ucastnik-storno" type="button" value="Storno"/>
+                            {% endif %}
+                        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# VYTVORENI A PRIDANI UCASTNIKA #}
+
+        <div class="block">
+            <form action="/admin/objednavky.php?page=ucastnici&action=add&idObjednavka={{ objednavka.id }}" method="post" id="frm-ucastnici-add">
+                <div class="row row-create-action">
+                    <input required class="req min trans-400-lin" type="text" name="user-prijmeni" placeholder="Pøíjmení" title="Pøíjmení" id="inp-user-surname"/>
+                    <input required class="req min trans-400-lin" type="text" name="user-jmeno" placeholder="Jméno" title="Jméno"/>
+                    <input class="min trans-400-lin" type="text" name="user-titul" placeholder="Titul" title="Titul"/>
+                    <input class="min trans-400-lin calendar-ymd" type="text" name="user-datum-narozeni" placeholder="Narozen" title="Narozen"/>
+                    <input class="min trans-400-lin" type="text" name="user-rodne-cislo" placeholder="RÈ" title="RÈ"/>
+                    <input class="min trans-400-lin" type="text" name="user-email" placeholder="Email" title="Email"/>
+                    <input class="min trans-400-lin" type="text" name="user-telefon" placeholder="Telefon" title="Telefon"/>
+                    <input class="min trans-400-lin" type="text" name="user-cislo-op" placeholder="Èíslo OP" title="Èíslo OP"/>
+                    <input class="min trans-400-lin" type="text" name="user-cislo-pasu" placeholder="Èíslo pasu" title="Èíslo pasu"/>
+                    <input class="min trans-400-lin" type="text" name="user-mesto" placeholder="Mìsto" title="Mìsto"/>
+                    <input class="min trans-400-lin" type="text" name="user-ulice" placeholder="Ulice" title="Ulice"/>
+                    <input class="min trans-400-lin" type="text" name="user-psc" placeholder="PSÈ" title="PSÈ"/>
+
+                    <div class="org-add">
+                        <input type="button" id="btn-ucastnik-create" value="Vytvoøit a pøidat"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

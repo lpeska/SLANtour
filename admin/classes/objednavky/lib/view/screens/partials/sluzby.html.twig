@@ -1,0 +1,95 @@
+{% set sklonovaniNocResult = staticCall('ViewUtils', 'ceskeSklonovaniPoctu', [objednavka.pocet_noci]) %}
+{% set sklonovaniNoc = sklonovaniNocResult == CESKE_SKLONOVANI_1 ? ' noc' : (sklonovaniNocResult == CESKE_SKLONOVANI_2_4 ? ' noci' : ' nocí') %}
+{# toggle section #}
+{% set toggleSectionClass = SECTION_OBJEDNAVKA_EDIT_BLOCK_NEOBJEDNANE_SLUZBY in toggleSekce ? 'toggleOpen' : 'toggleClosed' %}
+
+<div class="float-left" id="section-sluzby">
+    <div class="header toggle bg-l-yellow">
+        <span class="btn-toggle trans-200-eio">»</span><div class="title">Objednané služby</div>
+    </div>
+
+    {# OBJEDNANE SLUZBY #}
+
+    <div class="block">
+        <div class="row row-header">
+            <div>Název</div>
+            <div class="slu-price-header align-r">Èástka</div>
+            <div class="slu-empty-header"></div>
+            <div class="border-left slu-actions">Storno</div>
+        </div>
+
+        {% for sluzba in objednavka.sluzbaHolder.objednaneSluzby %}
+            {% set sluzbaPriceExplenation = 'celkem: ' ~ sluzba.calcCastkaFull(sluzba.pocet, objednavka.pocet_noci)|number_format(0, ',', ' ') ~ ' ' ~ sluzba.mena ~ ' = ' ~ sluzba.castka|number_format(0, ',', ' ') ~ ' ' ~ sluzba.mena ~ ' × ' ~ sluzba.pocet ~ (sluzba.use_pocet_noci ? ' × ' ~ objednavka.pocet_noci ~ sklonovaniNoc : '') %}
+            {% set sluzbaStornoClass = sluzba.pocetStorno > 0 ? 'bg-vl-yellow' : '' %}
+
+            <div class="row" data-sluzba-id="{{ sluzba.id_cena }}" data-sluzba-pocet="{{ sluzba.pocet }}" data-sluzba-typ="{{ sluzba.typ }}">
+                {% if sluzba.typ == SLUZBA_TYP_RUCNE_PRIDANA %}
+                    <div class="row-data added-by-hand {{ sluzbaStornoClass }}" title="Ruènì pøidáno">{{ sluzba.nazev_ceny }}</div>
+                {% else %}
+                    <div class="row-data {{ sluzbaStornoClass }}">{{ sluzba.nazev_ceny }}</div>
+                {% endif %}
+                <div class="row-data slu-price {{ sluzbaStornoClass }}">
+                    {% if sluzba.typ != SLUZBA_TYP_RUCNE_PRIDANA %}
+                        <button class="reload btn-round btn-xsmall btn-white-pink icon-reload" title="Aktualizovat èástku ze služby zájezdu"></button>
+                    {% else %}
+                        <div class="slu-empty-refresh-price"></div>
+                    {% endif %}
+                    <span class="ib-display castka align-r" title="{{ sluzbaPriceExplenation }}">{{ sluzba.castka|number_format(0, ',', ' ') ~ ' ' ~ sluzba.mena }}</span>
+                    <span class="math-sign">×</span>
+                    <span class="ib-display number-2d offset-right-5">{{ sluzba.pocet }}</span><div class="i-num"><div class="m-sign btn-sluzby-minus">-</div><div class="p-sign btn-sluzby-plus">+</div></div>
+                </div>
+                <div class="row-data border-left slu-actions align-cm {{ sluzbaStornoClass }}">
+                    
+                        <span class="number-2d align-cm offset-right-5">{{ sluzba.pocetStorno }}</span>
+                        <div class="i-num"><div class="m-sign btn-sluzby-storno-minus">-</div><div class="p-sign btn-sluzby-storno-plus">+</div><div class="clearfix"></div></div>
+                    
+                </div>
+            </div>
+        {% else %}
+            <div class="row row-data">
+                <div>Žádné objednané služby</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {# NEOBJEDNANE SLUZBY #}
+
+    <div class="block {{ toggleSectionClass }}" id="block-neobjednane-sluzby">
+        <div class="row row-header">
+            <div>Neobjednané služby</div>
+        </div>
+        {% for sluzba in objednavka.sluzbaHolder.neobjednaneSluzby %}
+            <div class="row" data-sluzba-id="{{ sluzba.id_cena }}">
+                <div class="row-data">{{ sluzba.nazev_ceny }}</div>
+                <div class="row-data slu-price">
+                    <span class="ib-display castka align-r" title="{{ sluzba.use_pocet_noci ? 'násobí se poètem nocí' : 'NEnásobí se poètem nocí' }}">{{ sluzba.castka|number_format(0, ',', ' ') ~ ' ' ~ sluzba.mena }}</span>
+                    <span class="math-sign">×</span>
+                    <input class="min trans-400-lin" type="text" name="pocet" placeholder="Poèet" title="Poèet">
+                </div>
+                <div class="border-left slu-actions align-cm"><input type="button" value="Pøidat" class="btn-sluzby-add"/></div>
+            </div>
+        {% else %}
+            <div class="row row-data">
+                <div>Žádné neobjednané služby</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {# VYTVORENI NOVE SLUZBY #}
+
+    <div class="block">
+        <form method="post" action="/admin/objednavky.php?page=sluzby&action=create&idObjednavka={{ objednavka.id }}" id="frm-sluzby-create">
+            <div class="row row-create-action">
+                <input type="text" name="nazev-sluzby" placeholder="Název služby" title="Název služby" class="req trans-400-lin"/>
+                <input type="text" name="castka" placeholder="Èástka" title="Èástka" class="req trans-400-lin"/>
+                <span>×</span>
+                <input type="text" name="pocet" placeholder="Poèet" title="Poèet" class="req trans-400-lin">
+                <input type="checkbox" name="use-pocet-noci" id="sluzby-upn" value="1"><label for="sluzby-upn"><span></span>násobit nocemi</label>
+
+                <div class="slu-add">
+                    <input type="button" value="Pøidat" id="btn-sluzby-create"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

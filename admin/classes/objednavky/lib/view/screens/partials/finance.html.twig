@@ -1,0 +1,152 @@
+{# fakura prodejce #}
+{% set fakturaProdejce = objednavka.fakturaProdejce %}
+{% set prodejceNazev = objednavka.prodejce.nazev %}
+{# fakury #}
+{% set faktury = objednavka.fakturyHolder.faktury %}
+{# platby #}
+{% set platby = objednavka.platbyHolder.platby %}
+{# toggle section #}
+{% set toggleSectionClass = SECTION_OBJEDNAVKA_EDIT_BLOCK_FAKTURY_PLATBY in toggleSekce ? 'toggleOpen' : 'toggleClosed' %}
+
+<div class="section" id="section-finance">
+    <div class="header toggle bg-l-brown">
+        <span class="btn-toggle trans-200-eio">»</span>
+
+        <div class="title">Finance</div>
+    </div>
+
+    {# CELKOVA CENA/STORNO/PROVIZE #}
+
+    <div class="block">
+        <div class="row">
+            <div class="title finance-celkem bg-important">Celková cena objednávky</div>
+            <div class="value bg-important"><span class="fw-bold">{{ objednavka.calcFinalniCenaObjednavky|number_format(0, ',', ' ') }} Kè</span> (<span class="green" title="Uhrazeno">{{ objednavka.calcUhrazeno|number_format(0, ',', ' ') ~ ' Kè' }}</span> / <span class="red" title="Zbývá uhradit - záporné èíslo znaèí pøeplatek">{{ objednavka.calcZbyvaUhradit|number_format(0, ',', ' ') ~ ' Kè' }}</span>)</div>
+            {% if objednavka.storno_poplatek %}
+                <div class="title finance-storno bg-important border-left">Storno poplatek</div>
+                <div class="value finance-storno-val bg-important">{{ objednavka.storno_poplatek|number_format(0, ',', ' ') ~ ' Kè' }}</div>
+            {% endif %}
+            {% if objednavka.prodejce is not null %}
+                <div class="title finance-provize bg-important border-left">Provize</div>
+                <div class="value finance-provize-val bg-important">{{ objednavka.calcProvize|number_format(0, ',', ' ') ~ ' Kè' ~ (objednavka.provize_vc_dph ? ' (vèetnì DPH)' : ' (bez DPH)') }}</div>
+                <div class="value finance-provize-edit bg-important">
+                    <button id="btn-provize-edit" class="btn-round btn-xsmall btn-white-pink icon-edit" title="Aktualizovat èástku ze služby zájezdu"></button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {# FAKTURY A PLATBY #}
+
+    <div class="block-group {{ toggleSectionClass }}" id="block-faktury-platby">
+
+        {# FAKTURA PROVIZE #}
+
+        {% if fakturaProdejce %}
+            <div class="block">
+                <div class="row row-header">
+                    <div class="finance-name">Faktura provize</div>
+                    <div class="finance-price">Èástka</div>
+                    <div>Pøíjemce</div>
+                    <div class="finance-dates">Vystaveno</div>
+                    <div class="finance-last"></div>
+                    <div class="border-left finance-actions">Edit</div>
+                </div>
+                <div class="row" data-faktura-prodejce-id="{{ fakturaProdejce.id }}">
+                    <div class="row-data finance-name">{{ fakturaProdejce.cislo_faktury }} (<a target="_blank" href="{{ FAKTURA_PROVIZE_URL ~ '/' ~ fakturaProdejce.pdfFilename }}">pdf</a>)</div>
+                    <div class="row-data finance-price">{{ fakturaProdejce.celkova_castka|number_format(0, ',', ' ') ~ ' ' ~ fakturaProdejce.mena }}</div>
+                    <div class="row-data">{{ prodejceNazev }}</div>
+                    <div class="row-data finance-dates">{{ fakturaProdejce.datum_vystaveni|date(CZECH_DATE_FORMAT) }}</div>
+                    {% if fakturaProdejce.zaplaceno == FAKTURA_ZAPLACENO_ANO %}
+                        <div class="row-data finance-last green">uhrazena</div>
+                    {% else %}
+                        <div class="row-data finance-last red">neuhrazena</div>
+                    {% endif %}
+                    <div class="actions border-left align-cm finance-actions"><input type="button" value="Zaplatit" class="btn-faktura-provize-pay"/></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {# FAKTURY #}
+
+        <div class="block">
+            <div class="row row-header">
+                <div class="finance-name">Faktury</div>
+                <div class="finance-price">Èástka</div>
+                <div>Pøíjemce</div>
+                <div class="finance-dates">Vystaveno/Splatnost</div>
+                <div class="finance-last"></div>
+                <div class="finance-actions"></div>
+            </div>
+            {% for faktura in faktury %}
+                {% set prijemceText = faktura.prijemce_text|replace({'  ': ''})%}
+                <!--|striptags|slice(11) -->
+                <div class="row">
+                    <div class="row-data finance-name"><a target="_blank" href="faktury.php?id_faktury={{ faktura.id }}&typ=faktury&pozadavek=edit">{{ faktura.cislo_faktury }}</a> (<a target="_blank" href="ts_faktura.php?id_faktury={{ faktura.id }}">pdf</a>)</div>
+                    <div class="row-data finance-price">{{ faktura.celkova_castka|number_format(0, ',', ' ') ~ ' ' ~ faktura.mena }}</div>
+                    <div class="row-data" title="{{ prijemceText }}">{{ prijemceText|truncate(75) }}</div>
+                    <div class="row-data finance-dates">{{ faktura.datum_vystaveni|date(CZECH_DATE_FORMAT) ~ '/' ~ faktura.datum_splatnosti|date(CZECH_DATE_FORMAT) }}</div>
+                    {% if faktura.zaplaceno %}
+                        <div class="row-data finance-last green">uhrazena</div>
+                    {% else %}
+                        <div class="row-data finance-last red">neuhrazena</div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="row row-data">
+                    <div>Žádné faktury</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# PLATBY #}
+
+        <div class="block">
+            <div class="row row-header">
+                <div class="finance-name">Platby</div>
+                <div class="finance-price">Èástka</div>
+                <div class="finance-multidates">Vystaveno/Splatnost/Uhrazeno</div>
+                <div>Èíslo Dokladu</div>
+                <div class="finance-last">Zpùsob úhrady</div>
+                <div class="border-left finance-actions">Edit</div>
+            </div>
+            {% for platba in platby %}
+                <div class="row" data-platba-id="{{ platba.id }}" data-platba-vystaveno="{{ platba.vystaveno|date(CZECH_DATE_FORMAT) }}">
+                    <div class="row-data finance-name">{{ platba.id ~ ' (' ~ platba.typ_dokladu ~ ')' }}</div>
+                    <div class="row-data finance-price">{{ platba.castka|number_format(0, ',', ' ') ~ ' Kè' }}</div>
+                    <div class="row-data finance-multidates">{{ platba.vystaveno|date(CZECH_DATE_FORMAT) ~ '/' ~ (platba.splatit_do ? platba.splatit_do|date(CZECH_DATE_FORMAT) : '-') ~ '/' ~ (platba.splaceno ? platba.splaceno|date(CZECH_DATE_FORMAT) : '-') }}</div>
+                    <div class="row-data">{{ platba.cislo_dokladu }}</div>
+                    <div class="row-data finance-last">{{ platba.zpusob_uhrady }}</div>
+                    <div class="actions align-cm border-left action-btns finance-actions"><input type="button" value="Upravit" class="btn-platba-edit"/><input type="button" value="Odebrat" class="btn-platba-remove"/></div>
+                </div>
+            {% else %}
+                <div class="row row-data">
+                    <div>Žádné platby</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# VYTVORIT PLATBU #}
+
+        <form method="post" action="objednavky.php?page=platby&action=add&idObjednavka={{ objednavka.id }}" id="frm-platba-add">
+            <input type="hidden" name="idObjednavka" value="{{ objednavka.id }}"/>
+            <div class="block">
+                <div class="row row-create-action">
+                    <input type="text" name="cislo-dokladu" placeholder="Èíslo" title="Èíslo" class="trans-400-lin"/>
+                    <select name="typ-dokladu" class="req  trans-400-lin" title="Typ dokladu">
+                        <option value="prijmovy">pøíjmový doklad</option>
+                        <option value="vydajovy">výdajový doklad</option>
+                    </select>
+                    <input type="text" name="castka" class="req  trans-400-lin" placeholder="Èástka" title="Èástka"/>
+                    <input type="text" name="splatnost" class="trans-400-lin calendar-ymd" placeholder="Splatnost" title="Splatnost"/>
+                    <input type="text" name="uhrazeno" class="trans-400-lin calendar-ymd" placeholder="Uhrazeno" title="Uhrazeno"/>
+                    <input type="text" name="zpusob-uhrady" class="trans-400-lin" placeholder="Zpùsob úhrady" title="Zpùsob úhrady"/>
+
+                    <div class="finance-add">
+                        <input type="button" value="Pøidat platbu" id="btn-platba-add"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<div id="popup">
+    <div class="header">Header</div>
+    <div class="body">
+        <div class="row">
+            <label for="stav-stav-objednavky">Stav</label>
+            <select name="stav-stav-objednavky" id="stav-stav-objednavky">
+                {% for stav in mozneStavy %}
+                    <option value="{{ stav }}">{{ staticCall('ViewUtils', 'objednavkaStavNoToString', [stav]) }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row">
+            <label for="stav-storno-poplatek">Storno poplatek</label>
+            <input type="text" name="stav-storno-poplatek" id="stav-storno-poplatek"/>
+        </div>
+        <div class="row">
+            <label for="stav-storno-poplatek-ck">Storno poplatek CK</label>
+            <input type="text" name="stav-storno-poplatek-ck" id="stav-storno-poplatek-ck"/>
+        </div>
+        <div class="row">
+            <label for="user-titul">Titul</label>
+            <input type="text" name="user-titul" id="user-titul"/>
+        </div>
+        <div class="row">
+            <label for="user-jmeno" class="required">Jméno</label>
+            <input type="text" name="user-jmeno" id="user-jmeno" required/>
+        </div>
+        <div class="row">
+            <label for="user-prijmeni" class="required">Pøíjmení</label>
+            <input type="text" name="user-prijmeni" id="user-prijmeni" required/>
+        </div>
+        <div class="row">
+            <label for="user-datum-narozeni">Datum narození</label>
+            <input type="text" name="user-datum-narozeni" id="user-datum-narozeni"/>
+        </div>
+        <div class="row">
+            <label for="user-rodne-cislo">Rodné èíslo</label>
+            <input type="text" name="user-rodne-cislo" id="user-rodne-cislo"/>
+        </div>
+        <div class="row">
+            <label for="user-email">Email</label>
+            <input type="text" name="user-email" id="user-email"/>
+        </div>
+        <div class="row">
+            <label for="user-telefon">Telefon</label>
+            <input type="text" name="user-telefon" id="user-telefon"/>`
+        </div>
+        <div class="row">
+            <label for="user-cislo-op">Èíslo OP</label>
+            <input type="text" name="user-cislo-op" id="user-cislo-op"/>
+        </div>
+        <div class="row">
+            <label for="user-cislo-pasu">Èíslo pasu</label>
+            <input type="text" name="user-cislo-pasu" id="user-cislo-pasu"/>
+        </div>
+        <div class="row">
+            <label for="user-ulice">Ulice</label>
+            <input type="text" name="user-ulice" id="user-ulice"/>
+        </div>
+        <div class="row">
+            <label for="user-mesto">Mìsto</label>
+            <input type="text" name="user-mesto" id="user-mesto"/>
+        </div>
+        <div class="row">
+            <label for="user-psc">PSÈ</label>
+            <input type="text" name="user-psc" id="user-psc"/>
+        </div>
+        <div class="row">
+            <label for="platba-cislo-dokladu">Èíslo dokladu</label>
+            <input type="text" name="platba-cislo-dokladu" id="platba-cislo-dokladu"/>
+        </div>
+        <div class="row">
+            <label for="platba-typ-dokladu" class="required">Typ dokladu</label>
+            <select name="platba-typ-dokladu" id="platba-typ-dokladu">
+                <option value="prijmovy">pøíjmový doklad</option>
+                <option value="vydajovy">výdajový doklad</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="platba-castka" class="required">Èástka</label>
+            <input type="text" name="platba-castka" id="platba-castka"/>
+        </div>
+        <div class="row">
+            <label for="platba-splatnost-do">Splatnost do</label>
+            <input type="text" name="platba-splatnost-do" id="platba-splatnost-do"/>
+        </div>
+        <div class="row">
+            <label for="platba-uhrazeno">Uhrazeno</label>
+            <input type="text" name="platba-uhrazeno" id="platba-uhrazeno"/>
+        </div>
+        <div class="row">
+            <label for="platba-zpusob-uhrady">Zpùsob úhrady</label>
+            <input type="text" name="platba-zpusob-uhrady" id="platba-zpusob-uhrady"/>
+        </div>
+        <div class="row">
+            <textarea name="ts-poznamky" id="ts-poznamky" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-tajne-poznamky" id="ts-tajne-poznamky" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-doprava-cs" id="ts-doprava-cs" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-stravovani-cs" id="ts-stravovani-cs" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row">
+            <textarea name="ts-ubytovani-cs" id="ts-ubytovani-cs" cols="60" rows="15"></textarea>
+        </div>
+        <div class="row actions">
+            <input type="button" value="Uložit" name="save" class="btn-small btn-round btn-green"/>
+            <input type="button" value="Zrušit" name="cancel" class="btn-small btn-round btn-white"/>
+        </div>
+    </div>
+</div>
+<div id="lightbox"></div>
