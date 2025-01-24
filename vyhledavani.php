@@ -1,5 +1,26 @@
 <?php
 
+function isDBAccessNeeded($filePath) {
+    //FileCreatedMoreThan15MinutesAgo
+    // Check if the file exists
+    if (file_exists($filePath)) {
+        // Get the file's creation time
+        $fileCreationTime = filectime($filePath);
+
+        // Get the current time
+        $currentTime = time();
+
+        // Calculate the difference between current time and file creation time
+        $timeDifference = $currentTime - $fileCreationTime;
+
+        // Return true if the file was created more than 15 minutes ago (900 seconds)
+        return $timeDifference > 900;
+    } else {
+        // File does not exist
+        return false;
+    }
+}
+
 
 require_once 'vendor/autoload.php';
 
@@ -15,21 +36,28 @@ $countriesMenu = getCountriesMenu();
 $serialCol = new Serial_collection();
 
 #get all possible katalog menu fragments - based on ubytovani
-$katalog = getKatalogMenu();
-$jsonKatalog = json_encode($katalog);
-#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("data_katalog.json",$jsonKatalog,LOCK_EX);
-unset($jsonKatalog);
+if(isDBAccessNeeded("data_katalog.json")){
 
+    $katalog = getKatalogMenu();
+    $jsonKatalog = json_encode($katalog);
+    #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+    file_put_contents("data_katalog.json",$jsonKatalog,LOCK_EX);
+    unset($jsonKatalog);
+}else{
+    $jsonData = file_get_contents("data_katalog.json"); // Read JSON file
+    $katalog = json_decode($jsonData, true); // Convert JSON string to PHP array
+
+}
 
 #get portion of data with zajezdy_group
-$resZ = $serialCol->get_zajezdy_group();
-$zajezdyArr = mysqli_fetch_all($resZ, MYSQLI_ASSOC);
-$jsonDataZG = json_encode($zajezdyArr);
-#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("data_group.json",$jsonDataZG,LOCK_EX);
-unset($jsonDataZG);
-
+if(isDBAccessNeeded("data_group.json")){
+    $resZ = $serialCol->get_zajezdy_group();
+    $zajezdyArr = mysqli_fetch_all($resZ, MYSQLI_ASSOC);
+    $jsonDataZG = json_encode($zajezdyArr);
+    #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+    file_put_contents("data_group.json",$jsonDataZG,LOCK_EX);
+    unset($jsonDataZG);
+}
 #get portion of data with zajezdy
 /*
 
@@ -44,64 +72,67 @@ unset($jsonDataZ);
 
 
 //$resZZ = $serialCol->get_main_zeme_serial();
-$resZZ = $serialCol->get_all_zeme_serial();
-$zemeDB = mysqli_fetch_all($resZZ, MYSQLI_ASSOC);
-#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-$zemeArr = [];
-foreach ($zemeDB as $key => $z) {
-    $ids = explode(",", $z["zId"]);
-    $names = explode(",", $z["zName"]);
-    
-    $zemeArr[$z["sId"]] = ["zId"=>$ids, "zName"=>$names];    
-    //$zemeArr[$z["sId"]] =  $z
-}    
-unset($zemeDB);
-$jsonDataZZ = json_encode($zemeArr);
-file_put_contents("serial_zeme.json",$jsonDataZZ,LOCK_EX);
-unset($jsonDataZZ);
-
-
-
-$resD = $serialCol->get_all_destinace_serial();
-$destDB = mysqli_fetch_all($resD, MYSQLI_ASSOC);
-$destArr = [];
-foreach ($destDB as $key => $d) {
-    $destArr[$d["sId"]] = $d;  
+if(isDBAccessNeeded("serial_zeme.json")){
+    $resZZ = $serialCol->get_all_zeme_serial();
+    $zemeDB = mysqli_fetch_all($resZZ, MYSQLI_ASSOC);
+    #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+    $zemeArr = [];
+    foreach ($zemeDB as $key => $z) {
+        $ids = explode(",", $z["zId"]);
+        $names = explode(",", $z["zName"]);
+        
+        $zemeArr[$z["sId"]] = ["zId"=>$ids, "zName"=>$names];    
+        //$zemeArr[$z["sId"]] =  $z
+    }    
+    unset($zemeDB);
+    $jsonDataZZ = json_encode($zemeArr);
+    file_put_contents("serial_zeme.json",$jsonDataZZ,LOCK_EX);
+    unset($jsonDataZZ);
 }
-unset($destDB);
-$jsonDataD = json_encode($destArr);
-file_put_contents("serial_destinace.json",$jsonDataD,LOCK_EX);
-unset($jsonDataD);
 
 
-
-$resT = $serialCol->get_all_tour_types();
-$tourTypesDB = mysqli_fetch_all($resT, MYSQLI_ASSOC);
-$tourTypesArr = [];
-foreach ($tourTypesDB as $key => $tt) {
-    $tourTypesArr[$tt["id_typ"]] = $tt;
+if(isDBAccessNeeded("serial_destinace.json")){
+    $resD = $serialCol->get_all_destinace_serial();
+    $destDB = mysqli_fetch_all($resD, MYSQLI_ASSOC);
+    $destArr = [];
+    foreach ($destDB as $key => $d) {
+        $destArr[$d["sId"]] = $d;  
+    }
+    unset($destDB);
+    $jsonDataD = json_encode($destArr);
+    file_put_contents("serial_destinace.json",$jsonDataD,LOCK_EX);
+    unset($jsonDataD);
 }
-unset($tourTypesDB);
-$jsonDataT = json_encode($tourTypesArr);
-#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("tour_types.json",$jsonDataT,LOCK_EX);
-unset($jsonDataT);
-//echo memory_get_peak_usage(true)."/".memory_get_usage(true)."\n";
+
+
+
+    $resT = $serialCol->get_all_tour_types();
+    $tourTypesDB = mysqli_fetch_all($resT, MYSQLI_ASSOC);
+    $tourTypesArr = [];
+    foreach ($tourTypesDB as $key => $tt) {
+        $tourTypesArr[$tt["id_typ"]] = $tt;
+    }
+    unset($tourTypesDB);
+    $jsonDataT = json_encode($tourTypesArr);
+    #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+    file_put_contents("tour_types.json",$jsonDataT,LOCK_EX);
+    unset($jsonDataT);
+    //echo memory_get_peak_usage(true)."/".memory_get_usage(true)."\n";
 
 
 
 
-$res = $serialCol->get_all_zeme();
-$zemeDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
-$countries = [];
-foreach ($zemeDB as $key => $z) {
-    $countries[$z["id_zeme"]] = array("id_zeme"=>$z["id_zeme"],"nazev"=>$z["nazev_zeme"],"nazev_web"=>$z["nazev_zeme_web"]);
-}
-unset($zemeDB);
-$jsonDataZM = json_encode($zemeArr);
-#TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
-file_put_contents("zeme.json",$jsonDataZM,LOCK_EX);
-unset($jsonDataZM);
+    $res = $serialCol->get_all_zeme();
+    $zemeDB = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    $countries = [];
+    foreach ($zemeDB as $key => $z) {
+        $countries[$z["id_zeme"]] = array("id_zeme"=>$z["id_zeme"],"nazev"=>$z["nazev_zeme"],"nazev_web"=>$z["nazev_zeme_web"]);
+    }
+    unset($zemeDB);
+    $jsonDataZM = json_encode($countries);
+    #TODO: dodelat nacitani z DB jen obcas - jinak nacitat z toho jsonu
+    file_put_contents("zeme.json",$jsonDataZM,LOCK_EX);
+    unset($jsonDataZM);
 
 
 $res = $serialCol->get_all_sport_zeme();
@@ -221,7 +252,7 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
       ),
     'katalog' => $katalog_hier_restr,
     'breadcrumbs' => array(
-        new Breadcrumb('Vyhledat zájezdy', '../vyhledat-zajezd.php')
+        new Breadcrumb('Vyhledat zájezdy', '/vyhledavani')
     ),
     'dates' => $filter_dates,
     'txt' => $filter_txt,
