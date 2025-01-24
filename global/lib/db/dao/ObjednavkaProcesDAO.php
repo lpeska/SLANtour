@@ -5,13 +5,13 @@ class ObjednavkaProcesDAO
 {
 
     /**
-     * @var DatabaseProvider
+     * @var DatabaseProviderUTF
      */
     private static $database;
 
     public static function init()
     {
-        self::$database = DatabaseProvider::get_instance();
+        self::$database = DatabaseProviderUTF::get_instance();
     }
 
     /**

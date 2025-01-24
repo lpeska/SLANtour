@@ -5,6 +5,7 @@ session_start();
 require_once "../global/lib/cfg/DatabaseConfig.php";
 
 require_once "../global/lib/db/DatabaseProvider.php";
+require_once "../global/lib/db/DatabaseProviderUTF.php";
 require_once "../global/lib/db/SQLQuery.php";
 require_once "../global/lib/db/dao/ObjednavkaProcesDAO.php";
 require_once "../global/lib/db/dao/sql/SQLBuilder.php";
