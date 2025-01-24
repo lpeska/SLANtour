@@ -1,0 +1,1169 @@
+/* CSS RESET */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* NAVIGACNI LISTA ---------------------------------------------------- */
+
+#order-body {
+    font: normal 14px/22px Arial, "Helvetica Neue", Helvetica, sans-serif;
+    width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#order-nav {
+    border-bottom: solid lightgray 1px;
+    display: inline-block;
+    line-height: 80px;
+    width: 100%;
+    /*background-color: #fbfbfb;*/
+    /*background-color: #F7F7F7;*/
+}
+
+#order-nav ul li {
+    min-height: 100px;
+    display: inline;
+    background: url('../img/order-arrow-r-blue.png') no-repeat 0 8px;
+    padding: 10px 0 10px 50px;
+    margin-right: 15px;
+    font-weight: bold;
+    color: gray;
+}
+
+#order-nav ul li:first-child {
+    padding-left: 15px;
+    background: none;
+}
+
+.step-number {
+    vertical-align: middle;
+    background-color: #7F92AA;
+    padding: 10px 15px;
+    margin-right: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+html.ie9 .step-number {
+    display: inline-block;
+    line-height: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+html.ie7 .step-number {
+    margin-top: -10px;
+}
+
+#order-nav ul li.step-active {
+    color: black !important;
+}
+
+#order-nav ul li.step-active .step-number {
+    background-color: #0a3b82;
+}
+
+#order-nav ul li.step-active a {
+    color: black;
+}
+
+#order-nav ul li a {
+    text-decoration: none;
+    color: gray;
+}
+
+#order-nav ul li a:hover {
+    text-decoration: underline;
+}
+
+#order-btns {
+    margin: 40px 0;
+    padding-bottom: 40px;
+}
+
+/* TLACITKA ---------------------------------------------------- */
+
+.btn-round {
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    text-decoration: none;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.btn-small {
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.btn-medium {
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.btn-green {
+    border: 1px solid #647E29 !important;
+    color: #ffffff;
+    background-color: #93BB39 !important;
+    font-weight: bold;
+}
+
+.btn-green:hover, .btn-green:focus, .btn-green:active, .btn-green.active {
+    color: #ffffff;
+    background-color: #abd33b !important;
+}
+
+.btn-white {
+    border: 1px solid darkgray !important;
+    color: black;
+    background-color: white !important;
+    font-weight: bold;
+}
+
+.btn-white:hover, .btn-white:focus, .btn-white:active, .btn-white.active {
+    color: black;
+    background-color: #f9f9f9 !important;
+}
+
+.btn-black {
+    border: 1px solid #3a3d43 !important;
+    color: white;
+    background-color: #3a3d43 !important;
+    font-weight: bold;
+}
+
+.btn-black:hover, .btn-black:focus, .btn-black:active, .btn-black.active {
+    color: white;
+    border: 1px solid #3a3d43 !important;
+    background-color: #7f7f7f !important;
+}
+
+.btn-arrow-r-white-medium {
+    padding-right: 30px;
+    background: url('../img/btn-arrow-r-white-medium.png') no-repeat 90% 50%;
+}
+
+.btn-arrow-l-black-small {
+    padding-left: 15px;
+    background: url('../img/btn-arrow-l-black-small.png') no-repeat 10% 48%;
+}
+
+/* FORM OTHERS ---------------------------------------------------- */
+
+.input-help {
+    font-size: 10px;
+    color: gray;
+    padding-left: 10px;
+    padding-right: 20%;
+}
+
+.calendar-ico {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    cursor: pointer;
+    width: 16px;
+    height: 12px;
+    background: url("../img/calendar-ico.png") 50% 50% no-repeat #DBDFE9;
+    border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
+    border: 1px solid #b2b2b2;
+}
+
+.calendar-ico:hover {
+    background-color: #7f7f7f !important;
+    border: 1px solid #7f7f7f !important;
+}
+
+/* FIELDSET ---------------------------------------------------- */
+
+fieldset, div.fieldset {
+    /*display: inline-block;*/
+    /*vertical-align: top;*/
+    text-align: left;
+    /*border: solid lightgray 1px;*/
+    padding: 10px 0 20px 0;
+}
+
+fieldset legend, div.fieldset div.legend {
+    width: 845px;
+    color: darkblue;
+    font-weight: bold;
+    background-color: #ECF5FE;
+    text-align: left;
+    padding: 5px 0 5px 5px;
+}
+
+fieldset label {
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+fieldset label:hover {
+    background-color: #f2faff;
+}
+
+fieldset label::after {
+    content: ' *';
+    color: red;
+}
+
+fieldset label.optional {
+    font-weight: normal;
+}
+
+fieldset label.optional::after {
+    content: '';
+}
+
+fieldset > div {
+    margin-bottom: 4px;
+}
+
+/* CHECKBOX (jsem ucastnikem) ---------------------------------------------------- */
+
+.checkbox label:hover {
+    background-color: #F2FAFF;
+}
+
+.checkbox label {
+    cursor: pointer !important;
+    position: absolute;
+    width: 15px !important;
+    height: 15px !important;
+    padding: 2px;
+    background: #DBDFE9;
+    border: 1px solid #b2b2b2;
+    margin-top: 1px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+html.ie7 .checkbox label, html.ie8 .checkbox label {
+    display: none;
+}
+
+.checkbox span {
+    vertical-align: middle;
+    padding-left: 30px;
+    font-size: 12px;
+}
+
+html.ie7 .checkbox span, html.ie8 .checkbox span {
+    padding-left: 10px;
+}
+
+.checkbox label:after {
+    opacity: 0;
+    content: '' !important;
+    position: absolute;
+    width: 6px;
+    height: 3px;
+    top: 5px;
+    left: 6px;
+    border: 2px solid #333;
+    border-top: none;
+    border-right: none;
+
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.checkbox input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+
+/* FLAGS ---------------------------------------------------- */
+
+#flag-widget {
+    display: inline-block;
+}
+
+/*html.ie7 #flag-widget {*/
+    /*display: inline;*/
+    /*margin-bottom: 6px;*/
+    /*margin-right: 4px;*/
+    /*zoom: 1;*/
+/*}*/
+
+.flag {
+    width: 20px;
+    height: 11px;
+    background: url('../img/flags.png') no-repeat;
+    display: none;
+}
+
+.flag-picker {
+    z-index: 1;
+    position: relative;
+    left: 6px;
+}
+
+.flag-selector {
+    margin-left: 5px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.flag-active {
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 6px;
+    /* selectable = false */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+html.ie7 #flag-widget {
+    display: none;
+}
+
+html.ie7 #telefon-pre {
+    margin-left: 0 !important;
+}
+
+html.ie7 #telefon {
+    width: 198px !important;
+}
+
+#select-flag {
+    border: 1px solid #9f9f9f;
+    background-color: #DBDFE9;
+    cursor: pointer;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    width: 47px;
+    height: 22px;
+    display: inline-block;
+    position: absolute;
+}
+
+#select-flag .select-triangle {
+    width: 0;
+    height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 6px solid black;
+    position: relative;
+    top: 9px;
+    left: 32px;
+}
+
+ul#country-selector {
+    display: none;
+    width: 263px;
+    height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    background-color: #DBDFE9;
+    margin-left: 274px;
+    font-size: 12px;
+    padding: 5px 0 5px 0;
+    z-index: 1;
+}
+
+ul#country-selector li {
+    width: 400px;
+    height: 18px;
+    cursor: pointer;
+}
+
+ul#country-selector li:hover {
+    background-color: #1e90ff;
+}
+
+.country-border {
+    border-bottom: solid 1px gray;
+    padding-bottom: 4px;
+}
+
+/* +/- WIDGET ---------------------------------------------------- */
+
+.i-num {
+    width: 50px;
+    /*height: 32px;*/
+}
+
+.i-num input {
+    border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+    border: 1px solid transparent;
+    background-color: #f6f8fb;
+    width: 18px;
+    height: 18px;
+    padding: 4px;
+    float: left;
+}
+
+.i-num input:hover, .i-num input:active, .i-num input:focus {
+    /*outline: 2px red dashed;*/
+    outline: none;
+}
+
+.p-m {
+    background-color: #f6f8fb;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.p-sign, .m-sign {
+    font-size: 12px;
+    float: left;
+    background-color: #3a3d43;
+    margin: 1px;
+    width: 20px;
+    height: 12px;
+    line-height: 12px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    vertical-align: middle;
+    outline: none;
+
+    /* selectable = false */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.p-sign {
+    border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+}
+
+.m-sign {
+    border-radius: 0 0 5px 0;
+    -moz-border-radius: 0 0 5px 0;
+    -webkit-border-radius: 0 0 5px 0;
+}
+
+.m-sign:hover, .p-sign:hover {
+    background-color: #7f7f7f;
+}
+
+/* COMMON ---------------------------------------------------- */
+
+body {
+    overflow-y: scroll;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.left {
+    text-align: left !important;
+}
+
+.right {
+    text-align: right !important;
+}
+
+.top {
+    vertical-align: top;
+}
+
+.center {
+    text-align: center !important;
+}
+
+.autopos {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-display {
+    display: none !important;
+}
+
+.display-ib {
+    display: inline-block !important;
+}
+
+.display-b {
+    display: block !important;
+}
+
+.il-bl {
+    display: inline-block;
+}
+
+strong, .strong {
+    font-weight: bold;
+}
+
+.popup-msg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    padding: 10px 15px;
+    -webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.35);
+    -moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.35);
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.35);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.35) !important;
+}
+
+.sys-msg {
+    font-weight: bold;
+    padding: 6px 10px 6px 10px;
+    margin-bottom: .5em;
+}
+
+.success {
+    border: solid .1em #d6e9c6;
+    color: #468847;
+    background-color: #dff0d8;
+}
+
+.error {
+    background-color: #ff514d;
+    border: solid 1px #ff514d;
+    color: white;
+}
+
+.warning {
+    background-color: #ff8a4f;
+    border: solid 1px #ff8a4f;
+    color: white;
+}
+
+.warning .text {
+    margin-bottom: 15px;
+}
+
+/* OFFSETS ----------------------------------------------------
+ioff = inner (padding)
+off = outer (margin)
+t/r/l/b = top/right/left/bottom
+[number] = [number]px
+*/
+
+.ioff-t-1 {
+    padding-top: 1px !important;
+}
+
+.off-t-20 {
+    margin-top: 20px !important;
+}
+
+.off-b-7 {
+    margin-bottom: 7px !important;
+}
+
+.off-r-10 {
+    margin-right: 10px !important;
+}
+
+/* HEADER ---------------------------------------------------- */
+
+#header {
+    background-color: #D4EAF3;
+    font-size: 20px;
+    padding: 15px;
+    color: #0b4974;
+    border-bottom: solid lightgray 1px;
+    font-weight: bold;
+}
+
+#header .agentura {
+    font-size: 11px;
+    text-align: right;
+    padding: 10px 10px 0 0;
+}
+
+/* ZAJEZD (validace) ---------------------------------------------------- */
+
+form#frm-zajezd .val-err, form#frm-zajezd .val-wrn {
+    font-weight: bold;
+    display: none;
+    position: relative;
+    color: white;
+    height: 20px;
+    font-size: 12px;
+    margin-left: 24px;
+    box-shadow: -10px 5px 10px rgba(11, 28, 41, 0.40);
+    padding: 4px 8px 4px 0;
+}
+
+form#frm-zajezd .val-err {
+    background-color: #ff514d;
+}
+
+form#frm-zajezd .val-wrn {
+    background-color: #ff8a4f;
+}
+
+form#frm-zajezd .val-wrn.height-44 {
+    padding: 4px 8px;
+    height: 44px;
+}
+
+form#frm-zajezd .val-err:after, form#frm-zajezd .val-wrn:after {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 14px solid transparent;
+}
+
+form#frm-zajezd .val-err:after {
+    border-right-color: #ff514d;
+}
+
+form#frm-zajezd .val-wrn:after {
+    border-right-color: #ff8a4f;
+}
+
+/* ZAJEZD (info) ---------------------------------------------------- */
+
+#order-zajezd-info {
+    background-color: #D4EAF3;
+    /*background-color: #04ACED;*/
+    padding: 20px;
+    color: #3a3a3a;
+    /*color: #000000;*/
+    text-align: left;
+    font-size: 14px;
+    border-bottom: solid lightgray 1px;
+}
+
+#order-zajezd-info .info {
+    width: 70%;
+}
+
+#order-zajezd-info .header {
+    font-weight: bold;
+    font-size: 18px;
+    color: #0b4974;
+    /*color: white;*/
+    margin-bottom: 10px;
+}
+
+#order-zajezd-info .row {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+#order-zajezd-info .row-nospace {
+    margin-bottom: 0;
+}
+
+#order-zajezd-info .text {
+    width: 20%;
+    float: left;
+    margin: 2px 10px 2px 2px;
+}
+
+#order-zajezd-info .calendar-ico {
+    height: 18px;
+    margin: 0 2px 0 0;
+    padding: 4px;
+}
+
+#order-zajezd-info .image {
+    width: 20%;
+    margin-right: 20px;
+}
+
+#order-zajezd-info .image img {
+    width: 150px;
+    max-height: 150px;
+    border: solid 1px #909090;
+    /*border: solid 1px #f4f4f4;*/
+}
+
+#order-zajezd-info #datepicker {
+    width: 155px;
+    height: 20px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 3px;
+    background-color: #F6F8FB;
+    border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    -webkit-border-radius: 3px 0 0 3px;
+    border: 1px solid #F6F8FB;
+    outline: none;
+    cursor: pointer;
+}
+
+/* ZAJEZD (sluzby...) ---------------------------------------------------- */
+
+table.order {
+    margin-top: 20px;
+    width: 100%;
+}
+
+table.order th {
+    height: 35px;
+    vertical-align: middle;
+    font-weight: bold;
+    color: #1f1f1f;
+    font-size: 14px;
+    text-align: left;
+    padding: 0 10px;
+}
+
+table.order td {
+    border-top: 1px solid #ffffff;
+    background-color: #E9E9E9;
+    padding: 8px 10px;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+table.order td.price {
+    color: #F17D24;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+table.order td span.pocet-noci {
+    padding: 0 8px 0 8px;
+}
+
+.order-sluzby th {
+    background-color: #F6E796;
+}
+
+.order-priplatky th {
+    background-color: #F6E796;
+}
+
+.order-last-minute th {
+    background-color: #f6caa3;
+}
+
+.order-odjezd th {
+    background-color: #9db6f6;
+}
+
+.order-slevy th {
+    background-color: #D3E58F;
+}
+
+table.order-total-price td {
+    /*background-color: #04ACED;*/
+    background-color: #D4EAF3;
+}
+
+table.order-total-price .lbl {
+    font-weight: bold;
+    font-size: 20px;
+    /*color: #ffffff;*/
+    color: #0b4974;
+}
+
+table.order-total-price .price {
+    font-size: 20px !important;
+    /*color: white !important;*/
+}
+
+.sl-status {
+    margin-right: 5px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.sl-status-green {
+    color: #228B22;
+}
+
+.sl-status-orange {
+    color: #5278f0;
+}
+
+.sl-status-red {
+    color: #dc4a49;
+}
+
+/* OSOBNI UDAJE (ucastnik) ---------------------------------------------------- */
+
+form#frm-osobni-udaje div.ucastnik label {
+    width: 7%;
+}
+
+form#frm-osobni-udaje div.ucastnik label:hover {
+    background-color: transparent;
+}
+
+form#frm-osobni-udaje div.ucastnik input {
+    width: 80px;
+}
+
+form#frm-osobni-udaje div.ucastnik input.input-large {
+    width: 165px;
+}
+
+form#frm-osobni-udaje div.ucastnik {
+    margin-bottom: 0;
+    padding: 7px 0 7px 0;
+    border-bottom: #ebebeb 1px dashed;
+}
+
+form#frm-osobni-udaje div.ucastnik:hover {
+    background-color: #F2FAFF;
+}
+
+form#frm-osobni-udaje div.ucastnik label {
+    font-size: 11px;
+}
+
+form#frm-osobni-udaje div[id^='ucastnik-optional-'] {
+    display: none;
+    margin-top: 4px;
+}
+
+form#frm-osobni-udaje .btn-ucastnici {
+    margin-left: 85px;
+    margin-bottom: 2px;
+    width: 92px;
+
+    /* selectable = false */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* OSOBNI UDAJE (udaje objednatel) ---------------------------------------------------- */
+
+form#frm-osobni-udaje input, form.order label {
+    display: inline-block;
+}
+
+form#frm-osobni-udaje label {
+    text-align: right;
+    width: 30%;
+    margin-right: 15px;
+    padding: 2px;
+}
+
+form#frm-osobni-udaje input[type=text], form#frm-osobni-udaje input[type=email] {
+    width: 255px;
+    padding: 3px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px solid #b2b2b2;
+    background-color: #dbdfe9;
+}
+
+form#frm-osobni-udaje #telefon-pre {
+    width: 40px;
+    margin-right: 6px;
+    padding-left: 2px;
+    margin-left: 34px;
+}
+
+form#frm-osobni-udaje #telefon {
+    width: 140px;
+}
+
+form#frm-osobni-udaje #psc {
+    width: 50px;
+}
+
+form#frm-osobni-udaje #datum-narozeni-day {
+    width: 30px;
+    margin-right: 6px;
+}
+
+form#frm-osobni-udaje #datum-narozeni-month {
+    width: 80px;
+    height: 24px;
+    overflow: hidden;
+    background: #DBDFE9;
+    border: 1px solid #b2b2b2;
+    margin-right: 6px;
+    cursor: pointer;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+form#frm-osobni-udaje #datum-narozeni-year {
+    width: 117px;
+}
+form#frm-osobni-udaje #cislo-dokladu {
+    width: 120px;
+}
+form#frm-osobni-udaje #rodne-cislo {
+    width: 120px;
+}
+
+form#frm-osobni-udaje label.optional:after {
+    content: '' !important;
+}
+
+form#frm-osobni-udaje #ucastnik, form#frm-osobni-udaje #souhlas {
+    display: none;
+}
+
+html.ie7 form#frm-osobni-udaje #ucastnik, html.ie8 form#frm-osobni-udaje #ucastnik {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+form#frm-osobni-udaje #newsletter {
+    display: none;
+}
+
+html.ie7 form#frm-osobni-udaje #newsletter, html.ie8 form#frm-osobni-udaje #newsletter {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* OSOBNI UDAJE (ostatni) ---------------------------------------------------- */
+
+form#frm-osobni-udaje #poznamka-wrapper {
+    padding: 0 20px 20px 20px;
+}
+
+form#frm-osobni-udaje #poznamka {
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    height: 120px;
+    padding: 5px;
+    border-color: transparent;
+    background-color: #dbdfe9;
+    width: 100%;
+}
+
+form#frm-osobni-udaje #legend {
+    font-style: italic;
+    font-size: 12px;
+    padding-top: 10px;
+    padding-left: 20px;
+    border-top: solid lightgray 1px;
+}
+
+form#frm-osobni-udaje #legend span {
+    color: red;
+    margin-right: 4px;
+}
+
+/* OSOBNI UDAJE (validace) ---------------------------------------------------- */
+
+form#frm-osobni-udaje .val-err {
+    display: inline-block;
+    margin-left: 30%;
+    padding-left: 20px;
+    font-size: 12px;
+    color: #dd4b39;
+}
+
+form#frm-osobni-udaje .val-err-border {
+    border: 1px solid #dd4b39 !important;
+}
+
+form#frm-osobni-udaje .val-err-uc {
+    display: inline-block;
+    padding-left: 20px;
+    font-size: 12px;
+    color: #dd4b39;
+}
+
+form#frm-osobni-udaje .val-err-uc-border {
+    border: 1px solid #dd4b39 !important;
+}
+
+form#frm-osobni-udaje .val-warn {
+    display: inline-block;
+    margin-left: 30%;
+    padding-left: 20px;
+    font-size: 12px;
+    color: #ddaf4b;
+}
+
+form#frm-osobni-udaje .val-warn-border {
+    border: 1px solid #ddaf4b !important;
+}
+
+#val-fail {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* ZPUSOB PLATBY (vyber) ---------------------------------------------------- */
+
+#list-platba {
+    list-style-type: none;
+    text-align: left;
+    padding: 20px 0 20px 0;
+}
+
+#list-platba div {
+    padding-left: 30%;
+    margin-bottom: 6px;
+}
+
+#list-platba .ico {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+#list-platba .method-h {
+    background: url("../img/platby/hotove.png") no-repeat transparent;
+}
+
+#list-platba .method-bp {
+    background: url("../img/platby/prevodem.png") no-repeat transparent;
+}
+
+#list-platba .method-c {
+    background: url("../img/platby/kartou.png") no-repeat transparent;
+}
+
+#list-platba .method-pp {
+    background: url("../img/platby/slozenkou.png") no-repeat transparent;
+}
+
+#list-platba label {
+    height: 20px;
+    line-height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 2px;
+    width: 90%;
+}
+
+#list-platba .text {
+    float: left;
+    margin-left: 10px;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+#list-platba label:hover {
+    background-color: #F2FAFF;
+}
+
+#list-platba input[type=radio] {
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#platba-info {
+    font-size: 12px;
+    padding-left: 40px;
+}
+
+/* SOUHRN (tables) ---------------------------------------------------- */
+
+table.order-recap th {
+    background-color: #ECF5FE;
+}
+
+table.order-recap td {
+    background-color: #f5f5f5;
+}

@@ -43,9 +43,9 @@ class DatabaseProvider
             $this->conn = new PDO('mysql:host=' . DatabaseConfig::DB_SERVER . ';dbname=' . DatabaseConfig::DB_NAZEV, DatabaseConfig::DB_JMENO, DatabaseConfig::DB_HESLO);
             $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-            $this->conn->exec("SET character_set_results=cp1250;");
+            $this->conn->exec("SET character_set_results=UTF8;");
             $this->conn->exec("SET character_set_connection=UTF8;");
-            $this->conn->exec("SET character_set_client=cp1250;");
+            $this->conn->exec("SET character_set_client=UTF8;");
         } catch (PDOException $ex) {
             echo "DatabaseProvider->connect() - " . $ex->getTraceAsString();
         }

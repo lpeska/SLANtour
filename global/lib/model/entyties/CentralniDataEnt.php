@@ -26,7 +26,7 @@ class CentralniDataEnt
         $this->nazev = $nazev;
         $this->text = $text;
         //je treba se zbavit const [$id_objednavka] v textu platebnich metod a nahradit to necim inteligentnejsim
-        $this->text = str_replace('[$id_objednavka]', "<i>bude doplnìno po dokonèení objednávky</i>", $this->text);
+        $this->text = str_replace('[$id_objednavka]', "<i>bude doplnÄ›no po dokonÄenÃ­ objednÃ¡vky</i>", $this->text);
     }
 
     //todo tohle je hnus- presunout nekam do view
@@ -34,23 +34,23 @@ class CentralniDataEnt
     {
         switch ($this->id) {
             case self::ID_PLATBA_HOTOVE:
-                $this->nazevWeb = 'Hotovì';
+                $this->nazevWeb = 'HotovÄ›';
                 $this->class = 'method-h';
                 break;
             case self::ID_PLATBA_PREVODEM:
-                $this->nazevWeb = 'Bankovním pøevodem';
+                $this->nazevWeb = 'BankovnÃ­m pÅ™evodem';
                 $this->class = 'method-bp';
                 break;
             case self::ID_PLATBA_SLOVENSKO:
-                $this->nazevWeb = 'Bankovním pøevodem v eurech na Slovensku';
+                $this->nazevWeb = 'BankovnÃ­m pÅ™evodem v eurech na Slovensku';
                 $this->class = 'method-bp';
                 break;
             case self::ID_PLATBA_KARTOU:
-                $this->nazevWeb = 'Platební kartou';
+                $this->nazevWeb = 'PlatebnÃ­ kartou';
                 $this->class = 'method-c';
                 break;
             case self::ID_PLATBA_SLOZENKOU:
-                $this->nazevWeb = 'Poštovní poukázkou';
+                $this->nazevWeb = 'PoÅ¡tovnÃ­ poukÃ¡zkou';
                 $this->class = 'method-pp';
                 break;
         }

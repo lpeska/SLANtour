@@ -460,7 +460,7 @@
 			const dateId = datePicker[datePicker.value].dataset.dateid;
 			const persons = $('#orderPerson')[0];
 			const personsNumber = persons.value;
-			window.location.href = "https://slantour.cz/objednavka-proces/index.php?page=zobrazit&src_web=slantour.cz&id_zajezd=" + dateId + "&pocet-osob=" + personsNumber;
+			window.location.href = "/objednavka-proces/index.php?page=zobrazit&src_web=slantour.cz&id_zajezd=" + dateId + "&pocet-osob=" + personsNumber;
 		}
 	});
 

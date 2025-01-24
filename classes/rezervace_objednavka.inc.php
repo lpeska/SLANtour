@@ -1,7 +1,7 @@
 <?php
 /** 
-* trida pro obslouzeni prichoziho formulare s objednávkou zájezdu
-* 	- zpracování objednávky má 2 fáze
+* trida pro obslouzeni prichoziho formulare s objednÃ¡vkou zÃ¡jezdu
+* 	- zpracovÃ¡nÃ­ objednÃ¡vky mÃ¡ 2 fÃ¡ze
 *	- po uspesne druhe fazi je objednavka ulozena do databaze
 * 	- odesle se e-mail tvurci serialu, na centralni e-mail systemu a potvrzeni klientovi
 */
@@ -30,7 +30,7 @@ class Rezervace_objednavka extends Generic_data_class{
 	private $array_osoby;
 	private $new_clients; //pole dotazu na vytvoreni novych klientu
 	private $id_clients; //pole id klientu
-	private $text_klienti; //vypis klientù do e-mailu
+	private $text_klienti; //vypis klientÅ¯ do e-mailu
 	private $text_ucastnici_klient;
 
 	private $stav;
@@ -91,7 +91,7 @@ class Rezervace_objednavka extends Generic_data_class{
 	
 		
 //------------------- KONSTRUKTOR -----------------
-	/**konstruktor tøídy na základì formuláøovıch dat odpovídajících tabulce objednavka*/
+	/**konstruktor tÅ™Ã­dy na zÃ¡kladÄ› formulÃ¡Å™ovÃ½ch dat odpovÃ­dajÃ­cÃ­ch tabulce objednavka*/
 	function __construct($typ_pozadavku, $id_serial, $id_zajezd, $upresneni_terminu_od, $upresneni_terminu_do){
 
 		//trida pro odesilani dotazu
@@ -113,7 +113,7 @@ class Rezervace_objednavka extends Generic_data_class{
 			$this->objednavajici_ca = $_SESSION["id_klient"];	
 		}else{
 			$this->objednavajici_ca = 0;
-			/*$this->chyba("Uivatel není správnì pøihlášen!");*/
+			/*$this->chyba("UÅ¾ivatel nenÃ­ sprÃ¡vnÄ› pÅ™ihlÃ¡Å¡en!");*/
 		}
                 
                 //echo $this->upresneni_terminu_od;
@@ -183,7 +183,7 @@ class Rezervace_objednavka extends Generic_data_class{
                         //print_r($_POST);
                         
                         if($_POST["src_web"]!=""){
-                            $this->src_web = "Objednávka z webu ".$this->check($_POST["src_web"]);
+                            $this->src_web = "ObjednÃ¡vka z webu ".$this->check($_POST["src_web"]);
                         }
                         $this->objednavajici_je_ucastnik = $this->check_int($_POST["objednavajici_je_ucastnik"]);
                     //nahravam dalsi osoby
@@ -210,11 +210,11 @@ class Rezervace_objednavka extends Generic_data_class{
 		$this->nazev_ubytovani_web = $this->check($nazev_ubytovani);
                 $this->pocet_osob = $_POST["pocet_osob"];
 		$zajezd = mysqli_fetch_array( $this->database->transaction_query($this->create_query("get_zajezd") ) )
-		 	or $this->chyba("Chyba pøi dotazu do databáze zájezd: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );                
+		 	or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze zÃ¡jezd: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );                
                 $this->id_zajezd = $zajezd["id_zajezd"];                
 	}
 
-/**prijima informace o jednotlivych sluzbach a sestavuje z nich èásti dotazu do databáze*/
+/**prijima informace o jednotlivych sluzbach a sestavuje z nich ÄÃ¡sti dotazu do databÃ¡ze*/
 	function add_to_query_cena_poznavaci($id_cena,$pocet,$typ_ceny){
 		//kontrola vstupnich dat
 		$id_cena = $this->check_int($id_cena);
@@ -263,7 +263,7 @@ class Rezervace_objednavka extends Generic_data_class{
 		}//if legal_data
 	}
 
-/**prijima informace o jednotlivych sluzbach a sestavuje z nich èásti dotazu do databáze*/
+/**prijima informace o jednotlivych sluzbach a sestavuje z nich ÄÃ¡sti dotazu do databÃ¡ze*/
 	function add_to_query_vstupenka_v_cene($id_vstupenky,$pocet,$kategorie,$cena){
 		//kontrola vstupnich dat
 		$id_vstupenky = $this->check_int($id_vstupenky);
@@ -279,7 +279,7 @@ class Rezervace_objednavka extends Generic_data_class{
                         $this->kategorie_vstup_v_cene[ $this->cislo_vstupenky_v_cene ] = $kategorie;
 		}//if legal_data
 	}
-/**prijima informace o jednotlivych sluzbach a sestavuje z nich èásti dotazu do databáze*/
+/**prijima informace o jednotlivych sluzbach a sestavuje z nich ÄÃ¡sti dotazu do databÃ¡ze*/
 	function add_to_query_vstupenka_k_doobjednani($id_vstupenky,$pocet,$kategorie){
 		//kontrola vstupnich dat
 		$id_vstupenky = $this->check_int($id_vstupenky);
@@ -297,17 +297,17 @@ class Rezervace_objednavka extends Generic_data_class{
 	/**kontrola zda poslane ceny (jako celek) splnuji vsechny pozadavky - napr. alespon u jedne pocet<>0*/		
 	function check_ceny(){
 		if(!$this->vyplnena_cena){
-				$this->chyba("Je tøeba vyplnt alespoò jednu slubu!");
+				$this->chyba("Je tÅ™eba vyplnt alespoÅˆ jednu sluÅ¾bu!");
 		}
 		if(!$this->get_error_message()){
 			if($this->typ_pozadavku == "osoby"){
-				$this->confirm("Poadované sluby byly zkontrolovány, prosím vyplnte údaje o pøihlášenıch osobách");
+				$this->confirm("PoÅ¾adovanÃ© sluÅ¾by byly zkontrolovÃ¡ny, prosÃ­m vyplnte Ãºdaje o pÅ™ihlÃ¡Å¡enÃ½ch osobÃ¡ch");
 			}else{
 				$this->confirm("");
 			}
 		}
 	}
-	/**prijima informace o jednotlivych osobach a sestavuje z nich èásti dotazu do databáze*/
+	/**prijima informace o jednotlivych osobach a sestavuje z nich ÄÃ¡sti dotazu do databÃ¡ze*/
 	function add_to_query_osoby(
 			$checkbox_id_klient, $select_id_klient, $input_id_klient,
 			$jmeno,$prijmeni, $titul, $email, $telefon, $datum_narozeni, $rodne_cislo, $cislo_pasu, $cislo_op,
@@ -318,7 +318,7 @@ class Rezervace_objednavka extends Generic_data_class{
 	
 		//kontrola vstupnich dat
 		
-		//pokud mám, naleznu id klienta
+		//pokud mÃ¡m, naleznu id klienta
 		//echo "osoba".$this->cislo_osoby."-id:".$checkbox_id_klient."-".$input_id_klient."-".$select_id_klient." \n";
 		
 		if($this->check_int($checkbox_id_klient)){
@@ -363,9 +363,9 @@ class Rezervace_objednavka extends Generic_data_class{
 		
 		if($this->legal_data_osoby($id_klient,$jmeno,$prijmeni,$titul,$email,$telefon,$datum_narozeni,$rodne_cislo,$cislo_pasu,$cislo_op,$ulice,$mesto,$psc)){				
 			
-			//objednávajícího vytvoríme ve finish()
+			//objednÃ¡vajÃ­cÃ­ho vytvorÃ­me ve finish()
 			if($id_klient!=0){
-				$create_new_client = 0; //znaèí zda mám vytvoøit nového klienta
+				$create_new_client = 0; //znaÄÃ­ zda mÃ¡m vytvoÅ™it novÃ©ho klienta
 				$this->id_clients[ $this->cislo_osoby ] = $id_klient;
                                 
                         //prvni osoba je zaroven objednavajici zajezdu - vytvorim update dotaz        
@@ -399,10 +399,10 @@ class Rezervace_objednavka extends Generic_data_class{
 	}
 
 
-	/** funkce pro finální zpracování 2. èásti formuláøe pro objednívku zájezdu
+	/** funkce pro finÃ¡lnÃ­ zpracovÃ¡nÃ­ 2. ÄÃ¡sti formulÃ¡Å™e pro objednÃ­vku zÃ¡jezdu
 	* - zkontroluje, zda lze zarezervovat kapacity
-	* - po prijmuti vsech dat vytvori cely dotaz a odesle ho do databáze
-	* - vytvoøí e-maily s potvrzením objednávky
+	* - po prijmuti vsech dat vytvori cely dotaz a odesle ho do databÃ¡ze
+	* - vytvoÅ™Ã­ e-maily s potvrzenÃ­m objednÃ¡vky
 	*/
         function finish() {
             //echo "finish ".$this->get_error_message();
@@ -414,7 +414,7 @@ class Rezervace_objednavka extends Generic_data_class{
                 $this->celkova_cena = 0;
                 //ziskani serialu z databaze
                 $zajezd = mysqli_fetch_array($this->database->transaction_query($this->create_query("get_zajezd")))
-                        or $this->chyba("Chyba pøi dotazu do databáze zájezd: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                        or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze zÃ¡jezd: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
                 
                 if ($zajezd["id_sablony_zobrazeni"]=="12" and $zajezd["nazev_ubytovani"] != "") {
                     $nazev_zajezd = $zajezd["nazev_ubytovani"] . " - " . $zajezd["nazev"];
@@ -427,7 +427,7 @@ class Rezervace_objednavka extends Generic_data_class{
 
                 if ($this->objednavajici_ca) {
                     $agentura = mysqli_fetch_array($this->database->transaction_query($this->create_query("get_agentura")))
-                            or $this->chyba("Chyba pøi dotazu do databáze agentura: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                            or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze agentura: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
 
                             $this->provizni_koeficient = $agentura["provizni_koeficient"];
                         
@@ -436,19 +436,19 @@ class Rezervace_objednavka extends Generic_data_class{
                 }
                 //ziskani maximalni slevu                
                 $data_slevy = $this->database->transaction_query($this->create_query("get_sleva"))
-                        or $this->chyba("Chyba pøi dotazu do databáze sleva: " . $this->create_query("get_sleva") . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                        or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze sleva: " . $this->create_query("get_sleva") . mysqli_error($GLOBALS["core"]->database->db_spojeni));
 
                 //ziskani jednotlivych cen
                 // echo $this->create_query("get_ceny");
                 $data_ceny = $this->database->transaction_query($this->create_query("get_ceny"))
-                        or $this->chyba("Chyba pøi dotazu do databáze ceny: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                        or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze ceny: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
 
                 //ziskani blackdays
                 $data_blackdays = $this->database->transaction_query($this->create_query("get_blackdays"))
-                        or $this->chyba("Chyba pøi dotazu do databáze blackdays: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                        or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze blackdays: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
 
                 $centralni_data = $this->database->query($this->create_query("get_centralni_data"))
-                        or $this->chyba("Chyba pøi dotazu do databáze central data: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                        or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze central data: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
 
                 //nacteme centralni data do pole
                 while ($row = mysqli_fetch_array($centralni_data)) {
@@ -469,7 +469,7 @@ class Rezervace_objednavka extends Generic_data_class{
                             $mena_slevy = "%";
                         } else {
                             $velikost_slevy = round($slevy["castka"] * $this->pocet_osob);
-                            $mena_slevy = "Kè/osoba";
+                            $mena_slevy = "KÄ/osoba";
                             $count_velikost_slevy = 0;
                         }
                         $this->dotaz_slevy = "INSERT INTO `objednavka_sleva` 
@@ -500,7 +500,7 @@ class Rezervace_objednavka extends Generic_data_class{
                 //slevy pro stale klienty
                 if ($_POST["pocet_slev"] >= 1) {
                     $i = 0;
-                    $this->poznamky .= "\n <strong>DALŠÍ POADAVKY:</strong>\n";
+                    $this->poznamky .= "\n <strong>DALÅ Ã POÅ½ADAVKY:</strong>\n";
                     while ($i <= $_POST["pocet_slev"]) {
                         $this->poznamky .= $this->check_slashes($_POST["sleva_" . $i]) . "\n";
                         $i++;
@@ -563,7 +563,7 @@ class Rezervace_objednavka extends Generic_data_class{
                         
                         if ($pocet != 0) {
                             $this->castka_ceny[$cislo_ceny] = $ceny["castka"];
-                            $this->mena_ceny[$cislo_ceny] ="Kè";
+                            $this->mena_ceny[$cislo_ceny] ="KÄ";
                             $this->use_pocet_noci_ceny[$cislo_ceny] = $ceny["use_pocet_noci"];
                             
                             //pridam do celkove ceny
@@ -581,7 +581,7 @@ class Rezervace_objednavka extends Generic_data_class{
                                     //procentuelni
                                     $this->provize += ($cena_sluzby * $ceny["vyse_provize"] / 100);
                                 } else {
-                                   // echo "spravny provize ceny v Kè,\n ";
+                                   // echo "spravny provize ceny v KÄ,\n ";
                                     $this->provize += ($ceny["vyse_provize"] * $pocet);
                                 }
                             }
@@ -591,7 +591,7 @@ class Rezervace_objednavka extends Generic_data_class{
 					<tr >
 						<th  align=\"left\" >".$this->name_of_typ_ceny($ceny["typ_ceny"])."</th>
 						<th  align=\"right\" >Cena</th>
-						<th  align=\"right\" >Poèet</th>
+						<th  align=\"right\" >PoÄet</th>
                                                 <th  align=\"right\" >Celkem</th>
 					</tr>
                                     ";
@@ -674,12 +674,12 @@ class Rezervace_objednavka extends Generic_data_class{
                     //updatuju kapacity jednotlivych cen
                     foreach ($update_kapacity as $i => $dotaz) {
                         $dotaz_kapacita = $this->database->query($dotaz)
-                                or $this->chyba("Chyba pøi dotazu do databáze kapacity: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                                or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze kapacity: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
                     }
                         //updatuju kapacity na toku
                         foreach ($this->query_tok_kapacity as $key => $query) {
                             $dotaz_kapacitaTOK = $this->database->query($query)
-	 				or $this->chyba("Chyba pøi dotazu do databáze: TOK".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
+	 				or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze: TOK".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
                         }                        
 		}else if($objednano_blackdays == 1){
                     $this->potvrzovaci_hlaska = $this->centralni_data["objednavka:blackdays"];
@@ -712,28 +712,28 @@ class Rezervace_objednavka extends Generic_data_class{
                 //print_r($this);
                 /* ----------------------------create objednavky-------------------------------- */
                 if (!$this->get_error_message()) {
-                    //nejprve vlozim do databaze objednávajícího a ziskam jeho id
+                    //nejprve vlozim do databaze objednÃ¡vajÃ­cÃ­ho a ziskam jeho id
                     $dotaz_objednavajici = $this->database->transaction_query($this->create_query("create_objednavajici"))
-                            or $this->chyba("Chyba pøi dotazu do databáze objednávající: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                            or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze objednÃ¡vajÃ­cÃ­: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
                     $this->id_klient = mysqli_insert_id($GLOBALS["core"]->database->db_spojeni);
 
 
                     //nejprve vlozim do databaze objednavku a ziskam jeji id
                     $dotaz_objednavka = $this->database->transaction_query($this->create_query("create_objednavka"))
-                            or $this->chyba("Chyba pøi dotazu do databáze objednávka: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$this->create_query("create_objednavka"));
+                            or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze objednÃ¡vka: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$this->create_query("create_objednavka"));
                     $id_objednavka = mysqli_insert_id($GLOBALS["core"]->database->db_spojeni);
                     $this->id_objednavka = $id_objednavka;
                     
-                    if($this->dotaz_slevy!=""){//chci vloit èasovou slevu
+                    if($this->dotaz_slevy!=""){//chci vloÅ¾it Äasovou slevu
                         $this->dotaz_slevy = str_replace("[id_objednavka]", $this->id_objednavka, $this->dotaz_slevy);
                         $this->dotaz_slevy = str_replace("[velikost_slevy]", $this->velikost_slevy, $this->dotaz_slevy);
                         $dotaz_slevy = $this->database->transaction_query($this->dotaz_slevy)
-                            or $this->chyba("Chyba pøi dotazu do databáze objednávka slevy: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$this->dotaz_slevy);
+                            or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze objednÃ¡vka slevy: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$this->dotaz_slevy);
                         $update_ceny = " update `objednavka` set `celkova_cena` = (`celkova_cena` - $this->velikost_slevy),
                                                         `zbyva_zaplatit` = (`zbyva_zaplatit` - $this->velikost_slevy)
                                                     where `id_objednavka` = $this->id_objednavka limit 1";
                         $dotaz_zmena_zaplatit = $this->database->transaction_query($update_ceny)
-                            or $this->chyba("Chyba pøi dotazu do databáze zmìna zaplatit: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$update_ceny);
+                            or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze zmÄ›na zaplatit: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$update_ceny);
                     }
                     
                     /* ----------------------------create cen objednavky-------------------------------- */
@@ -750,7 +750,7 @@ class Rezervace_objednavka extends Generic_data_class{
                     }
                     // echo $objednavka_cen;
                     $dotaz_ceny = $this->database->transaction_query($objednavka_cen)
-                            or $this->chyba("Chyba pøi dotazu do databáze objednávka ceny: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$objednavka_cen);
+                            or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze objednÃ¡vka ceny: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$objednavka_cen);
                     //echo $objednavka_cen;
                     
                         //vytvorim objednavku tok
@@ -767,12 +767,12 @@ class Rezervace_objednavka extends Generic_data_class{
                         if ($i == 1 and $this->objednavajici_je_ucastnik == 1) {
                             //update dotazm je treba dodat id_klienta
                             $dotaz_klient = $this->database->transaction_query($dotaz . $this->id_klient)
-                                    or $this->chyba("Chyba pøi dotazu do databáze klienti 1: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                                    or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze klienti 1: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
                             $this->id_clients[$i] = $this->id_klient;
                         } else {
 
                             $dotaz_klient = $this->database->transaction_query($dotaz)
-                                    or $this->chyba("Chyba pøi dotazu do databáze klienti 2: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                                    or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze klienti 2: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
                             //doplnim informace o id klientu
                             $this->id_clients[$i] = mysqli_insert_id($GLOBALS["core"]->database->db_spojeni);
                         }
@@ -804,7 +804,7 @@ class Rezervace_objednavka extends Generic_data_class{
                                                     <td><strong  style=\"font-size: 1.2em;\">" . $this->array_osoby[$i]["titul"] . " " . $this->array_osoby[$i]["jmeno"] . " " . $this->array_osoby[$i]["prijmeni"] . "</strong></td><td>e-mail: " . $this->array_osoby[$i]["email"] . "</td> <td>tel.: " . $this->array_osoby[$i]["telefon"] . "</td>
                                             </tr>
                                             <tr>
-                                                    <td>datum nar.: " . $this->change_date_en_cz($this->array_osoby[$i]["datum_narozeni"]) . "</td><td>RÈ: " . $this->array_osoby[$i]["rodne_cislo"] . "</td><td>è. dokladu: " . $doklad . "</td>
+                                                    <td>datum nar.: " . $this->change_date_en_cz($this->array_osoby[$i]["datum_narozeni"]) . "</td><td>RÄŒ: " . $this->array_osoby[$i]["rodne_cislo"] . "</td><td>Ä. dokladu: " . $doklad . "</td>
                                             </tr>
                                             <tr>
                                                     <td colspan=\"3\">Adresa: " . $this->array_osoby[$i]["ulice"] . ",  " . $this->array_osoby[$i]["psc"] . ", " . $this->array_osoby[$i]["mesto"] . "</td>
@@ -816,7 +816,7 @@ class Rezervace_objednavka extends Generic_data_class{
                     }
                     echo $objednavka_osob;
                     $dotaz_osoby = $this->database->transaction_query($objednavka_osob)
-                            or $this->chyba("Chyba pøi dotazu do databáze objednávka osob: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$objednavka_osob);
+                            or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze objednÃ¡vka osob: " . mysqli_error($GLOBALS["core"]->database->db_spojeni).$objednavka_osob);
 
                     /* ----------------------------odeslani e-mailu s objednavkou-------------------------------- */
                     if (!$this->get_error_message()) {
@@ -833,7 +833,7 @@ class Rezervace_objednavka extends Generic_data_class{
                         $dnu_do_odjezdu = $diff->days;
 
                         //aktualni zaloha
-                        $sql_podminky = "select `smluvni_podminky`.* from `smluvni_podminky`  where `id_smluvni_podminky_nazev`=" . $zajezd["id_sml_podm"] . " and (`typ`=\"záloha\" or `typ`=\"doplatek\")
+                        $sql_podminky = "select `smluvni_podminky`.* from `smluvni_podminky`  where `id_smluvni_podminky_nazev`=" . $zajezd["id_sml_podm"] . " and (`typ`=\"zÃ¡loha\" or `typ`=\"doplatek\")
                                         order by `prodleva` desc ";
 
                         $query = mysqli_query($GLOBALS["core"]->database->db_spojeni,$sql_podminky);
@@ -857,7 +857,7 @@ class Rezervace_objednavka extends Generic_data_class{
                             //nasli jsme aktualni polozku - bud zalohu nebo doplatek
                             if (!$nalezena_aktualni_zaloha and ($row_podminky["prodleva"] + 5) <= $dnu_do_odjezdu) {
 
-                                if ($row_podminky["typ"] == "záloha") {
+                                if ($row_podminky["typ"] == "zÃ¡loha") {
 
                                     //nasli jsme zalohu
                                     $nalezena_aktualni_zaloha = 1;
@@ -869,7 +869,7 @@ class Rezervace_objednavka extends Generic_data_class{
                                         $this->castka_k_zaplaceni = $vyse_zalohy ;
                                     } else {
                                         $aktualni_zaloha = $row_podminky["castka"];
-                                        $jednotka_zaloha = "Kè";
+                                        $jednotka_zaloha = "KÄ";
                                         //castka vztazena na osobu
                                         $vyse_zalohy = round($this->pocet_osob * $aktualni_zaloha);
                                         $this->castka_k_zaplaceni = $vyse_zalohy ;
@@ -885,7 +885,7 @@ class Rezervace_objednavka extends Generic_data_class{
                                 //nasli jsme proslou zalohu - ale muze byt jeste vic zaloh
                                 $existuje_zaloha = 1;
                                 $prosly_rozhodujici_termin = $row_podminky["prodleva"];
-                            } else if ($row_podminky["typ"] == "záloha") {
+                            } else if ($row_podminky["typ"] == "zÃ¡loha") {
                                 //nasli jsme druhou zalohu, doplatek neni az tak zajimavy                                        
                                 $existuje_druha_zaloha = 1;
                                 if ($row_podminky["procento"] > 0) {
@@ -893,7 +893,7 @@ class Rezervace_objednavka extends Generic_data_class{
                                     $dalsi_zaloha_jednotka[] = "%";
                                 } else {
                                     $dalsi_zaloha_castka[] = $row_podminky["castka"];
-                                    $dalsi_zaloha_jednotka[] = "Kè";
+                                    $dalsi_zaloha_jednotka[] = "KÄ";
                                 }
                                 $dalsi_zaloha_termin[] = $row_podminky["prodleva"];
                             }
@@ -939,13 +939,13 @@ class Rezervace_objednavka extends Generic_data_class{
                                         $rozh_termin = $dalsi_zaloha_termin[($key - 1)];
                                     }
                                     if ($dalsi_zaloha_jednotka[$key] == "%") {
-                                        $text = "Zálohu do vıše $value % z ceny zájezdu uhraïte nejpozdìji " . $rozh_termin . " dní pøed odjezdem zájezdu.<br/>";
+                                        $text = "ZÃ¡lohu do vÃ½Å¡e $value % z ceny zÃ¡jezdu uhraÄte nejpozdÄ›ji " . $rozh_termin . " dnÃ­ pÅ™ed odjezdem zÃ¡jezdu.<br/>";
                                     } else {
-                                        $text = "Zálohu do vıše $value Kè za osobu uhraïte nejpozdìji " . $rozh_termin . " dní pøed odjezdem zájezdu.<br/>";
+                                        $text = "ZÃ¡lohu do vÃ½Å¡e $value KÄ za osobu uhraÄte nejpozdÄ›ji " . $rozh_termin . " dnÃ­ pÅ™ed odjezdem zÃ¡jezdu.<br/>";
                                     }
                                     $doplatky_text.=$text;
                                 }
-                                $doplatky_text.= "Doplatek uhraïte prosím nejpozdìji " . $dalsi_zaloha_termin[max(array_keys($dalsi_zaloha_termin))] . " dní pøed odjezdem zájezdu.<br/>";
+                                $doplatky_text.= "Doplatek uhraÄte prosÃ­m nejpozdÄ›ji " . $dalsi_zaloha_termin[max(array_keys($dalsi_zaloha_termin))] . " dnÃ­ pÅ™ed odjezdem zÃ¡jezdu.<br/>";
                                 $hlaska_platba = str_replace('[$doplatky_text]', $doplatky_text, $hlaska_platba);
                             } else if ($prosla_zaloha) {
                                 $hlaska_platba = $this->centralni_data["platba:prosla_zaloha"] ;
@@ -979,7 +979,7 @@ class Rezervace_objednavka extends Generic_data_class{
                         $this->id_sablony_zobrazit = $zajezd["id_sablony_zobrazeni"];
                         //print_r($zajezd);
                         /*$sablona = mysqli_fetch_array($this->database->transaction_query($this->create_query("sablona_objednavka")))
-                                or $this->chyba("Chyba pøi dotazu do databáze šablona objednávka: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));*/
+                                or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze Å¡ablona objednÃ¡vka: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));*/
                         //require_once "./".ADRESAR_SABLONA."/".$sablona["adresa_sablony"]."";
 
                         //require_once "./templates/" . $sablona["adresa_sablony"] . "";
@@ -987,15 +987,15 @@ class Rezervace_objednavka extends Generic_data_class{
                        //odeslu e-maily
                         //odeslu klientovi e-mail s potvrzovacim kodem
                         if ($sablona_zobrazeni["adresa_sablony"] == "zobrazit_vstupenky.inc.php") {
-                            $predmet_ck = "Objednávka vstupenek: " . $nazev_zajezd ;
-                            $predmet_klient = "Potvrzení odeslání objednávky vstupenek";
+                            $predmet_ck = "ObjednÃ¡vka vstupenek: " . $nazev_zajezd ;
+                            $predmet_klient = "PotvrzenÃ­ odeslÃ¡nÃ­ objednÃ¡vky vstupenek";
                         } else {
-                            $predmet_ck = "Objednávka zájezdu: " . $nazev_zajezd ;
-                            $predmet_klient = "Potvrzení odeslání objednávky zájezdu";
+                            $predmet_ck = "ObjednÃ¡vka zÃ¡jezdu: " . $nazev_zajezd ;
+                            $predmet_klient = "PotvrzenÃ­ odeslÃ¡nÃ­ objednÃ¡vky zÃ¡jezdu";
                         }
 
                         if ($zajezd["dlouhodobe_zajezdy"]) {
-                            $termin_zajezdu = "Období";
+                            $termin_zajezdu = "ObdobÃ­";
                             //kontrola zda je upresneni terminu uvnitr obdobi                                     
                             $termin_od = new DateTime($this->change_date_cz_en($this->upresneni_terminu_od) . " 00:00:00");
                             $termin_do = new DateTime($this->change_date_cz_en($this->upresneni_terminu_do) . " 00:00:00");
@@ -1010,7 +1010,7 @@ class Rezervace_objednavka extends Generic_data_class{
                                 $hlaska_termin = str_replace('[$termin_zajezdu]', "" . $this->change_date_en_cz($zajezd["od"]) . " - " . $this->change_date_en_cz($zajezd["do"]) . "", $hlaska_termin);
                             }
                         } else {
-                            $termin_zajezdu = "Termín";
+                            $termin_zajezdu = "TermÃ­n";
                         }
 
                         $klient_jmeno = $this->prijmeni . " " . $this->jmeno;
@@ -1027,7 +1027,7 @@ class Rezervace_objednavka extends Generic_data_class{
 
                         if ($this->upresneni_terminu_od != "") {
                             $termin = "<tr>
-                                                    <td><strong>Upøesnìní termínu:</strong> " . $this->upresneni_terminu_od . " - " . $this->upresneni_terminu_do . "</td>  <td></td>
+                                                    <td><strong>UpÅ™esnÄ›nÃ­ termÃ­nu:</strong> " . $this->upresneni_terminu_od . " - " . $this->upresneni_terminu_do . "</td>  <td></td>
                                                     </tr>";
                         } else {
                             $termin = "";
@@ -1037,7 +1037,7 @@ class Rezervace_objednavka extends Generic_data_class{
                                                     <table class=\"objednavka\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:640px;margin-bottom:15px;font-size: 12px;\">
                                                             <tr>
                                                                     <td style=\"border-top: 3px solid #3d3937;	 border-left: 1px solid white;	 border-right: 1px solid white;	border-bottom: 3px solid #3d3937;	background-color: #efefef;	valign=\"top\">
-                                                                            <h2 style=\"font-size: 1.4em;margin:0 0 0 10px;padding:0;\">Zájezd je objednáván prostøednictvím agentury:</h2>
+                                                                            <h2 style=\"font-size: 1.4em;margin:0 0 0 10px;padding:0;\">ZÃ¡jezd je objednÃ¡vÃ¡n prostÅ™ednictvÃ­m agentury:</h2>
                                                                             <p style=\"margin:0 5px 5px 20px;\">
                                                                             <strong style=\"font-size: 1.2em;\">" . $agentura["nazev"] . "</strong>; " . $agentura["ulice"] . ", " . $agentura["mesto"] . ", " . $agentura["psc"] . " <br/>
                                                                             telefon: " . $agentura["telefon"] . " <br/>
@@ -1047,7 +1047,7 @@ class Rezervace_objednavka extends Generic_data_class{
                                                             </tr>
                                                     </table>
                                             ";
-			    $objednavka_id_text = "<br/><br/><b>Èíslo objednávky (variabilní symbol):</b> ".$id_objednavka;
+			    $objednavka_id_text = "<br/><br/><b>ÄŒÃ­slo objednÃ¡vky (variabilnÃ­ symbol):</b> ".$id_objednavka;
 
                         } else {
                             $info_agentura = "";
@@ -1059,10 +1059,10 @@ class Rezervace_objednavka extends Generic_data_class{
                                                                     <td colspan=\"4\"> <hr style=\"color: black; height:2px;\"/> </td>
                                                             </tr>
                                                             <tr>
-                                                                    <th align=\"left\" style=\"padding-right:50px;\">NÁZEV SLEVY</th><th align=\"right\">Sleva</th><th align=\"right\"></th><th align=\"right\">Celkem</th>
+                                                                    <th align=\"left\" style=\"padding-right:50px;\">NÃZEV SLEVY</th><th align=\"right\">Sleva</th><th align=\"right\"></th><th align=\"right\">Celkem</th>
                                                             </tr>
                                                             <tr>
-                                                                    <td style=\"padding-right:50px;\">" . $slevy["nazev_slevy"] . "</td><td align=\"right\">" . $slevy["castka"] . " " . $slevy["mena"] . "</td><td align=\"right\"></td><td align=\"right\">" . $this->velikost_slevy . " Kè</td>
+                                                                    <td style=\"padding-right:50px;\">" . $slevy["nazev_slevy"] . "</td><td align=\"right\">" . $slevy["castka"] . " " . $slevy["mena"] . "</td><td align=\"right\"></td><td align=\"right\">" . $this->velikost_slevy . " KÄ</td>
                                                             </tr>
                                             ";
                         } else {
@@ -1070,11 +1070,11 @@ class Rezervace_objednavka extends Generic_data_class{
                         }
 
                         if ($sablona_zobrazeni["adresa_sablony"] == "zobrazit_vstupenky.inc.php") {
-                            $obj_nadpis = "Objednávka vstupenek CK SLAN tour";
+                            $obj_nadpis = "ObjednÃ¡vka vstupenek CK SLAN tour";
                             $zajezd_nadpis = "Vstupenky";
                         } else {
-                            $obj_nadpis = "Objednávka zájezdu CK SLAN tour";
-                            $zajezd_nadpis = "Zájezd/Pobyt";
+                            $obj_nadpis = "ObjednÃ¡vka zÃ¡jezdu CK SLAN tour";
+                            $zajezd_nadpis = "ZÃ¡jezd/Pobyt";
                         }
                         $klient_text = "
     <div style=\"	font-family: Helvetica, Arial,  sans-serif;font-size: 12px;	margin: 0;	padding: 0;\">
@@ -1105,7 +1105,7 @@ class Rezervace_objednavka extends Generic_data_class{
     <table cellpadding=\"0\" cellspacing=\"0\" style=\"width:640px;margin-bottom:15px;font-size: 12px;\">
             <tr>
                     <td style=\"	border-top: 3px solid #E77919;	 border-left: 1px solid white;	 border-right: 1px solid white;	border-bottom: 3px solid #E77919;	background-color: #FFFDD4;	padding-bottom:5px;	padding-top:2px;\" valign=\"top\">
-                            <h2 style=\"font-size: 1.4em;color: #BF6A00;margin:0 0 0 10px;\">Objednávající</h2>
+                            <h2 style=\"font-size: 1.4em;color: #BF6A00;margin:0 0 0 10px;\">ObjednÃ¡vajÃ­cÃ­</h2>
                             <table style=\"width:100%;margin-left:20px;	font-size: 12px;clear:left;\">
                                     <tr>
                                             <td><strong style=\"font-size: 1.2em;\">" . $this->prijmeni . " " . $this->jmeno . "</strong></td> <td>e-mail: " . $this->email . "</td> <td>tel.: " . $this->telefon . "</td>
@@ -1128,12 +1128,12 @@ class Rezervace_objednavka extends Generic_data_class{
                                             <td><strong style=\"font-size: 1.2em;\">" . $nazev_zajezd .  "</strong> " . $zajezd["nazev_zajezdu"] . "</td>  <td align=\"right\" style=\"padding-right:50px;\">" . $termin_zajezdu . ": <b>" . $this->change_date_en_cz($zajezd["od"]) . " - " . $this->change_date_en_cz($zajezd["do"]) . "</b></td>
                                     </tr>
                                     <tr>
-                                            <td><strong>Poèet osob</strong>: " . $this->pocet_osob . "</td>  <td></td>
+                                            <td><strong>PoÄet osob</strong>: " . $this->pocet_osob . "</td>  <td></td>
                                     </tr>
                                     " . $termin . "
 
                                     <tr>
-                                            <td colspan=\"2\"><b>Poadované sluby</b></td>
+                                            <td colspan=\"2\"><b>PoÅ¾adovanÃ© sluÅ¾by</b></td>
                                     </tr>
                                     <tr>
                                             <td colspan=\"2\">
@@ -1146,13 +1146,13 @@ class Rezervace_objednavka extends Generic_data_class{
                                                             </tr>
 
                                                             <tr>
-                                                                    <th colspan=\"3\" align=\"left\" style=\"padding-right:50px;\"><strong style=\"font-size: 1.2em;\">Pøedpokládaná celková cena</strong></th><th  align=\"right\"><strong style=\"font-size: 1.2em; color:red;\">" . ($this->celkova_cena - $this->velikost_slevy) . " Kè (".round(($this->celkova_cena - $this->velikost_slevy)/$this->centralni_data["kurz EUR"])." EUR)</strong></th>
+                                                                    <th colspan=\"3\" align=\"left\" style=\"padding-right:50px;\"><strong style=\"font-size: 1.2em;\">PÅ™edpoklÃ¡danÃ¡ celkovÃ¡ cena</strong></th><th  align=\"right\"><strong style=\"font-size: 1.2em; color:red;\">" . ($this->celkova_cena - $this->velikost_slevy) . " KÄ (".round(($this->celkova_cena - $this->velikost_slevy)/$this->centralni_data["kurz EUR"])." EUR)</strong></th>
                                                             </tr>
                                                     </table>
                                             </td>
                                     </tr>
                                     <tr>
-                                            <td colspan=\"2\"  style=\"padding-right:20px;\"><b>Poznámky:</b><br/>
+                                            <td colspan=\"2\"  style=\"padding-right:20px;\"><b>PoznÃ¡mky:</b><br/>
                                                      " . nl2br($this->poznamky) . "
 						     " . $objednavka_id_text. "
 
@@ -1167,7 +1167,7 @@ class Rezervace_objednavka extends Generic_data_class{
     <table cellpadding=\"0\" cellspacing=\"0\" style=\"width:640px;margin-bottom:15px;font-size: 12px;\">
             <tr>
                     <td style=\"	border-top: 3px solid #007CC3;	 border-left: 1px solid white;	 border-right:1px solid white;	border-bottom: 3px solid #007CC3;	background-color: #FFFDD4;	padding-bottom:5px;	padding-top:2px; \" valign=\"top\">
-                            <h2 style=\"font-size: 1.4em;color: #007CC3;margin:0 0 0 10px;\">Seznam úèastníkù</h2>
+                            <h2 style=\"font-size: 1.4em;color: #007CC3;margin:0 0 0 10px;\">Seznam ÃºÄastnÃ­kÅ¯</h2>
                             <table style=\"width:100%;margin-left:15px;	font-size: 12px;	clear:left;\">
                                     " . $this->text_ucastnici_klient . "
                             </table>
@@ -1180,10 +1180,10 @@ class Rezervace_objednavka extends Generic_data_class{
     <table cellpadding=\"0\" cellspacing=\"0\" style=\"width:640px;margin-bottom:15px;font-size: 12px;\">
             <tr>
                     <td style=\"	border-top: 3px solid #b3ae4a;	 border-left: 1px solid white;	 border-right: 1px solid white;	border-bottom: 3px solid #b3ae4a;	background-color: #FFFDD4;	padding-bottom:5px; padding-right:20px;	padding-top:2px;\" valign=\"top\">
-                            <h2 style=\"font-size: 1.4em;color: #5a5727;margin:0 0 0 10px;\">Informace o platbì</h2>
+                            <h2 style=\"font-size: 1.4em;color: #5a5727;margin:0 0 0 10px;\">Informace o platbÄ›</h2>
                             <p style=\"width:100%;margin:0 20px 0 20px;	font-size: 12px;	clear:left;\">
                                     " . $hlaska_termin . $hlaska_platba . "<br/>
-                               Správce zájezdu: $spravce->jmeno $spravce->prijmeni, $spravce->email, $spravce->telefon
+                               SprÃ¡vce zÃ¡jezdu: $spravce->jmeno $spravce->prijmeni, $spravce->email, $spravce->telefon
                             </p>
                     </td>
             </tr>
@@ -1191,7 +1191,7 @@ class Rezervace_objednavka extends Generic_data_class{
                         }else{
 
                             
-                            $klient_text .= "Správce zájezdu: $spravce->jmeno $spravce->prijmeni, $spravce->email, $spravce->telefon <br/> ";
+                            $klient_text .= "SprÃ¡vce zÃ¡jezdu: $spravce->jmeno $spravce->prijmeni, $spravce->email, $spravce->telefon <br/> ";
                         }
                         if($this->novinky == 1){
                             $this->novinky = "Ano";
@@ -1199,22 +1199,22 @@ class Rezervace_objednavka extends Generic_data_class{
                             $this->novinky = "Ne";
                         }
                         $klient_text.="
-                                                            Souhlas se zasíláním aktuálních nabídek CK SLAN tour: " . $this->novinky . "<br/><br/>
+                                                            Souhlas se zasÃ­lÃ¡nÃ­m aktuÃ¡lnÃ­ch nabÃ­dek CK SLAN tour: " . $this->novinky . "<br/><br/>
                                                                          
-             (Souhlas se zpracováním osobních údajù v rozsahu jméno, pøíjmení, telefonní èíslo a e-mailová adresa za úèelem zasílání obchodních sdìlení. Cestovní kanceláø mùe zasílat obchodní sdìlení formou SMS, MMS, elektronické pošty, poštou èi sdìlovat telefonicky a to maximálnì 1x tıdnì.)<br/><br/>
-              Proti zasílání obchodních sdìlení je mono vznést kdykoliv námitku, a to buï na adrese cestovní kanceláøe nebo e-mailem zaslanım na adresu info@slantour.cz. V tomto pøípadì nebude cestovní kanceláø dále zasílat obchodní sdìlení, ani jinak zpracovávat vaše osobní údaje pro úèely pøímého marketingu.
+             (Souhlas se zpracovÃ¡nÃ­m osobnÃ­ch ÃºdajÅ¯ v rozsahu jmÃ©no, pÅ™Ã­jmenÃ­, telefonnÃ­ ÄÃ­slo a e-mailovÃ¡ adresa za ÃºÄelem zasÃ­lÃ¡nÃ­ obchodnÃ­ch sdÄ›lenÃ­. CestovnÃ­ kancelÃ¡Å™ mÅ¯Å¾e zasÃ­lat obchodnÃ­ sdÄ›lenÃ­ formou SMS, MMS, elektronickÃ© poÅ¡ty, poÅ¡tou Äi sdÄ›lovat telefonicky a to maximÃ¡lnÄ› 1x tÃ½dnÄ›.)<br/><br/>
+              Proti zasÃ­lÃ¡nÃ­ obchodnÃ­ch sdÄ›lenÃ­ je moÅ¾no vznÃ©st kdykoliv nÃ¡mitku, a to buÄ na adrese cestovnÃ­ kancelÃ¡Å™e nebo e-mailem zaslanÃ½m na adresu info@slantour.cz. V tomto pÅ™Ã­padÄ› nebude cestovnÃ­ kancelÃ¡Å™ dÃ¡le zasÃ­lat obchodnÃ­ sdÄ›lenÃ­, ani jinak zpracovÃ¡vat vaÅ¡e osobnÃ­ Ãºdaje pro ÃºÄely pÅ™Ã­mÃ©ho marketingu.
 
             <br/><br/>                                                
-            <b>Odesláním objednávky zároveò:</b><br/>
+            <b>OdeslÃ¡nÃ­m objednÃ¡vky zÃ¡roveÅˆ:</b><br/>
             <ul>
-                <li>Souhlasím se <a href=\"https://www.slantour.cz/dokumenty/".$_POST["smluvni_podminky"]."\" target=\"_blank\">smluvními podmínkami cestovní kanceláøe SLAN tour</a>, s.r.o., které jsou nedílnou souèástí objednávky/smlouvy o zájezdu.</li>
-                <li>Potvrzuji, e jsem se seznámil s podrobnım vymezením zájezdu.</li>
-                <li>Prohlašuji, e jsem oprávnìn uzavøít smlouvu za všechny osoby, uvedené v této smlouvì a odpovídám za úhradu celkové ceny zájezdu.</li>
-                <li>Potvrzuji, e jsem se seznámil s pøíslušnım <a href=\"https://www.slantour.cz/dokumenty/3126-povinne-informace-k-zajezdu.pdf\" target=\"_blank\">formuláøem dle vyhlášky è. 122/2018 Sb.</a>, o vzorech formuláøù pro jednotlivé typy zájezdù a spojenıch cestovních slueb, a s <a href=\"https://www.slantour.cz/dokumenty/3041-certifikat-pojistovny.pdf\" target=\"_blank\">dokladem o pojištìní CK proti úpadku</a>.</li>
+                <li>SouhlasÃ­m se <a href=\"https://www.slantour.cz/dokumenty/".$_POST["smluvni_podminky"]."\" target=\"_blank\">smluvnÃ­mi podmÃ­nkami cestovnÃ­ kancelÃ¡Å™e SLAN tour</a>, s.r.o., kterÃ© jsou nedÃ­lnou souÄÃ¡stÃ­ objednÃ¡vky/smlouvy o zÃ¡jezdu.</li>
+                <li>Potvrzuji, Å¾e jsem se seznÃ¡mil s podrobnÃ½m vymezenÃ­m zÃ¡jezdu.</li>
+                <li>ProhlaÅ¡uji, Å¾e jsem oprÃ¡vnÄ›n uzavÅ™Ã­t smlouvu za vÅ¡echny osoby, uvedenÃ© v tÃ©to smlouvÄ› a odpovÃ­dÃ¡m za Ãºhradu celkovÃ© ceny zÃ¡jezdu.</li>
+                <li>Potvrzuji, Å¾e jsem se seznÃ¡mil s pÅ™Ã­sluÅ¡nÃ½m <a href=\"https://www.slantour.cz/dokumenty/3126-povinne-informace-k-zajezdu.pdf\" target=\"_blank\">formulÃ¡Å™em dle vyhlÃ¡Å¡ky Ä. 122/2018 Sb.</a>, o vzorech formulÃ¡Å™Å¯ pro jednotlivÃ© typy zÃ¡jezdÅ¯ a spojenÃ½ch cestovnÃ­ch sluÅ¾eb, a s <a href=\"https://www.slantour.cz/dokumenty/3041-certifikat-pojistovny.pdf\" target=\"_blank\">dokladem o pojiÅ¡tÄ›nÃ­ CK proti Ãºpadku</a>.</li>
             </ul>
 
 
-                Objednávka z webu: " . $_SERVER["SERVER_NAME"] . "<br/>	<br/>
+                ObjednÃ¡vka z webu: " . $_SERVER["SERVER_NAME"] . "<br/>	<br/>
                 </div>
                                     ";
                         $ck_text = $klient_text;
@@ -1242,12 +1242,12 @@ class Rezervace_objednavka extends Generic_data_class{
                             //odesilani e-mailu zamestnanci - tvurci serialu
 
                             if ($sablona_zobrazeni["adresa_sablony"] == "zobrazit_vstupenky.inc.php") { 
-                                $this->confirm("Objednávka vstupenek byla úspìšnì odeslána. ".$spravce->email.$testMail );
+                                $this->confirm("ObjednÃ¡vka vstupenek byla ÃºspÄ›Å¡nÄ› odeslÃ¡na. ".$spravce->email.$testMail );
                             } else {
-                                $this->confirm("Objednávka zájezdu/pobytu byla úspìšnì odeslána.".$spravce->email.$testMail );
+                                $this->confirm("ObjednÃ¡vka zÃ¡jezdu/pobytu byla ÃºspÄ›Å¡nÄ› odeslÃ¡na.".$spravce->email.$testMail );
                             }
                         } else {
-                            $this->chyba("Nepodaøilo se odeslat e-mail s objednávkou.");
+                            $this->chyba("NepodaÅ™ilo se odeslat e-mail s objednÃ¡vkou.");
                         }
                     }
                 }
@@ -1271,24 +1271,24 @@ class Rezervace_objednavka extends Generic_data_class{
 
 	function name_of_typ_ceny($typ_ceny){
 		if($typ_ceny == 1){
-			return "Sluby";
+			return "SluÅ¾by";
 		}else if($typ_ceny == 2){
 			return "Last minute";
 		}else if($typ_ceny == 3){
 			return "Slevy";
 		}else if($typ_ceny == 4){
-			return "Pøíplatky";
+			return "PÅ™Ã­platky";
 		}else if($typ_ceny == 5){
-			return "Odjezdová místa";			
+			return "OdjezdovÃ¡ mÃ­sta";			
 		}else{
 			return "";
 		}
 	}
 
-	/** funkce pro finální zpracování 2. èásti formuláøe pro objednívku zájezdu
+	/** funkce pro finÃ¡lnÃ­ zpracovÃ¡nÃ­ 2. ÄÃ¡sti formulÃ¡Å™e pro objednÃ­vku zÃ¡jezdu
 	* - zkontroluje, zda lze zarezervovat kapacity
-	* - po prijmuti vsech dat vytvori cely dotaz a odesle ho do databáze
-	* - vytvoøí e-maily s potvrzením objednávky
+	* - po prijmuti vsech dat vytvori cely dotaz a odesle ho do databÃ¡ze
+	* - vytvoÅ™Ã­ e-maily s potvrzenÃ­m objednÃ¡vky
 	*/
         function get_kategorie($kat="") {
             if($kat==""){$kat=$this->radek["kategorie"];}
@@ -1318,7 +1318,7 @@ class Rezervace_objednavka extends Generic_data_class{
                             return "Autokarem";
                             break;
                         case "1":
-                            return "Vlastní dopravou";
+                            return "VlastnÃ­ dopravou";
                             break;
                         default:
                             return $doprava;
@@ -1365,40 +1365,40 @@ class Rezervace_objednavka extends Generic_data_class{
 	 	}
 		return $pocet_noci;
         }
-	/**kontrola zda jsou informace o osobách správné (neprazdne nazvy, nenulova id atd.)*/
+	/**kontrola zda jsou informace o osobÃ¡ch sprÃ¡vnÃ© (neprazdne nazvy, nenulova id atd.)*/
 	function legal_data_osoby($id_klient,$jmeno,$prijmeni,$titul,$email,$telefon,$datum_narozeni,$rodne_cislo,$cislo_pasu,$cislo_op,$ulice,$mesto,$psc){
 		$ok = 1;
 		if( !Validace::int_min($id_klient,1) ){
 		
 			if(!Validace::text($jmeno) ){
 				$ok = 0;
-				$this->chyba("Musíte vyplnit jméno u osoby è.".$this->cislo_osoby);
+				$this->chyba("MusÃ­te vyplnit jmÃ©no u osoby Ä.".$this->cislo_osoby);
 			}
 			if(!Validace::text($prijmeni) ){
 				$ok = 0;
-				$this->chyba("Musíte vyplnit pøíjmení u osoby è.".$this->cislo_osoby);
+				$this->chyba("MusÃ­te vyplnit pÅ™Ã­jmenÃ­ u osoby Ä.".$this->cislo_osoby);
 			}
 			
 			/*
 			if(!Validace::datum_en($datum_narozeni) ){
 				$ok = 0;
-				$this->chyba("Datum narození musí bıt ve formátu dd.mm.rrrr u osoby è.".$this->cislo_osoby);
+				$this->chyba("Datum narozenÃ­ musÃ­ bÃ½t ve formÃ¡tu dd.mm.rrrr u osoby Ä.".$this->cislo_osoby);
 			}				
 			if(!Validace::email($email) ){
 				$ok = 0;
-				$this->chyba("Špatnì vyplnìnı e-mail u osoby è.".$this->cislo_osoby);
+				$this->chyba("Å patnÄ› vyplnÄ›nÃ½ e-mail u osoby Ä.".$this->cislo_osoby);
 			}	
 			if(!Validace::text($ulice) ){
 				$ok = 0;
-				$this->chyba("Musíte vyplnit ulici a èíslo popisné u osoby è.".$this->cislo_osoby);
+				$this->chyba("MusÃ­te vyplnit ulici a ÄÃ­slo popisnÃ© u osoby Ä.".$this->cislo_osoby);
 			}
 			if(!Validace::text($mesto) ){
 				$ok = 0;
-				$this->chyba("Musíte vyplnit mìsto u osoby è.".$this->cislo_osoby);
+				$this->chyba("MusÃ­te vyplnit mÄ›sto u osoby Ä.".$this->cislo_osoby);
 			}		
 			if(!Validace::text($psc) ){
 				$ok = 0;
-				$this->chyba("Musíte vyplnit PSÈ u osoby è.".$this->cislo_osoby);
+				$this->chyba("MusÃ­te vyplnit PSÄŒ u osoby Ä.".$this->cislo_osoby);
 			}	
 			*/		
 		}													
@@ -1410,7 +1410,7 @@ class Rezervace_objednavka extends Generic_data_class{
 		}
 	}
 		
-	/**kontrola zda informace o cenách (, nenulova id a poèet objednanıch jednotek)*/
+	/**kontrola zda informace o cenÃ¡ch (, nenulova id a poÄet objednanÃ½ch jednotek)*/
 	function legal_data_ceny_poznavaci($id_cena,$pocet,$typ_ceny){
 		$ok = 1;
 
@@ -1418,14 +1418,14 @@ class Rezervace_objednavka extends Generic_data_class{
 			$this->odjezd_misto_exist = 1;
 		}
 
-		//kontrolovane pole id cena a poèet
+		//kontrolovane pole id cena a poÄet
 			if(!Validace::int_min($id_cena,1) ){
 				$ok = 0;
 			}
 			if(!Validace::int_min_max($pocet,1,MAX_OSOB) ){
 				$ok = 0;
                                 if($pocet > MAX_OSOB){
-                                    $this->chyba("Maximální objednávka od jedné sluby je ".MAX_OSOB." jednotek.");
+                                    $this->chyba("MaximÃ¡lnÃ­ objednÃ¡vka od jednÃ© sluÅ¾by je ".MAX_OSOB." jednotek.");
                                 }
 			}
 		//pokud je vse vporadku...
@@ -1441,11 +1441,11 @@ class Rezervace_objednavka extends Generic_data_class{
 		}
 	}
 
-	/**kontrola zda informace o cenách (, nenulova id a poèet objednanıch jednotek)*/
+	/**kontrola zda informace o cenÃ¡ch (, nenulova id a poÄet objednanÃ½ch jednotek)*/
 	function legal_data_vstupenky($id_vstupenky,$pocet,$kategorie){
 		$ok = 1;
 
-		//kontrolovane pole id cena a poèet
+		//kontrolovane pole id cena a poÄet
 			if(!Validace::int_min($id_vstupenky,1) ){
 				$ok = 0;
 			}
@@ -1693,7 +1693,7 @@ class Rezervace_objednavka extends Generic_data_class{
 						<table class=\"sluzby\"  cellpadding=\"3\" cellspacing=\"0\" style=\"width:100%\">
 							<tr>
 								<th style=\"background-color:#0070ca;color:white;border:1px solid #0080da;\">
-									<strong>Údaje cestovní agentury:</strong>
+									<strong>Ãšdaje cestovnÃ­ agentury:</strong>
                                                                 </th>
                                                         </tr><tr>
                                                                 <td style=\"background-color:#fafaea; border:1px solid #0080da;\">
@@ -1723,7 +1723,7 @@ class Rezervace_objednavka extends Generic_data_class{
        if($this->upresneni_terminu_od!=""){
             
             $data_blackdays = $this->database->query($this->create_query("get_blackdays"))
-               or $this->chyba("Chyba pøi dotazu do databáze blackdays: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+               or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze blackdays: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
             while ($row = mysqli_fetch_array($data_blackdays)) {
                 $objednano_blackdays = 1;
                 return false; //staci prvni chyba, abychom platbu kartou nepovolili
@@ -1736,7 +1736,7 @@ class Rezervace_objednavka extends Generic_data_class{
                $this->current_cena = intval($_POST["id_cena_".$i]);
                //echo $this->create_query("get_current_cena");
                $data_cena = $this->database->query($this->create_query("get_current_cena"))
-                  or $this->chyba("Chyba pøi dotazu do databáze blackdays: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
+                  or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze blackdays: " . mysqli_error($GLOBALS["core"]->database->db_spojeni));
                while ($row_cena = mysqli_fetch_array($data_cena)) {
                     if($row_cena["vyprodano"]=="1" or $row_cena["na_dotaz"]=="1" or $row_cena["objekt_na_dotaz"]=="1" or $row_cena["objekt_na_dotaz"]=="1"  ){
                         return false;
@@ -1766,10 +1766,10 @@ class Rezervace_objednavka extends Generic_data_class{
       if(!$show_platba_kartou){
           $karta_enabled = "disabled=\"disabled\""  ;
 
-          $karta_text = "Platbu kartou bohuel nelze realizovat, protoe nìkteré ze slueb, které objednáváte jsou vyprodané, pouze na dotaz, specifikovali jste termín mimo rozsah zájezdu, nebo je z jiného dùvodu nutné, aby dostupnost zájezdu nejprve potvrdil pracovník CK.<br/>";
+          $karta_text = "Platbu kartou bohuÅ¾el nelze realizovat, protoÅ¾e nÄ›kterÃ© ze sluÅ¾eb, kterÃ© objednÃ¡vÃ¡te jsou vyprodanÃ©, pouze na dotaz, specifikovali jste termÃ­n mimo rozsah zÃ¡jezdu, nebo je z jinÃ©ho dÅ¯vodu nutnÃ©, aby dostupnost zÃ¡jezdu nejprve potvrdil pracovnÃ­k CK.<br/>";
       }else{
           $karta_enabled = "";
-          $karta_text = "Online platba kartou. Po dokonèení objednávky budete pøesmìrováni na platební bránu AGMO, a.s.";
+          $karta_text = "Online platba kartou. Po dokonÄenÃ­ objednÃ¡vky budete pÅ™esmÄ›rovÃ¡ni na platebnÃ­ brÃ¡nu AGMO, a.s.";
       }
       $script="
           <script type=\"text/javascript\">
@@ -1809,43 +1809,43 @@ class Rezervace_objednavka extends Generic_data_class{
           ";
       $form = "
           <table class=\"sluzby\" style=\"width:100%;\"  cellpadding=\"2\" cellspacing=\"2\">
-            <tr><th colspan=\"2\"><strong>Zpùsob platby:</strong></th></tr>
-            <tr><td><img src=\"/img/platby/hotove.gif\" style=\"border:none;float:left;\" alt=\"Platba hotovì\"/>
+            <tr><th colspan=\"2\"><strong>ZpÅ¯sob platby:</strong></th></tr>
+            <tr><td><img src=\"/img/platby/hotove.gif\" style=\"border:none;float:left;\" alt=\"Platba hotovÄ›\"/>
                 <input name=\"zpusob_platby\" id=\"platba_hotove\" type=\"radio\" value=\"hotove\" ".($_REQUEST["zpusob_platby"]=="hotove" ? "checked=\"checked\"" : "")." /> 
-                Hotovì <a href=\"#\" id=\"platba_hotove_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpùsobu platby\" style=\"border:none\"/></a>
+                HotovÄ› <a href=\"#\" id=\"platba_hotove_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpÅ¯sobu platby\" style=\"border:none\"/></a>
                 <div id=\"hidden_platba_hotove\" style=\"display:none;clear:left;\">
-                <b>Platbu hotovì mùete provést na našich poboèkách v Praze, Slaném, Roudnici nad Labem</b><br/>
-                <b>PRAHA 7 - Holešovice</b>: Veletrní 48, Praha 7, tel/fax: 224217521<br/>
-                <b>SLANİ</b>: Wilsonova 597, Slanı, tel/fax: 312524174<br/>      
-                <b>ROUDNICE NAD LABEM</b>: Tøída T.G. Masaryka 989, Roudnice n. L., tel/fax: 416838914<br/>
-                <b>Obchodní zastoupení BRNO - Agentura Zabloudil</b>: Lidická 4, Brno<br/><br/>
+                <b>Platbu hotovÄ› mÅ¯Å¾ete provÃ©st na naÅ¡ich poboÄkÃ¡ch v Praze, SlanÃ©m, Roudnici nad Labem</b><br/>
+                <b>PRAHA 7 - HoleÅ¡ovice</b>: VeletrÅ¾nÃ­ 48, Praha 7, tel/fax: 224217521<br/>
+                <b>SLANÃ</b>: Wilsonova 597, SlanÃ½, tel/fax: 312524174<br/>      
+                <b>ROUDNICE NAD LABEM</b>: TÅ™Ã­da T.G. Masaryka 989, Roudnice n. L., tel/fax: 416838914<br/>
+                <b>ObchodnÃ­ zastoupenÃ­ BRNO - Agentura Zabloudil</b>: LidickÃ¡ 4, Brno<br/><br/>
                 </div>
                 
-            <tr><td><img src=\"/img/platby/prevodem.gif\" style=\"border:none;float:left;\" alt=\"Platba bankovním pøevodem\"/>
+            <tr><td><img src=\"/img/platby/prevodem.gif\" style=\"border:none;float:left;\" alt=\"Platba bankovnÃ­m pÅ™evodem\"/>
             <input name=\"zpusob_platby\" type=\"radio\" value=\"prevodem\" ".($_REQUEST["zpusob_platby"]=="prevodem" ? "checked=\"checked\"" : "")." /> 
-              Bankovním pøevodem  <a href=\"#\" id=\"platba_prevodem_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpùsobu platby\" style=\"border:none\"/></a>
-                <div id=\"hidden_platba_prevodem\" style=\"display:none;clear:left;\">Platbu pøevodem mùete provést na náš úèet <b>19-6706930207 / 0100</b>. Jako variabilní symbol prosím uveïte èíslo objednávky (èíslo objednávky naleznete v potvrzovacím e-mailu, kterı Vám zašleme po dokonèení Vaší objednávky).<br/></div>          
+              BankovnÃ­m pÅ™evodem  <a href=\"#\" id=\"platba_prevodem_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpÅ¯sobu platby\" style=\"border:none\"/></a>
+                <div id=\"hidden_platba_prevodem\" style=\"display:none;clear:left;\">Platbu pÅ™evodem mÅ¯Å¾ete provÃ©st na nÃ¡Å¡ ÃºÄet <b>19-6706930207 / 0100</b>. Jako variabilnÃ­ symbol prosÃ­m uveÄte ÄÃ­slo objednÃ¡vky (ÄÃ­slo objednÃ¡vky naleznete v potvrzovacÃ­m e-mailu, kterÃ½ VÃ¡m zaÅ¡leme po dokonÄenÃ­ VaÅ¡Ã­ objednÃ¡vky).<br/></div>          
               
-            <tr id=\"prevod_slovensko\" style=\"dislay:none;\"><td><img src=\"/img/platby/prevodem.gif\" style=\"border:none;float:left;\" alt=\"Platba bankovním pøevodem Slovensko\"/>
+            <tr id=\"prevod_slovensko\" style=\"dislay:none;\"><td><img src=\"/img/platby/prevodem.gif\" style=\"border:none;float:left;\" alt=\"Platba bankovnÃ­m pÅ™evodem Slovensko\"/>
             <input name=\"zpusob_platby\" type=\"radio\" value=\"prevodem_sk\" ".($_REQUEST["zpusob_platby"]=="prevodem" ? "checked=\"checked\"" : "")." /> 
-              Bankovním pøevodem v eurech na Slovensku  <a href=\"#\" id=\"platba_prevodem_sk_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpùsobu platby\" style=\"border:none\"/></a>
-                <div id=\"hidden_platba_prevodem_sk\" style=\"display:none;clear:left;\"><b>Pro klienty ze Slovenska je moné zaplatit zájezd v eurech na náš úèet u VÚB.</b><br/>
-                    Celková cena zájezdu v eurech je <b>".round($celkova_castka/$centralni_data["kurz EUR"])." EUR</b>.<br/>
-                    Platbu proveïte na úèet <b>".$centralni_data["platebni_spojeni:slovensko"]."</b>. Jako variabilní symbol prosím uveïte èíslo objednávky (èíslo objednávky naleznete v potvrzovacím e-mailu, kterı Vám zašleme po dokonèení Vaší objednávky).<br/></div>          
+              BankovnÃ­m pÅ™evodem v eurech na Slovensku  <a href=\"#\" id=\"platba_prevodem_sk_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpÅ¯sobu platby\" style=\"border:none\"/></a>
+                <div id=\"hidden_platba_prevodem_sk\" style=\"display:none;clear:left;\"><b>Pro klienty ze Slovenska je moÅ¾nÃ© zaplatit zÃ¡jezd v eurech na nÃ¡Å¡ ÃºÄet u VÃšB.</b><br/>
+                    CelkovÃ¡ cena zÃ¡jezdu v eurech je <b>".round($celkova_castka/$centralni_data["kurz EUR"])." EUR</b>.<br/>
+                    Platbu proveÄte na ÃºÄet <b>".$centralni_data["platebni_spojeni:slovensko"]."</b>. Jako variabilnÃ­ symbol prosÃ­m uveÄte ÄÃ­slo objednÃ¡vky (ÄÃ­slo objednÃ¡vky naleznete v potvrzovacÃ­m e-mailu, kterÃ½ VÃ¡m zaÅ¡leme po dokonÄenÃ­ VaÅ¡Ã­ objednÃ¡vky).<br/></div>          
   
               
             <tr ><td><img src=\"/img/platby/kartou.gif\" style=\"border:none;float:left;\" alt=\"Platba kartou\"/>
             <input $karta_enabled name=\"zpusob_platby\" type=\"radio\" value=\"".EnumPaymentMethods::METHOD_CARD_ALL."\" ".($_REQUEST["zpusob_platby"]=="".EnumPaymentMethods::METHOD_CARD_ALL."" ? "checked=\"checked\"" : "")." /> 
-              Platební kartou <a href=\"#\" id=\"platba_kartou_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpùsobu platby\" style=\"border:none\"/></a>
+              PlatebnÃ­ kartou <a href=\"#\" id=\"platba_kartou_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpÅ¯sobu platby\" style=\"border:none\"/></a>
                 <div id=\"hidden_platba_kartou\" style=\"display:none;clear:left;\">$karta_text </div>
                   
-            <tr><td><img src=\"/img/platby/slozenkou.gif\" style=\"border:none;float:left;\" alt=\"Platba poštovní poukázkou\"/>
+            <tr><td><img src=\"/img/platby/slozenkou.gif\" style=\"border:none;float:left;\" alt=\"Platba poÅ¡tovnÃ­ poukÃ¡zkou\"/>
             <input name=\"zpusob_platby\" type=\"radio\" value=\"poukazkou\" ".($_REQUEST["zpusob_platby"]=="poukazkou" ? "checked=\"checked\"" : "")." /> 
-              Poštovní poukázkou <a href=\"#\" id=\"platba_slozenkou_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpùsobu platby\" style=\"border:none\"/></a>
-                <div id=\"hidden_platba_slozenkou\" style=\"display:none;clear:left;\"><b>Adresa pro zaslání pøíslušné èástky</b><br/>
+              PoÅ¡tovnÃ­ poukÃ¡zkou <a href=\"#\" id=\"platba_slozenkou_info\" style=\"border:none\"><img src=\"/img/platby/info.gif\"  alt=\"Informace o zpÅ¯sobu platby\" style=\"border:none\"/></a>
+                <div id=\"hidden_platba_slozenkou\" style=\"display:none;clear:left;\"><b>Adresa pro zaslÃ¡nÃ­ pÅ™Ã­sluÅ¡nÃ© ÄÃ¡stky</b><br/>
                 SLAN tour s.r.o.<br/>
                 Wilsonova 597<br/>
-                Slanı, 27401</div>
+                SlanÃ½, 27401</div>
           </table>
                 ".$script;
 	
@@ -1858,10 +1858,10 @@ class Rezervace_objednavka extends Generic_data_class{
                         $serial->create_ceny();
 			if(!$_SESSION["id_klient"]){
 				$povinny_email = "<span class=\"red\">*</span>";
-                                $hlaska_ucastnik = "(Zaškrtnìte, pokud se vy osobnì zúèastníte zájezdu - nejedná se napø. o dárek)";
+                                $hlaska_ucastnik = "(ZaÅ¡krtnÄ›te, pokud se vy osobnÄ› zÃºÄastnÃ­te zÃ¡jezdu - nejednÃ¡ se napÅ™. o dÃ¡rek)";
 			}else{
 				$povinny_email = ""; 
-                                $hlaska_ucastnik = "(Zaškrtnìte, pokud se objednávající zúèastní zájezdu)";
+                                $hlaska_ucastnik = "(ZaÅ¡krtnÄ›te, pokud se objednÃ¡vajÃ­cÃ­ zÃºÄastnÃ­ zÃ¡jezdu)";
                                 
 			}	
                         $dotaz = "SELECT * FROM `centralni_data` WHERE 1  ";
@@ -1871,16 +1871,16 @@ class Rezervace_objednavka extends Generic_data_class{
                             $centralni_data[$row["nazev"]]=$row["text"];
                         }   
                        
-			$klient = "<tr><th colspan=\"2\"><strong>Objednávající:</strong></th></tr>
-							<tr><td width=\"110\">&nbsp;&nbsp;Jméno: <span class=\"red\">*</span></td><td><input onChange=\"set_prvni_osoba()\"  name=\"jmeno\" type=\"text\" value=\"".$_POST["jmeno"]."\" /></td></tr>
-							<tr><td>&nbsp;&nbsp;Pøíjmení: <span class=\"red\">*</span></td><td><input onChange=\"set_prvni_osoba()\"  name=\"prijmeni\" type=\"text\" value=\"".$_POST["prijmeni"]."\" /></td></tr>
-							<tr><td>&nbsp;&nbsp;Datum narození: ".$povinny_email."</td><td><input onChange=\"set_prvni_osoba()\"  name=\"datum_narozeni\" type=\"text\" value=\"".$_POST["datum_narozeni"]."\" /></td></tr>
+			$klient = "<tr><th colspan=\"2\"><strong>ObjednÃ¡vajÃ­cÃ­:</strong></th></tr>
+							<tr><td width=\"110\">&nbsp;&nbsp;JmÃ©no: <span class=\"red\">*</span></td><td><input onChange=\"set_prvni_osoba()\"  name=\"jmeno\" type=\"text\" value=\"".$_POST["jmeno"]."\" /></td></tr>
+							<tr><td>&nbsp;&nbsp;PÅ™Ã­jmenÃ­: <span class=\"red\">*</span></td><td><input onChange=\"set_prvni_osoba()\"  name=\"prijmeni\" type=\"text\" value=\"".$_POST["prijmeni"]."\" /></td></tr>
+							<tr><td>&nbsp;&nbsp;Datum narozenÃ­: ".$povinny_email."</td><td><input onChange=\"set_prvni_osoba()\"  name=\"datum_narozeni\" type=\"text\" value=\"".$_POST["datum_narozeni"]."\" /></td></tr>
 							<tr><td>&nbsp;&nbsp;E-mail: ".$povinny_email."</td><td><input onChange=\"set_prvni_osoba()\"  name=\"email\" type=\"text\" value=\"".$_POST["email"]."\" /></td></tr>
 							<tr><td>&nbsp;&nbsp;Telefon:<span class=\"red\">*</span></td><td><input onChange=\"set_prvni_osoba()\"  name=\"telefon\" type=\"text\" value=\"".$_POST["telefon"]."\" /></td></tr>
-							<tr><td>&nbsp;&nbsp;Ulice a ÈP: ".$povinny_email."</td><td><input onChange=\"set_prvni_osoba()\"  name=\"ulice\" type=\"text\" value=\"".$_POST["ulice"]."\" /></td></tr>
-							<tr><td>&nbsp;&nbsp;Mìsto: <span class=\"red\">*</span></td><td><input onChange=\"set_prvni_osoba()\"  name=\"mesto\" type=\"text\" value=\"".$_POST["mesto"]."\" /></td></tr>
-							<tr><td>&nbsp;&nbsp;PSÈ: ".$povinny_email."</td><td><input onChange=\"set_prvni_osoba()\"  name=\"psc\" type=\"text\" value=\"".$_POST["psc"]."\" /></td></tr>
-                                                            <tr><td>&nbsp;&nbsp;Objednávající je úèastník zájezdu: </td><td><input name=\"objednavajici_je_ucastnik\" onChange=\"set_prvni_osoba()\" value=\"1\" checked=\"checked\" type=\"checkbox\" ".(($_POST["objednavajici_je_ucastnik"]==1)?("checked=\"checked\""):(""))."\" />
+							<tr><td>&nbsp;&nbsp;Ulice a ÄŒP: ".$povinny_email."</td><td><input onChange=\"set_prvni_osoba()\"  name=\"ulice\" type=\"text\" value=\"".$_POST["ulice"]."\" /></td></tr>
+							<tr><td>&nbsp;&nbsp;MÄ›sto: <span class=\"red\">*</span></td><td><input onChange=\"set_prvni_osoba()\"  name=\"mesto\" type=\"text\" value=\"".$_POST["mesto"]."\" /></td></tr>
+							<tr><td>&nbsp;&nbsp;PSÄŒ: ".$povinny_email."</td><td><input onChange=\"set_prvni_osoba()\"  name=\"psc\" type=\"text\" value=\"".$_POST["psc"]."\" /></td></tr>
+                                                            <tr><td>&nbsp;&nbsp;ObjednÃ¡vajÃ­cÃ­ je ÃºÄastnÃ­k zÃ¡jezdu: </td><td><input name=\"objednavajici_je_ucastnik\" onChange=\"set_prvni_osoba()\" value=\"1\" checked=\"checked\" type=\"checkbox\" ".(($_POST["objednavajici_je_ucastnik"]==1)?("checked=\"checked\""):(""))."\" />
                                                             <tr><td colspan=\"2\">$hlaska_ucastnik</td></tr> 
 			";
                         $i=0;
@@ -1923,26 +1923,26 @@ class Rezervace_objednavka extends Generic_data_class{
                             }
                             $dalsi_osoby.="				
 					<tr>
-						<th colspan=\"6\">Osoba è. ".$i."</th>
+						<th colspan=\"6\">Osoba Ä. ".$i."</th>
 					</tr>					
 					<tr ".$parita.">
-						<td colspan=\"6\"><strong>Vyplòte potøebné údaje o pøihlášené osobì</strong></td>
+						<td colspan=\"6\"><strong>VyplÅˆte potÅ™ebnÃ© Ãºdaje o pÅ™ihlÃ¡Å¡enÃ© osobÄ›</strong></td>
 					</tr>													
 					<tr ".$parita.">
-						<td>Jméno: <span class=\"red\">*</span></td>		<td><input name=\"jmeno_".$i."\" type=\"text\" value=\"".$jmeno."\" /></td>
-						<td>Pøíjmení: <span class=\"red\">*</span></td>	<td><input name=\"prijmeni_".$i."\" type=\"text\" value=\"".$prijmeni."\" /></td>
+						<td>JmÃ©no: <span class=\"red\">*</span></td>		<td><input name=\"jmeno_".$i."\" type=\"text\" value=\"".$jmeno."\" /></td>
+						<td>PÅ™Ã­jmenÃ­: <span class=\"red\">*</span></td>	<td><input name=\"prijmeni_".$i."\" type=\"text\" value=\"".$prijmeni."\" /></td>
 						<td>Telefon:</td>		<td><input name=\"telefon_".$i."\" type=\"text\" value=\"".$telefon."\" /></td>
 					</tr>
 					<tr".$parita.">
-                                                <td>Datum narození: </td>	<td><input name=\"datum_narozeni_".$i."\" type=\"text\" value=\"".$datum_narozeni."\" /></td>
-						<td>Rodné èíslo:</td>		<td><input name=\"rodne_cislo_".$i."\" type=\"text\" value=\"".$rodne_cislo."\" /></td>
-						<td>Èíslo dokladu (OP / pas):</td> <td><input name=\"cislo_pasu_".$i."\" type=\"text\" value=\"".$cislo_pasu."\" /></td>
+                                                <td>Datum narozenÃ­: </td>	<td><input name=\"datum_narozeni_".$i."\" type=\"text\" value=\"".$datum_narozeni."\" /></td>
+						<td>RodnÃ© ÄÃ­slo:</td>		<td><input name=\"rodne_cislo_".$i."\" type=\"text\" value=\"".$rodne_cislo."\" /></td>
+						<td>ÄŒÃ­slo dokladu (OP / pas):</td> <td><input name=\"cislo_pasu_".$i."\" type=\"text\" value=\"".$cislo_pasu."\" /></td>
 					</tr>
                             ";                            
                         }
 
 
-			$poznamky = "<tr><td valign=\"top\"><strong>Poznámky:</strong></td><td><textarea name=\"poznamky\" type=\"text\"  cols=\"17\" rows=\"6\">".$_POST["poznamky"]."</textarea></td></tr>\n";
+			$poznamky = "<tr><td valign=\"top\"><strong>PoznÃ¡mky:</strong></td><td><textarea name=\"poznamky\" type=\"text\"  cols=\"17\" rows=\"6\">".$_POST["poznamky"]."</textarea></td></tr>\n";
                         
 			$vystup="<script  type=\"text/javascript\">
                                function set_prvni_osoba(){
@@ -1984,12 +1984,12 @@ class Rezervace_objednavka extends Generic_data_class{
                                         </table>
                                       </td><td valign=\"top\">
                                         <table class=\"sluzby\"  cellpadding=\"2\" cellspacing=\"2\" width=\"400\" style=\"margin-left:5px;\">
-						<tr><th colspan=\"2\"><strong>Objednávka - rekapitulace:</strong></th></tr>
-                                                <tr><td>Zájezd <td>".$_POST["nazev_zajezdu"]."</td>
-                                                <tr><td>Termín<td>".(($serial->get_dlouhodobe_zajezdy())?($_POST["upresneni_terminu_od"]." - ".$_POST["upresneni_terminu_do"]):($serial->get_termin_od()." - ".$serial->get_termin_do()))."
+						<tr><th colspan=\"2\"><strong>ObjednÃ¡vka - rekapitulace:</strong></th></tr>
+                                                <tr><td>ZÃ¡jezd <td>".$_POST["nazev_zajezdu"]."</td>
+                                                <tr><td>TermÃ­n<td>".(($serial->get_dlouhodobe_zajezdy())?($_POST["upresneni_terminu_od"]." - ".$_POST["upresneni_terminu_do"]):($serial->get_termin_od()." - ".$serial->get_termin_do()))."
 
                                                 <tr><td colspan=\"2\">".$serial->get_ceny()->show_rekapitulace_objednavka()."
-                                                <tr><td>Celková cena<td><strong>".$serial->get_ceny()->get_celkova_castka()." Kè 
+                                                <tr><td>CelkovÃ¡ cena<td><strong>".$serial->get_ceny()->get_celkova_castka()." KÄ 
                                                     <span id=\"castka_euro\" style=\"display:none\">/ ".round($serial->get_ceny()->get_celkova_castka()/$centralni_data["kurz EUR"])." EUR</span></strong>
                                                   
                                         </table>
@@ -2000,7 +2000,7 @@ class Rezervace_objednavka extends Generic_data_class{
 							".$dalsi_osoby."
 				</table>	
                                 ".$this->show_form_platby($serial->get_ceny()->get_celkova_castka())." 
-				<input type=\"submit\" name=\"submit_kontakty\" value=\"ODESLAT OBJEDNÁVKU &gt;&gt;\" />
+				<input type=\"submit\" name=\"submit_kontakty\" value=\"ODESLAT OBJEDNÃVKU &gt;&gt;\" />
 
                         ";
 				
@@ -2021,7 +2021,7 @@ class Rezervace_objednavka extends Generic_data_class{
 			
 			<form action=\"".$this->get_adress(array($adresa_rezervace,"objednavka","osoby"))."\" method=\"post\" name=\"objednavka\">
 		\n";
-		$submit = "<input type=\"submit\" name=\"back\" value=\"&lt;&lt;Zpìt na 1. krok\" /><input type=\"submit\" value=\"Odeslat objednávku\" />\n";
+		$submit = "<input type=\"submit\" name=\"back\" value=\"&lt;&lt;ZpÄ›t na 1. krok\" /><input type=\"submit\" value=\"Odeslat objednÃ¡vku\" />\n";
 
 		//vypisu seznam cen
 		$ceny_objednavky = new Seznam_cen($this->id_serial, $this->id_zajezd );					
@@ -2031,12 +2031,12 @@ class Rezervace_objednavka extends Generic_data_class{
 		
 		//ziskani serialu z databaze	
 		$zajezd = mysqli_fetch_array( $this->database->query($this->create_query("get_zajezd") ) )
-		 	or $this->chyba("Chyba pøi dotazu do databáze zájezd: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
+		 	or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze zÃ¡jezd: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
 		//ziskani id_smluvnich podminek
 		$this->id_smluvni_podminky = $zajezd["id_smluvni_podminky"];			
-			//získání dokumentu se smluvními podmínkami
+			//zÃ­skÃ¡nÃ­ dokumentu se smluvnÃ­mi podmÃ­nkami
 			$data_smluvni_podminky=$this->database->query($this->create_query("smluvni_podminky"))
-		 		or $this->chyba("Chyba pøi dotazu do databáze smluvní podmínky: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
+		 		or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze smluvnÃ­ podmÃ­nky: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
 			$zaznam_smp = mysqli_fetch_array($data_smluvni_podminky);		
 			
 					
@@ -2068,10 +2068,10 @@ class Rezervace_objednavka extends Generic_data_class{
 			}
 		}
 		
-		$serial = "<tr><th valign=\"top\">Zájezd:</th><th><strong>".$zajezd["nazev"]."</strong> (".$this->change_date_en_cz( $zajezd["od"] )." - ".$this->change_date_en_cz( $zajezd["do"] ).")</th></tr>\n";		
-		$klient = "<tr><td valign=\"top\">Objednávající:</td><td><strong>".$this->prijmeni." ".$this->jmeno."</strong>; ".$this->change_date_en_cz( $this->datum_narozeni )."; ".$this->email."; ".$this->mesto.", ".$this->ulice.", ".$this->psc."</td></tr>\n";
-		$pocet_osob = "<tr><td valign=\"top\">Poèet osob:</td><td>".$this->pocet_osob." <input name=\"pocet_osob\" type=\"hidden\" value=\"".$this->pocet_osob."\" /></td></tr>\n";			
-		$poznamky = "<tr><td valign=\"top\">Poznámky:</td><td>".$this->poznamky." <input name=\"poznamky\" type=\"hidden\" value=\"".$this->poznamky."\" /></td></tr>\n";
+		$serial = "<tr><th valign=\"top\">ZÃ¡jezd:</th><th><strong>".$zajezd["nazev"]."</strong> (".$this->change_date_en_cz( $zajezd["od"] )." - ".$this->change_date_en_cz( $zajezd["do"] ).")</th></tr>\n";		
+		$klient = "<tr><td valign=\"top\">ObjednÃ¡vajÃ­cÃ­:</td><td><strong>".$this->prijmeni." ".$this->jmeno."</strong>; ".$this->change_date_en_cz( $this->datum_narozeni )."; ".$this->email."; ".$this->mesto.", ".$this->ulice.", ".$this->psc."</td></tr>\n";
+		$pocet_osob = "<tr><td valign=\"top\">PoÄet osob:</td><td>".$this->pocet_osob." <input name=\"pocet_osob\" type=\"hidden\" value=\"".$this->pocet_osob."\" /></td></tr>\n";			
+		$poznamky = "<tr><td valign=\"top\">PoznÃ¡mky:</td><td>".$this->poznamky." <input name=\"poznamky\" type=\"hidden\" value=\"".$this->poznamky."\" /></td></tr>\n";
 
 		
 			
@@ -2088,7 +2088,7 @@ class Rezervace_objednavka extends Generic_data_class{
 		
 		//ziskani osob, ktere uz klient nekdy prihlasoval na zajezd
 		$vytvorene_osoby = $this->database->query($this->create_query("get_drive_objednane_osoby") ) 
-		 	or $this->chyba("Chyba pøi dotazu do databáze objednané osoby: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
+		 	or $this->chyba("Chyba pÅ™i dotazu do databÃ¡ze objednanÃ© osoby: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
 		$pocet_vytvorenych_osob = mysqli_num_rows($vytvorene_osoby);
 		
 		$i=0;
@@ -2153,7 +2153,7 @@ class Rezervace_objednavka extends Generic_data_class{
 					
 					$table_vytvorene_osoby = 
 						"<tr ".$parita.">
-							<td colspan=\"4\"><strong><span class=\"red\">**</span> Nebo vyberte osobu, kterou jste ji vytvoøil</strong> </td>
+							<td colspan=\"4\"><strong><span class=\"red\">**</span> Nebo vyberte osobu, kterou jste jiÅ¾ vytvoÅ™il</strong> </td>
 							<td colspan=\"2\">".$select_vytvorene_osoby."</td>
 						</tr>	";	
 				}else{
@@ -2173,21 +2173,21 @@ class Rezervace_objednavka extends Generic_data_class{
 					<tr ".$parita.">
 						<td colspan=\"2\">".$checkbox_prvni_osoba."</td>
 					</tr>	";		
-				$text_osoby="Nebo vyplòte potøebné újdaje o pøihlášené osobì:";		
+				$text_osoby="Nebo vyplÅˆte potÅ™ebnÃ© Ãºjdaje o pÅ™ihlÃ¡Å¡enÃ© osobÄ›:";		
 			}else{
 				$prvni_osoba="";
-				$text_osoby="Vyplòte potøebné újdaje o pøihlášené osobì:";	
+				$text_osoby="VyplÅˆte potÅ™ebnÃ© Ãºjdaje o pÅ™ihlÃ¡Å¡enÃ© osobÄ›:";	
 			}
 
 					/*
 					<tr ".$parita.">
-						<td colspan=\"4\"><strong><span class=\"red\">**</span> Napište Id vybrané osoby</strong>  </td>
+						<td colspan=\"4\"><strong><span class=\"red\">**</span> NapiÅ¡te Id vybranÃ© osoby</strong>  </td>
 						<td colspan=\"2\"><input name=\"id_klient_".$i."\" type=\"text\" value=\"".$id_klient."\" /></td>
 					</tr>		
 					*/
 			$vystup=$vystup."				
 					<tr>
-						<th colspan=\"6\">Osoba è. ".$i."</th>
+						<th colspan=\"6\">Osoba Ä. ".$i."</th>
 					</tr>
 					".$prvni_osoba."
 					
@@ -2196,23 +2196,23 @@ class Rezervace_objednavka extends Generic_data_class{
 						<td colspan=\"6\"><strong>".$text_osoby."</strong></td>
 					</tr>													
 					<tr ".$parita.">
-						<td>Jméno: <span class=\"red\">*</span></td>		<td><input name=\"jmeno_".$i."\" type=\"text\" value=\"".$jmeno."\" /></td>
-						<td>Pøíjmení: <span class=\"red\">*</span></td>	<td><input name=\"prijmeni_".$i."\" type=\"text\" value=\"".$prijmeni."\" /></td>
+						<td>JmÃ©no: <span class=\"red\">*</span></td>		<td><input name=\"jmeno_".$i."\" type=\"text\" value=\"".$jmeno."\" /></td>
+						<td>PÅ™Ã­jmenÃ­: <span class=\"red\">*</span></td>	<td><input name=\"prijmeni_".$i."\" type=\"text\" value=\"".$prijmeni."\" /></td>
 						<td>Titul:</td>		<td><input name=\"titul_".$i."\" type=\"text\" value=\"".$titul."\" /></td>
 					</tr>
 					<tr".$parita.">	
 						<td>E-mail: </td>		<td><input name=\"email_".$i."\" type=\"text\" value=\"".$email."\" /></td>
 						<td>Telefon:</td>		<td><input name=\"telefon_".$i."\" type=\"text\" value=\"".$telefon."\" /></td>				
-						<td>Datum narození: </td>	<td><input name=\"datum_narozeni_".$i."\" type=\"text\" value=\"".$datum_narozeni."\" /></td>
+						<td>Datum narozenÃ­: </td>	<td><input name=\"datum_narozeni_".$i."\" type=\"text\" value=\"".$datum_narozeni."\" /></td>
 					</tr>
 					<tr".$parita.">						
-						<td>Rodné èíslo:</td>		<td><input name=\"rodne_cislo_".$i."\" type=\"text\" value=\"".$rodne_cislo."\" /></td>
-						<td>Èíslo dokladu:</td>			<td colspan=\"3\"><input name=\"cislo_pasu_".$i."\" type=\"text\" value=\"".$cislo_pasu."\" /> (obèanskı prùkaz nebo pas)</td>
+						<td>RodnÃ© ÄÃ­slo:</td>		<td><input name=\"rodne_cislo_".$i."\" type=\"text\" value=\"".$rodne_cislo."\" /></td>
+						<td>ÄŒÃ­slo dokladu:</td>			<td colspan=\"3\"><input name=\"cislo_pasu_".$i."\" type=\"text\" value=\"".$cislo_pasu."\" /> (obÄanskÃ½ prÅ¯kaz nebo pas)</td>
 					</tr>
 					<tr".$parita.">
-						<td>Mìsto: </td>		<td><input name=\"mesto_".$i."\" type=\"text\" value=\"".$mesto."\" /></td>						
-						<td>Ulice a ÈP: </td>	<td><input name=\"ulice_".$i."\" type=\"text\" value=\"".$ulice."\" /></td>
-						<td>PSÈ: </td>			<td><input name=\"psc_".$i."\" type=\"text\" value=\"".$psc."\" /></td>
+						<td>MÄ›sto: </td>		<td><input name=\"mesto_".$i."\" type=\"text\" value=\"".$mesto."\" /></td>						
+						<td>Ulice a ÄŒP: </td>	<td><input name=\"ulice_".$i."\" type=\"text\" value=\"".$ulice."\" /></td>
+						<td>PSÄŒ: </td>			<td><input name=\"psc_".$i."\" type=\"text\" value=\"".$psc."\" /></td>
 					</tr>
 				";
 		}
@@ -2224,16 +2224,16 @@ class Rezervace_objednavka extends Generic_data_class{
                            
 			".$submit."
 			
-					<p><span class=\"red\">*</span> - poloky oznaèené hvìzdièkou je tøeba vyplnit.</p>
+					<p><span class=\"red\">*</span> - poloÅ¾ky oznaÄenÃ© hvÄ›zdiÄkou je tÅ™eba vyplnit.</p>
 					
 						
-					<h3>Smluvní podmínky</h3>
-					<p>Odesláním objednávky souhlasíte se smluvními podmínkami CK SLAN tour: <a href=\"/".ADRESAR_DOKUMENT."/".$zaznam_smp["dokument_url"]."\" target=\"_blank\" title=\"".$zaznam_smp["popisek_dokument"]."\">".$zaznam_smp["nazev_dokument"]."</a></p>					
+					<h3>SmluvnÃ­ podmÃ­nky</h3>
+					<p>OdeslÃ¡nÃ­m objednÃ¡vky souhlasÃ­te se smluvnÃ­mi podmÃ­nkami CK SLAN tour: <a href=\"/".ADRESAR_DOKUMENT."/".$zaznam_smp["dokument_url"]."\" target=\"_blank\" title=\"".$zaznam_smp["popisek_dokument"]."\">".$zaznam_smp["nazev_dokument"]."</a></p>					
 					
-					<h3>Co se stane po odeslání?</h3>
-					<p>Po odeslání formuláøe systém zkontroluje kapacity slueb, o které máte zájem. Pokud jsou volné, provede èasovì omezenou rezervaci zájezdu.<br/>
-					 Pracovníci CK SLAN tour objednávku zkontrolují a budou Vás dále informovat o zpùsobech platby a pøípadnì dalších podrobnostech.								
-					<br/>Mám zájem o zasílání aktuálních nabídek CK: <input type=\"checkbox\" name=\"novinky\"  value=\"ano\"/></p>
+					<h3>Co se stane po odeslÃ¡nÃ­?</h3>
+					<p>Po odeslÃ¡nÃ­ formulÃ¡Å™e systÃ©m zkontroluje kapacity sluÅ¾eb, o kterÃ© mÃ¡te zÃ¡jem. Pokud jsou volnÃ©, provede ÄasovÄ› omezenou rezervaci zÃ¡jezdu.<br/>
+					 PracovnÃ­ci CK SLAN tour objednÃ¡vku zkontrolujÃ­ a budou VÃ¡s dÃ¡le informovat o zpÅ¯sobech platby a pÅ™Ã­padnÄ› dalÅ¡Ã­ch podrobnostech.								
+					<br/>MÃ¡m zÃ¡jem o zasÃ­lÃ¡nÃ­ aktuÃ¡lnÃ­ch nabÃ­dek CK: <input type=\"checkbox\" name=\"novinky\"  value=\"ano\"/></p>
 			</form>
 			";
 
@@ -2245,19 +2245,19 @@ class Rezervace_objednavka extends Generic_data_class{
 	function correct_data(){
 		$ok = 1;
 		if($this->typ_pozadavku == "osoby" or $this->typ_pozadavku == "odeslat"){
-		//kontrolovaná data: název seriálu, popisek,  id_typ, 
+		//kontrolovanÃ¡ data: nÃ¡zev seriÃ¡lu, popisek,  id_typ, 
 			/*if(!Validace::int_min($this->id_klient,1) ){
 				$ok = 0;
-				$this->chyba("Klient není pøihlášen!");
+				$this->chyba("Klient nenÃ­ pÅ™ihlÃ¡Å¡en!");
 			}		*/
 			if($this->zajezd_info["dlouhodobe_zajezdy"]){
 				if(!Validace::datum_cz($this->upresneni_terminu_od) ){
 					$ok = 0;
-					$this->chyba("U dlouhodobého zájezdu je tøeba upøesnit poadované datum odjezdu ve formátu dd.mm.rrrr");
+					$this->chyba("U dlouhodobÃ©ho zÃ¡jezdu je tÅ™eba upÅ™esnit poÅ¾adovanÃ© datum odjezdu ve formÃ¡tu dd.mm.rrrr");
 				}
 				if(!Validace::datum_cz($this->upresneni_terminu_do) ){
 					$ok = 0;
-					$this->chyba("U dlouhodobého zájezdu je tøeba upøesnit poadované datum návratu ve formátu dd.mm.rrrr");
+					$this->chyba("U dlouhodobÃ©ho zÃ¡jezdu je tÅ™eba upÅ™esnit poÅ¾adovanÃ© datum nÃ¡vratu ve formÃ¡tu dd.mm.rrrr");
 
 				}	
 			/*kontrola upresneni terminu*/
@@ -2275,56 +2275,56 @@ class Rezervace_objednavka extends Generic_data_class{
 
 					if($time_upresneni_od < $time_od or $time_upresneni_do > $time_do){
 						$ok = 0;
-						$this->chyba("Upøesnìní termínu je mimo rozsah daného zájezdu (nelze garantovat cenu a kapacitu slueb): upøesnìte termín v rozmezí od ".$this->change_date_en_cz($this->zajezd_od)." do ".$this->change_date_en_cz($this->zajezd_do).", nebo zvolte jinı zájezd (nebo jinı termínovı rozsah stávajícího zájezdu).");						
+						$this->chyba("UpÅ™esnÄ›nÃ­ termÃ­nu je mimo rozsah danÃ©ho zÃ¡jezdu (nelze garantovat cenu a kapacitu sluÅ¾eb): upÅ™esnÄ›te termÃ­n v rozmezÃ­ od ".$this->change_date_en_cz($this->zajezd_od)." do ".$this->change_date_en_cz($this->zajezd_do).", nebo zvolte jinÃ½ zÃ¡jezd (nebo jinÃ½ termÃ­novÃ½ rozsah stÃ¡vajÃ­cÃ­ho zÃ¡jezdu).");						
 					}	
 					if($time_upresneni_od > $time_upresneni_do){
 						$ok = 0;
-						$this->chyba("Datum odjezdu je zvoleno a po datu návratu!");						
+						$this->chyba("Datum odjezdu je zvoleno aÅ¾ po datu nÃ¡vratu!");						
 						
 					}
 				}							
 			}
 			if(!Validace::text($this->jmeno) ){
 				$ok = 0;
-				$this->chyba("Je tøeba vyplnit Vaše jméno!");
+				$this->chyba("Je tÅ™eba vyplnit VaÅ¡e jmÃ©no!");
 			}
 			if(!Validace::text($this->prijmeni) ){
 				$ok = 0;
-				$this->chyba("Je tøeba vyplnit Vaše pøíjmení!");
+				$this->chyba("Je tÅ™eba vyplnit VaÅ¡e pÅ™Ã­jmenÃ­!");
 			}
 			if(!Validace::text($this->datum_narozeni) ){
 				$ok = 0;
-				$this->chyba("Je tøeba vyplnit Vaše datum narození!");
+				$this->chyba("Je tÅ™eba vyplnit VaÅ¡e datum narozenÃ­!");
 			}
 			if(!Validace::text($this->ulice) ){
 				$ok = 0;
-				$this->chyba("Je tøeba vyplnit Vaši adresu - ulici a èíslo popisné");
+				$this->chyba("Je tÅ™eba vyplnit VaÅ¡i adresu - ulici a ÄÃ­slo popisnÃ©");
 			}
 			if(!Validace::text($this->mesto) ){
 				$ok = 0;
-				$this->chyba("Je tøeba vyplnit Vaši adresu - mìsto");
+				$this->chyba("Je tÅ™eba vyplnit VaÅ¡i adresu - mÄ›sto");
 			}
 			if(!Validace::text($this->psc) ){
 				$ok = 0;
-				$this->chyba("Je tøeba vyplnit Vaši adresu - psè");
+				$this->chyba("Je tÅ™eba vyplnit VaÅ¡i adresu - psÄ");
 			}
 			if(!Validace::text($this->telefon) ){
 				$ok = 0;
-				$this->chyba("Je tøeba vyplnit Váš telefon");
+				$this->chyba("Je tÅ™eba vyplnit VÃ¡Å¡ telefon");
 			}
 			if(!$_SESSION["id_klient"]){
 				if(!Validace::email($this->email) ){
 					$ok = 0;
-					$this->chyba("Email není správnì vyplnìn!");
+					$this->chyba("Email nenÃ­ sprÃ¡vnÄ› vyplnÄ›n!");
 				}				
 			}		
 			if(!Validace::int_min_max($this->pocet_osob,1,MAX_OSOB) ){
 				$ok = 0;
-				$this->chyba("Poèet osob není v intervalu 1 - ".MAX_OSOB."!");
+				$this->chyba("PoÄet osob nenÃ­ v intervalu 1 - ".MAX_OSOB."!");
 			}
 			if(!Validace::int_min_max($this->pocet_cen,1,MAX_CEN) ){
 				$ok = 0;
-				$this->chyba("Poèet slueb není v intervalu 1 - ".MAX_CEN."!");
+				$this->chyba("PoÄet sluÅ¾eb nenÃ­ v intervalu 1 - ".MAX_CEN."!");
 			}			
 		}																	
 		//pokud je vse vporadku...

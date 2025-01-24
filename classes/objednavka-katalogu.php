@@ -44,14 +44,14 @@ require_once "./classes/destinace_list.inc.php"; //menu katalogu
 
 <head>
 <title>
-Objednávka katalogů | SLAN tour | Poznávací zájezdy 2020, Lázně, Dovolená u moře léto 2019, fotbal, Formule 1, ATP Masters, olympiáda, biatlon
+ObjednĂˇvka katalogĹŻ | SLAN tour | PoznĂˇvacĂ­ zĂˇjezdy 2020, LĂˇznÄ›, DovolenĂˇ u moĹ™e lĂ©to 2019, fotbal, Formule 1, ATP Masters, olympiĂˇda, biatlon
 </title>  
   <meta http-equiv="cache-control" content="no-cache" />
 
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1250" />
-<meta name="Keywords" content="objednávka katalogů, slan tour, dovolená, poznávací, zájezdy, lázně, lyžování, 2019"/>
-<meta name="Description" content="SLAN tour: objednávka katalogů; Poznávací zájezdy 2020 (Francie, Německo, Evropa, Mexiko, Indie, Rakousko, Itálie, Nepál, Namibie), Dovolená u moře (Chorvatsko, Francie, Španělsko, Mexiko - Cancun, Bali, SAE), 
- , lázně v Čechách, Moravě, Slovensku a Maďarsku, pobyty na horách i u vody,  2019, 2020, Premier League, Formule 1, tenis - vstupenky a zájezdy." />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="objednĂˇvka katalogĹŻ, slan tour, dovolenĂˇ, poznĂˇvacĂ­, zĂˇjezdy, lĂˇznÄ›, lyĹľovĂˇnĂ­, 2019"/>
+<meta name="Description" content="SLAN tour: objednĂˇvka katalogĹŻ; PoznĂˇvacĂ­ zĂˇjezdy 2020 (Francie, NÄ›mecko, Evropa, Mexiko, Indie, Rakousko, ItĂˇlie, NepĂˇl, Namibie), DovolenĂˇ u moĹ™e (Chorvatsko, Francie, Ĺ panÄ›lsko, Mexiko - Cancun, Bali, SAE), 
+ , lĂˇznÄ› v ÄŚechĂˇch, MoravÄ›, Slovensku a MaÄŹarsku, pobyty na horĂˇch i u vody,  2019, 2020, Premier League, Formule 1, tenis - vstupenky a zĂˇjezdy." />
 
 <meta name="Robots" content="index, follow"/>
 
@@ -86,16 +86,16 @@ Objednávka katalogů | SLAN tour | Poznávací zájezdy 2020, Lázně, Dovolená u moře
                 $('#termin_od').datepicker({
 					inline: true,
                                         dateFormat: 'dd.mm.yy',
-                                        dayNamesMin: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pa', 'So'],
-                                        monthNames:  ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'],
+                                        dayNamesMin: ['Ne', 'Po', 'Ăšt', 'St', 'ÄŚt', 'Pa', 'So'],
+                                        monthNames:  ['Leden', 'Ăšnor', 'BĹ™ezen', 'Duben', 'KvÄ›ten', 'ÄŚerven', 'ÄŚervenec', 'Srpen', 'ZĂˇĹ™Ă­', 'ĹĂ­jen', 'Listopad', 'Prosinec'],
                                         yearRange:    'c-12:c+2',
                                         firstDay: 1
 				});
                                 $('#termin_do').datepicker({
 					inline: true,
                                         dateFormat: 'dd.mm.yy',
-                                        dayNamesMin: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pa', 'So'],
-                                        monthNames:  ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'],
+                                        dayNamesMin: ['Ne', 'Po', 'Ăšt', 'St', 'ÄŚt', 'Pa', 'So'],
+                                        monthNames:  ['Leden', 'Ăšnor', 'BĹ™ezen', 'Duben', 'KvÄ›ten', 'ÄŚerven', 'ÄŚervenec', 'Srpen', 'ZĂˇĹ™Ă­', 'ĹĂ­jen', 'Listopad', 'Prosinec'],
                                         yearRange:    'c-12:c+2',
                                         firstDay: 1
 
@@ -113,35 +113,35 @@ Objednávka katalogů | SLAN tour | Poznávací zájezdy 2020, Lázně, Dovolená u moře
 function checkform(katalog){
 	var hlaska = "";
 	if(document.form1.jmeno.value == ""){
-		hlaska = hlaska + "Je třeba vyplnit Vaše jméno!\n"
+		hlaska = hlaska + "Je tĹ™eba vyplnit VaĹˇe jmĂ©no!\n"
 		var wrong = 1;
 	}
 	if(document.form1.prijmeni.value == ""){
-		hlaska = hlaska + "Je třeba vyplnit Vaše příjmení!\n"
+		hlaska = hlaska + "Je tĹ™eba vyplnit VaĹˇe pĹ™Ă­jmenĂ­!\n"
 		var wrong = 1;
 	}
 	if(document.form1.email.value == ""){
-		hlaska = hlaska + "Je třeba vyplnit Váš e-mail!\n"
+		hlaska = hlaska + "Je tĹ™eba vyplnit VĂˇĹˇ e-mail!\n"
 		var wrong = 1;
 	}
 	if(document.form1.mesto.value == ""){
-		hlaska = hlaska + "Je třeba vyplnit Vaši adresu - město!\n"
+		hlaska = hlaska + "Je tĹ™eba vyplnit VaĹˇi adresu - mÄ›sto!\n"
 		var wrong = 1;
 	}			
 	if(document.form1.ulice.value == ""){
-		hlaska = hlaska + "Je třeba vyplnit Vaši adresu - ulici!\n"
+		hlaska = hlaska + "Je tĹ™eba vyplnit VaĹˇi adresu - ulici!\n"
 		var wrong = 1;
 	}			
 	if(document.form1.psc.value == ""){
-		hlaska = hlaska + "Je třeba vyplnit Vaši adresu - PSČ!\n"
+		hlaska = hlaska + "Je tĹ™eba vyplnit VaĹˇi adresu - PSÄŚ!\n"
 		var wrong = 1;
 	}	
 	if(document.form1.kod.value == ""){
-		hlaska = hlaska + "Je třeba vyplnit SMS kód!\n"
+		hlaska = hlaska + "Je tĹ™eba vyplnit SMS kĂłd!\n"
 		var wrong = 1;
 	}		
 	if(katalog == false){
-		hlaska = hlaska + "Je třeba vybrat alespoň jeden katalog!\n"
+		hlaska = hlaska + "Je tĹ™eba vybrat alespoĹ jeden katalog!\n"
 		var wrong = 1;
 	}		
 	if(wrong == 1){
@@ -162,13 +162,13 @@ for (i=0; i < document.form1.katalog.length; i++)
 	vybran=true;
 	}
   }
-jmeno="<tr><td>jméno:<\/td><td>" + document.form1.jmeno.value + "<\/td><\/tr>\n";
-prijmeni="<tr><td>příjmení:<\/td><td>" + document.form1.prijmeni.value + "<\/td><\/tr>\n";
+jmeno="<tr><td>jmĂ©no:<\/td><td>" + document.form1.jmeno.value + "<\/td><\/tr>\n";
+prijmeni="<tr><td>pĹ™Ă­jmenĂ­:<\/td><td>" + document.form1.prijmeni.value + "<\/td><\/tr>\n";
 email="<tr><td>email:<\/td><td>" + document.form1.email.value + "<\/td><\/tr>\n";
 ulice="<tr><td>ulice:<\/td><td>" + document.form1.ulice.value + "<\/td><\/tr>\n";
-mesto="<tr><td>město:<\/td><td>" + document.form1.mesto.value + "<\/td><\/tr>\n";
-psc="<tr><td>PSČ:<\/td><td>" + document.form1.psc.value + "<\/td><\/tr>\n";
-kod="<tr><td>SMS kód:<\/td><td>" + document.form1.kod.value + "<\/td><\/tr>\n";
+mesto="<tr><td>mÄ›sto:<\/td><td>" + document.form1.mesto.value + "<\/td><\/tr>\n";
+psc="<tr><td>PSÄŚ:<\/td><td>" + document.form1.psc.value + "<\/td><\/tr>\n";
+kod="<tr><td>SMS kĂłd:<\/td><td>" + document.form1.kod.value + "<\/td><\/tr>\n";
 
 
 document.form1.kat.value = "<table border=0>" + jmeno + prijmeni + email + ulice + mesto + psc +  kod + "<\/table>\n<br \/> katalogy:\n<br \/>" + katalog;
@@ -236,11 +236,11 @@ return vybran;
       <div class="main-content">
         
         <!-- Pagetitle 
-        <h1 class="pagetitle">Lázně a termální lázně</h1>-->
+        <h1 class="pagetitle">LĂˇznÄ› a termĂˇlnĂ­ lĂˇznÄ›</h1>-->
   <div class="column2-unit-left" > 
 
       <div class="zeme">
-          <h3>KATALOG ZÁJEZDŮ A POBYTŮ</h3>
+          <h3>KATALOG ZĂJEZDĹ® A POBYTĹ®</h3>
           
 
 <table width="298">
@@ -253,7 +253,7 @@ return vybran;
 
           
 <table width="298">
-    <tr><td colspan="4"><b>Nejžádanější země</b></td>
+    <tr><td colspan="4"><b>NejĹľĂˇdanÄ›jĹˇĂ­ zemÄ›</b></td>
     </tr><tr>    
           <?php
                 $menu2 = new Menu_katalog("dotaz_top_zeme","", "", "");
@@ -261,7 +261,7 @@ return vybran;
           ?>     
 </table>     
 <table width="298">
-    <tr><td colspan="4"><b>Nejzajímavější sportovní akce</b></td>
+    <tr><td colspan="4"><b>NejzajĂ­mavÄ›jĹˇĂ­ sportovnĂ­ akce</b></td>
     </tr><tr>    
           <?php
                 $menu3 = new Menu_katalog("dotaz_top_sporty","", "", "");
@@ -281,7 +281,7 @@ return vybran;
        <div class="akce">
            
            
-<h3>Objednávka katalogů CK SLAN tour</h3>
+<h3>ObjednĂˇvka katalogĹŻ CK SLAN tour</h3>
 
 
 <form action="objednavka-katalog.php" method="post" name="form1" onsubmit="return odeslano();">
@@ -289,7 +289,7 @@ return vybran;
         
         <tr>
           <th colspan="2">
-           Objednané katalogy Vám zašleme poštou během několika dnů
+           ObjednanĂ© katalogy VĂˇm zaĹˇleme poĹˇtou bÄ›hem nÄ›kolika dnĹŻ
           </th>
         </tr>
         <tr>
@@ -298,11 +298,11 @@ return vybran;
                               <table align="left" border="0"   class="round_light">
 
                                 <tr>
-                                  <td>Jméno</td>
+                                  <td>JmĂ©no</td>
                                   <td><input name="jmeno" size="20" /></td>
                                 </tr>
                                 <tr>
-                                  <td>Příjmení</td>
+                                  <td>PĹ™Ă­jmenĂ­</td>
                                   <td><input name="prijmeni" size="20" /></td>
                                 </tr>
                                 <tr>
@@ -314,28 +314,28 @@ return vybran;
                                   <td><input name="ulice" size="20" /></td>
                                 </tr>
                                 <tr>
-                                  <td>Město</td>
+                                  <td>MÄ›sto</td>
                                   <td><input name="mesto" size="20" /></td>
                                 </tr>
                                 <tr>
-                                  <td>PSČ</td>
+                                  <td>PSÄŚ</td>
                                   <td><input name="psc" size="20" /></td>
                                 </tr>
                               </table>
            </td><td  valign="top">
                               <table align="left" border="0"   class="round_light">
-                                <tr valign="top"><td><input type="checkbox" name="katalog" value="Dovolená u moře" /> Dovolená u moře</td><td><a href="/pdf/katalog-dum.pdf">stáhnout PDF</a></td></tr>
-                                <tr valign="top"><td><input type="checkbox" name="katalog" value="Fly and Drive" /> Fly and Drive</td><td><a href="https://www.slantour.cz/pdf/katalog FlyandDrive.pdf">stáhnout PDF</a></td></tr>
+                                <tr valign="top"><td><input type="checkbox" name="katalog" value="DovolenĂˇ u moĹ™e" /> DovolenĂˇ u moĹ™e</td><td><a href="/pdf/katalog-dum.pdf">stĂˇhnout PDF</a></td></tr>
+                                <tr valign="top"><td><input type="checkbox" name="katalog" value="Fly and Drive" /> Fly and Drive</td><td><a href="https://www.slantour.cz/pdf/katalog FlyandDrive.pdf">stĂˇhnout PDF</a></td></tr>
                                
-                                <tr valign="top"><td><input type="checkbox" name="katalog" value="Svět na dosah - poznávací" /> Svět na dosah - poznávací (evropské státy)</td><td><a href="https://issuu.com/slantour/docs/svet-na-dosah">prohlédnout  PDF</a></td></tr>
-                                  <tr valign="top"><td><input type="checkbox" name="katalog" value="Vzdálené světy - poznávací" /> Vzdálené světy  - poznávací (mimoevropské státy)</td><td><a href="https://issuu.com/slantour/docs/vzdalene-svety_dcb90dc4dbc26e">prohlédnout PDF</a></td>
+                                <tr valign="top"><td><input type="checkbox" name="katalog" value="SvÄ›t na dosah - poznĂˇvacĂ­" /> SvÄ›t na dosah - poznĂˇvacĂ­ (evropskĂ© stĂˇty)</td><td><a href="https://issuu.com/slantour/docs/svet-na-dosah">prohlĂ©dnout  PDF</a></td></tr>
+                                  <tr valign="top"><td><input type="checkbox" name="katalog" value="VzdĂˇlenĂ© svÄ›ty - poznĂˇvacĂ­" /> VzdĂˇlenĂ© svÄ›ty  - poznĂˇvacĂ­ (mimoevropskĂ© stĂˇty)</td><td><a href="https://issuu.com/slantour/docs/vzdalene-svety_dcb90dc4dbc26e">prohlĂ©dnout PDF</a></td>
                                
-                                <tr valign="top"><td><input type="checkbox" name="katalog" value="Lázně" /> Lázně</td><td><a href="https://issuu.com/slantour/docs/slan_katalog_lat_2017">stáhnout PDF</a></td></tr>
-                                <tr valign="top"><td><input type="checkbox" name="katalog" value="Exotika" /> Exotika</td><td><a href="/pdf/katalog-exotika.pdf">stáhnout PDF</a></td></tr>    
+                                <tr valign="top"><td><input type="checkbox" name="katalog" value="LĂˇznÄ›" /> LĂˇznÄ›</td><td><a href="https://issuu.com/slantour/docs/slan_katalog_lat_2017">stĂˇhnout PDF</a></td></tr>
+                                <tr valign="top"><td><input type="checkbox" name="katalog" value="Exotika" /> Exotika</td><td><a href="/pdf/katalog-exotika.pdf">stĂˇhnout PDF</a></td></tr>    
                                 <tr valign="top"><td colspan="2">
-                                  <b><i>Katalogy zasíláme pouze za cenu poštovného.<br/>
-                                    Jedním požadavkem je možné objednat max. 3 katalogy. <br/>
-                                    Katalogy jsou zasílány pouze na adresy v České republice.
+                                  <b><i>Katalogy zasĂ­lĂˇme pouze za cenu poĹˇtovnĂ©ho.<br/>
+                                    JednĂ­m poĹľadavkem je moĹľnĂ© objednat max. 3 katalogy. <br/>
+                                    Katalogy jsou zasĂ­lĂˇny pouze na adresy v ÄŚeskĂ© republice.
                                     </i></b>
                                     </td></tr>
                          </table>
@@ -348,7 +348,7 @@ return vybran;
 <td valign="top" >	
     <table border="0" cellpadding="1" cellspacing="0"   class="round_light">
 		<tr>
-                                  <td valign="top">SMS kód *</td>
+                                  <td valign="top">SMS kĂłd *</td>
                                   <td   valign="top"><input name="kod" size="20" /></td>
 										</tr>
                               <tr>
@@ -362,13 +362,13 @@ return vybran;
 									<table border="0" cellpadding="5" cellspacing="5"   class="round_light">										
 										<tr>
 											<td  valign="top">
-											<b><i><font color="#0000C0">Pro dokončení objednávky katalogů je třeba získat SMS kód. </font></i></b><br/><br/>
- SMS kód získáte zasláním SMS ve tvaru: <FONT COLOR="#0000D2">SLAN "vaše jméno"</FONT> (bez uvozovek, není nutné rozlišovat malá a velká písmena) na číslo <b><FONT COLOR="#7E0000"><FONT SIZE=4>9021130</FONT></FONT></b> . Cena jedné SMS je 30 Kč (cena pokrývá náklady na poštovné). Ihned po odeslání SMS vám přijde <U>zpět zpráva s kódem</U>, který napište do příslušného pole ve formuláři v rámečku vlevo. Po vložení SMS kódu můžete objednávku odeslat..<br/>
+											<b><i><font color="#0000C0">Pro dokonÄŤenĂ­ objednĂˇvky katalogĹŻ je tĹ™eba zĂ­skat SMS kĂłd. </font></i></b><br/><br/>
+ SMS kĂłd zĂ­skĂˇte zaslĂˇnĂ­m SMS ve tvaru: <FONT COLOR="#0000D2">SLAN "vaĹˇe jmĂ©no"</FONT> (bez uvozovek, nenĂ­ nutnĂ© rozliĹˇovat malĂˇ a velkĂˇ pĂ­smena) na ÄŤĂ­slo <b><FONT COLOR="#7E0000"><FONT SIZE=4>9021130</FONT></FONT></b> . Cena jednĂ© SMS je 30 KÄŤ (cena pokrĂ˝vĂˇ nĂˇklady na poĹˇtovnĂ©). Ihned po odeslĂˇnĂ­ SMS vĂˇm pĹ™ijde <U>zpÄ›t zprĂˇva s kĂłdem</U>, kterĂ˝ napiĹˇte do pĹ™Ă­sluĹˇnĂ©ho pole ve formulĂˇĹ™i v rĂˇmeÄŤku vlevo. Po vloĹľenĂ­ SMS kĂłdu mĹŻĹľete objednĂˇvku odeslat..<br/>
 <br/>
-<I>Cena této služby je 30 Kč vč. DPH za odeslanou SMS. Za službu odpovídá Advanced Telecom Services, s.r.o. Infolinka 776999199,  www.platmobilem.cz.</I><br/>
+<I>Cena tĂ©to sluĹľby je 30 KÄŤ vÄŤ. DPH za odeslanou SMS. Za sluĹľbu odpovĂ­dĂˇ Advanced Telecom Services, s.r.o. Infolinka 776999199,  www.platmobilem.cz.</I><br/>
 <br/>
 
-Příklad tvaru  zaslané sms: <I><FONT COLOR="#00006F">slan novak</FONT></I>
+PĹ™Ă­klad tvaru  zaslanĂ© sms: <I><FONT COLOR="#00006F">slan novak</FONT></I>
 
 											</td>										
 										</tr>																		
