@@ -3,23 +3,23 @@
 generic.inc.php - definuje obecne (abstraktni) tridy
  */
 
-/*trida pro staticka data, ktera souvisi s objektem seriÃ¡l (typ ubytovÃ¡nÃ­, typ dopravy,...)*/
+/*trida pro staticka data, ktera souvisi s objektem seriál (typ ubytování, typ dopravy,...)*/
 //private kostruktor + final class zarucuje, ze trida nebude instancovana
 final class Serial_library
 {
-    static private $doprava = array("vlastnÃ­", "autokar", "letecky", "vlakem", "vlastnÃ­ nebo autobus");
-    static private $strava = array("bez stravy", "snÃ­danÄ›", "polopenze", "plnÃ¡ penze", "all inclusive");
-    static private $ubytovani = array("bez ubytovÃ¡nÃ­", "stan", "chatky", "apartmÃ¡ny", "penzion", "hotel", "hotel 2*", "hotel 3*", "hotel 4*", "hotel 5*", "lÃ¡zeÅˆskÃ½ dÅ¯m");
-    static private $typ_ceny = array("cena", "last minute", "sleva", "pÅ™Ã­platek", "odjezdovÃ© mÃ­sto");
+    static private $doprava = array("vlastní", "autokar", "letecky", "vlakem", "vlastní nebo autobus");
+    static private $strava = array("bez stravy", "snídanì", "polopenze", "plná penze", "all inclusive");
+    static private $ubytovani = array("bez ubytování", "stan", "chatky", "apartmány", "penzion", "hotel", "hotel 2*", "hotel 3*", "hotel 4*", "hotel 5*", "lázeòskı dùm");
+    static private $typ_ceny = array("cena", "last minute", "sleva", "pøíplatek", "odjezdové místo");
 
-    static private $typ_kontaktu = array("HlavnÃ­ kontakt", "ÃšÄtÃ¡rna", "Rezervace", "OstatnÃ­");
-    static private $typ_bankovniho_spojeni = array("", "HlavnÃ­ kontakt", "ostatnÃ­");
-    static private $typ_organizace = array("", "Prodejce (CA)", "UbytovacÃ­ zaÅ™Ã­zenÃ­", "Partner", "Dopravce", "JinÃ¡", "PoboÄka");
-    static private $typ_adresy = array("", "SÃ­dlo spoleÄnosti", "KontaktnÃ­ adresa", "DalÅ¡Ã­ adresa");
+    static private $typ_kontaktu = array("Hlavní kontakt", "Úètárna", "Rezervace", "Ostatní");
+    static private $typ_bankovniho_spojeni = array("", "Hlavní kontakt", "ostatní");
+    static private $typ_organizace = array("", "Prodejce (CA)", "Ubytovací zaøízení", "Partner", "Dopravce", "Jiná", "Poboèka");
+    static private $typ_adresy = array("", "Sídlo spoleènosti", "Kontaktní adresa", "Další adresa");
 
-    static private $typ_objektu = array("", "UbytovacÃ­", "DopravnÃ­", "Vstupenka", "OstatnÃ­", "LetuÅ¡ka API", "GoGlobal API");
+    static private $typ_objektu = array("", "Ubytovací", "Dopravní", "Vstupenka", "Ostatní", "Letuška API", "GoGlobal API");
 
-    //privÃ¡tnÃ­ konstruktor
+    //privátní konstruktor
     private function __construct()
     {
 
@@ -154,10 +154,10 @@ final class Serial_library
 }
 
 
-/*trida pro staticka data, ktera souvisi s objektem seriÃ¡l (typ ubytovÃ¡nÃ­, typ dopravy,...)*/
+/*trida pro staticka data, ktera souvisi s objektem seriál (typ ubytování, typ dopravy,...)*/
 //private kostruktor + final class zarucuje, ze trida nebude instancovana
 final class Validace{
-	//privÃ¡tnÃ­ konstruktor
+	//privátní konstruktor
 	private function __construct(){
 	
 	}
@@ -171,7 +171,7 @@ final class Validace{
 		}
 	}
 
-	/**kontrola data ve formÃ¡tu ISO*/
+	/**kontrola data ve formátu ISO*/
 	static function datum_en($vstup){
 		if( preg_match ("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$/", $vstup) ){
 			return true;
@@ -180,7 +180,7 @@ final class Validace{
 		}
 	}	
 	
-	/**kontrola ÄeskÃ©ho formÃ¡tu data*/
+	/**kontrola èeského formátu data*/
 	static function datum_cz($vstup){
 		if( preg_match ("/^[0-9]{1,2} ?\.[0-9]{1,2} ?\.[0-9]{4}$/", $vstup) ){
 			return true;
@@ -206,7 +206,7 @@ final class Validace{
 			return false;
 		}
 	}
-	/**kontrola integeru s omezenÃ­m minimÃ¡lnÃ­ hodnoty*/
+	/**kontrola integeru s omezením minimální hodnoty*/
 	static function int_min($vstup,$min){
 		if( preg_match("/[0-9]+$/",$vstup) and $vstup >= $min ){
 			return true;
@@ -214,7 +214,7 @@ final class Validace{
 			return false;
 		}
 	}	
-	/** kontrola integeru s omezenÃ­m minimÃ¡lnÃ­ i maximÃ¡lnÃ­ hodnoty*/
+	/** kontrola integeru s omezením minimální i maximální hodnoty*/
 	static function int_min_max($vstup,$min,$max){
 		if( preg_match("/[0-9]+$/",$vstup) and $vstup >= $min and $vstup <= $max ){
 			return true;
@@ -225,13 +225,13 @@ final class Validace{
 }
 
 
-/*trida pro staticka data, ktera souvisi s objektem seriÃ¡l (typ ubytovÃ¡nÃ­, typ dopravy,...)*/
+/*trida pro staticka data, ktera souvisi s objektem seriál (typ ubytování, typ dopravy,...)*/
 //private kostruktor + final class zarucuje, ze trida nebude instancovana
 final class Informace_library
 {
-    static private $typ_informace = array("popis zemÄ›", "popis destinace", "informace");
+    static private $typ_informace = array("popis zemì", "popis destinace", "informace");
 
-    //privÃ¡tnÃ­ konstruktorobyÄejnÃ¡ informace
+    //privátní konstruktorobyèejná informace
     private function __construct()
     {
 
@@ -253,8 +253,8 @@ final class Informace_library
 final class Rezervace_library
 {
     //stavy zmeneny
-    //static private $stav_rezervace = array("pÅ™edbÄ›Å¾nÃ¡ poptÃ¡vka","poÅ¾adavek na rezervaci","opce","rezervace","zÃ¡loha","zaplaceno","odbaveno","storno");
-    static private $stav_rezervace = array("pÅ™edbÄ›Å¾nÃ¡ poptÃ¡vka", "poÅ¾adavek na rezervaci", "opce", "rezervace", "zÃ¡loha", "prodÃ¡no", "odbaveno", "storno","storno CK","VOUCHER");
+    //static private $stav_rezervace = array("pøedbìná poptávka","poadavek na rezervaci","opce","rezervace","záloha","zaplaceno","odbaveno","storno");
+    static private $stav_rezervace = array("pøedbìná poptávka", "poadavek na rezervaci", "opce", "rezervace", "záloha", "prodáno", "odbaveno", "storno","storno CK","VOUCHER");
     static private $stav_rezervace_styl = array("stav-predb", "stav-pozad", "stav-opce", "stav-rez", "stav-zal", "stav-prodano", "stav-odbav", "stav-storno","stav-storno","stav-voucher");
     static public $STAV_PREDBEZNA_POPTAVKA = 1;
     static public $STAV_POZADAVEK_NA_REZERVACI = 2;
@@ -267,7 +267,7 @@ final class Rezervace_library
     static public $STAV_STORNO_CK = 9;
     static public $STAV_VOUCHER = 10;
 
-    //privÃ¡tnÃ­ konstruktorobyÄejnÃ¡ informace
+    //privátní konstruktorobyèejná informace
     private function __construct()
     {
 
