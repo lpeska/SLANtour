@@ -214,6 +214,17 @@ if ($serial->create_foto_ubytovani()) {
     }
 }
 
+$serial->create_dokumenty();
+$documentDB = $serial->get_dokumenty();
+$documents = array();
+if ( $documentDB->get_pocet_radku() != 0) {
+    //mame nejake dokumenty
+    while ($documentDB->get_next_radek()) {
+        $docUrl = "https://www.slantour.cz/".ADRESAR_DOKUMENT."/".$documentDB->get_dokument_url();
+        $documents[] =  new Document($documentDB->get_id_dokument(), $documentDB->get_nazev_dokument(), $documentDB->get_popisek_dokument(), $docUrl);
+    }
+}
+
 $doprava = Serial_library::get_typ_dopravy($serial->serial["doprava"]-1);
 
 if ($doprava == 'letecky') {
@@ -368,6 +379,7 @@ echo $twig->render($predbeznaRegistrace ? 'zajezd-registrace.html.twig' : 'zajez
         new Program('Soho a China Town', 'Dopoledne se můžete vydáte k  návštěvě těch míst a muzeí, které jste během prvních dní ještě navštívit nestihli  (v doprovodu průvodce či samostatně). Navštívit můžete muzeum voskových figurín Madame Tussaud´s případně  rozsáhlé Britské muzeum. Nebo si na Baker Street zajdete na návštěvu k Sherlocku Holmesovi (zda bude doma nemůžeme garantovat).  Projdete se rovněž pro proslulé Oxford Street a nevynecháte ani pověstné Soho a Čínskou čtvrť. Odpoledne odjezd na letiště a odlet  zpět do Prahy.', '/img/dovolena.jpg')
     ),*/
     'dates'  => $dates,
+    'documents'  => $documents,
     'longTour' => $longTour,
     'breadcrumbs' => $breadcrumbs
     /*array(

@@ -701,3 +701,20 @@ class Review
         $this->image = $image;
     }
 }
+
+class Document
+{
+    public int $id;
+    public string $title;
+    public string $description;
+    public string $url;
+
+    public function __construct(int $id, string $title, string $description, string $url)
+    {
+        $this->id = $id;
+        $this->title = $title;
+        $this->description = $description;
+        $this->url = $url;
+    }
+}
+

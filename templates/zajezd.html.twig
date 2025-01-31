@@ -321,6 +321,12 @@
                     <h3>Důležité odkazy</h3>
                     <div>
                         <ul>
+                            {% if documents is not empty %}
+                                {% for doc in documents %}
+                                    <li><a href="{{doc.url}}">{{doc.title}}</a></li>
+                                {% endfor %}
+                            {% endif %}
+
                             <li><a href="{{contractLink}}">Smluvní podmínky</a></li>
                             <li><a href="{{infoLink}}">Povinné informace k zájezdu</a></li>
                             <li><a href="{{insuranceLink}}">Přehled pojištění</a></li>
