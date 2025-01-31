@@ -1234,10 +1234,15 @@ class Rezervace_objednavka extends Generic_data_class{
                                 Send_mail::send($agentura["nazev"], $agentura["email"], $rsck_email, $predmet_ck, $ck_text);
                                 Send_mail::send($agentura["nazev"], $agentura["email"], "lpeska@seznam.cz", $predmet_ck, $ck_text);
                             } else {
+                                $testMail = Send_mail::send("noreply@slantour.cz", "info@slantour.cz", $spravce->email, $predmet_ck, $ck_text);
+                                Send_mail::send("noreply@slantour.cz", "info@slantour.cz", $rsck_email, $predmet_ck, $ck_text);
+                                Send_mail::send("noreply@slantour.cz", "info@slantour.cz", "lpeska@seznam.cz", $predmet_ck, $ck_text);
+                            }  
+                            /* else {
                                 $testMail = Send_mail::send($klient_jmeno, $klient_email, $spravce->email, $predmet_ck, $ck_text);
                                 Send_mail::send($klient_jmeno, $klient_email, $rsck_email, $predmet_ck, $ck_text);
                                 Send_mail::send($klient_jmeno, $klient_email, "lpeska@seznam.cz", $predmet_ck, $ck_text);
-                            }
+                            }*/
 
                             //odesilani e-mailu zamestnanci - tvurci serialu
 
