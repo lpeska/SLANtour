@@ -13,7 +13,7 @@ session_start();
 
 //require_once potrebnych souboru
 //nahrani potrebnych trid spolecnych pro vsechny moduly a vytvoreni instance tridy Core
-require_once "./core/load_core.inc.php";
+require_once "./core/load_core_w1250.inc.php";
 
 require_once "./classes/organizace_list.inc.php"; //seznamy klientù
 require_once "./classes/organizace.inc.php"; //detail seriálu

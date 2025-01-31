@@ -20,7 +20,8 @@ session_start();
 
 //require_once potrebnych souboru
 //nahrani potrebnych trid spolecnych pro vsechny moduly a vytvoreni instance tridy Core
-require_once "./core/load_core.inc.php";
+require_once "./core/load_core_w1250.inc.php";
+
 require_once "./config/config_export_sdovolena.inc.php"; //seznamy serialu
 
 require_once "./classes/serial_list.inc.php"; //seznamy serialu
