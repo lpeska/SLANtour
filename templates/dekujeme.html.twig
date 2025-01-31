@@ -1,0 +1,64 @@
+{% extends "_base.html.twig" %}
+
+{% block title %}SLANtour - Děkujeme za objednávku{% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+<section class="hero_in tour_list search">
+    <img src="../img/dovolena.png" alt="Slide background">
+    <div class="wrapper">
+</section>
+<!--/hero_in-->
+
+<div class="bg_color_1">
+
+    {% include "_breadcrumbs.html.twig" %}
+
+    <div class="container margin_35_35">
+        <section class="{{class}}">
+            <h3>{{nadpis}}</h3>
+            <p>
+                {{dekujeme2|raw}}
+                {{potvrzeni|raw}}
+                {{varovani|raw}}
+                V případě nejasností, či dalších požadavků nás můžete kontaktovat na:
+            </p>
+            <h5>CK SLAN tour</h5>
+            <ul>
+                <li>
+                    <i class="pe-7s-map-marker"></i>
+                    <a href="https://maps.app.goo.gl/GtEsVKrCn4QPBo189">Wilsonova 597, Slaný</a>
+                </li>
+                <li>
+                    <i class="pe-7s-phone"></i>
+                    <a href="tel:+420312522704">+420 312 522 704</a>
+                </li>
+                <li>
+                    <i class="pe-7s-mail-open-file"></i>
+                    <a href="mailto:info@slantour.cz">info@slantour.cz</a>
+                </li>
+            </ul>
+        </section>
+
+        {% if typ != "dotaz" %}
+        <section class="{{class_platba}}">
+            <h3>{{nadpis_platba}}</h3>
+            <p>
+                {{dekujeme2_platba|raw}}
+                {{potvrzeni_platba|raw}}
+            </p>
+        </section>
+        {% endif %}
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->
+
+{% endblock main %}
+
+{% block javascripts %}
+{% endblock javascripts %}
