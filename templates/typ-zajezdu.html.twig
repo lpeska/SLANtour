@@ -38,7 +38,13 @@
 
         <section class="add_bottom_45">
             <div class="main_title_3">
-                <h2>Země</h2>
+                <h2>
+                    {% if type.id == 4 %}
+                        Sporty
+                    {% else %}
+                        Země
+                    {% endif %} 
+                </h2>
             </div>
             <div class="row">
                 {% for country in countries %}

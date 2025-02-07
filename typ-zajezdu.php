@@ -24,7 +24,11 @@ $popularTours = getPopularTours($typeName, "");
 
 $newTours = getNewTours($typeName, "");
 
-$countries = getAllCountries($continentName, $typeName);
+if ($typeName == 'za-sportem') {
+    $countries = getSportCountries();
+} else {
+    $countries = getAllCountries($continentName, $typeName);
+}
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
