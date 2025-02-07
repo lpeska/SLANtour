@@ -99,6 +99,19 @@
                         </ul>
                     </div>
 
+                    <a data-toggle="collapse" href="#country_filter_special" aria-expanded="false" aria-controls="country_filter_special" class="filter_type_header">Tematické zájezdy</a>
+                    <div class="filter_type collapse show" id="country_filter_special">
+                        <ul>
+                            {% for key,sport in sports %}
+                            <li>
+                                <label class="container_check filter" id="countryFilter_{{key}}">{{sport.nazev}} <small>(0)</small>
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>    
 
                     <a id="katalog_filter_header" data-toggle="collapse" href="#katalog_filter" aria-expanded="false" aria-controls="katalog_filter" class="filter_type_header collapsed">Destinace a ubytování</a>
                     <div class="filter_type collapse" id="katalog_filter">
@@ -186,21 +199,6 @@
                             {% endfor %}
                         </ul>
                     </div>
-                        
-                    <a data-toggle="collapse" href="#country_filter_special" aria-expanded="false" aria-controls="country_filter_special" class="filter_type_header collapsed">Tematické zájezdy</a>
-                    <div class="filter_type collapse" id="country_filter_special">
-                        <ul>
-                            {% for key,sport in sports %}
-                            <li>
-                                <label class="container_check filter" id="countryFilter_{{key}}">{{sport.nazev}} <small>(0)</small>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>    
-                            
                 </div>
                 <!--/filters col-->
             </aside>
