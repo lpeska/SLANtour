@@ -1229,14 +1229,16 @@ class Rezervace_objednavka extends Generic_data_class{
 
                         if ($mail) {
                             //odeslani emailu na standardni adresu systemu
+                            $predmet_ck_encoded = mb_encode_mimeheader($predmet_ck, "UTF-8", "B", "\r\n");
                             if ($this->objednavajici_ca) {
-                                $testMail = Send_mail::send($agentura["nazev"], $agentura["email"], $spravce->email, $predmet_ck, $ck_text);
-                                Send_mail::send($agentura["nazev"], $agentura["email"], $rsck_email, $predmet_ck, $ck_text);
-                                Send_mail::send($agentura["nazev"], $agentura["email"], "lpeska@seznam.cz", $predmet_ck, $ck_text);
+                                $testMail = Send_mail::send($agentura["nazev"], $agentura["email"], $spravce->email, $predmet_ck_encoded, $ck_text);
+                                Send_mail::send($agentura["nazev"], $agentura["email"], $rsck_email, $predmet_ck_encoded, $ck_text);
+                                Send_mail::send($agentura["nazev"], $agentura["email"], "lpeska@seznam.cz", $predmet_ck_encoded, $ck_text);
                             } else {
-                                $testMail = Send_mail::send("noreply@slantour.cz", "info@slantour.cz", $spravce->email, $predmet_ck, $ck_text);
-                                Send_mail::send("noreply@slantour.cz", "info@slantour.cz", $rsck_email, $predmet_ck, $ck_text);
-                                Send_mail::send("noreply@slantour.cz", "info@slantour.cz", "lpeska@seznam.cz", $predmet_ck, $ck_text);
+                                $testMail = Send_mail::send("noreply@slantour.cz", "info@slantour.cz", $spravce->email, $predmet_ck_encoded, $ck_text);
+                                Send_mail::send("noreply@slantour.cz", "info@slantour.cz", $rsck_email, $predmet_ck_encoded, $ck_text);
+                                Send_mail::send("noreply@slantour.cz", "info@slantour.cz", "lpeska@seznam.cz", $predmet_ck_encoded, $ck_text);
+                                Send_mail::send("noreply@slantour.cz", "info@slantour.cz", "peska.honza@seznam.cz", $predmet_ck_encoded, $ck_text);
                             }  
                             /* else {
                                 $testMail = Send_mail::send($klient_jmeno, $klient_email, $spravce->email, $predmet_ck, $ck_text);
