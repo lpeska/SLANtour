@@ -71,7 +71,7 @@ class Menu_katalog extends Generic_list{
 	/** vytvoreni dotazu ze zadaneho nazvu typu a zeme*/
 	function create_query($typ=""){
 		//funkce vytvori vsechny radky menu na jeden dotaz, do nej jsou pridavany tabulky podle toho, ktere parametry dostavame
-            if($typ=="dotaz_zeme_destinace_ubytovani"){                    
+      if($typ=="dotaz_zeme_destinace_ubytovani"){                    
 			//mam nazev zeme i typu
 				$dotaz="
 					SELECT DISTINCT `foto`.`foto_url`,
@@ -95,14 +95,14 @@ class Menu_katalog extends Generic_list{
                                                 (`objekt_serial` join
                                                  `objekt` on (`objekt`.`typ_objektu`= 1 and `objekt`.`id_objektu` = `objekt_serial`.`id_objektu`) join
                                                  `objekt_ubytovani` on (`objekt`.`id_objektu` = `objekt_ubytovani`.`id_objektu`)
-                                                 ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial`)
+                                                 ) on (`serial`.`id_serial` = `objekt_serial`.`id_serial` and `serial`.`id_sablony_zobrazeni` = 12)
                                             left join 
                                                 (`foto_serial` join `foto` on (`foto_serial`.`id_foto` = `foto`.`id_foto` and `foto_serial`.`zakladni_foto` = 1)
                                                 )on (`foto_serial`.`id_serial` = `serial`.`id_serial`)
 
 					ORDER BY `zeme`.`nazev_zeme`, `destinace`.`nazev_destinace`, `nazev_ubytovani`, serial.nazev
 					";
-                               // echo $dotaz;
+                //echo $dotaz;
                 return $dotaz;
             }
 		if($this->typ!=""){

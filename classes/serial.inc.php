@@ -166,7 +166,7 @@ class Serial extends Generic_data_class{
 		}
 	}	
         
-        function get_popis_akce() { return $this->serial["popis_akce"];}
+    function get_popis_akce() { return $this->serial["popis_akce"];}
 
 		function get_predregistrace(){
 			return $this->serial["predregistrace"];
@@ -263,11 +263,19 @@ class Serial extends Generic_data_class{
 	}
 	/** ziska vsechny fotografie k danemu serialu*/
 	function create_foto(){
+      //print_r($this->serial);
+      if($this->serial["nezobrazovat_data_objektu"] == 1){
+          $this->foto= new Seznam_fotografii("serial_no_object_foto",$this->get_id());
+      }else{
+          $this->foto= new Seznam_fotografii("serial_suppress_object_foto",$this->get_id());
+      }
+          /*
             if($this->serial["id_typ"] == 2 or $this->serial["id_typ"] == 29 or $this->serial["id_typ"] == 30 ){
                 $this->foto= new Seznam_fotografii("serial_suppress_object_foto",$this->get_id());
             }else{
                 $this->foto= new Seznam_fotografii("serial",$this->get_id());
             }
+          */
 		
 	}
         function create_foto_ubytovani(){
@@ -308,10 +316,12 @@ class Serial extends Generic_data_class{
 	function get_nazev_zeme_web() { return $this->serial["nazev_zeme_web"];}
 	function get_nazev_typ_web() { return $this->serial["nazev_typ_web"];}
 	function get_popisek() { 
-            return "".$this->serial["popisek"]."
-                    ".$this->serial["popisek_ubytovani"]."";
-            
-        }
+      if($this->serial["nezobrazovat_data_objektu"] == 1){
+          return $this->serial["popisek"];
+      }
+      return "".$this->serial["popisek"]."
+             ".$this->serial["popisek_ubytovani"]."";        
+  }
 
 
 	function get_adresa_sablony() { return $this->serial["adresa_sablony"];}
@@ -334,9 +344,17 @@ class Serial extends Generic_data_class{
 	}
 
 		
-	function get_popis_ubytovani() {             
+	function get_popis_ubytovani() {     
+    if($this->serial["nezobrazovat_data_objektu"] == 1){
+         if($this->serial["popis_ubytovani"]!=""){
+               return "".$this->serial["popis_ubytovani"]."";
+         }else{
+              return "";
+         }
+    }
+          
 		if($this->serial["popis_ubytovani"]!="" or $this->serial["ubytovani_popis_ubytovani"]!=""){
-                    return "".$this->serial["ubytovani_popis_ubytovani"]."".$this->serial["popis_ubytovani"]."";
+        return "".$this->serial["ubytovani_popis_ubytovani"]."".$this->serial["popis_ubytovani"]."";
                       
 		}else{ 
 			return "";
@@ -419,6 +437,14 @@ class Serial extends Generic_data_class{
 	}
 	
 	function get_poznamky() { 
+    if($this->serial["nezobrazovat_data_objektu"] == 1){
+         if($this->serial["poznamky"]!=""){
+               return "".$this->serial["poznamky"]."";
+         }else{
+              return "";
+         }
+    }
+    
 		if($this->serial["poznamky"]!="" or $this->serial["poznamka_ubytovani"]!=""){
                         
                         if($this->serial["poznamky"]!=""){

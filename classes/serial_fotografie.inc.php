@@ -45,7 +45,17 @@ class Seznam_fotografii extends Generic_list{
 						WHERE `serial`.`id_serial`= ".$this->id."  
                                                 ORDER BY `foto_objekty`.`zakladni_foto` desc,`foto`.`id_foto` ) ORDER BY `zakladni_foto` desc
                                                 ";
-//			echo $dotaz;
+			//echo $dotaz;
+			return $dotaz;
+                }else if($typ_pozadavku == "serial_no_object_foto"){
+			$dotaz= "SELECT `foto_serial`.`id_serial`, `foto_serial`.`zakladni_foto`,
+							`foto`.`id_foto`,`foto`.`nazev_foto`,`foto`.`popisek_foto`, `foto`.`foto_url` 
+						FROM `foto_serial` JOIN
+							`foto` on (`foto`.`id_foto` =`foto_serial`.`id_foto`) 
+						WHERE `foto_serial`.`id_serial`= ".$this->id." 
+						ORDER BY `foto_serial`.`zakladni_foto` desc,`foto`.`id_foto` 
+                                                ";
+			//echo $dotaz;
 			return $dotaz;
                 }else if($typ_pozadavku == "serial_suppress_object_foto"){
 			$dotaz= "(SELECT `foto_serial`.`id_serial`, `foto_serial`.`zakladni_foto`,
@@ -64,7 +74,7 @@ class Seznam_fotografii extends Generic_list{
 						WHERE `serial`.`id_serial`= ".$this->id."  
                                                 ORDER BY `foto_objekty`.`zakladni_foto` desc,`foto`.`id_foto` ) ORDER BY `foto_from_serial` desc, `zakladni_foto` desc
                                                 ";
-//			echo $dotaz;
+			//echo $dotaz;
 			return $dotaz;
                 }else if($typ_pozadavku == "ubytovani"){
 			$dotaz= "SELECT `foto_objekty`.`id_objektu`,`foto_objekty`.`zakladni_foto`,
