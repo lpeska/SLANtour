@@ -45,7 +45,7 @@ if ($_GET["lev4"] != "") { //mame velmi pravdepodobne stary serial+zajezd
     $serial = new Serial_with_zajezd($_GET["lev1"], $_GET["lev2"]);
 
     $nazev_serialu = $_GET["lev1"];
-    $_GET["id_serial"] = $serial->get_id_serial();
+    $_GET["id_serial"] = $serial->get_id_serial();          
     $zobrazit_zajezd = 1;
     $_GET["id_serial"] = $serial->get_id_serial();
     $_GET["id_zajezd"] = $serial->get_id_zajezd();
@@ -188,6 +188,8 @@ function maxDiscount($dates) {
     }
     return sizeof($discounts) > 0 ? max($discounts) : 0;;
 }
+
+
 
 $minPrice = minPrice($dates);
 $maxDiscount = maxDiscount($dates);

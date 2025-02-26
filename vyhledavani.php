@@ -3,6 +3,7 @@
 function isDBAccessNeeded($filePath) {
     //FileCreatedMoreThan15MinutesAgo
     // Check if the file exists
+    //return true;
     if (file_exists($filePath)) {
         // Get the file's creation time
         $fileCreationTime = filectime($filePath);
@@ -17,7 +18,7 @@ function isDBAccessNeeded($filePath) {
         return $timeDifference > 900;
     } else {
         // File does not exist
-        return false;
+        return true;
     }
 }
 
