@@ -111,6 +111,7 @@ class Serial extends Generic_data_class{
 		$this->highlights = $this->check(trim($highlights));		
 		$this->predregistrace = $this->check_slashes( $this->check(trim($predregistrace)) );
 		$this->nezobrazovat = $this->check_int($nezobrazovat);
+    
                 
                 $this->typ_provize = $this->check_int($typ_provize);
 		$this->vyse_provize = $this->check_int($vyse_provize);
@@ -132,6 +133,8 @@ class Serial extends Generic_data_class{
                 $this->id_sml_podm = $this->check_int($id_sml_podm);
 		$this->id_sablony_zobrazeni = $this->check_int($id_sablony_zobrazeni);
 		$this->id_sablony_objednavka = $this->check_int($id_sablony_objednavka);
+    $this->nezobrazovat_data_objektu = $this->check_int($_POST["nezobrazovat_data_objektu"]);
+    
 		//pokud mam dostatecna prava pokracovat
 		if($this->legal($this->typ_pozadavku) and $this->correct_data($this->typ_pozadavku)){
 		
@@ -170,6 +173,7 @@ class Serial extends Generic_data_class{
 						$this->jazyk = $this->serial["jazyk"];	
 						$this->predregistrace = $this->serial["predregistrace"];	
 						$this->nezobrazovat = $this->serial["nezobrazovat"];
+            $this->nezobrazovat_data_objektu = (($this->serial["nezobrazovat_data_objektu"]==1)?(1):(0));
                                                 
                                                 $this->typ_provize = $this->serial["typ_provize"];
 						$this->vyse_provize = $this->serial["vyse_provize"];
@@ -385,13 +389,13 @@ class Serial extends Generic_data_class{
                         }
 			$dotaz= "INSERT INTO `serial`
 							(`nazev`,`nazev_web`,".$ubyt_name."`popisek`,`popis`,`popis_ubytovani`,`popis_stravovani`,`popis_strediska`,`popis_lazni`,`program_zajezdu`,`cena_zahrnuje`,`cena_nezahrnuje`,`povinne_poplatky`,`poznamky`,
-							`id_typ`,`id_podtyp`,`podtyp`,`strava`,`doprava`,`ubytovani`,`ubytovani_kategorie`,`dlouhodobe_zajezdy`,`highlights`,`jazyk`,`predregistrace`,`nezobrazovat`,".$provize_name."`zajezd_dle_zakona`,`id_smluvni_podminky`,`id_sml_podm`,`id_sablony_zobrazeni`,`id_default_kalkulacni_mena`,`id_default_kalkulacni_vzorec`,`id_sablony_objednavka`,`id_user_create`,`id_user_edit`,`id_spravce`".$objekt_name.")
+							`id_typ`,`id_podtyp`,`podtyp`,`strava`,`doprava`,`ubytovani`,`ubytovani_kategorie`,`dlouhodobe_zajezdy`,`highlights`,`jazyk`,`predregistrace`,`nezobrazovat`,`nezobrazovat_data_objektu`,".$provize_name."`zajezd_dle_zakona`,`id_smluvni_podminky`,`id_sml_podm`,`id_sablony_zobrazeni`,`id_default_kalkulacni_mena`,`id_default_kalkulacni_vzorec`,`id_sablony_objednavka`,`id_user_create`,`id_user_edit`,`id_spravce`".$objekt_name.")
 						VALUES
 							 ('".$this->nazev."','".$this->nazev_web."',".$ubyt_value."'".$this->popisek."','".$this->popis."',
 							 '".$this->popis_ubytovani."','".$this->popis_stravovani."','".$this->popis_strediska."','".$this->popis_lazni."','".$this->program_zajezdu."',
 							 '".$this->cena_zahrnuje."','".$this->cena_nezahrnuje."','".$this->povinne_poplatky."','".$this->poznamky."',
 							 ".$this->id_typ.",".$this->id_podtyp.",'".$this->podtyp."',".$this->strava.",".$this->doprava.",".$this->ubytovani.",".$this->ubytovani_kategorie.",".$this->dlouhodobe_zajezdy.",
-							 '".$this->highlights."','".$this->jazyk."','".$this->predregistrace."',".$this->nezobrazovat.",".$provize_value."".$this->zajezd_dle_zakona.",".$this->id_smluvni_podminky.",".$this->id_sml_podm.",".$this->id_sablony_zobrazeni.",".$this->id_default_kalkulacni_mena.",".$this->id_default_kalkulacni_vzorec.",".$this->id_sablony_objednavka.",
+							 '".$this->highlights."','".$this->jazyk."','".$this->predregistrace."',".$this->nezobrazovat.",".$this->nezobrazovat_data_objektu.",".$provize_value."".$this->zajezd_dle_zakona.",".$this->id_smluvni_podminky.",".$this->id_sml_podm.",".$this->id_sablony_zobrazeni.",".$this->id_default_kalkulacni_mena.",".$this->id_default_kalkulacni_vzorec.",".$this->id_sablony_objednavka.",
 							 ".$this->id_zamestnance.",".$this->id_zamestnance.",".$this->id_spravce.$objekt_value." )";
 //			echo $dotaz;
                         
@@ -435,7 +439,7 @@ class Serial extends Generic_data_class{
 							`cena_zahrnuje`='".$this->cena_zahrnuje."',`cena_nezahrnuje`='".$this->cena_nezahrnuje."',`povinne_poplatky`='".$this->povinne_poplatky."',`poznamky`='".$this->poznamky."',
 							`id_typ`=".$this->id_typ.",`id_podtyp`=".$this->id_podtyp.",`podtyp`='".$this->podtyp."',
 							`strava`=".$this->strava.",`doprava`=".$this->doprava.",`ubytovani`=".$this->ubytovani.",`ubytovani_kategorie`=".$this->ubytovani_kategorie.",`dlouhodobe_zajezdy`=".$this->dlouhodobe_zajezdy.",
-							`highlights`='".$this->highlights."',`jazyk`='".$this->jazyk."',`predregistrace`='".$this->predregistrace."',`nezobrazovat`='".$this->nezobrazovat."',".$provize." `zajezd_dle_zakona`=".$this->zajezd_dle_zakona.",`id_smluvni_podminky`=".$this->id_smluvni_podminky.",`id_sml_podm`=".$this->id_sml_podm.",`id_default_kalkulacni_mena`=".$this->id_default_kalkulacni_mena.",`id_default_kalkulacni_vzorec`=".$this->id_default_kalkulacni_vzorec.",
+							`highlights`='".$this->highlights."',`jazyk`='".$this->jazyk."',`predregistrace`='".$this->predregistrace."',`nezobrazovat`='".$this->nezobrazovat."',`nezobrazovat_data_objektu`='".$this->nezobrazovat_data_objektu."',".$provize." `zajezd_dle_zakona`=".$this->zajezd_dle_zakona.",`id_smluvni_podminky`=".$this->id_smluvni_podminky.",`id_sml_podm`=".$this->id_sml_podm.",`id_default_kalkulacni_mena`=".$this->id_default_kalkulacni_mena.",`id_default_kalkulacni_vzorec`=".$this->id_default_kalkulacni_vzorec.",
                                                             `id_sablony_zobrazeni`=".$this->id_sablony_zobrazeni.",`id_sablony_objednavka`=".$this->id_sablony_objednavka.",
 							`id_user_edit`=".$this->id_zamestnance.",`id_spravce`=".$this->id_spravce.$objekt."
 						WHERE `id_serial`=".$this->id_serial."
@@ -1054,7 +1058,10 @@ class Serial extends Generic_data_class{
                     <div class=\"form_row\" id=\"predbezna_registrace\" > <div class=\"label_float_left\">Pøedbìžná registrace</div> <div class=\"value\"> Jednotlivé položky pro pøedbìžnou registraci (napø jednotlivé sporty): oddìlujte èárkou<br/><textarea name=\"predregistrace\" rows=\"3\" cols=\"100\">".$this->predregistrace."</textarea></div></div>\n";
 		$nezobrazovat="
                     <div class=\"form_row\" id=\"nezobrazovat\"> <div class=\"label_float_left\">Nezobrazovat seriál</div> <div class=\"value\"> <input type=\"checkbox\" name=\"nezobrazovat\" value=\"1\" ".(($this->nezobrazovat==1)?("checked=\"checked\""):(""))." /> Zaškrtnìte, pokud nechcete, aby se seriál zobrazoval na webu \n
-							</div></div>\n";
+							</div></div>\n
+              <div class=\"form_row\" id=\"nezobrazovat_data_objektu\"> <div class=\"label_float_left\">Nezobrazovat data objektù</div> <div class=\"value\"> <input type=\"checkbox\" name=\"nezobrazovat_data_objektu\" value=\"1\" ".(($this->nezobrazovat_data_objektu==1)?("checked=\"checked\""):(""))." /> Zaškrtnìte, pokud nechcete, aby se fotografie a další data pøíslušné k objektùm navázaným na tento seriál zobrazovaly na webu \n
+							</div></div>\n
+              ";
                 if($this->typ_pozadavku=="new"){
                     $data_ubytovani = $this->database->query($this->create_query("get_ubytovani"))
 		 	or $this->chyba("Chyba pøi dotazu do databáze: ".mysqli_error($GLOBALS["core"]->database->db_spojeni) );
