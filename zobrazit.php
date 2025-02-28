@@ -161,7 +161,7 @@ while ($serial->get_zajezdy()->get_next_radek()) {
     }
     
 
-    $dates[] =  new TourDate($tourDetails[0],$tourDetails[1],$priceHeadline,$tourDetails[2],$details.$tourDetails[3],$services,$extras,$pickups);
+    $dates[] =  new TourDate($tourDetails[0], $tourDetails[1], $priceHeadline, $tourDetails[2], $details.$tourDetails[3], $services,$extras,$pickups);
 
 }
 //print_r($dates);

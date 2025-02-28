@@ -183,7 +183,8 @@
                                                 {{ tourDate.price}} Kč
                                             </div>
                                             {% endif %}
-                                            {% if tourDate.price > 0 %}
+                                            {% if tourDate.discount > 0 %}
+                                                sleva {{ tourDate.discount}}
                                             {% endif %}
                                             
                                         </div>
@@ -534,6 +535,7 @@
                 <div class="box_detail booking">
                     <div class="price">
                         <span class="price_span"><small>od</small> {{priceFrom}} Kč</span>
+                        <span class="price_span"><small>sleva</small> {{priceDiscount}} Kč</span>
                         
                         {# <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div> #}
                     </div>
