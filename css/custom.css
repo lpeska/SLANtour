@@ -253,7 +253,7 @@ figure .price_discount_tag {
 }
 
 .animated .counter_number.years {
-    --years: 34;
+    --years: 35;
 }
 
 @property --tours {
@@ -291,7 +291,7 @@ figure .price_discount_tag {
 }
 
 .animated .counter_number.clients {
-    --clients: 32;
+    --clients: 245;
 }
 
 @property --employees {
