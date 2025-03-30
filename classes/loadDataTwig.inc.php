@@ -672,8 +672,9 @@ class TourDate
     public array $services;
     public array $extraFees;
     public array $pickupSpots;
+    public array $discounts;
 
-    public function __construct(int $dateID, string $date, int $price, string $discount, string $details, array $services, array $extraFees, array $pickupSpots)
+    public function __construct(int $dateID, string $date, int $price, string $discount, string $details, array $services, array $extraFees, array $pickupSpots, array $discounts)
     {
         $this->dateID = $dateID;
         $this->date = $date;
@@ -683,8 +684,34 @@ class TourDate
         $this->services = $services;
         $this->extraFees = $extraFees;
         $this->pickupSpots = $pickupSpots;
+        $d = [];
+        foreach ($discounts as $discount) {
+            $d[] = new Discount(...$discount);
+        }
+                
+        $this->discounts = $d;
     }
 }
+
+class Discount
+{
+    public $title;
+    public $short_title;
+    public $price;
+    public $currency;
+    public $notes;
+
+
+    public function __construct($title,$short_title,$price,$currency,$notes)
+    {
+        $this->title = $title;
+        $this->short_title = $short_title;
+        $this->price = $price;
+        $this->currency = $currency;
+        $this->notes = $notes;
+    }
+}
+
 
 class Review
 {

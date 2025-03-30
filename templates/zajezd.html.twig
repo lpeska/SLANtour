@@ -289,6 +289,31 @@
                                             </tbody>
                                         </table>
                                         {% endif %}
+                                        
+                                        
+                                        {% if tourDate.discounts is not empty %}
+                                        <table class="table service_table">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col" class="service_title">Slevy</th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="service_table_body">
+                                                {% for discount in tourDate.discounts %}
+                                                    <tr>
+                                                        <td><span title="{{ discount.title }}; {{ discount.notes }}">{{ discount.short_title }}</span></td>
+                                                        <td></td>
+                                                        
+                                                        
+                                                        <td>{{ discount.price }} {{ discount.currency }}</td>
+                                                    </tr>
+                                                    
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% endif %}
 
                                         {# <pre>
                                             {{ dump(tourDate) }}

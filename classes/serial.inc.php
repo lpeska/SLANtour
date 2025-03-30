@@ -226,7 +226,7 @@ class Serial extends Generic_data_class{
 		return $vypis;
 	}
         
-        function show_slevy_zkracene(){
+        function show_slevy_zkracene($typ_zobrazeni=""){
 		$dotaz_slevy = "select * from `slevy` join
 							`slevy_serial` on (`slevy`.`id_slevy` = `slevy_serial`.`id_slevy`)
 							where `slevy_serial`.`id_serial` = ".$this->get_id()." 
@@ -239,6 +239,23 @@ class Serial extends Generic_data_class{
 		//ziskani slev z databaze	
 		$data = $this->database->query($dotaz_slevy)
 		 	or $this->chyba("Chyba při dotazu do databáze");
+                
+                if($typ_zobrazeni=="array"){
+                    $vystup = [];
+                    while($sleva = mysqli_fetch_array($data)){
+                        if($sleva["sleva_staly_klient"] == 1){
+                            $poznamka = "Sleva bude odečtena po zkontrolování Vašich údajů pracovníkem CK";
+                        }else{
+                            $poznamka = "Sleva bude odečtena v průběhu objednávky";                        
+                        } 
+
+                        $sleva_record = [$sleva["nazev_slevy"], $sleva["zkraceny_nazev"],  $sleva["castka"], $sleva["mena"], $poznamka];
+                        
+                        $vystup[] = $sleva_record;
+                    }
+                    return $vystup;	
+                    
+                }
                 
                 $vystup = "
                     <tr><td colspan=\"2\">
@@ -549,7 +566,7 @@ class Serial_ubytovani extends Serial{
 	function create_informace(){
 		$this->informace= new Seznam_informaci(0);
 	}
-        function show_slevy_zkracene(){
+        function show_slevy_zkracene($typ_zobrazeni=''){
 		return "";
 	}
 	function get_parametry_zajezdu($typ_zobrazeni) {
@@ -769,7 +786,7 @@ class Serial_with_zajezd extends Serial{
 		
 	}	
 	
-	function show_slevy_zkracene(){
+	function show_slevy_zkracene($typ_zobrazeni=""){
 		$dotaz_slevy = "select * from `slevy` join
 							`slevy_serial` on (`slevy`.`id_slevy` = `slevy_serial`.`id_slevy`)
 							where `slevy_serial`.`id_serial` = ".$this->get_id()." 
@@ -791,7 +808,42 @@ class Serial_with_zajezd extends Serial{
 						
 		$data_zajezd = $this->database->query($dotaz_slevy_zajezd)
 		 	or $this->chyba("Chyba při dotazu do databáze");	
-			
+
+                
+                if($typ_zobrazeni=="array"){
+                    $vystup = [];
+                    while($sleva = mysqli_fetch_array($data)){
+                        if($sleva["sleva_staly_klient"] == 1){
+                            $poznamka = "Sleva bude odečtena po zkontrolování Vašich údajů pracovníkem CK";
+                        }else{
+                            $poznamka = "Sleva bude odečtena v průběhu objednávky";                        
+                        }                         
+                        $sleva_record = [$sleva["nazev_slevy"], $sleva["zkraceny_nazev"],  $sleva["castka"], $sleva["mena"], $poznamka];
+                        
+                        $vystup[] = $sleva_record;
+                    }   
+                     while($sleva = mysqli_fetch_array($data_zajezd)){
+                        if($sleva["sleva_staly_klient"] == 1){
+                            $poznamka = "Sleva bude odečtena po zkontrolování Vašich údajů pracovníkem CK";
+                        }else{
+                            $poznamka = "Sleva bude odečtena v průběhu objednávky";                        
+                        } 
+                        $sleva_record = [$sleva["nazev_slevy"], $sleva["zkraceny_nazev"],  $sleva["castka"], $sleva["mena"], $poznamka];
+                        
+                        $vystup[] = $sleva_record;    
+                     }    
+                    if($this->serial["cena_pred_akci"]>0 and $this->serial["akcni_cena"]>0){
+                            $sleva_procenta = round( 1-($this->serial["akcni_cena"] / $this->serial["cena_pred_akci"]),2) * 100 ;
+                            $poznamka = "Cena před akcí: ".$this->serial["cena_pred_akci"]." Kč, nyní cena od: ".$this->serial["akcni_cena"]." Kč.";
+                                    
+                            $sleva_record = [$this->serial["popis_akce"], $this->serial["popis_akce"],  $sleva_procenta, "%", $poznamka];
+                            
+                            $vystup[] = $sleva_record;  
+                    }                        
+                        
+                    return $vystup;	
+                }
+                
 		$vystup = "
                     <table style=\"width:296px;background-color:#ffefc0;margin-left:2px;\">";	
 		while($sleva = mysqli_fetch_array($data)){
