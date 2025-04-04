@@ -185,12 +185,35 @@ function minPrice($dates) {
     }
 }
 
-function maxDiscount($dates) {
-    $discounts = array();
-    foreach ($dates as $dt) {
-        $discounts[] = intval($dt->discount);
+// function maxDiscountOld($dates) {
+//     $discounts = array();
+//     foreach ($dates as $dt) {
+//         echo "<br> discount string pred<br> " . $dt->discount;
+//         $discounts[] = intval($dt->discount);
+//     }
+//     return sizeof($discounts) > 0 ? max($discounts) : 0;;
+// }
+
+function maxDiscount($dates)
+{
+    $maxDiscount = 0;
+    $discountString = "";
+    foreach ($dates as $date) {
+        $discounts = $date->discounts;
+        foreach ($discounts as $discount) {
+            if ($discount->type == "staly") {
+                continue;
+            }
+            $priceBefore = $date->priceBefore;
+            $priceAfter = $date->price;
+            $discountValue = $priceBefore - $priceAfter;
+            if ($discountValue > $maxDiscount) {
+                $maxDiscount = $discountValue;
+                $discountString = $discount->value . $discount->currency;
+            }
+        }
     }
-    return sizeof($discounts) > 0 ? max($discounts) : 0;;
+    return $discountString;
 }
 
 function removeAkce($dateString) {
