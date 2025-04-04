@@ -160,8 +160,10 @@ while ($serial->get_zajezdy()->get_next_radek()) {
         
     }
     
-
-    $dates[] =  new TourDate($tourDetails[0], $tourDetails[1], $priceHeadline, $tourDetails[2], $details.$tourDetails[3], $services,$extras,$pickups);
+    $serial_with_zajezd = new Serial_with_zajezd($_GET["lev1"],$tourDetails[0]);
+    $discounts = $serial_with_zajezd->show_slevy_zkracene("array");
+    
+    $dates[] =  new TourDate($tourDetails[0],$tourDetails[1],$priceHeadline,$tourDetails[2],$details.$tourDetails[3],$services,$extras,$pickups,$discounts);
 
 }
 //print_r($dates);
@@ -349,6 +351,7 @@ echo $twig->render($predbeznaRegistrace ? 'zajezd-registrace.html.twig' : 'zajez
     'name' => $nazev,
     'priceFrom' => $minPrice,
     'priceDiscount' => $maxDiscount,
+    'discountsList' => $serial->show_slevy_zkracene("array"), 
     'accomodation' => Serial_library::get_typ_ubytovani($serial->serial["ubytovani"]-1),
     'meals' => Serial_library::get_typ_stravy($serial->serial["strava"]-1),
     'destination' => $location,

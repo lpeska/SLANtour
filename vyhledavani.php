@@ -4,6 +4,9 @@ function isDBAccessNeeded($filePath) {
     //FileCreatedMoreThan15MinutesAgo
     // Check if the file exists
     //return true;
+    if($_GET["recalculate"] == true){
+        return true;        
+    }
     if (file_exists($filePath)) {
         // Get the file's creation time
         $fileCreationTime = filectime($filePath);

@@ -77,7 +77,7 @@ class Menu_katalog extends Generic_list{
 					SELECT DISTINCT `foto`.`foto_url`,
                                                         `destinace_serial`.`id_destinace` , `destinace`.`nazev_destinace`,
                                                         `zeme`.`id_zeme`, `zeme`.`nazev_zeme`,
-                                                        `serial`.`id_typ`,`serial`.`id_serial`,`serial`.`nazev`,
+                                                        `serial`.`id_typ`,`serial`.`id_serial`,`serial`.`nazev`,`serial`.`id_sablony_zobrazeni`,
                                                         `objekt`.`id_objektu`, `objekt`.`nazev_objektu` as `nazev_ubytovani`
 					FROM 
                                             `zeme`
@@ -654,7 +654,7 @@ class Menu_katalog extends Generic_list{
             while($this->get_next_radek()){
                 $this->radek["foto_url"] = "https://slantour.cz/foto/ico/".$this->radek["foto_url"];
                 
-                if($this->radek["id_typ"] == 3 or $this->radek["id_typ"] == 7 or $this->radek["id_typ"] == 29){
+                if($this->radek["id_sablony_zobrazeni"] == 12){
                    $this->radek["nazev_final"] = $this->radek["nazev_ubytovani"] ;
                    $this->radek["id_final"] = $this->radek["id_objektu"]; 
                 }else{
