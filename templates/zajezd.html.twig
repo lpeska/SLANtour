@@ -171,7 +171,15 @@
                                 <h2 class="accordion-header" id="heading{{loop.index}}">
                                     <button class="accordion-button{% if loop.index > 1 %} collapsed{% endif %}" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
                                         <div class="col-md-7 col-sm-9">
-                                            <div class="date_date"> <i class="fa" aria-hidden="true"></i> {{ tourDate.date}}</div> 
+                                            <div class="date_date"> <i class="fa" aria-hidden="true"></i>
+                                                {{ tourDate.date}}
+                                                {% if tourDate.discount > 0 %}
+                                                    <span class="price_discount_tag">
+                                                        -{{tourDate.discount}}
+                                                    </span>
+
+                                                {% endif %}
+                                            </div> 
                                         </div>
                                         <div class="col-md-3 col-sm-3">
                                             {% if tourDate.price == -1 %}
@@ -181,10 +189,10 @@
                                             {% else %}
                                             <div class="date_price">
                                                 {{ tourDate.price}} Kč
+                                                {% if tourDate.priceBefore != -1 %}
+                                                    <span class="price_discount">{{ tourDate.priceBefore}} Kč</span>
+                                                {% endif %}
                                             </div>
-                                            {% endif %}
-                                            {% if tourDate.discount > 0 %}
-                                                sleva {{ tourDate.discount}}
                                             {% endif %}
                                             
                                         </div>
@@ -235,7 +243,12 @@
                                                         <td>{{ service.title }}</td>
                                                         <td>{{ service.capacity }}</td>
                                                         
-                                                        <td>{{ service.price }} Kč</td>
+                                                        <td>
+                                                            {{ service.price }} Kč
+                                                            {% if service.priceBefore != -1 %}
+                                                                <span class="price_discount">{{ service.priceBefore}} Kč</span>
+                                                            {% endif %}
+                                                        </td>
                                                         
                                                         
                                                     </tr>
@@ -308,7 +321,7 @@
                                                         <td></td>
                                                         
                                                         
-                                                        <td>{{ discount.price }} {{ discount.currency }}</td>
+                                                        <td>{{ discount.value }} {{ discount.currency }}</td>
                                                     </tr>
                                                     
                                                 {% endfor %}
@@ -559,9 +572,14 @@
             <aside class="col-lg-4" id="sidebar">
                 <div class="box_detail booking">
                     <div class="price">
-                        <span class="price_span"><small>od</small> {{priceFrom}} Kč</span>
-                        <span class="price_span"><small>sleva</small> {{priceDiscount}} Kč</span>
-                        
+                        <div class="price_main">
+                            <span class="price_span"><small>od</small> {{priceFrom}} Kč</span>
+                        </div>
+                        {% if priceDiscount > 0 %}
+                            <div class="price_discount">
+                                -{{priceDiscount}}%
+                            </div>
+                        {% endif %}
                         {# <div class="score"><span>Good<em>350 Recenzí</em></span><strong>7.0</strong></div> #}
                     </div>
                     
@@ -585,11 +603,16 @@
                                 {% endif %}...
                             </option>
                             {% for tourDate in dates %}
-                                {% if tourDate.price == -1 %}
-                                    <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}"> {{tourDate.date}} (vyprodáno)</option>
-                                {% else %}
-                                    <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-dateid="{{tourDate.dateID}}"> {{tourDate.date}} ({{tourDate.price}} Kč)</option>
-                                {% endif %}
+                                <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-discount="{{tourDate.discount}}" data-dateid="{{tourDate.dateID}}">
+                                    {{tourDate.date}} 
+                                    {% if tourDate.price == -1 %}
+                                        (vyprodáno)
+                                    {% elseif tourDate.discount is not empty %}
+                                        ({{tourDate.price}} Kč, sleva {{tourDate.discount}})
+                                    {% else %}
+                                        ({{tourDate.price}} Kč)
+                                    {% endif %}
+                                </option>
                             {% endfor %} 
                         </select>
                         <label for="orderPerson"><i class="fas fa-user"></i> Počet osob</label>

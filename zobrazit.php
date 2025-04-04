@@ -143,7 +143,7 @@ while ($serial->get_zajezdy()->get_next_radek()) {
         //var_dump($prices);
         
         if($prices[3] <= 3){
-            $services[] = new Service($prices[0], $prices[1], $prices[2]);
+            $services[] = new Service($prices[0], $prices[1], $prices[2], $prices[6]);
             if($prices[5] and $priceHeadline < 0){//dostupnasluzba
                 $priceHeadline = $prices[2];                
             }
@@ -159,11 +159,13 @@ while ($serial->get_zajezdy()->get_next_radek()) {
         }
         
     }
-    
-    $serial_with_zajezd = new Serial_with_zajezd($_GET["lev1"],$tourDetails[0]);
+
+    $serial_with_zajezd = new Serial_with_zajezd($_GET["lev1"], $tourDetails[0]);
     $discounts = $serial_with_zajezd->show_slevy_zkracene("array");
-    
-    $dates[] =  new TourDate($tourDetails[0],$tourDetails[1],$priceHeadline,$tourDetails[2],$details.$tourDetails[3],$services,$extras,$pickups,$discounts);
+    $dateString = removeAkce($tourDetails[1]);
+    $date = new TourDate($tourDetails[0], $dateString, $priceHeadline, $tourDetails[2], $details . $tourDetails[3], $services, $extras, $pickups, $discounts);
+    applyDiscount($date);
+    $dates[] = $date;
 
 }
 //print_r($dates);
@@ -191,7 +193,43 @@ function maxDiscount($dates) {
     return sizeof($discounts) > 0 ? max($discounts) : 0;;
 }
 
+function removeAkce($dateString) {
+    return preg_replace('/^AKCE\(|\)$/', '', $dateString);
+}
 
+function applyDiscount($date) {
+    $discounts = $date->discounts;
+    foreach ($discounts as $discount) {
+        $type = $discount->type;
+        if ($type == "akce") {
+            $priceAfter = $date->price;
+            $priceBefore = $priceAfter / (1 - $discount->value/100);
+            $date->priceBefore = $priceBefore;
+            $basicService = findBasicService($date);
+            $basicService->priceBefore = $priceBefore;
+        } else if ($type == "sleva") {
+            $priceBefore = $date->price;
+            if ($discount->currency == "%") {
+                $priceAfter = $priceBefore * (1 - $discount->value/100);
+            } else {
+                $priceAfter = $priceBefore - $discount->value;
+            }
+            $date->priceBefore = $priceBefore;
+            $date->price = $priceAfter;
+            $basicService = findBasicService($date);
+            $basicService->priceBefore = $priceBefore;
+            $basicService->price = $priceAfter;
+        }
+    }
+}
+
+function findBasicService($date){
+    foreach ($date->services as $service) {
+        if ($service->basicService == 1) {
+            return $service;
+        }
+    }
+}
 
 $minPrice = minPrice($dates);
 $maxDiscount = maxDiscount($dates);

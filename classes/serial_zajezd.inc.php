@@ -218,7 +218,7 @@ class Seznam_zajezdu extends Generic_list{
                                 
                         }else if($typ_zobrazeni=="array"){
                             if ($this->radek["cena_pred_akci"] and $this->radek["akcni_cena"]) {
-                                $sleva =  round((1 - $this->radek["akcni_cena"] / $this->radek["cena_pred_akci"]) * 100)." %";
+                                $sleva =  round((1 - $this->radek["akcni_cena"] / $this->radek["cena_pred_akci"]) * 100)."%";
                             } else {
                                 $sleva = $this->get_max_sleva($this->get_id_zajezd());
                             }

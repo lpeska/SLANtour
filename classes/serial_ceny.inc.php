@@ -273,8 +273,7 @@ class Seznam_cen extends Generic_list{
             $additional_row = "";
         }
 
-
-        $vystup = array($this->get_nazev_ceny(),$this->get_dostupnost(),$this->get_castka()." ".$this->get_mena(),$this->radek["typ_ceny"],$additional_row, $this->cena_dostupna());							
+        $vystup = array($this->get_nazev_ceny(),$this->get_dostupnost(),$this->get_castka()." ".$this->get_mena(),$this->radek["typ_ceny"],$additional_row, $this->cena_dostupna(),$this->radek["zakladni_cena"]);							
         return $vystup;
 
     }		

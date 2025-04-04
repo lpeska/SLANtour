@@ -653,12 +653,16 @@ class Service
     public string $title;
     public string $capacity;
     public int $price;
+    public int $priceBefore;
+    public int $basicService;
 
-    public function __construct(string $title, string $capacity, int $price)
+    public function __construct(string $title, string $capacity, int $price, int $basicService = 0)
     {
         $this->title = $title;
         $this->capacity = $capacity;
         $this->price = $price;
+        $this->priceBefore = -1;
+        $this->basicService = $basicService;
     }
 }
 
@@ -667,6 +671,7 @@ class TourDate
     public int $dateID;
     public string $date;
     public int $price;
+    public int $priceBefore;
     public string $discount;
     public string $details;
     public array $services;
@@ -690,6 +695,7 @@ class TourDate
         }
                 
         $this->discounts = $d;
+        $this->priceBefore = -1;
     }
 }
 
@@ -697,18 +703,20 @@ class Discount
 {
     public $title;
     public $short_title;
-    public $price;
+    public $value;
     public $currency;
     public $notes;
+    public $type;
 
 
-    public function __construct($title,$short_title,$price,$currency,$notes)
+    public function __construct($title, $short_title, $value, $currency, $notes, $type)
     {
         $this->title = $title;
         $this->short_title = $short_title;
-        $this->price = $price;
+        $this->value = $value;
         $this->currency = $currency;
         $this->notes = $notes;
+        $this->type = $type;
     }
 }
 

@@ -449,6 +449,16 @@
 			priceSpan.text(this[this.value].dataset.price + " Kč");
 			$('#orderTour')[0].disabled = false;
 		}
+		
+		const discountDiv = $('.price .price_discount');
+		const discount = this[this.value].dataset.discount;
+		if (discount == "") {
+			discountDiv.text("");
+			discountDiv.hide();
+		} else {
+			discountDiv.text("-" + this[this.value].dataset.discount);
+			discountDiv.show();
+		}
 	});
 
 	// Order button clicked

@@ -815,20 +815,24 @@ class Serial_with_zajezd extends Serial{
                     while($sleva = mysqli_fetch_array($data)){
                         if($sleva["sleva_staly_klient"] == 1){
                             $poznamka = "Sleva bude odečtena po zkontrolování Vašich údajů pracovníkem CK";
+							$typ = "staly";
                         }else{
-                            $poznamka = "Sleva bude odečtena v průběhu objednávky";                        
+                            $poznamka = "Sleva bude odečtena v průběhu objednávky"; 
+							$typ = "sleva";
                         }                         
-                        $sleva_record = [$sleva["nazev_slevy"], $sleva["zkraceny_nazev"],  $sleva["castka"], $sleva["mena"], $poznamka];
+                        $sleva_record = [$sleva["nazev_slevy"], $sleva["zkraceny_nazev"],  $sleva["castka"], $sleva["mena"], $poznamka, $typ];
                         
                         $vystup[] = $sleva_record;
                     }   
                      while($sleva = mysqli_fetch_array($data_zajezd)){
                         if($sleva["sleva_staly_klient"] == 1){
                             $poznamka = "Sleva bude odečtena po zkontrolování Vašich údajů pracovníkem CK";
+							$typ = "staly";
                         }else{
-                            $poznamka = "Sleva bude odečtena v průběhu objednávky";                        
+                            $poznamka = "Sleva bude odečtena v průběhu objednávky";  
+							$typ = "sleva";                      
                         } 
-                        $sleva_record = [$sleva["nazev_slevy"], $sleva["zkraceny_nazev"],  $sleva["castka"], $sleva["mena"], $poznamka];
+                        $sleva_record = [$sleva["nazev_slevy"], $sleva["zkraceny_nazev"],  $sleva["castka"], $sleva["mena"], $poznamka, $typ];
                         
                         $vystup[] = $sleva_record;    
                      }    
@@ -836,7 +840,7 @@ class Serial_with_zajezd extends Serial{
                             $sleva_procenta = round( 1-($this->serial["akcni_cena"] / $this->serial["cena_pred_akci"]),2) * 100 ;
                             $poznamka = "Cena před akcí: ".$this->serial["cena_pred_akci"]." Kč, nyní cena od: ".$this->serial["akcni_cena"]." Kč.";
                                     
-                            $sleva_record = [$this->serial["popis_akce"], $this->serial["popis_akce"],  $sleva_procenta, "%", $poznamka];
+                            $sleva_record = [$this->serial["popis_akce"], $this->serial["popis_akce"],  $sleva_procenta, "%", $poznamka, "akce"];
                             
                             $vystup[] = $sleva_record;  
                     }                        
