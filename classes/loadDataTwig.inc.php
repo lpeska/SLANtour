@@ -391,7 +391,9 @@ function isEurope($countryNameWeb) {
      $euCountries = array(
         "anglie",
         "belgie",
+        "cerna-hora",
         "ceska-republika",
+        "dansko",
         "estonsko",
         "finsko",
         "francie",
