@@ -53,11 +53,16 @@ foreach ($zajezdIDs as $key => $zID) {
         );
         $allDatesRes = $serialCol->get_all_dates_for_id_serial($row["id_serial"]);                
         $allDates = mysqli_fetch_all($allDatesRes, MYSQLI_ASSOC);
-        
+
+        $lowestPrice = null;
         foreach ($allDates as $key => $value) {
             $allDates[$key]["dates"] = Serial_collection::get_dates($value);
+            $price = $allDates[$key]["castka"];
+            if (!$lowestPrice || $lowestPrice > $price) {
+                $lowestPrice = $price;
+            }
         }
-        
+
         $totalDates = count($allDates);    
                 
         if($totalDates >= 1){
@@ -96,7 +101,7 @@ foreach ($zajezdIDs as $key => $zID) {
                 Serial_collection::get_dates($row), 
                 $totalDates, 
                 $allDates,
-                $row["min_castka"], // TODO: jedno z tech dvou je spatne, ale mozna se to lisi dle typu slevy... zjistit
+                $lowestPrice, // TODO: jedno z tech dvou je spatne, ale mozna se to lisi dle typu slevy... zjistit
                 $row["final_max_sleva"],
                 $row["min_castka"],
                 Serial_collection::get_nights($row), 
