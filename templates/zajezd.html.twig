@@ -169,7 +169,7 @@
                         {% for tourDate in dates %}
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading{{loop.index}}">
-                                    <button class="accordion-button{% if loop.index > 1 %} collapsed{% endif %}" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
+                                    <button class="accordion-button collapsed" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
                                         <div class="col-md-7 col-sm-9">
                                             <div class="date_date"> <i class="fa" aria-hidden="true"></i>
                                                 {{ tourDate.date}}
@@ -209,7 +209,7 @@
                                         
                                     </button>
                                 </h2>
-                                <div id="collapse{{loop.index}}" class="accordion-collapse collapse {% if loop.index == 1 %} show {% endif %}" aria-labelledby="heading{{loop.index}}"
+                                <div id="collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="heading{{loop.index}}"
                                     data-bs-parent="#accordionDates">
                                     <div class="accordion-body">
                                         <a href="#sidebar" class="date_select body" data-dateindex="{{loop.index}}">
@@ -222,11 +222,6 @@
                                                 {% endif %} <i class="arrow_carrot-right"></i>
                                             </strong>
                                         </a>
-                                        {% if tourDate.details is not empty %}
-                                        <div class="tour-html-block margin_0_30">
-                                            {{ tourDate.details|raw }}
-                                        </div>
-                                        {% endif %}
                                         
                                         {% if tourDate.services is not empty %}
                                         <table class="table service_table">
@@ -327,6 +322,12 @@
                                                 {% endfor %}
                                             </tbody>
                                         </table>
+                                        {% endif %}
+
+                                        {% if tourDate.details is not empty %}
+                                        <div class="tour-html-block">
+                                            {{ tourDate.details|raw }}
+                                        </div>
                                         {% endif %}
 
                                         {# <pre>
