@@ -3,8 +3,6 @@
 {% block stylesheets %}
 <!-- REVOLUTION SLIDER CSS -->
 <link rel="stylesheet" type="text/css" href="/html-template/revolution-slider/css/settings.css">
-<link rel="stylesheet" type="text/css" href="/html-template/revolution-slider/css/settings.css">
-<link rel="stylesheet" type="text/css" href="/html-template/revolution-slider/css/layers.css">
 <link rel="stylesheet" type="text/css" href="/html-template/revolution-slider/css/navigation.css">
 {% endblock stylesheets %}
 
@@ -14,7 +12,7 @@
 <div id="rev_slider_44_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="mask-showcase"
 	data-source="gallery">
 	<!-- Start revolution slider 5.4.8 fullscreen mode -->
-	<div id="rev_slider_44" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.8">
+	<div id="rev_slider_44" class="rev_slider fullwidthabanner"  data-version="5.4.8">
 
 		<ul>
 			<!-- start slide 01 -->
@@ -25,7 +23,7 @@
 				<!-- main image -->
 				<img src="/img/dovolena.jpg" alt="" data-bgcolor="#ccc" data-bgposition="center center"
 					data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg"
-					data-no-retina>
+					data-no-retina fetchpriority="high">
 
 				<div class="rev-slider-mask"></div>
 
@@ -167,11 +165,11 @@
 		<div class="custom-search-input-2">
 			<div class="form-group">
 				<input class="form-control" type="text" name="txt" placeholder="Kamkoliv" id="autocomplete">
-				<i class="icon_pin_alt"></i>
+				<i class="fa-solid fa-location-dot"></i>
 			</div>
 			<div class="form-group">
 				<input class="form-control" type="text" name="dates" placeholder="Kdykoliv">
-				<i class="icon_calendar"></i>
+				<i class="fa-solid fa-calendar"></i>
 			</div>
 			<div class="form-group text-right">
 				<input type="submit" class="btn_search" value="Vyhledat zájezd">
@@ -205,8 +203,10 @@
 			<div class="row small-gutters mt-md-0 mt-sm-2">
 				<div class="col-sm-12">
 					<a href="{{ typesOfTours[2].url }}">
-						<img src="{{ typesOfTours[2].image }}"
-							alt="{{ typesOfTours[2].name }} - {{ typesOfTours[2].description }}" class="img-fluid">
+						<picture>
+							<source srcset="{{ typesOfTours[2].image|replace({'.png': '.webp'}) }}" type="image/webp">
+							<img src="{{ typesOfTours[2].image }}" alt="{{ typesOfTours[2].name }} - {{ typesOfTours[2].description }}" class="img-fluid">
+						</picture>
 						<div class="wrapper">
 							<h2>{{ typesOfTours[2].name }}</h2>
 							<p>
@@ -226,8 +226,10 @@
 				</div>
 				<div class="col-sm-12 mt-sm-2">
 					<a href="{{ typesOfTours[29].url }}">
-						<img src="{{ typesOfTours[29].image }}"
-							alt="{{ typesOfTours[29].name }} - {{ typesOfTours[29].description }}" class="img-fluid">
+						<picture>
+							<source srcset="{{ typesOfTours[29].image|replace({'.png': '.webp'}) }}" type="image/webp">
+							<img src="{{ typesOfTours[29].image }}" alt="{{ typesOfTours[29].name }} - {{ typesOfTours[29].description }}" class="img-fluid">
+						</picture>
 						<div class="wrapper">
 							<h2>{{ typesOfTours[29].name }}</h2>
 							<p>
@@ -251,8 +253,10 @@
 			<div class="row small-gutters mt-md-0 mt-sm-2">
 				<div class="col-sm-6">
 					<a href="{{ typesOfTours[1].url }}">
-						<img src="{{ typesOfTours[1].image }}"
-							alt="{{ typesOfTours[1].name }} - {{ typesOfTours[1].description }}" class="img-fluid">
+						<picture>
+							<source srcset="{{ typesOfTours[1].image|replace({'.png': '.webp'}) }}" type="image/webp">
+							<img src="{{ typesOfTours[1].image }}" alt="{{ typesOfTours[1].name }} - {{ typesOfTours[1].description }}" class="img-fluid">
+						</picture>
 						<div class="wrapper">
 							<h2>{{ typesOfTours[1].name }}</h2>
 							<p>
@@ -272,8 +276,10 @@
 				</div>
 				<div class="col-sm-6">
 					<a href="{{ typesOfTours[3].url }}">
-						<img src="{{ typesOfTours[3].image }}"
-							alt="{{ typesOfTours[3].name }} - {{ typesOfTours[3].description }}" class="img-fluid">
+						<picture>
+							<source srcset="{{ typesOfTours[3].image|replace({'.png': '.webp'}) }}" type="image/webp">
+							<img src="{{ typesOfTours[3].image }}" alt="{{ typesOfTours[3].name }} - {{ typesOfTours[3].description }}" class="img-fluid">
+						</picture>
 						<div class="wrapper">
 							<h2>{{ typesOfTours[3].name }}</h2>
 							<p>
@@ -293,8 +299,10 @@
 				</div>
 				<div class="col-sm-12 mt-sm-2">
 					<a href="{{ typesOfTours[4].url }}">
-						<img src="{{ typesOfTours[4].image }}"
-							alt="{{ typesOfTours[4].name }} - {{ typesOfTours[4].description }}" class="img-fluid">
+						<picture>
+							<source srcset="{{ typesOfTours[4].image|replace({'.png': '.webp'}) }}" type="image/webp">
+							<img src="{{ typesOfTours[4].image }}" alt="{{ typesOfTours[4].name }} - {{ typesOfTours[4].description }}" class="img-fluid">
+						</picture>
 						<div class="wrapper">
 							<h2>{{ typesOfTours[4].name }}</h2>
 							<p>
@@ -352,7 +360,7 @@
 
 			<div class="col-md-6 col-lg-5 col-xl-4 col-8 wow">
 				<!-- Thumbnail-info-->
-				<article class="counter_item"><img src="/img/poznavaci.png" alt="">
+				<article class="counter_item"><img src="/img/poznavaci.webp" alt="">
 					<div class="counter_item_figure">
 						<div class="counter">
 							<div class="counter_number years"></div>
@@ -363,7 +371,7 @@
 			</div>
 			<div class="col-md-6 col-lg-5 col-xl-4 col-8 wow">
 				<!-- Thumbnail-info-->
-				<article class="counter_item"><img src="/img/poznavaci.png" alt="">
+				<article class="counter_item"><img src="/img/poznavaci.webp" alt="">
 					<div class="counter_item_figure">
 						<div class="counter">
 							<div class="counter_number tours"></div>
@@ -374,7 +382,7 @@
 			</div>
 			<div class="col-md-6 col-lg-5 col-xl-4 col-8 wow">
 				<!-- Thumbnail-info-->
-				<article class="counter_item"><img src="/img/poznavaci.png" alt="">
+				<article class="counter_item"><img src="/img/poznavaci.webp" alt="">
 					<div class="counter_item_figure">
 						<div class="counter">
 							<div class="counter_number clients"></div>
@@ -427,15 +435,9 @@
 <!-- SLIDER REVOLUTION SCRIPTS  -->
 <script src="/html-template/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
 <script src="/html-template/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.actions.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.carousel.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.kenburn.min.js"></script>
 <script src="/html-template/revolution-slider/js/extensions/revolution.extension.layeranimation.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.migration.min.js"></script>
 <script src="/html-template/revolution-slider/js/extensions/revolution.extension.navigation.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.parallax.min.js"></script>
 <script src="/html-template/revolution-slider/js/extensions/revolution.extension.slideanims.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.video.min.js"></script>
 <script>
 	var tpj = jQuery;
 

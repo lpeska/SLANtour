@@ -4157,20 +4157,17 @@ a.filter_type_header {
 }
 
 a.filter_type_header:before {
-  font-family: "ElegantIcons";
-  content: "\32";
-  font-size: 26px;
-  font-size: 1.625rem;
+  font-family: "FontAwesome";
+  content: "\f106"; /* FontAwesome icon for angle-up */
+  font-size: 16px;
+  font-size: 1rem;
   position: absolute;
   right: 0;
-  top: 10;
-  line-height: 1;
-  font-weight: normal;
 }
 
 a.filter_type_header.collapsed:before {
-  font-family: "ElegantIcons";
-  content: "\33";
+  font-family: "FontAwesome";
+  content: "\f107"; /* FontAwesome icon for angle-down */
 }
 
 .filter_type h6 {
@@ -8337,12 +8334,9 @@ ul.share-buttons li i {
   color: #fff;
   cursor: pointer;
 }
-#toTop:after {
-  content: "\e899";
-  font-family: "fontello";
+#toTop i::before {
   position: relative;
-  display: block;
-  top: 50%;
+  top: 6px;
   -webkit-transform: translateY(-55%);
   transform: translateY(-55%);
 }
