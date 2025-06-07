@@ -48,7 +48,7 @@ class Ohlasy_list extends Generic_list
             // print_r($this->radek);
             // echo "</br>";
             // echo "</br>";
-            $this->radek["foto_url"] = "https://slantour.cz/foto/full/".$this->radek["foto_url"];
+            $this->radek["foto_url"] = "https://slantour.cz/foto/nahled/".$this->radek["foto_url"];
             $ret[$this->radek["id_ohlasu"]] = $this->radek;  
         }
         return $ret;

@@ -67,18 +67,18 @@
                         {% for image in images %}
                             {% if loop.index0 <= 3 %}
                                 <figure>
-                                    <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"><img src="{{ image.url }}" alt=""></a>
+                                    <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"><img src="{{ image.url }}" alt="{{ image.description }}"></a>
                                 </figure>
                             {% elseif loop.index0 == 4 %}
                                 {% if loop.last %}
                                     <figure>
-                                        <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"><img src="{{ image.url }}" alt=""></a>
+                                        <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in"><img src="{{ image.url }}" alt="{{ image.description }}"></a>
                                     </figure>
                                 {% else %}
                                     <figure>
                                         <a href="{{ image.url }}" title="{{ image.description }}" data-effect="mfp-zoom-in">
                                             <span class="d-flex align-items-center justify-content-center">+{{ loop.length - 4}}</span>
-                                            <img src="{{ image.url }}" alt="">
+                                            <img src="{{ image.url }}" alt="{{ image.description }}">
                                         </a>
                                     </figure>
                                 {% endif %}
@@ -103,7 +103,7 @@
                             <div class="cbp_tmlabel">
                                 {% if day.image %}
                                 <div class="hidden-xs">
-                                    <img src="{{ day.image }}" alt="" class="rounded-circle thumb_visit">
+                                    <img src="{{ day.image }}" alt="{{ day.title }}" class="rounded-circle thumb_visit">
                                 </div>
                                 {% endif %}
                                 <h4>{{ day.title }}</h4>
@@ -164,6 +164,8 @@
                     {% else %}
                     Termíny
                     {% endif %} a ceny</h2>
+
+                    <div class="add_bottom_15"> Pro podrobnosti o cenách a službách rozbalte daný termín pomocí <i class="fas fa-angle-down"></i></div>
 
                     <div class="accordion" id="accordionDates">
                         {% for tourDate in dates %}

@@ -109,7 +109,7 @@ foreach ($zajezdIDs as $key => $zID) {
                 Serial_library::get_typ_dopravy($row["doprava"]-1), 
                 Serial_library::get_typ_ubytovani($row["ubytovani"]-1),             
                 Serial_collection::get_destinace($row),
-                "//slantour.cz/foto/full/".$row["foto_url"], 
+                "//slantour.cz/foto/nahled/".$row["foto_url"], 
                 $features, 
                 Serial_collection::get_description($row),
                 $predbeznaRegistrace,

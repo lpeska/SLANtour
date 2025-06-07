@@ -1061,7 +1061,7 @@ ul#top_menu li a:hover, ul#top_menu li a:hover span {
 .sticky ul#top_menu li a.search-header:hover, .sticky ul#top_menu li a.phone:hover:before {
   color: #fc5b62;
 }
-.sticky ul#top_menu li a.phone, .sticky ul#top_menu li a.search-header:before {
+.sticky ul#top_menu li a.phone, .sticky ul#top_menu li a.search-header:before, .sticky ul#top_menu li a.phone span {
   color: #444;
 }
 @media (max-width: 575px) {
