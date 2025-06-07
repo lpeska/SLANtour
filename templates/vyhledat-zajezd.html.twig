@@ -1,6 +1,12 @@
 {% extends "_base.html.twig" %}
 
-{% block title %}SLANtour - vyhledávaní zájezdů{% endblock title %}
+{% block meta %}
+<meta name="description" content="SLANtour - vyhledávání zájezdů a pobytů. Prozkoumejte širokou nabídku zájezdů a najděte ten pravý pro vás.">
+
+<meta name="keywords" content="vyhledávání zájezdů, dovolená, zájezdy, poznávací zájezdy, sportovní zájezdy, relaxační zájezdy">
+{% endblock meta %}
+
+{% block title %}SLANtour | vyhledávaní zájezdů{% endblock title %}
 
 {% block stylesheets %}
 
@@ -206,21 +212,24 @@
 
             <div class="col-lg-9" id="list_sidebar">
                 <div class="list-header">
-                    <h4 id="nalezenoHeader">Nalezeno 0 zájezdů</h4>
-                    <div class="switch-field">
-                        <input type="radio" id="popular" name="listing_filter" value="popular" class="sorting-control" checked data-filter=".popular"
-                            class="selected">
-                        <label for="popular">Nejprodávanější</label>
-                        <input type="radio" id="cheapest" name="listing_filter" value="cheapest" class="sorting-control" data-filter=".cheapest">
-                        <label for="cheapest">Nejlevnější</label>
-                        <input type="radio" id="closest" name="listing_filter" value="closest" class="sorting-control" data-filter=".closest">
-                        <label for="closest">Nejbližší odjezd</label>
-                        <input type="radio" id="latest" name="listing_filter" value="latest" class="sorting-control" data-filter=".latest">
-                        <label for="latest">Nově přidané</label>
+                    <div class="nalezeno-header-container">
+                        <h1 id="nalezenoHeader">Nalezeno 0 zájezdů</h1>
                     </div>
-                   <a class="btn_map" data-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                        aria-controls="collapseMap" data-text-swap="Zavřít mapu" data-text-original="Zobrazit na mapě">Zobrazit na mapě</a>
-
+                    <div class="switch-field-container">
+                        <div class="switch-field">
+                            <input type="radio" id="popular" name="listing_filter" value="popular" class="sorting-control" checked data-filter=".popular">
+                            <label for="popular">Nejprodávanější</label>
+                            <input type="radio" id="cheapest" name="listing_filter" value="cheapest" class="sorting-control" data-filter=".cheapest">
+                            <label for="cheapest">Nejlevnější</label>
+                            <input type="radio" id="closest" name="listing_filter" value="closest" class="sorting-control" data-filter=".closest">
+                            <label for="closest">Nejbližší odjezd</label>
+                            <input type="radio" id="latest" name="listing_filter" value="latest" class="sorting-control" data-filter=".latest">
+                            <label for="latest">Nově přidané</label>
+                        </div>
+                        <a class="btn_map" data-toggle="collapse" href="#collapseMap" aria-expanded="false" aria-controls="collapseMap"
+                            data-text-swap="Zavřít mapu" data-text-original="Zobrazit na mapě">Zobrazit na mapě</a>
+                    </div>
+                    
                 </div>
                 
                 <div id="selected-filters-widget">

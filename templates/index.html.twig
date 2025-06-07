@@ -1,5 +1,12 @@
 {% extends "_base.html.twig" %}
 
+{% block meta %}
+<meta name="description" content="SLANtour - Cestovní kancelář s více než 30letou tradicí. Nabízíme poznávací zájezdy, lázně, dovolenou u moře a sportovní zájezdy.">
+<meta name="keywords" content="poznávací zájezdy, lázně, dovolená u moře, sportovní zájezdy, cestovní kancelář, SLANtour">
+{% endblock meta %}
+
+{% block title %}SLANtour | Poznávací zájezdy, lázně, dovolená u moře a sportovní zájezdy{% endblock title %}
+
 {% block stylesheets %}
 <!-- REVOLUTION SLIDER CSS -->
 <link rel="stylesheet" type="text/css" href="/html-template/revolution-slider/css/settings.css">
@@ -21,7 +28,7 @@
 				data-masterspeed="1500" data-rotate="0" data-saveperformance="off" data-title="01" data-param1="01"
 				data-description="">
 				<!-- main image -->
-				<img src="/img/dovolena.jpg" alt="" data-bgcolor="#ccc" data-bgposition="center center"
+				<img src="/img/dovolena.jpg" alt="Dovolená u moře" data-bgcolor="#ccc" data-bgposition="center center"
 					data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg"
 					data-no-retina fetchpriority="high">
 
@@ -67,7 +74,7 @@
 				data-easeout="Power3.easeInOut" data-masterspeed="1500" data-rotate="0" data-saveperformance="off"
 				data-title="02" data-param1="02" data-description="">
 				<!-- main image -->
-				<img src="/img/lazne.jpeg" alt="" data-bgcolor="#ccc" data-bgposition="center center" data-bgfit="cover"
+				<img src="/img/lazne.jpeg" alt="Lázně a welness" data-bgcolor="#ccc" data-bgposition="center center" data-bgfit="cover"
 					data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
 
 				<div class="rev-slider-mask"></div>
@@ -113,7 +120,7 @@
 				data-easeout="Power3.easeInOut" data-masterspeed="1500" data-rotate="0" data-saveperformance="off"
 				data-title="03" data-param1="03" data-description="">
 				<!-- main image -->
-				<img src="/img/poznavaci.jpeg" alt="" data-bgcolor="#ccc" data-bgposition="center center"
+				<img src="/img/poznavaci.jpeg" alt="Poznávací zájezdy" data-bgcolor="#ccc" data-bgposition="center center"
 					data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg"
 					data-no-retina>
 
@@ -184,15 +191,7 @@
 <div class="container margin_80_0">
 	<div class="main_title_2">
 		<span><em></em></span>
-		<h2>Typy zájezdů a pobytů</h2>
-		<!--TODO: zbavit se posledni carky - nevim jak to ve twigu udelat...
-                    TODO na zvazeni: puvodni barva textu pro jednotlive linky na typy
-                -->
-		{# {% for type in typesOfTours %}
-		<a href="{{ type.url }}"
-			title="{{ type.name }}: {{ type.numberOfTours }} Zájezdů s cenami od {{ type.priceFrom }} Kč; {{ type.description }}">{{
-			type.name }}</a>,
-		{% endfor %} #}
+		<h1>Zájezdy a dovolená s CK Slantour</h1>
 		<p>
 			Ať už toužíte po odpočinku u moře, adrenalinu špičkových sportovních akcí, či poznání exotických zemí, naše cestovní kancelář Vám připraví zážitek přesně pro vás. V naší nabídce naleznete zájezdy všeho druhu.
 			{# Poznávací zájezdy, Dovolená u moře, Tuzemské pobyty, Zájezdy za sportem, Eurovíkendy, Fly and Drive, Exotické zájezdy, Pobyty na horách, Lázně a termály, Jednodenní zájezdy. #}

@@ -1,6 +1,11 @@
 {% extends "_base.html.twig" %}
 
-{% block title %}SLANtour - {{ type.name }}{% endblock title %}
+{% block meta %}
+<meta name="description" content="SLANtour - {{ type.name }} - nabídka zájezdů a pobytů. Prozkoumejte širokou nabídku zájezdů v kategorii {{ type.name }}.">
+<meta name="keywords" content="{{ type.name }}, zájezdy, dovolená, sportovní zájezdy, poznávací zájezdy, relaxační zájezdy">
+{% endblock meta %}
+
+{% block title %}SLANtour | {{ type.name }} - zájezdy a pobyty{% endblock title %}
 
 {% block stylesheets %}
 

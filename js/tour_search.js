@@ -1,4 +1,3 @@
-     
 //TODO: selected filters udelat pristupne zvenku = inicialni nastaveni vyhledavani
 /*var selected_filters = ["txt_Lo","minPrice_100","maxPrice_20000"];*/  
 var tourLocations = {};
@@ -487,15 +486,45 @@ async function updateTextSearch(text){
         console.log(err);
     }            
 }  
-async function updateTotalTours(toursVolume){
-    try{
-        $("#toursVolume").val("Ukázat "+toursVolume+ " zájezdů");
-        $("#nalezenoHeader").html("Nalezeno "+toursVolume+" zájezdů");
-        
-    }catch(err){
+
+async function updateTotalTours(toursVolume, selectedFilters) {
+    try {
+        // Update the "toursVolume" button text
+        $("#toursVolume").val("Ukázat " + toursVolume + " zájezdů");
+
+        // Generate filter descriptions for Země and Typ
+        let filterDescriptions = [];
+        selectedFilters.forEach(filter => {
+            let [key, value] = filter.split('_');
+
+            // Only process Země (countryFilter) and Typ (tourTypeFilter)
+            if (key === "countryFilter" || key === "tourTypeFilter") {
+                const label = getFilterLabel(key, value);
+                if (label) {
+                    filterDescriptions.push(label);
+                }
+            }
+        });
+
+        // Construct the header text
+        const headerText = filterDescriptions.length > 0
+            ? `${filterDescriptions.join(', ')} - nalezeno ${toursVolume} zájezdů`
+            : `Nalezeno ${toursVolume} zájezdů`;
+
+        // Update the "nalezenoHeader" header
+        $("#nalezenoHeader").html(headerText);
+
+        // Update the page title
+        const originalTitle = "SLANtour | Vyhledávání zájezdů";
+        const newTitle = filterDescriptions.length > 0
+            ? `${originalTitle} | ${filterDescriptions.join(', ')}`
+            : originalTitle;
+        document.title = newTitle;
+
+    } catch (err) {
         console.log(err);
-    }            
-}  
+    }
+}
 
 async function updateFilterWidgets(filters) {
 
@@ -725,11 +754,11 @@ async function showData(filteredData,filteredDataNoKatalog,selected_filters,appe
         fd.data.aggregations.durGroup.buckets.forEach(el => updateEnumElement(el,"durGroupFilter"));
         fd.data.aggregations.country.buckets.forEach(el => updateEnumElement(el,"countryFilter"));
             
-        //updatePrice(filters.minPrice,filters.maxPrice);
+        // Update the page title for Země and Typ filters
+        updateTotalTours(fd.pagination.total, selected_filters);
+
         updateTextSearch(filters.txt);
-        updateTotalTours(fd.pagination.total);
         //console.dir(fd);
-         
         
         //load corresponding data and show them on appropriate location
         var dataAnchor = $("#tours_container");
@@ -809,9 +838,8 @@ $(function(){
         
         var selected_filters_noKatalog = selected_filters.filter((filter) => 1-filter.startsWith("katalogFilter_"));
         var filteredDataNoKatalog = filterData(data,selected_filters_noKatalog, page, 10000);
-        
         var filteredData = filterData(data, selected_filters, page, 20);
-        showData(filteredData, filteredDataNoKatalog, selected_filters,false);
+        showData(filteredData, filteredDataNoKatalog, selected_filters, false);
     }
 
     let typingTimerTo;

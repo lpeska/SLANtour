@@ -806,12 +806,25 @@ span.price_discount_tag {
     color: #fc5b62;
 }
 
-.list-header {
+.nalezeno-header-container {
+    display: block;
+    margin-bottom: 15px; /* Add spacing below the header */
+    margin-left: 15px;
+}
+
+.nalezeno-header-container h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0; /* Remove default margin */
+    color: #333; /* Set text color */
+}
+
+.switch-field-container {
     display: flex;
     margin: 0 15px 15px;
 }
 
-.list-header h4{
+.list-header .switch-field{
     flex-grow: 1;
 }
 

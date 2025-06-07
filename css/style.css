@@ -671,11 +671,11 @@ ul, ol {
     margin-bottom: 10px;
   }
 }
-.main_title_2 h2 {
+.main_title_2 h2, .main_title_2 h1 {
   margin: 25px 0 0 0;
 }
 @media (max-width: 767px) {
-  .main_title_2 h2 {
+  .main_title_2 h2, .main_title_2 h1 {
     font-size: 26px;
     font-size: 1.625rem;
   }
@@ -4093,6 +4093,7 @@ a.grid_item:hover figure img {
 }
 .switch-field label:first-of-type {
   border-left: 0;
+  padding-left: 0;
 }
 .switch-field label:last-of-type {
   border-right: 0;

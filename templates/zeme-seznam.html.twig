@@ -1,14 +1,19 @@
 {% extends "_base.html.twig" %}
 
-{% block title %}SLANtour - 
+{% block meta %}
+<meta name="description" content="SLANtour - nabídka zájezdů do evropských a světových zemí. Vyberte si z široké nabídky poznávacích, sportovních a relaxačních zájezdů.">
+<meta name="keywords" content="zájezdy, dovolená, evropské země, světové země, sportovní zájezdy, poznávací zájezdy, relaxační zájezdy">
+{% endblock meta %}
+
+{% block title %}SLANtour | 
 	{% if continentName == "evropa" %}
-		Evropské země
+		Evropské země - zájezdy a pobyty
     {% elseif continentName == "svet" %}
-        Svět
+        Svět - zájezdy a pobyty
     {% elseif continentName == "sport" %}
-        Sporty
+        Sportovní zájezdy a pobyty
 	{% elseif continentName == "zeme-seznam" %}
-		Země
+		Nabízené země - zájezdy a pobyty
     {% endif %}
 
 {% endblock title %}

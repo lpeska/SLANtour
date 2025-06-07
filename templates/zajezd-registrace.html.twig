@@ -1,6 +1,12 @@
 {% extends "_base.html.twig" %}
 
-{% block title %}SLANtour - {{ name }}{% endblock title %}
+{% block meta %}
+<meta name="description" content="SLANtour - {{ name }} - vytvořte si předběžnou registraci na zájezd. Vyplňte formulář a my vás budeme kontaktovat s dalšími informacemi.">
+
+<meta name="keywords" content="{% for breadcrumb in breadcrumbs %} {{breadcrumb.label}}, {% endfor %} předbězná registrace">
+{% endblock meta %}
+
+{% block title %}SLANtour | {{ name }}{% endblock title %}
 
 {% block stylesheets %}
 

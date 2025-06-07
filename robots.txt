@@ -1,0 +1,15 @@
+# Allow all search engines to crawl the site
+User-agent: *
+Disallow: /admin/          # Block admin pages
+Disallow: /private/        # Block private directories
+Disallow: /temp/           # Block temporary files
+Disallow: /search-results/ # Block search results pages to avoid duplicate content
+Disallow: /cart/           # Block shopping cart pages
+Disallow: /checkout/       # Block checkout pages
+Disallow: /login/          # Block login pages
+
+# Allow specific files in blocked directories
+Allow: /admin/public-file.html
+
+# Specify the location of the sitemap
+Sitemap: https://www.slantour.cz/sitemap.xml
