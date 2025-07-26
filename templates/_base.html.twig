@@ -52,9 +52,19 @@
 		})(document);
 	</script>
 	<noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
-    
-    {% block stylesheets %}{% endblock stylesheets %}
+	
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1XR3F18XCG"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
 
+		gtag('config', 'G-1XR3F18XCG');
+	</script>
+	
+	{% block stylesheets %}{% endblock stylesheets %}
+	
 </head>
 
 <body class="datepicker_mobile_full"><!-- Remove this class to disable datepicker full on mobile -->
