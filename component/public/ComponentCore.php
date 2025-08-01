@@ -74,7 +74,7 @@ class ComponentCore {
         require_once($basedir."/methods/VSM.php");
         require_once($basedir."/methods/External.php");
         require_once($basedir."/methods/Standard.php");
-        require_once($basedir."/methods/StandardNegPref.php");
+        require_once($basedir."/methods/standardnegpref.php");
         require_once($basedir."/methods/Attributes.php");
         require_once($basedir."/methods/Randomized.php");
         require_once($basedir."/methods/NRmse.php");
