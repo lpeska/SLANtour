@@ -18,7 +18,7 @@ if (isset($_GET["lev1"])) {
                 if (!empty($_GET["lev3"])) {
                     $id_dest = Serial_list::get_id_from_destinace($_GET["lev3"], $_GET["lev2"]);
                     if ($id_dest > 0) {
-                        $query .= "&destinace=" . urlencode($id_dest);
+                        $query .= "&destinaceFilter[]=" . urlencode($id_dest);
                     }
                 }
                 header("Location: $query", true, 301);
@@ -34,7 +34,7 @@ if (isset($_GET["lev1"])) {
             $id_dest = Serial_list::get_id_from_destinace($_GET["lev2"], $_GET["lev1"]);
             if ($id_dest > 0) {
                 // Handle destinace with zeme, use IDs for vyhledavani
-                header("Location: /vyhledavani?countryFilter[]=" . urlencode($id_zeme) . "&destinace=" . urlencode($id_dest), true, 301);
+                header("Location: /vyhledavani?countryFilter[]=" . urlencode($id_zeme) . "&destinaceFilter[]=" . urlencode($id_dest), true, 301);
                 exit;
             }
         } else {

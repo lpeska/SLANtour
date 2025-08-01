@@ -234,7 +234,7 @@ function filterZajezd(item){
 
                                       
 async function filterData(data, selected_filters, page, resultsPerPage=20){
-    var filters = {countryFilter:[],katalogFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
+    var filters = {countryFilter:[],katalogFilter:[],destinaceFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
     selected_filters.forEach(f => {
         let arr = f.split("_");
         if(arr.length >= 2){
@@ -668,7 +668,7 @@ function getTypeLabel(typeId){
     return typeLabel;
 }  
 
-async function updateKatalog(fd, katalogFilters, expandKatalog){
+async function updateKatalog(fd, katalogFilters, destinaceFilters, expandKatalog){
 
     var fdRes = await fd;
     var serialIDs = new Set([...fdRes.data.items.map(item => item.id_serial)].flat(Infinity));
@@ -694,6 +694,15 @@ async function updateKatalog(fd, katalogFilters, expandKatalog){
         if(destinaceIDs.has(destinaceID)){
             //v soucasnych vysledcich se nachazi aktualni ubytko
             $(k).show();
+            if (destinaceFilters.includes(destinaceID)) {
+                $(k).find('input[type="checkbox"]').prop("checked", true);
+                $(k).find('input[type="checkbox"]').trigger('change');
+                // Remove the destinaceID from destinaceFilters if present
+                const index = destinaceFilters.indexOf(destinaceID);
+                if (index !== -1) {
+                    destinaceFilters.splice(index, 1);
+                }
+            }
         }else{
             $(k).hide();
         }
@@ -735,7 +744,7 @@ async function updateKatalog(fd, katalogFilters, expandKatalog){
 
 
 async function showData(filteredData,filteredDataNoKatalog,selected_filters,append){ 
-    var filters = {countryFilter:[],katalogFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
+    var filters = {countryFilter:[],katalogFilter:[],destinaceFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
     selected_filters.forEach(f => {
         let arr = f.split("_");
         if(arr.length >= 2){
@@ -749,7 +758,7 @@ async function showData(filteredData,filteredDataNoKatalog,selected_filters,appe
     filteredDataNoKatalog.then(fdnk => 
     {
         var expandKatalog = filters.countryFilter.length == 1 && filters.tourTypeFilter.length == 1;    
-        updateKatalog(fdnk, filters.katalogFilter, expandKatalog);                    
+        updateKatalog(fdnk, filters.katalogFilter, filters.destinaceFilter, expandKatalog);                    
         //console.dir(fdnk);
     });  
     
