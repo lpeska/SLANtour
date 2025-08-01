@@ -1,0 +1,101 @@
+{% extends "_base.html.twig" %}
+
+{% block meta %}
+<meta name="description" content="SLANtour - Přihlášení pro cestovní agentury - registrace a přihlášení do systému Albatros 3000 pro cestovní agentury. Informace o objednávkách, cestovních smlouvách a XML exportech.">
+<meta name="keywords" content="přihlášení pro agentury, registrace Albatros 3000, objednávky zájezdů, cestovní smlouvy, XML exporty, SLAN tour">
+{% endblock meta %}
+
+{% block title %}SLANtour | Přihlášení pro cestovní agentury{% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+<section class="hero_in general">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Přihlášení pro cestovní agentury</h1>
+        </div>
+    </div>
+</section>
+<!--/hero_in-->
+
+<div class="bg_color_1">
+
+    {% include "_breadcrumbs.html.twig" %}
+    
+    <div class="container margin_35_35">
+
+        <h2>Přihlášení do systému pro agentury</h2>
+        {{CAcode|raw}}
+
+        <h2>Registrace a přihlášení do systému agentur CK SLAN tour</h2>
+        <section>
+            <p>Vítejte v přihlašování pro cestovní agentury do systému ALBATROS 3000. V následujícím textu je shrnuto několik základních informací o fungování systému, 
+                proto doporučujeme, abyste si ho přečetli ještě před první registrací.</p>
+        </section>
+        <section>
+            <h3>Registrace</h3>
+            <p>Pro vstup do našeho on-line rezervačního systému RISCK je nutná registrace. Přihlašovací údaje (přihlašovací jméno a heslo) vám zašleme na vyžádání. 
+                Stačí zaslat jednoduchý email na naši centrálu, nejlépe na <a href="mailto:info@slantour.cz">info@slantour.cz</a>.
+            </p>
+        </section>
+        <section>
+            <h3>Přihlášení do systému</h3>
+            <p>Poté co od nás obdržíte přihlašovací jméno a heslo je již vstup do rezervačního systému snadný: <br/>
+                Na webových stránkách CK SLAN tour klikněte na odkaz "přihlášení pro CA" vpravo nahoře pod logem CK SLAN tour a na následující stránce vyplňte vaše uživatelské jméno a heslo.
+                Po přihlášení do systému se v pravém sloupci zobrazí uživatelské menu Vaší CA, kde můžete zobrazit vaše již existující objednávky, nebo případně změnit údaje o CA.
+            </p>
+        </section>
+        <section>
+            <h3>Objednávka zájezdu</h3>
+            <p>Před objednávkou zájezdu je třeba se do systému přihlásit, jinak sice objednávka proběhne, ale nezaznamená se, že ji podala vaše agentura (pokud se zapomenete přihlásit -> sekce Řešení problémů).
+                Objednávka zájezdu probíhá stejně jako u objednávky zájezdu "normálním" klientem: vyhledáte požadovaný zájezd, vyplníte informace o klientovi - objednavateli, požadované služby a jména dalších osob.
+            </p>
+        </section>
+        <section>
+            <h3>Seznam objednávek</h3>
+            <p>Každá Vaše objednávka se zobrazí v seznamu objednávek dostupného z uživatelského menu - <strong>"Moje Objednávky"</strong>.
+                Každou objednávku ze seznamu je možné rozkliknout a zjistit o ní detailní informace, nebo zobrazit PDF dokument s předvyplněnou <strong>cestovní smlouvou</strong>.
+            </p>
+        </section>
+        <section>
+            <h3>PDF cestovní smlouva</h3>
+            <p>Cestovní smlouvu ke každé Vámi vyplněné objednávce můžete vygenerovat kliknutím na odkaz "PDF cestovní smlouva" buď ze seznamu objednávek, nebo přímo u detailu objednávky. 
+            </p>
+        </section>
+        <section>
+            <h3>Možnosti a výhodysystému Albatros 3000</h3>
+            <ul>
+                <li>Aktuální <strong>stav obsazenosti zájezdů</strong>: Ihned vidíte, zda je vybraný zájezd dostupný nebo vyprodaný, bez nutnosti telefonicky ověřovat kapacitu.</li>
+                <li>Snadné <strong>vyplnění objednávky po internetu</strong></li>
+                <li>Snadná a rychlá elektronická komunikace s naší centrálou</li>
+                <li>Přehled a <strong>kontrola objednávek</strong> on-line v uživatelské sekci</li>
+                <li>On-line dostupná <strong>cestovní smlouva</strong> ke každé objednávce</li>
+                <li>Možnost vystavení <strong>faktur na provizi</strong> přímo z našeho systému. Bez dalšího vyplňování jakýchkoliv údajů</li>
+            </ul>
+        </section>
+
+         <section>
+            <h3>Řešení problémů</h3>
+            <p>Typické problémy se kterými se můžete setkat a jejich řešení:<br/>
+                <strong><em>Vyplnil jsem objednávku a zjistil jsem, že nejsem přihlášený / nemohu najít uživatelské menu vpravo / objednávku v seznamu objednávek nevidím</em></strong><br/>
+                Buď jste se zapoměli přihlásit, nebo vás systém po příliš dlouhé nečinnosti (30 minut) automaticky odhlásil.<br/>
+                Objednávka byla pravděpodobně odeslána, ale nebylo zaznamenáno, že je vyplněna Vaší agenturou, kontaktujte nás prosím e-mailem se Jménem klienta, objednávaným zájezdem a Vaším uživatelským jménem a my zkontrolujeme zda byla objednávka vytvořena a přidáme informaci o Vaší CA.
+                <br/> <br/>
+                <strong><em>Klient v okamžiku objednávky nevěděl všechny potřebné údaje, nyní bych je chtěl doplnit</em></strong><br/>
+                Do budoucna připravujeme formulář pro doplnění objednávky, nyní nám prosím pošlete e-mail s identifikací objednávky a doplněnými údaji.
+            </p>
+        </section>
+
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->
+
+{% endblock main %}
+
+{% block javascripts %}
+{% endblock javascripts %}
