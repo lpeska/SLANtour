@@ -191,7 +191,7 @@ foreach ($katalog as $key => $kItem) {
 
 $initFilters = array();
 $keywords = array("txt","dates","minPrice","maxPrice");
-$keywordsArrays = array("tourTypeFilter","transportFilter","foodFilter","durGroupFilter","countryFilter","akceFilter");
+$keywordsArrays = array("tourTypeFilter", "transportFilter", "foodFilter", "durGroupFilter", "countryFilter", "akceFilter", "katalogFilter");
 
 $filter_txt = "";
 $filter_dates = "";

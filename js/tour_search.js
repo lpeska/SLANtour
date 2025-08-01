@@ -164,8 +164,8 @@ function updateFilters(){
     var selected_filters = [];
     $(".filter").each(function(idx,el){
         let r = checkFilter(el);
-        if(r){
-            selected_filters.push(r)
+        if (r && !selected_filters.includes(r)) {
+            selected_filters.push(r);
         }
     })
     
@@ -668,7 +668,7 @@ function getTypeLabel(typeId){
     return typeLabel;
 }  
 
-async function updateKatalog(fd, expandKatalog){
+async function updateKatalog(fd, katalogFilters, expandKatalog){
 
     var fdRes = await fd;
     var serialIDs = new Set([...fdRes.data.items.map(item => item.id_serial)].flat(Infinity));
@@ -707,6 +707,14 @@ async function updateKatalog(fd, expandKatalog){
         if(ubytIDs.has(ubytID) || serialIDs.has(ubytID)){
             //v soucasnych vysledcich se nachazi aktualni ubytko
             $(k).show();
+            if (katalogFilters.includes(ubytID)) {
+                $(k).find('input[type="checkbox"]').prop("checked", true);
+                // Remove the ubytID from katalogFilters if present
+                const index = katalogFilters.indexOf(ubytID);
+                if (index !== -1) {
+                    katalogFilters.splice(index, 1);
+                }
+            }
             totalMenuItems += 1;
         }else{
             $(k).hide();
@@ -717,12 +725,11 @@ async function updateKatalog(fd, expandKatalog){
     const myCollapse = document.getElementById('katalog_filter');
     const bsCollapse = new bootstrap.Collapse(myCollapse, { toggle: false }); // Initialize collapse without toggling
 
-    if(totalMenuItems > 20){
-        bsCollapse.hide();
-    }
-    
-    if(totalMenuItems <= 20 || expandKatalog){
+    if(totalMenuItems <= 20 || expandKatalog || katalogFilters.length > 0){
+        // Expand the katalog filter if there are less than 20 items or if expandKatalog is true    
         bsCollapse.show();
+    } else {
+        bsCollapse.hide();
     }
 }  
 
@@ -742,7 +749,7 @@ async function showData(filteredData,filteredDataNoKatalog,selected_filters,appe
     filteredDataNoKatalog.then(fdnk => 
     {
         var expandKatalog = filters.countryFilter.length == 1 && filters.tourTypeFilter.length == 1;    
-        updateKatalog(fdnk, expandKatalog);                    
+        updateKatalog(fdnk, filters.katalogFilter, expandKatalog);                    
         //console.dir(fdnk);
     });  
     
