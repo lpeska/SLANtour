@@ -238,6 +238,15 @@ span.price_discount_tag {
     border-radius: 5px;
 }
 
+span.date_query {
+    margin-left: 5px;
+    display: inline-block;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
 #sidebar .price {
     display: flex;
     align-items: center; /* Align items vertically */

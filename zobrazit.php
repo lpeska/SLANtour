@@ -135,17 +135,17 @@ while ($serial->get_zajezdy()->get_next_radek()) {
     $pickups = array();
     $details = "";
     $priceHeadline = -1;
+    $priceHeadlineState = "";
     
     $tourPrices = new Seznam_cen($_GET["id_serial"],$tourDetails[0]);
     while($tourPrices->get_next_radek()){
         $prices = $tourPrices->show_list_item_array();
         
-        //var_dump($prices);
-        
         if($prices[3] <= 3){
             $services[] = new Service($prices[0], $prices[1], $prices[2], $prices[6]);
-            if($prices[5] and $priceHeadline < 0){//dostupnasluzba
-                $priceHeadline = $prices[2];                
+            $priceHeadlineState = $prices[1];
+            if($priceHeadline < 0){//dostupnasluzba
+                $priceHeadline = $prices[2];  
             }
             
         }else if($prices[3] == 4){
@@ -163,7 +163,7 @@ while ($serial->get_zajezdy()->get_next_radek()) {
     $serial_with_zajezd = new Serial_with_zajezd($_GET["lev1"], $tourDetails[0]);
     $discounts = $serial_with_zajezd->show_slevy_zkracene("array");
     $dateString = removeAkce($tourDetails[1]);
-    $date = new TourDate($tourDetails[0], $dateString, $priceHeadline, $tourDetails[2], $details . $tourDetails[3], $services, $extras, $pickups, $discounts);
+    $date = new TourDate($tourDetails[0], $dateString, $priceHeadline, $priceHeadlineState, $tourDetails[2], $details . $tourDetails[3], $services, $extras, $pickups, $discounts);
     applyDiscount($date);
     $dates[] = $date;
 

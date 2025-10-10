@@ -441,10 +441,13 @@
 	$('#orderDate').change(function(){
 		const priceSpan = $('.price .price_span');
 		
-		const price = this[this.value].dataset.price;
-		if (price == -1) {
+		const state = this[this.value].dataset.state;
+		if (state == "Vyprodáno!") {
 			priceSpan.text("Vyprodáno!");
 			$('#orderTour')[0].disabled = true;
+		} else if (state == "Na dotaz") {
+			priceSpan.text(this[this.value].dataset.price + " Kč (na dotaz)");
+			$('#orderTour')[0].disabled = false;
 		} else {
 			priceSpan.text(this[this.value].dataset.price + " Kč");
 			$('#orderTour')[0].disabled = false;

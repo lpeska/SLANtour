@@ -187,12 +187,15 @@
                                                     </span>
 
                                                 {% endif %}
+                                                {% if tourDate.state == "Na dotaz" %}
+                                                    <span class="badge bg-secondary date_query">{{ tourDate.state }}</span>
+                                                {% endif %}
                                             </div> 
                                         </div>
                                         <div class="col-md-3 col-sm-3">
-                                            {% if tourDate.price == -1 %}
+                                            {% if tourDate.state == "Vyprodáno!" %}
                                             <div class="date_price soldout">
-                                                Vyprodáno!    
+                                                {{ tourDate.state}}     
                                             </div>
                                             {% else %}
                                             <div class="date_price">
@@ -612,12 +615,14 @@
                                 {% endif %}...
                             </option>
                             {% for tourDate in dates %}
-                                <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-discount="{{tourDate.discount}}" data-dateid="{{tourDate.dateID}}">
+                                <option value="{{loop.index}}" data-price="{{tourDate.price}}" data-discount="{{tourDate.discount}}" data-dateid="{{tourDate.dateID}}" data-state="{{tourDate.state}}">
                                     {{tourDate.date}} 
-                                    {% if tourDate.price == -1 %}
+                                    {% if tourDate.state == "Vyprodáno!" %}
                                         (vyprodáno)
                                     {% elseif tourDate.discount is not empty %}
                                         ({{tourDate.price}} Kč, sleva {{tourDate.discount}})
+                                    {% elseif tourDate.state == "Na dotaz" %}
+                                        ({{tourDate.price}} Kč, na dotaz)
                                     {% else %}
                                         ({{tourDate.price}} Kč)
                                     {% endif %}

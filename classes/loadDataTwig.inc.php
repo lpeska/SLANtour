@@ -674,6 +674,7 @@ class TourDate
     public string $date;
     public int $price;
     public int $priceBefore;
+    public string $state;
     public string $discount;
     public string $details;
     public array $services;
@@ -681,11 +682,12 @@ class TourDate
     public array $pickupSpots;
     public array $discounts;
 
-    public function __construct(int $dateID, string $date, int $price, string $discount, string $details, array $services, array $extraFees, array $pickupSpots, array $discounts)
+    public function __construct(int $dateID, string $date, int $price, string $state, string $discount, string $details, array $services, array $extraFees, array $pickupSpots, array $discounts)
     {
         $this->dateID = $dateID;
         $this->date = $date;
         $this->price = $price;
+        $this->state = $state;
         $this->discount = $discount;
         $this->details = $details;
         $this->services = $services;
