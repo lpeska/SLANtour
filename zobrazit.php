@@ -86,11 +86,13 @@ if ($_GET["lev4"] != "") { //mame velmi pravdepodobne stary serial+zajezd
 
 //echo $_GET["id_serial"].",".$_GET["id_zajezd"];
 
+$type_serial_id = $serial->get_typ(); // needed for the link to similar tours
 $typ_serial = $serial->get_nazev_typ(); //Not shown in template at the moment
 $typ_serial_web = $serial->get_nazev_typ_web();//might be necessary for breadcrumb links - search
 
 $zeme_nazev = $serial->get_zeme();
 $zeme_nazev_web = $serial->get_nazev_zeme_web(); //might be necessary for breadcrumb links - search
+$zeme_id = getCountry($zeme_nazev_web)->id; // needed for the link to similar tours
 
 $destinace_id = $serial->get_id_destinace();//might be necessary for breadcrumb links - search
 $destinace_nazev = $serial->get_destinace();
@@ -447,7 +449,9 @@ echo $twig->render($predbeznaRegistrace ? 'zajezd-registrace.html.twig' : 'zajez
     'dates'  => $dates,
     'documents'  => $documents,
     'longTour' => $longTour,
-    'breadcrumbs' => $breadcrumbs
+    'breadcrumbs' => $breadcrumbs,
+    'typeId' => $type_serial_id,
+    'countryId' => $zeme_id
     /*array(
         new TourDate('22.04. - 25.04.2022', 16900, 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.'), 
         new TourDate('11.05. - 16.05.2022', 15900, 'Dopoledne odlet z Prahy do Londýna. Odpoledne ubytování v hotelu a dále návštěva proslulého Notting Hillu. Projdete se trhem, který znáte ze stejnojmeného filmu s Julií Roberts a Hugh Grantem. Večer pak můžete zamířit do některého z typických anglických pubů.'), 

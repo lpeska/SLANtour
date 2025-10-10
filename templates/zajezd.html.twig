@@ -66,6 +66,14 @@
                            
                         </ul>
                     </div>
+                    {% if dates is empty %}
+                    <div class="alert alert-warning mt-4 mb-4">
+                        <h4>Aktuálně nejsou vypsány žádné termíny pro tento zájezd.</h4>
+                        <p class="btn_tours_align no_dates">
+                            <a href="/vyhledavani?tourTypeFilter[]={{ typeId }}&countryFilter[]={{ countryId }}" class="btn_1 rounded">Zobrazit podobné zájezdy</a>
+                        </p>
+                    </div>
+                    {% endif %}
                     <h2>Popis</h2>
                     <div class="tour-html-block">{{ descriptionMain|raw}}</div>
 
@@ -171,8 +179,17 @@
                     Termíny
                     {% endif %} a ceny</h2>
 
-                    <div class="add_bottom_15"> Pro podrobnosti o cenách a službách rozbalte daný termín pomocí <i class="fas fa-angle-down"></i></div>
+                    
+                    {% if dates is empty %}
+                    <div class="alert alert-warning mt-4 mb-4">
+                        <h4>Aktuálně nejsou vypsány žádné termíny pro tento zájezd.</h4>
+                        <p class="btn_tours_align no_dates">
+                            <a href="/vyhledavani?tourTypeFilter[]={{ typeId }}&countryFilter[]={{ countryId }}" class="btn_1 rounded">Zobrazit podobné zájezdy</a>
+                        </p>
+                    </div>
 
+                    {% else %}
+                    <div class="add_bottom_15"> Pro podrobnosti o cenách a službách rozbalte daný termín pomocí <i class="fas fa-angle-down"></i></div>
                     <div class="accordion" id="accordionDates">
                         {% for tourDate in dates %}
                             <div class="accordion-item">
@@ -349,6 +366,7 @@
                             </div>
                         {% endfor %}
                     </div>
+                    {% endif %}
                     
                     <hr>
 
@@ -582,6 +600,8 @@
             <!-- /col -->
 
             <aside class="col-lg-4" id="sidebar">
+                {% if dates is not empty %} 
+
                 <div class="box_detail booking">
                     <div class="price">
                         <div class="price_main">
@@ -636,6 +656,7 @@
                     {# <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Přidat do oblíbených</a> #}
                     
                 </div>
+                {% endif %}
                 {# <ul class="share-buttons">
                     <li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
                     <li><a class="twitter-share" href="#0"><i class="social_twitter"></i> Tweet</a></li>

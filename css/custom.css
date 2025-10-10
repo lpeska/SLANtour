@@ -247,6 +247,11 @@ span.date_query {
     border-radius: 5px;
 }
 
+p.no_dates {
+    margin-bottom: 10px;
+    margin-top: 25px;
+}
+
 #sidebar .price {
     display: flex;
     align-items: center; /* Align items vertically */
