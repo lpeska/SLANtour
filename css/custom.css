@@ -1028,3 +1028,8 @@ section.main_description ul , ul.list-circle{
 .remove-filter:hover {
     color: #333;
 }
+
+.mfp-img {
+  max-height: 90vh !important;
+  width: auto;
+}

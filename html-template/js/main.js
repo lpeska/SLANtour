@@ -95,6 +95,9 @@
 			delegate: 'a',
 			type: 'image',
             preloader: true,
+            image: {
+                verticalFit: false
+            },
 			gallery: {
 				enabled: true
 			},
