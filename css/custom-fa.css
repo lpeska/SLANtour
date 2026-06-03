@@ -763,12 +763,37 @@ readers do not read off random characters that represent icons */
     content: "\f1eb";
 }
 
+/* Icons from homepage trust strip */
+.fa-medal::before {
+    content: "\f5a2";
+}
+
+.fa-suitcase-rolling::before {
+    content: "\f5c1";
+}
+
+.fa-users::before {
+    content: "\f0c0";
+}
+
+.fa-shield-halved::before {
+    content: "\f3ed";
+}
+
+.fa-certificate::before {
+    content: "\f0a3";
+}
+
 /* Icons from _base.html.twig */
 .fa-phone::before {
     content: "\f095";
 }
 
 .fa-search::before {
+    content: "\f002";
+}
+
+.fa-magnifying-glass::before {
     content: "\f002";
 }
 
@@ -829,6 +854,10 @@ readers do not read off random characters that represent icons */
 
 .fa-location-dot::before {
     content: "\f3c5";
+}
+
+.fa-compass::before {
+    content: "\f14e";
 }
 
 /* New Icons */

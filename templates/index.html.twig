@@ -7,182 +7,85 @@
 
 {% block title %}SLANtour | Poznávací zájezdy, lázně, dovolená u moře a sportovní zájezdy{% endblock title %}
 
-{% block stylesheets %}
-<!-- REVOLUTION SLIDER CSS -->
-<link rel="stylesheet" type="text/css" href="/html-template/revolution-slider/css/settings.css">
-<link rel="stylesheet" type="text/css" href="/html-template/revolution-slider/css/navigation.css">
-{% endblock stylesheets %}
-
 {% block main %}
 
-<!-- START SLIDER -->
-<div id="rev_slider_44_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="mask-showcase"
-	data-source="gallery">
-	<!-- Start revolution slider 5.4.8 fullscreen mode -->
-	<div id="rev_slider_44" class="rev_slider fullwidthabanner"  data-version="5.4.8">
+<section class="home-hero" aria-labelledby="home-hero-title">
+	<div class="home-hero__overlay" aria-hidden="true"></div>
+	<div class="home-hero__content">
+		<p class="home-hero__eyebrow">CESTOVNÍ KANCELÁŘ OD ROKU 1990</p>
+			<h1 id="home-hero-title">
+				Dovolená u moře, poznávací zájezdy, eurovíkendy, lázně i sportovní zájezdy.
+			</h1>
 
-		<ul>
-			<!-- start slide 01 -->
-			<li data-index="rs-73" data-transition="zoomout" data-slotamount="default" data-hideafterloop="0"
-				data-hideslideonmobile="off" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut"
-				data-masterspeed="1500" data-rotate="0" data-saveperformance="off" data-title="01" data-param1="01"
-				data-description="">
-				<!-- main image -->
-				<img src="/img/dovolena.jpg" alt="Dovolená u moře" data-bgcolor="#ccc" data-bgposition="center center"
-					data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg"
-					data-no-retina fetchpriority="high">
-
-				<div class="rev-slider-mask"></div>
-
-				<!-- main text layer -->
-				<div class="tp-caption tp-resizeme text-white text-center" id="slide-411-layer-01"
-					data-frames='[{"delay":200,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-type="text" data-whitespace="nowrap" data-x="['center','center','center','center']"
-					data-hoffset="['-300','-300','0','0']" data-y="['middle','middle','middle','middle']"
-					data-voffset="['-50','-50','-115','-65']" data-width="auto" data-height="auto"
-					data-fontsize="['70','53','60','35']" data-lineheight="['70','59','70','39']"
-					data-letterspacing="['-2','-1','-1','-1']" data-responsive="off" data-responsive_offset="off"
-					data-paddingtop="['0','0','0','0']" data-paddingbottom="['15','8','8','8']"
-					data-paddingright="['0','0','0','0']" data-paddingleft="['0','0','0','0']"
-					style="text-shadow: 0 0 20px rgba(0,0,0,0.3); font-weight: 600;">S námi máte <br>svět na dosah
-				</div>
-
-				<!-- small text layer -->
-				<div class="tp-caption tp-resizeme text-white text-center" id="slide-411-layer-02"
-					data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-type="text" data-x="['center','center','center','center']"
-					data-hoffset="['-300','-300','0','0']" data-y="['middle','middle','middle','middle']"
-					data-voffset="['65','40','-5','15']" data-width="auto" data-height="auto"
-					data-fontsize="['19','16','19','14']" data-lineheight="['28','14','23','20']"
-					data-letterspacing="['0.5','0.5','0.5','0.5']" data-responsive="off" data-responsive_offset="on">
-					Vyberte si z více než 90 zemí
-				</div>
-
-				<!-- btn layer -->
-				<a class="tp-caption tp-resizeme rs-btn btn_1" href="/zeme-seznam" id="slide-411-layer-03"
-					data-x="['center','center','center','center']" data-hoffset="['-300','-300','0','0']"
-					data-y="['middle','middle','middle','middle']" data-voffset="['152','130','82','80']"
-					data-whitespace="nowrap" data-type="button" data-responsive="off" data-responsive_offset="off"
-					data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-textAlign="['center','center','center','center']">Země
-				</a>
+			<p class="home-hero__lead">
+			CK SLAN tour již přes {{ yearsSinceFounded }} let plní vaše cestovatelské sny.
+		</p>
+		<ul class="home-hero__trust" aria-label="Důvody proč cestovat se SLANtour">
+			<li>
+				<i class="fa-solid fa-medal" aria-hidden="true"></i>
+				<span>{{ yearsSinceFounded }} let tradice</span>
 			</li>
-			<!-- end slide 01 -->
-			<!-- start slide 02 -->
-			<li data-index="rs-74" data-transition="fadetotopfadefrombottom" data-slotamount="default"
-				data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power3.easeInOut"
-				data-easeout="Power3.easeInOut" data-masterspeed="1500" data-rotate="0" data-saveperformance="off"
-				data-title="02" data-param1="02" data-description="">
-				<!-- main image -->
-				<img src="/img/lazne.jpeg" alt="Lázně a welness" data-bgcolor="#ccc" data-bgposition="center center" data-bgfit="cover"
-					data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
-
-				<div class="rev-slider-mask"></div>
-
-				<!-- main text layer -->
-				<div class="tp-caption tp-resizeme alt-font text-white font-weight-600 text-center"
-					id="slide-411-layer-04"
-					data-frames='[{"delay":200,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-type="text" data-whitespace="nowrap" data-x="['center','center','center','center']"
-					data-hoffset="['-300','-300','0','0']" data-y="['middle','middle','middle','middle']"
-					data-voffset="['-50','-50','-115','-65']" data-width="auto" data-height="auto"
-					data-fontsize="['70','53','60','35']" data-lineheight="['70','59','70','39']"
-					data-letterspacing="['-2','-1','-1','-1']" data-responsive="off" data-responsive_offset="off"
-					data-paddingtop="['0','0','0','0']" data-paddingbottom="['15','8','8','8']"
-					data-paddingright="['0','0','0','0']" data-paddingleft="['0','0','0','0']"
-					style="text-shadow: 0 0 20px rgba(0,0,0,0.3); font-weight: 600">Je čas na odpočinek<br>a relaxaci</div>
-
-				<!-- small text layer -->
-				<div class="tp-caption tp-resizeme text-white text-center" id="slide-411-layer-05"
-					data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-type="text" data-x="['center','center','center','center']"
-					data-hoffset="['-300','-300','0','0']" data-y="['middle','middle','middle','middle']"
-					data-voffset="['65','40','-5','15']" data-width="auto" data-height="auto"
-					data-fontsize="['19','13','19','14']" data-lineheight="['28','14','23','20']"
-					data-letterspacing="['0.5','0.5','0.5','0.5']" data-responsive="off" data-responsive_offset="on">
-					Čeká na vás 80  objektů  lázní a termálů v Čechách, <br>na Moravě, Slovensku, v Maďarsku, v Polsku i v Německu
-					
-				</div>
-
-				<!-- btn layer -->
-				<a class="tp-caption tp-resizeme rs-btn btn_1" href="/zajezdy/typ-zajezdu/lazenske-pobyty" id="slide-411-layer-06"
-					data-x="['center','center','center','center']" data-hoffset="['-300','-300','0','0']"
-					data-y="['middle','middle','middle','middle']" data-voffset="['152','130','82','80']"
-					data-whitespace="nowrap" data-type="button" data-responsive="off" data-responsive_offset="off"
-					data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-textAlign="['center','center','center','center']" data-paddingleft="['34','34','34','34']">Lázně a Wellness zájezdy
-				</a>
+			<li>
+				<i class="fa-solid fa-suitcase-rolling" aria-hidden="true"></i>
+				<span>{{ totalTours }} zájezdů</span>
 			</li>
-			<!-- end slide 02 -->
-			<!-- start slide 03 -->
-			<li data-index="rs-75" data-transition="fadetotopfadefrombottom" data-slotamount="default"
-				data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power3.easeInOut"
-				data-easeout="Power3.easeInOut" data-masterspeed="1500" data-rotate="0" data-saveperformance="off"
-				data-title="03" data-param1="03" data-description="">
-				<!-- main image -->
-				<img src="/img/poznavaci.jpeg" alt="Poznávací zájezdy" data-bgcolor="#ccc" data-bgposition="center center"
-					data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg"
-					data-no-retina>
-
-				<div class="rev-slider-mask"></div>
-
-				<!-- main text layer -->
-				<div class="tp-caption tp-resizeme text-white text-center" id="slide-411-layer-07"
-					data-frames='[{"delay":200,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-type="text" data-whitespace="nowrap" data-x="['center','center','center','center']"
-					data-hoffset="['-300','-300','0','0']" data-y="['middle','middle','middle','middle']"
-					data-voffset="['-50','-50','-115','-65']" data-width="auto" data-height="auto"
-					data-fontsize="['70','53','60','35']" data-lineheight="['70','59','70','39']"
-					data-letterspacing="['-2','-1','-1','-1']" data-responsive="off" data-responsive_offset="off"
-					data-paddingtop="['0','0','0','0']" data-paddingbottom="['15','8','8','8']"
-					data-paddingright="['0','0','0','0']" data-paddingleft="['0','0','0','0']"
-					style="text-shadow: 0 0 20px rgba(0,0,0,0.3); font-weight: 600">Objevte s námi<br>tajemství světa
-				</div>
-
-				<!-- small text layer -->
-				<div class="tp-caption tp-resizeme alt-font text-white font-weight-300 text-center"
-					id="slide-411-layer-08"
-					data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-type="text" data-x="['center','center','center','center']"
-					data-hoffset="['-300','-300','0','0']" data-y="['middle','middle','middle','middle']"
-					data-voffset="['65','40','-5','15']" data-width="auto" data-height="auto"
-					data-fontsize="['19','13','19','14']" data-lineheight="['28','14','23','20']"
-					data-letterspacing="['0.5','0.5','0.5','0.5']" data-responsive="off" data-responsive_offset="on">
-					Umělecké poklady, památky Unesco, světové metropole<br>i monumenty naší historie
-				</div>
-
-				<!-- btn layer -->
-				<a class="tp-caption tp-resizeme rs-btn btn_1" href="/zajezdy/typ-zajezdu/poznavaci-zajezdy" id="slide-411-layer-09"
-					data-x="['center','center','center','center']" data-hoffset="['-300','-300','0','0']"
-					data-y="['middle','middle','middle','middle']" data-voffset="['152','130','82','80']"
-					data-whitespace="nowrap" data-type="button" data-responsive="off" data-responsive_offset="off"
-					data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
-					data-textAlign="['center','center','center','center']">Poznávací zájezdy
-				</a>
+			<li>
+				<i class="fa-solid fa-users" aria-hidden="true"></i>
+				<span>245 000+ klientů</span>
 			</li>
-			<!-- end slide 01 -->
+			<li>
+				<i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+				<span>Pojištění proti úpadku CK</span>
+			</li>
+			<li>
+				<i class="fa-solid fa-certificate" aria-hidden="true"></i>
+				<span>Členství v ACK</span>
+			</li>
 		</ul>
 	</div>
-</div>
-<!-- END REVOLUTION SLIDER -->
+</section>
 
 <div class="main_search">
-	<h3>Vyhledat zájezd</h3>
-	<form action="/vyhledavani">
-		<div class="custom-search-input-2">
+	<h3><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Vyhledat zájezd</h3>
+	<form action="/vyhledavani" role="search" aria-label="Vyhledávání zájezdů" class="search-form-accessible">
+		<div class="custom-search-input-2 search-box-accessible search-box-horizontal">
+			<input type="hidden" name="dates" id="search-dates" class="search-dates-range">
 			<div class="form-group">
-				<input class="form-control" type="text" name="txt" placeholder="Kamkoliv" id="autocomplete">
-				<i class="fa-solid fa-location-dot"></i>
+				<label for="search-destination" class="search-field-label">Kam chcete vycestovat?</label>
+				<input class="form-control" type="search" name="txt" placeholder="Např. Itálie, Londýn, Mexiko" id="search-destination" autocomplete="off">
+				<i class="fa-solid fa-location-dot" aria-hidden="true"></i>
 			</div>
 			<div class="form-group">
-				<input class="form-control" type="text" name="dates" placeholder="Kdykoliv">
-				<i class="fa-solid fa-calendar"></i>
+				<label for="search-date-from" class="search-field-label">Termín od</label>
+				<input class="form-control search-date-boundary search-date-from" type="date" id="search-date-from" autocomplete="off">
+				<i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
 			</div>
-			<div class="form-group text-right">
-				<input type="submit" class="btn_search" value="Vyhledat zájezd">
+			<div class="form-group">
+				<label for="search-date-to" class="search-field-label">Termín do</label>
+				<input class="form-control search-date-boundary search-date-to" type="date" id="search-date-to" autocomplete="off">
+				<i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+			</div>
+			<div class="form-group">
+				<label for="search-tour-type" class="search-field-label">Typ zájezdu</label>
+				<select name="tourTypeFilter" id="search-tour-type" class="wide" aria-label="Typ zájezdu">
+					<option value="">Všechny typy</option>
+					{% for tourType in typesOfTours %}
+						<option value="{{ tourType.id }}">{{ tourType.name }}</option>
+					{% endfor %}
+				</select>
+				<i class="fa-solid fa-compass" aria-hidden="true"></i>
+			</div>
+			<div class="form-group text-right search-submit-group">
+				<button type="submit" class="btn_search" aria-label="Zobrazit nabídku zájezdů podle zadaných kritérií"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Zobrazit nabídku</button>
 			</div>
 		</div>
 		<!-- /row -->
+		<div class="search-assist">
+			<strong>Nevíte přesně kam?</strong>
+			<a href="/kontakty.html">Poradíme s výběrem</a>
+			<span aria-hidden="true">|</span>
+			<a href="tel:+420604255018">+420 604 255 018 (Po-Pá 9-17)</a>
+		</div>
 	</form>
 </div>
 <!-- /main_search -->
@@ -191,9 +94,9 @@
 <div class="container margin_80_0">
 	<div class="main_title_2">
 		<span><em></em></span>
-		<h1>Zájezdy a dovolená s CK Slantour</h1>
+		<h2>Zájezdy a dovolená s CK Slantour</h2>
 		<p>
-			Ať už toužíte po odpočinku u moře, adrenalinu špičkových sportovních akcí, či poznání exotických zemí, naše cestovní kancelář Vám připraví zážitek přesně pro vás. V naší nabídce naleznete zájezdy všeho druhu.
+			{# Ať už toužíte po odpočinku u moře, adrenalinu špičkových sportovních akcí, či poznání exotických zemí, naše cestovní kancelář Vám připraví zážitek přesně pro vás. V naší nabídce naleznete zájezdy všeho druhu. #}
 			{# Poznávací zájezdy, Dovolená u moře, Tuzemské pobyty, Zájezdy za sportem, Eurovíkendy, Fly and Drive, Exotické zájezdy, Pobyty na horách, Lázně a termály, Jednodenní zájezdy. #}
 		</p>
 	</div>
@@ -429,119 +332,3 @@
 </div>
 <!--/call_section-->
 {% endblock main %}
-
-{% block javascripts %}
-<!-- SLIDER REVOLUTION SCRIPTS  -->
-<script src="/html-template/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
-<script src="/html-template/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.layeranimation.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.navigation.min.js"></script>
-<script src="/html-template/revolution-slider/js/extensions/revolution.extension.slideanims.min.js"></script>
-<script>
-	var tpj = jQuery;
-
-	var revapi44;
-	tpj(document).ready(function () {
-		if (tpj("#rev_slider_44").revolution == undefined) {
-			revslider_showDoubleJqueryError("#rev_slider_44");
-		} else {
-			revapi44 = tpj("#rev_slider_44").show().revolution({
-				sliderType: "standard",
-				jsFileLocation: "revolution-slider/js/",
-				sliderLayout: "fullwidth",
-				dottedOverlay: "none",
-				delay: 4500,
-				navigation: {
-					keyboardNavigation: "on",
-					keyboard_direction: "horizontal",
-					mouseScrollNavigation: "off",
-					mouseScrollReverse: "default",
-					onHoverStop: "off",
-					touch: {
-						touchenabled: "on",
-						touchOnDesktop: "on",
-						swipe_threshold: 75,
-						swipe_min_touches: 1,
-						swipe_direction: "horizontal",
-						drag_block_vertical: false
-					},
-					arrows: {
-						enable: true,
-						style: 'erinyen',
-						tmp: '',
-						rtl: false,
-						hide_onleave: true,
-						hide_onmobile: true,
-						hide_under: 767,
-						hide_over: 9999,
-						hide_delay: 0,
-						hide_delay_mobile: 0,
-
-						left: {
-							container: 'slider',
-							h_align: 'left',
-							v_align: 'center',
-							h_offset: 60,
-							v_offset: 0
-						},
-
-						right: {
-							container: 'slider',
-							h_align: 'right',
-							v_align: 'center',
-							h_offset: 60,
-							v_offset: 0
-						}
-					},
-					bullets: {
-						enable: true,
-						style: 'zeus',
-						direction: 'horizontal',
-						rtl: false,
-
-						container: 'slider',
-						h_align: 'center',
-						v_align: 'bottom',
-						h_offset: 0,
-						v_offset: 30,
-						space: 7,
-
-						hide_onleave: false,
-						hide_onmobile: false,
-						hide_under: 0,
-						hide_over: 2000,
-						hide_delay: 200,
-						hide_delay_mobile: 1200
-					},
-				},
-				responsiveLevels: [1240, 1025, 778, 480],
-				visibilityLevels: [1920, 1500, 1025, 768],
-				gridwidth: [1200, 991, 778, 480],
-				gridheight: [650, 650, 1025, 868],
-				lazyType: "none",
-				shadow: 0,
-				spinner: "spinner4",
-				stopLoop: "off",
-				stopAfterLoops: -1,
-				stopAtSlide: -1,
-				shuffle: "off",
-				autoHeight: "off",
-				fullScreenAutoWidth: "off",
-				fullScreenAlignForce: "off",
-				fullScreenOffsetContainer: "",
-				disableProgressBar: "on",
-				hideThumbsOnMobile: "on",
-				hideSliderAtLimit: 0,
-				hideCaptionAtLimit: 0,
-				hideAllCaptionAtLimit: 0,
-				debugMode: false,
-				fallbacks: {
-					simplifyAll: "off",
-					nextSlideOnWindowFocus: "off",
-					disableFocusListener: false,
-				}
-			});
-		}
-	});
-</script>
-{% endblock javascripts %}

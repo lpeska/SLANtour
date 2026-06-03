@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 
 <head>
     <meta charset="utf-8">
@@ -92,7 +92,7 @@
 		</div>
 		<ul id="top_menu">
 			
-			<li><a href="tel:+420312522704" class="phone "><i class="fas fa-phone"></i> <span>312 522 704</span></a></li>
+			<li><a href="tel:+420604255018" class="phone "><i class="fas fa-phone"></i> <span>604 255 018</span></a></li>
 			<li><a href="#sign-in-dialog" id="sign-in" class="search-header fas fa-search" title="Vyhledat zájezdy">Vyhledat zájezdy</a></li>
 		</ul>
 		<!-- /top_menu -->
@@ -260,18 +260,36 @@
 	<!-- Sign In Popup -->
 	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
 			<h3>Vyhledat zájezdy</h3>
-			<form action="/vyhledavani">
-				<div class="custom-search-input-2">
+			<form action="/vyhledavani" role="search" aria-label="Vyhledávání zájezdů" class="search-form-accessible">
+				<div class="custom-search-input-2 search-box-accessible">
+					<input type="hidden" name="dates" id="search-popup-dates" class="search-dates-range">
 					<div class="form-group">
-						<input class="form-control" type="text" name="txt" placeholder="Kamkoliv" id="autocomplete">
-						<i class="fa-solid fa-location-dot"></i>
+						<label for="search-popup-destination" class="search-field-label">Kam chcete vycestovat?</label>
+						<input class="form-control" type="search" name="txt" placeholder="Např. Itálie, Karlovy Vary, Mexiko" id="search-popup-destination" autocomplete="off">
+						<i class="fa-solid fa-location-dot" aria-hidden="true"></i>
 					</div>
 					<div class="form-group">
-						<input class="form-control" type="text" name="dates" placeholder="Kdykoliv">
-						<i class="fa-solid fa-calendar"></i>
+						<label for="search-popup-date-from" class="search-field-label">Termín od</label>
+						<input class="form-control search-date-boundary search-date-from" type="date" id="search-popup-date-from" autocomplete="off">
+						<i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+					</div>
+					<div class="form-group">
+						<label for="search-popup-date-to" class="search-field-label">Termín do</label>
+						<input class="form-control search-date-boundary search-date-to" type="date" id="search-popup-date-to" autocomplete="off">
+						<i class="fa-solid fa-calendar" aria-hidden="true"></i>
+					</div>
+					<div class="form-group">
+						<label for="search-popup-tour-type" class="search-field-label">Typ zájezdu</label>
+						<select name="tourTypeFilter" id="search-popup-tour-type" class="wide" aria-label="Typ zájezdu">
+							<option value="">Všechny typy</option>
+							{% for tourType in typesOfTours %}
+								<option value="{{ tourType.id }}">{{ tourType.name }}</option>
+							{% endfor %}
+						</select>
+						<i class="fa-solid fa-compass" aria-hidden="true"></i>
 					</div>
 					<div class="form-group text-right">
-						<input type="submit" class="btn_search" value="Vyhledat zájezd">
+						<button type="submit" class="btn_search" aria-label="Zobrazit nabídku zájezdů podle zadaných kritérií">Zobrazit nabídku</button>
 					</div>
 				</div>
 				<!-- /row -->
@@ -291,16 +309,12 @@
 	
     {% block javascripts %}{% endblock javascripts %}
 	
-	<!-- DATEPICKER  -->
-	<script>
-		$(function () {
-				'use strict';
+		<!-- DATEPICKER  -->
+		<script>
+			$(function () {
+					'use strict';
 
-
-				$('input[name="dates"]').daterangepicker({
-					autoUpdateInput: false,
-					minDate: new Date(),
-					locale: {
+					var datepickerLocale = {
 						"format": "DD/MM/YY",
 						"separator": "/",
 						"applyLabel": "Potvrdit",
@@ -333,19 +347,85 @@
 							"Prosinec"
 						],
 						"firstDay": 1
-					},
-				});
-				$('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
-					$(this).val(picker.startDate.format('DD/MM/YY') + ' > ' + picker.endDate.format('DD/MM/YY'));
-                                        
-                                        
-				});
+					};
 
-				$('input[name="dates"]').on('cancel.daterangepicker', function (ev, picker) {
-					$(this).val('');
+					var $dateRangeInputs = $('input[name="dates"]').not('.search-dates-range');
+					$dateRangeInputs.daterangepicker({
+						autoUpdateInput: false,
+						minDate: new Date(),
+						locale: datepickerLocale,
+					});
+					$dateRangeInputs.on('apply.daterangepicker', function (ev, picker) {
+						$(this).val(picker.startDate.format('DD/MM/YY') + ' > ' + picker.endDate.format('DD/MM/YY'));
+					});
+
+					$dateRangeInputs.on('cancel.daterangepicker', function (ev, picker) {
+						$(this).val('');
+					});
+
+					function updateSearchFieldValueState($field) {
+						$field.toggleClass('has-value', String($field.val() || '').trim() !== '');
+					}
+
+					$('form.search-form-accessible .form-control, form.search-form-accessible select')
+						.each(function () {
+							updateSearchFieldValueState($(this));
+						})
+						.on('input change', function () {
+							updateSearchFieldValueState($(this));
+						});
+
+					var today = new Date();
+					var localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+
+					$('form.search-form-accessible .search-date-boundary').attr('min', localToday);
+					$('form.search-form-accessible .search-date-boundary').on('input change', function () {
+						syncSplitDateRange($(this).closest('form'));
+					});
+
+					$('form.search-form-accessible').on('submit', function () {
+						syncSplitDateRange($(this));
+					});
+
+					function syncSplitDateRange($form) {
+						var $hiddenRange = $form.find('.search-dates-range');
+						if (!$hiddenRange.length) {
+							return;
+						}
+
+						var fromDate = parseNativeDate($form.find('.search-date-from').val());
+						var toDate = parseNativeDate($form.find('.search-date-to').val());
+
+						if (!fromDate && !toDate) {
+							$hiddenRange.val('');
+							return;
+						}
+
+						if (!fromDate) {
+							fromDate = toDate;
+						}
+						if (!toDate) {
+							toDate = fromDate;
+						}
+						if (fromDate > toDate) {
+							var originalFromDate = fromDate;
+							fromDate = toDate;
+							toDate = originalFromDate;
+						}
+
+						$hiddenRange.val(formatNativeDate(fromDate) + ' > ' + formatNativeDate(toDate));
+					}
+
+					function parseNativeDate(value) {
+						return /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;
+					}
+
+					function formatNativeDate(value) {
+						var dateParts = value.split('-');
+						return dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0].slice(-2);
+					}
 				});
-			});
-	</script>
+		</script>
 	
 </body>
 </html>

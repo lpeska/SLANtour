@@ -3,6 +3,119 @@
 var tourLocations = {};
 
 var page = 1;
+
+function parseSelectedFilter(filter) {
+    var separatorPosition = filter.indexOf("_");
+    if (separatorPosition === -1) {
+        return null;
+    }
+
+    return {
+        key: filter.slice(0, separatorPosition),
+        value: filter.slice(separatorPosition + 1)
+    };
+}
+
+function searchDateRangeToNative(value) {
+    if (!value) {
+        return null;
+    }
+
+    var dateRange = value.split(" > ");
+    if (dateRange.length !== 2) {
+        return null;
+    }
+
+    var fromDate = displayDateToNative(dateRange[0]);
+    var toDate = displayDateToNative(dateRange[1]);
+    if (!fromDate || !toDate) {
+        return null;
+    }
+    if (fromDate > toDate) {
+        var originalFromDate = fromDate;
+        fromDate = toDate;
+        toDate = originalFromDate;
+    }
+
+    return {
+        from: fromDate,
+        to: toDate
+    };
+}
+
+function displayDateToNative(value) {
+    var nativeDate = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (nativeDate) {
+        return value;
+    }
+
+    var dateParts = value.match(/^(\d{2})[/.](\d{2})[/.](\d{2}|\d{4})$/);
+    if (!dateParts) {
+        return "";
+    }
+
+    var year = dateParts[3].length === 2 ? "20" + dateParts[3] : dateParts[3];
+    return year + "-" + dateParts[2] + "-" + dateParts[1];
+}
+
+function nativeDateToSearch(value) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        return "";
+    }
+
+    var dateParts = value.split("-");
+    return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0].slice(-2);
+}
+
+function updateSearchFieldValueState($field) {
+    $field.toggleClass("has-value", String($field.val() || "").trim() !== "");
+}
+
+function updateSearchFieldValueStates($fields) {
+    $fields.each(function () {
+        updateSearchFieldValueState($(this));
+    });
+}
+
+function setSearchResultDateInputsFromRange() {
+    var dateRange = searchDateRangeToNative($("#datesInput").val());
+    if (!dateRange) {
+        return;
+    }
+
+    $(".search-result-date-from").val(dateRange.from);
+    $(".search-result-date-to").val(dateRange.to);
+}
+
+function syncSearchResultDateRange() {
+    var $dateField = $("#datesInput");
+    if (!$dateField.length) {
+        return;
+    }
+
+    var fromDate = $(".search-result-date-from").val();
+    var toDate = $(".search-result-date-to").val();
+
+    if (!fromDate && !toDate) {
+        $dateField.val("");
+        return;
+    }
+
+    if (!fromDate) {
+        fromDate = toDate;
+    }
+    if (!toDate) {
+        toDate = fromDate;
+    }
+    if (fromDate > toDate) {
+        var originalFromDate = fromDate;
+        fromDate = toDate;
+        toDate = originalFromDate;
+    }
+
+    $dateField.val(nativeDateToSearch(fromDate) + " > " + nativeDateToSearch(toDate));
+}
+
 async function getData(){
     
     var sz_res = await fetch('serial_zeme.json');
@@ -118,49 +231,39 @@ function checkFilter(el){
 }
 
 function pushFiltersToHistory(selected_filters) {
-    let baseUrl = "/vyhledavani?";
+    let baseUrl = "/vyhledavani";
     
     // Filters that should NOT accommodate multiple values
-    const singleValueFilters = new Set(["txt", "minPrice", "maxPrice"]);
+    const singleValueFilters = new Set(["txt", "dates", "minPrice", "maxPrice"]);
     
-    let params = {};
+    let params = new URLSearchParams();
 
     selected_filters.forEach(filter => {
-        let [key, value] = filter.split('_');
+        let parsedFilter = parseSelectedFilter(filter);
+        if (!parsedFilter) {
+            return;
+        }
 
         // Ignore empty values (e.g. 'txt_' or 'dates_')
-        if (value !== undefined && value !== "") {
-            if (singleValueFilters.has(key)) {
-                // For single-value filters, always overwrite the value
-                params[key] = value;
+        if (parsedFilter.value !== undefined && parsedFilter.value !== "") {
+            if (singleValueFilters.has(parsedFilter.key)) {
+                params.set(parsedFilter.key, parsedFilter.value);
             } else {
-                // For multi-value filters, store as an array
-                if (!params[key]) {
-                    params[key] = [];
-                }
-                params[key].push(value);
+                params.append(parsedFilter.key + "[]", parsedFilter.value);
             }
         }
     });
 
-    // Construct query string
-    let queryString = Object.keys(params)
-        .map(key => {
-            if (Array.isArray(params[key])) {
-                return `${key}[]=${params[key].join('&' + key + '[]=')}`;
-            } else {
-                return `${key}=${params[key]}`;
-            }
-        })
-        .join('&');
-
-    let fullUrl = baseUrl + queryString;
+    let queryString = params.toString();
+    let fullUrl = queryString ? baseUrl + "?" + queryString : baseUrl;
 
     // Push the new URL to the browser history without reloading the page
     history.pushState(null, "", fullUrl);
 }
 
 function updateFilters(){
+    syncSearchResultDateRange();
+
     var selected_filters = [];
     $(".filter").each(function(idx,el){
         let r = checkFilter(el);
@@ -209,20 +312,16 @@ function filterZajezd(item){
     }  
 
     if(dates != ""){
-        //add dates filter
-        var datesArr = dates.split(" > ");
-        var dateFrom = datesArr[0].split("/");
-        var dateTo = datesArr[1].split("/");
-        var dateFromEng = "20"+dateFrom[2]+"-"+dateFrom[1]+"-"+dateFrom[0];
-        var dateToEng = "20"+dateTo[2]+"-"+dateTo[1]+"-"+dateTo[0];
-
-        if(item.durNights == -1){                                                
-            filteredZajezd = filteredZajezd.filter((x) => x[1] >= dateFromEng && x[0] <= dateToEng);
-            /*datesCheck = item.do >= dateFromEng && item.od <= dateToEng;*/
-        }else{   
-            filteredZajezd = filteredZajezd.filter((x) => x[0] >= dateFromEng && x[1] <= dateToEng);
-            /*datesCheck = item.od >= dateFromEng && item.do <= dateToEng;*/
-        } 
+        var dateRange = searchDateRangeToNative(dates);
+        if(dateRange){
+            if(item.durNights == -1){
+                filteredZajezd = filteredZajezd.filter((x) => x[1] >= dateRange.from && x[0] <= dateRange.to);
+                /*datesCheck = item.do >= dateRange.from && item.od <= dateRange.to;*/
+            }else{
+                filteredZajezd = filteredZajezd.filter((x) => x[0] >= dateRange.from && x[1] <= dateRange.to);
+                /*datesCheck = item.od >= dateRange.from && item.do <= dateRange.to;*/
+            }
+        }
     }
     
     if(filteredZajezd.length > 0){
@@ -236,9 +335,9 @@ function filterZajezd(item){
 async function filterData(data, selected_filters, page, resultsPerPage=20){
     var filters = {countryFilter:[],katalogFilter:[],destinaceFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],tourTheme:[],dates:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
     selected_filters.forEach(f => {
-        let arr = f.split("_");
-        if(arr.length >= 2){
-            filters[arr[0]].push(arr[1]);
+        let parsedFilter = parseSelectedFilter(f);
+        if(parsedFilter && filters[parsedFilter.key]){
+            filters[parsedFilter.key].push(parsedFilter.value);
         }else{
             console.log(f);
         }
@@ -402,22 +501,18 @@ async function filterData(data, selected_filters, page, resultsPerPage=20){
                                 
                                 //dates filter
                                 if(dates != ""){
-                                    //add dates filter
-                                    var datesArr = dates.split(" > ");
-                                    var dateFrom = datesArr[0].split("/");
-                                    var dateTo = datesArr[1].split("/");
-                                    var dateFromEng = "20"+dateFrom[2]+"-"+dateFrom[1]+"-"+dateFrom[0];
-                                    var dateToEng = "20"+dateTo[2]+"-"+dateTo[1]+"-"+dateTo[0];
+                                    var dateRange = searchDateRangeToNative(dates);
+                                    if(dateRange){
+                                        if(item.durNights == -1){
+                                            datesCheck = item.zajezdData.some((x) => x[1] >= dateRange.from && x[0] <= dateRange.to);
+                                            filteredZajezd = filteredZajezd.filter((x) => x[1] >= dateRange.from && x[0] <= dateRange.to);
 
-                                    if(item.durNights == -1){                                                
-                                        datesCheck = item.zajezdData.some((x) => x[1] >= dateFromEng && x[0] <= dateToEng);
-                                        filteredZajezd = filteredZajezd.filter((x) => x[1] >= dateFromEng && x[0] <= dateToEng);
-                                        
-                                    }else{   
-                                        datesCheck = item.zajezdData.some((x) => x[0] >= dateFromEng && x[1] <= dateToEng);
-                                        filteredZajezd = filteredZajezd.filter((x) => x[0] >= dateFromEng && x[1] <= dateToEng);
-                                        
-                                    } 
+                                        }else{
+                                            datesCheck = item.zajezdData.some((x) => x[0] >= dateRange.from && x[1] <= dateRange.to);
+                                            filteredZajezd = filteredZajezd.filter((x) => x[0] >= dateRange.from && x[1] <= dateRange.to);
+
+                                        }
+                                    }
                                 }
                                 if(filteredZajezd.length > 0 && katalogCheck){
                                     return true;
@@ -495,11 +590,14 @@ async function updateTotalTours(toursVolume, selectedFilters) {
         // Generate filter descriptions for Země and Typ
         let filterDescriptions = [];
         selectedFilters.forEach(filter => {
-            let [key, value] = filter.split('_');
+            let parsedFilter = parseSelectedFilter(filter);
+            if (!parsedFilter) {
+                return;
+            }
 
             // Only process Země (countryFilter) and Typ (tourTypeFilter)
-            if (key === "countryFilter" || key === "tourTypeFilter") {
-                const label = getFilterLabel(key, value);
+            if (parsedFilter.key === "countryFilter" || parsedFilter.key === "tourTypeFilter") {
+                const label = getFilterLabel(parsedFilter.key, parsedFilter.value);
                 if (label) {
                     filterDescriptions.push(label);
                 }
@@ -541,10 +639,14 @@ async function updateFilterWidgets(filters) {
         const filterItem = document.createElement('li');
         filterItem.className = 'filter-item';
 
-        let filterArr = filter.split("_");
-        var filterTypeId = filterArr[0];
+        let parsedFilter = parseSelectedFilter(filter);
+        if (!parsedFilter) {
+            return;
+        }
+
+        var filterTypeId = parsedFilter.key;
         var filterTypeLabel = getTypeLabel(filterTypeId);
-        var filterId = filterArr[1];
+        var filterId = parsedFilter.value;
         var filterLabel = getFilterLabel(filterTypeId, filterId);
         if (!filterLabel) {
             return;
@@ -562,10 +664,10 @@ async function updateFilterWidgets(filters) {
     filtersList.querySelectorAll('.remove-filter').forEach(button => {
         button.addEventListener('click', (event) => {
             const filterRemove = event.target.getAttribute('data-index');
-            let filterArr = filterRemove.split("_");
-            var filterTypeId = filterArr[0];
-            var filterId = filterArr[1];
-            clearFilter(filterTypeId, filterId);
+            let parsedFilter = parseSelectedFilter(filterRemove);
+            if (parsedFilter) {
+                clearFilter(parsedFilter.key, parsedFilter.value);
+            }
         });
     });
 }
@@ -622,6 +724,8 @@ function clearFilter(typeId, filterId){
         case "dates":
             const dateField = $("#datesInput");
             dateField.val('');
+            $(".search-result-date-from").val('');
+            $(".search-result-date-to").val('');
             dateField.trigger('change');
             break;
         default:
@@ -746,9 +850,9 @@ async function updateKatalog(fd, katalogFilters, destinaceFilters, expandKatalog
 async function showData(filteredData,filteredDataNoKatalog,selected_filters,append){ 
     var filters = {countryFilter:[],katalogFilter:[],destinaceFilter:[],tourTypeFilter:[],transportFilter:[],foodFilter:[],durGroupFilter:[],txt:[],minPrice:[],maxPrice:[],dates:[]}
     selected_filters.forEach(f => {
-        let arr = f.split("_");
-        if(arr.length >= 2){
-            filters[arr[0]].push(arr[1]);
+        let parsedFilter = parseSelectedFilter(f);
+        if(parsedFilter && filters[parsedFilter.key]){
+            filters[parsedFilter.key].push(parsedFilter.value);
         }else{
             console.log(f);
         }
@@ -824,6 +928,17 @@ function arraysEqual(a, b) {
 }
 
 $(function(){
+    setSearchResultDateInputsFromRange();
+    syncSearchResultDateRange();
+    var $accessibleSearchFields = $(".custom-search-input-2.search-box-accessible .form-control, .custom-search-input-2.search-box-accessible select");
+    updateSearchFieldValueStates($accessibleSearchFields);
+    $accessibleSearchFields.on("input change", function () {
+        updateSearchFieldValueState($(this));
+    });
+    var today = new Date();
+    var localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    $(".search-result-date-from, .search-result-date-to").attr("min", localToday);
+
     
     var data = getData();
     var selected_filters_noKatalog = selected_filters.filter((filter) => 1-filter.startsWith("katalogFilter_"));
@@ -865,26 +980,25 @@ $(function(){
     const clearIcon = document.getElementById('clearIcon');
     const whereIcon = document.getElementById('whereIcon');
 
+    function updateWhereClearState() {
+        const hasValue = searchField.value.trim() !== '';
+        clearIcon.style.display = hasValue ? 'block' : 'none';
+        whereIcon.style.display = '';
+    }
+
+    updateWhereClearState();
 
     // Clear the input when the close icon is clicked
     clearIcon.addEventListener('click', function () {
         searchField.value = '';
-        clearIcon.style.display = 'none';
-        whereIcon.style.display = 'block';
+        updateWhereClearState();
 
         $("#autocomplete").trigger('change');
         searchField.focus(); // Optionally refocus the input field
     });
 
     $("#autocomplete").on("input", function () {
-
-        if (searchField.value.trim() !== '') {
-            clearIcon.style.display = 'block';
-            whereIcon.style.display = 'none';
-        } else {
-            clearIcon.style.display = 'none';
-            whereIcon.style.display = 'block';
-        }
+        updateWhereClearState();
 
         clearTimeout(typingTimerTo);   // Clear the previous timer on each keystroke
         typingTimerTo = setTimeout(function() {
@@ -893,12 +1007,17 @@ $(function(){
         }, typingDelay);
     });
 
-    $('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('DD/MM/YY') + ' > ' + picker.endDate.format('DD/MM/YY'));
+    $(".search-result-date-from, .search-result-date-to").on("input change", function () {
+        syncSearchResultDateRange();
         prepDataLoad();
     });
 
-    $(".form-control").change(function () {
+    $("#datesInput").change(function () {
+        updateSearchFieldValueStates($(".search-result-date-from, .search-result-date-to"));
+        prepDataLoad();
+    });
+
+    $(".form-control").not(".search-result-date-from, .search-result-date-to").change(function () {
         prepDataLoad();
     });
 

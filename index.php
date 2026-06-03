@@ -14,6 +14,8 @@ require_once "./classes/destinace_list.inc.php"; //menu katalogu
 $tourTypes = getAllTourTypes();
 $countriesMenu = getCountriesMenu();
 $totalTours = getTotalTours($tourTypes);
+$timezone = new DateTimeZone('Europe/Prague');
+$yearsSinceFounded = (new DateTimeImmutable('1990-06-01', $timezone))->diff(new DateTimeImmutable('today', $timezone))->y;
 
 $discountTours = getDiscountTours("", "");
 $popularTours = getPopularTours("", "");
@@ -34,6 +36,7 @@ echo $twig->render('index.html.twig', [
     'discountTours' => $discountTours,
     "totalDiscountedTours" => 157,
     "totalTours" => $totalTours,
+    "yearsSinceFounded" => $yearsSinceFounded,
     'newTours' => $newTours,
     'reviews' => $reviews,
     'news' => array(

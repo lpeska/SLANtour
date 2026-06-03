@@ -189,33 +189,95 @@ foreach ($katalog as $key => $kItem) {
 //print_r($katalog_hier_restr);
 
 
+function searchDateToNativeInput($date)
+{
+    $date = trim(html_entity_decode((string) $date, ENT_QUOTES, 'UTF-8'));
+
+    if(preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $date, $match)){
+        if(checkdate((int) $match[2], (int) $match[3], (int) $match[1])){
+            return $match[1]."-".$match[2]."-".$match[3];
+        }
+    }
+
+    if(preg_match('/^(\d{1,2})[\/.](\d{1,2})[\/.](\d{2}|\d{4})$/', $date, $match)){
+        $year = strlen($match[3]) === 2 ? "20".$match[3] : $match[3];
+        if(checkdate((int) $match[2], (int) $match[1], (int) $year)){
+            return sprintf('%04d-%02d-%02d', (int) $year, (int) $match[2], (int) $match[1]);
+        }
+    }
+
+    return "";
+}
+
+function nativeInputToSearchDate($date)
+{
+    if(!preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', (string) $date, $match)){
+        return "";
+    }
+
+    return $match[3]."/".$match[2]."/".substr($match[1], -2);
+}
+
 $initFilters = array();
 $keywords = array("txt","dates","minPrice","maxPrice");
 $keywordsArrays = array("tourTypeFilter", "transportFilter", "foodFilter", "durGroupFilter", "countryFilter", "akceFilter", "katalogFilter", "destinaceFilter");
 
 $filter_txt = "";
 $filter_dates = "";
+$filter_date_from = "";
+$filter_date_to = "";
 
 foreach ($keywords as $k) {
    if(isset($_GET[$k])){
-       $strVal = htmlspecialchars(strip_tags($_GET[$k]));
-       $initFilters[] = $k."_".$strVal;     
+       $rawVal = $_GET[$k];
+       if(is_array($rawVal)){
+           $rawVal = reset($rawVal);
+       }
+       $strVal = trim(strip_tags((string) $rawVal));
+       if($strVal === ""){
+           continue;
+       }
        
        if($k=="txt"){
            $filter_txt = $strVal;
        }else if($k=="dates"){
-           $filter_dates = $_GET[$k];
+           $filter_dates = $strVal;
+           continue;
        }
+
+       $initFilters[] = $k."_".$strVal;
        
    } 
 }
 foreach ($keywordsArrays as $k) {
    if(isset($_GET[$k])){
-       foreach($_GET[$k] as $val){ 
-            $strVal = htmlspecialchars(strip_tags($val));
-            $initFilters[] = $k."_".$strVal;  
+       foreach((array) $_GET[$k] as $val){
+           $strVal = trim(strip_tags($val));
+           if($strVal !== ""){
+               $initFilters[] = $k."_".$strVal;
+           }
        }
    } 
+}
+
+if($filter_dates !== ""){
+   $datesParts = preg_split('/\s*>\s*/', html_entity_decode($filter_dates, ENT_QUOTES, 'UTF-8'));
+   if(is_array($datesParts) && count($datesParts) === 2){
+       $filter_date_from = searchDateToNativeInput($datesParts[0]);
+       $filter_date_to = searchDateToNativeInput($datesParts[1]);
+       if($filter_date_from !== "" && $filter_date_to !== ""){
+           if($filter_date_from > $filter_date_to){
+               $original_filter_date_from = $filter_date_from;
+               $filter_date_from = $filter_date_to;
+               $filter_date_to = $original_filter_date_from;
+           }
+
+           $filter_dates = nativeInputToSearchDate($filter_date_from)." > ".nativeInputToSearchDate($filter_date_to);
+           $initFilters[] = "dates_".$filter_dates;
+       }else{
+           $filter_dates = "";
+       }
+   }
 }
 
 //echo "txt".json_encode($initFilters);
@@ -259,6 +321,8 @@ echo $twig->render('vyhledat-zajezd.html.twig', [
         new Breadcrumb('Vyhledat zájezdy', '/vyhledavani')
     ),
     'dates' => $filter_dates,
+    'dateFrom' => $filter_date_from,
+    'dateTo' => $filter_date_to,
     'txt' => $filter_txt,
-    'initFilters' => json_encode($initFilters)
+    'initFilters' => json_encode($initFilters, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)
 ]);

@@ -35,15 +35,23 @@
     <div class="container margin_35_35">
         <div class="row">
             <aside class="col-lg-3">
-                <div class="custom-search-input-2 inner-2">
+                <div class="custom-search-input-2 inner-2 search-box-accessible">
                     <div class="form-group">
-                        <input class="form-control" type="text" placeholder="Kamkoliv" id="autocomplete" value="{{ txt }}">
-                        <i id="whereIcon" class="fa-solid fa-location-dot"></i>
+                        <label for="autocomplete" class="search-field-label">Kam chcete vycestovat?</label>
+                        <input class="form-control" type="search" placeholder="Např. Itálie, Londýn, Mexiko" id="autocomplete" value="{{ txt }}" autocomplete="off">
+                        <i id="whereIcon" class="fa-solid fa-location-dot" aria-hidden="true"></i>
                         <span id="clearIcon" class="clear-icon"><i class="fas fa-x"></i> </span>
                     </div>
+                    <input type="hidden" id="datesInput" name="dates" value="{{ dates }}" class="search-dates-range">
                     <div class="form-group">
-                        <input class="form-control" type="text" id="datesInput" name="dates" placeholder="Kdykoliv" value="{{ dates }}">
-                        <i class="fa-solid fa-calendar"></i>
+                        <label for="search-results-date-from" class="search-field-label">Termín od</label>
+                        <input class="form-control search-date-boundary search-result-date-from" type="date" id="search-results-date-from" value="{{ dateFrom }}" autocomplete="off">
+                        <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="search-results-date-to" class="search-field-label">Termín do</label>
+                        <input class="form-control search-date-boundary search-result-date-to" type="date" id="search-results-date-to" value="{{ dateTo }}" autocomplete="off">
+                        <i class="fa-solid fa-calendar" aria-hidden="true"></i>
                     </div>
                     {# <input type="submit" class="btn_search" id="toursVolume" value="Načítání dat..."> #}
                 </div>
