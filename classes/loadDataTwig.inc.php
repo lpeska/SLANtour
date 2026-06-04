@@ -389,6 +389,7 @@ function getTypeImage($typeId, $defaultFoto)
 
 function isEurope($countryNameWeb) {
      $euCountries = array(
+        "albanie",
         "anglie",
         "belgie",
         "cerna-hora",
@@ -417,7 +418,8 @@ function isEurope($countryNameWeb) {
         "spanelsko",
         "svedsko",
         "svycarsko",
-        "turecko"
+        "turecko",
+        "wales"
      );
     return in_array($countryNameWeb, $euCountries);
 }
@@ -756,4 +758,3 @@ class Document
         $this->url = $url;
     }
 }
-
