@@ -256,6 +256,32 @@ function findBasicService($date){
     }
 }
 
+function buildTourMetaDescription($name, $description, $maxLength = 180) {
+    $cleanName = trim(html_entity_decode(strip_tags($name), ENT_QUOTES, 'UTF-8'));
+    $cleanDescription = trim(html_entity_decode(strip_tags($description), ENT_QUOTES, 'UTF-8'));
+    $cleanName = preg_replace('/\s+/', ' ', $cleanName);
+    $cleanDescription = preg_replace('/\s+/', ' ', $cleanDescription);
+
+    if ($cleanDescription == "") {
+        $cleanDescription = "nabídka zájezdů a pobytů";
+    }
+
+    $metaDescription = "SLANtour - " . $cleanName . " - " . $cleanDescription;
+
+    if (mb_strlen($metaDescription, 'UTF-8') <= $maxLength) {
+        return $metaDescription;
+    }
+
+    $shortened = mb_substr($metaDescription, 0, $maxLength, 'UTF-8');
+    $lastSpace = mb_strrpos($shortened, ' ', 0, 'UTF-8');
+
+    if ($lastSpace !== false) {
+        $shortened = mb_substr($shortened, 0, $lastSpace, 'UTF-8');
+    }
+
+    return rtrim($shortened, " \t\n\r\0\x0B.,;:") . "...";
+}
+
 $minPrice = minPrice($dates);
 $maxDiscount = maxDiscount($dates);
 
@@ -399,6 +425,8 @@ if ($serial->get_id_sablony_zobrazeni() == 8) {
 }
 
 $longTour = $serial->get_dlouhodobe_zajezdy();
+$descriptionMain = $serial->get_popisek();
+$metaDescription = buildTourMetaDescription($nazev, $descriptionMain);
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
@@ -412,6 +440,7 @@ echo $twig->render($predbeznaRegistrace ? 'zajezd-registrace.html.twig' : 'zajez
     'zajezdID' => $_GET["id_serial"],
     'dateID' => $_GET["id_zajezd"],
     'name' => $nazev,
+    'metaDescription' => $metaDescription,
     'priceFrom' => $minPrice,
     'priceDiscount' => $maxDiscount,
     'discountsList' => $serial->show_slevy_zkracene("array"), 
@@ -422,7 +451,7 @@ echo $twig->render($predbeznaRegistrace ? 'zajezd-registrace.html.twig' : 'zajez
     'imageMain' => $foto,
     'images' => $fotos,
     'features' => $features,
-    'descriptionMain' => $serial->get_popisek(),
+    'descriptionMain' => $descriptionMain,
     'descriptionMeals' => $serial->get_popis_stravovani(),
     'descriptionAccomodation' => $serial->get_popis_ubytovani(),
     'descriptionDetails' => $serial->get_popis(),
