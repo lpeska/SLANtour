@@ -76,7 +76,7 @@ class Informace_zeme extends Generic_list{
 					$dotaz_typ=" and `informace`.`typ_informace` = ".$id_typ." ";
 				}
 				if($this->nazev_zeme!=""){
-					$dotaz_zeme=" and `zeme`.`nazev_zeme` like \"%".$this->nazev_zeme."%\" ";
+					$dotaz_zeme=" and `zeme`.`nazev_zeme_web` = \"".$this->nazev_zeme."\" ";
 				}		
 				if($this->id_destinace!=""){
 					$dotaz_destinace=" and `destinace`.`id_destinace` = ".$this->id_destinace." ";
