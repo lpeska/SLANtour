@@ -1,7 +1,7 @@
 {% extends "_base.html.twig" %}
 
 {% block meta %}
-<meta name="description" content="SLANtour - {{ type.name }} - nabídka zájezdů a pobytů. Prozkoumejte širokou nabídku zájezdů v kategorii {{ type.name }}.">
+<meta name="description" content="{{ type.metaDescription|default('SLANtour - ' ~ type.name ~ ' - nabídka zájezdů a pobytů. Prozkoumejte širokou nabídku zájezdů v kategorii ' ~ type.name ~ '.') }}">
 <meta name="keywords" content="{{ type.name }}, zájezdy, dovolená, sportovní zájezdy, poznávací zájezdy, relaxační zájezdy">
 {% endblock meta %}
 

@@ -136,9 +136,50 @@ function getTourType($typeName)
     //setup img for type
     $foto = getTypeImage($typ["id_typ"], $typ["foto_url"]);
     $description = getTypeDescription($typ["nazev_typ_web"]);
-    $type = new TourType($typ["id_typ"], $typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $description, "/zajezdy/typ-zajezdu/" . $typ["nazev_typ_web"]);
+    $metaDescription = getTypeMetaDescription($typ["nazev_typ_web"], $typ["nazev_typ"]);
+    $type = new TourType($typ["id_typ"], $typ["nazev_typ"], $typ["tourCount"], $typ["tourPrice"], $foto,  $description, "/zajezdy/typ-zajezdu/" . $typ["nazev_typ_web"], $metaDescription);
     // print_r($type);
     return $type;
+}
+
+function getTypeMetaDescription($typeSlug, $typeName)
+{
+    $metaDescriptions = [
+        'poznavaci-zajezdy' => 'Objevte nejkrásnější místa Evropy i světa s CK SLAN tour. Poznávací zájezdy s průvodcem, bohatým programem a více než 30 letou zkušeností. Letecky, vlakem i autokarem. Rezervujte online.',
+        'eurovikendy' => 'Eurovíkendy v nejkrásnějších metropolích Evropy. Letecky i vlakem. CK SLAN tour vám zajistí letenky, hotel i program. Vydejte se do Londýna, Paříže, Říma, Dublinu, Budapešti a dalších měst.',
+        'exoticka-dovolena' => 'Sníte o dalekých krajích? CK SLAN tour vás vezme do exotiky! Objevte krásy Mexika, Bali, Brazílie, Malediv či Emirátů. Prožijte nezapomenutelnou dovolenou a leťte s námi.',
+        'jednodenni-zajezdy' => 'Tipy na jednodenní výlety po Česku i Evropě. Pohodlné cestování autobusem, zajímavý program a zkušený průvodce. Čekají vás Adventní trhy, výstavy, hrady i nákupy v zahraničí.',
+        'za-sportem' => 'Zažijte atmosféru světových sportovních událostí. CK SLAN tour zajišťuje vstupenky a zájezdy na fotbal, tenis, Formuli 1, ragby, hokej i další prestižní sportovní akce.',
+        'lazne-a-wellness' => 'Odpočiňte si v lázních, termálech i wellness hotelech. CK SLAN tour nabízí lázeňské a wellness pobyty v ČR, Maďarsku, Slovensku a dalších zemích. Rezervujte hned.',
+        'lazenske-pobyty' => 'Odpočiňte si v lázních, termálech i wellness hotelech. CK SLAN tour nabízí lázeňské a wellness pobyty v ČR, Maďarsku, Slovensku a dalších zemích. Rezervujte hned.',
+        'dovolena' => 'Užijte si skvělou dovolenou nejen u moře s CK SLAN tour. Rezervujte online.',
+        'na-hory' => 'Vydejte se za horskou turistikou a nádhernými výhledy. CK SLAN tour nabízí horské pobyty v Krkonoších, na Šumavě, v Jeseníkách, Tatrách i v Himalájích. Vyberte si svůj termín hned.',
+        'pobyty-hory' => 'Vydejte se za horskou turistikou a nádhernými výhledy. CK SLAN tour nabízí horské pobyty v Krkonoších, na Šumavě, v Jeseníkách, Tatrách i v Himalájích. Vyberte si svůj termín hned.',
+        'fly-drive' => 'Cestujte svobodně a bez starostí. S programem Fly and Drive od CK SLAN tour získáte letenky, hotel i pronájem auta. Vyražte na Island, do Andalusie, na Sicílii či jinam.',
+        'fly-and-drive' => 'Cestujte svobodně a bez starostí. S programem Fly and Drive od CK SLAN tour získáte letenky, hotel i pronájem auta. Vyražte na Island, do Andalusie, na Sicílii či jinam.',
+    ];
+
+    $nameFallbacks = [
+        'Poznávací zájezdy' => $metaDescriptions['poznavaci-zajezdy'],
+        'Eurovíkendy' => $metaDescriptions['eurovikendy'],
+        'Exotická dovolená' => $metaDescriptions['exoticka-dovolena'],
+        'Jednodenní zájezdy' => $metaDescriptions['jednodenni-zajezdy'],
+        'Sportovní zájezdy' => $metaDescriptions['za-sportem'],
+        'Lázně a wellness' => $metaDescriptions['lazne-a-wellness'],
+        'Dovolená' => $metaDescriptions['dovolena'],
+        'Na hory' => $metaDescriptions['na-hory'],
+        'Fly & Drive' => $metaDescriptions['fly-drive'],
+    ];
+
+    if (isset($metaDescriptions[$typeSlug])) {
+        return $metaDescriptions[$typeSlug];
+    }
+
+    if (isset($nameFallbacks[$typeName])) {
+        return $nameFallbacks[$typeName];
+    }
+
+    return "SLANtour - " . $typeName . " - nabídka zájezdů a pobytů. Prozkoumejte širokou nabídku zájezdů v kategorii " . $typeName . ".";
 }
 
 function getAllTourTypes()
@@ -545,8 +586,9 @@ class TourType
     public string $image;
     public $description;
     public $url;
+    public $metaDescription;
 
-    public function __construct(int $id, string $name, int $numberOfTours, int $priceFrom, string $image, $description, $url)
+    public function __construct(int $id, string $name, int $numberOfTours, int $priceFrom, string $image, $description, $url, $metaDescription = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -555,6 +597,7 @@ class TourType
         $this->image = $image;
         $this->description = $description;
         $this->url = $url;
+        $this->metaDescription = $metaDescription;
     }
 }
 
