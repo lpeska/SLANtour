@@ -221,6 +221,7 @@ function getCountry($countryName)
     }else{
         $popisek = "";
     }
+    $metaDescription = buildCountryMetaDescription($countryDB["nazev_zeme"], $popisek);
     
     $country = new Country(
         $countryDB["id_zeme"],
@@ -229,9 +230,37 @@ function getCountry($countryName)
         $countryDB["tourCount"],
         $countryDB["tourPrice"], //tady nastane chyba ze cena neexistuje pokud zeme nema platny zajezd
         "https://slantour.cz/foto/full/".$infoDB->get_foto_url(),
-        "/zeme/" . $countryDB["nazev_zeme_web"]
+        "/zeme/" . $countryDB["nazev_zeme_web"],
+        $metaDescription,
+        $popisek
     );
     return $country;
+}
+
+function buildCountryMetaDescription($countryName, $description, $maxLength = 180)
+{
+    $cleanDescription = trim(html_entity_decode(strip_tags($description), ENT_QUOTES, 'UTF-8'));
+    $cleanDescription = preg_replace('/\s+/u', ' ', $cleanDescription);
+    $prefix = "Zájezdy do " . $countryName . " s CK SLAN tour.";
+
+    if ($cleanDescription === '') {
+        return "SLANtour - " . $countryName . " - nabídka zájezdů a pobytů. Prozkoumejte krásy této země s našimi zájezdy.";
+    }
+
+    $metaDescription = $prefix . " " . $cleanDescription;
+
+    if (mb_strlen($metaDescription, 'UTF-8') <= $maxLength) {
+        return $metaDescription;
+    }
+
+    $shortened = mb_substr($metaDescription, 0, $maxLength, 'UTF-8');
+    $lastSpace = mb_strrpos($shortened, ' ', 0, 'UTF-8');
+
+    if ($lastSpace !== false) {
+        $shortened = mb_substr($shortened, 0, $lastSpace, 'UTF-8');
+    }
+
+    return rtrim($shortened, " .,;:-") . "...";
 }
 
 function getAllCountries($continent, $typ = "")
@@ -628,8 +657,10 @@ class Country
     public int $priceFrom;
     public string $image;
     public $url;
+    public $metaDescription;
+    public $metaDescriptionSource;
 
-    public function __construct(int $id, string $name, string $description, int $numberOfTours, int $priceFrom, string $image, $url)
+    public function __construct(int $id, string $name, string $description, int $numberOfTours, int $priceFrom, string $image, $url, $metaDescription = null, $metaDescriptionSource = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -638,6 +669,8 @@ class Country
         $this->priceFrom = $priceFrom;
         $this->image = $image;
         $this->url = $url;
+        $this->metaDescription = $metaDescription;
+        $this->metaDescriptionSource = $metaDescriptionSource;
     }
 }
 
