@@ -496,17 +496,15 @@ function isEurope($countryNameWeb) {
 
 function getTypeDescription($typeName) {
     $tourDescriptions = array(
-        "poznavaci-zajezdy" => "<p>Máme pro vás nezapomenutelná dobrodružství plná kultury, historie a úžasných zážitků. S námi se stanete cestovatelem, ne jen turistou. 
-        Naše poznávací zájezdy vás zavedou do srdce destinací, kde se ponoříte do místních tradic, poznáte fascinující příběhy a ochutnáte autentickou kuchyni.</p>
-        <p class='list'>Co vás čeká: </p>
+        "poznavaci-zajezdy" => "<p>Toužíte po dobrodružství, které vás obohatí a zanechá ve vás vzpomínky na celý život? S CK SLAN tour se stanete skutečným cestovatelem, nejen pouhým turistou. Naše poznávací zájezdy vás zavedou do samotného srdce těch nejkrásnějších destinací v Evropě i na druhém konci světa. Ponořte se do místních tradic, odhalte fascinující historii a ochutnejte autentickou kuchyni tam, kde to žije. Poznávací zájezdy připravujeme pro naše klienty již více než 35 let.</p>
+        <p class='list'>Proč vyrazit za poznáním právě s CK SLAN tour?</p>
         <ul>
-        <li>Návštěva historických památek a muzeí, které vám otevřou okno do minulosti</li> 
-        <li>Procházky malebnými městy a vesnicemi s průvodcem znalým místní kultury </li> 
-        <li>Příležitost objevit skryté poklady a krásy destinací</li> 
-        <li>Degustace místních specialit a vín</li> 
+        <li><strong>Zkušení průvodci:</strong> Naši průvodci nejsou jen „živé encyklopedie“. Jsou to specialisté, kteří daná místa dokonale znají, mluví místním jazykem a ukážou vám i skryté poklady, které v běžných bedekrech nenajdete.</li>
+        <li><strong>Historie a kultura na dosah:</strong> Otevřeme vám dveře do slavných muzeí, projdeme s vámi ikonické památky UNESCO i malebná, zapomenutá zákoutí.</li>
+        <li><strong>Zážitky pro všechny smysly:</strong> Poznávání pro nás neznamená jen fotografování památek. Čekají vás degustace místních specialit, ochutnávky vyhlášených vín i přímý kontakt s místní kulturou.</li>
+        <li><strong>Komfort a bezstarostná organizace:</strong> Vyberte si mezi pohodlnou leteckou dopravou pro vzdálenější země, moderními autobusy nebo romantickou jízdou vlakem. O ubytování, transfery a program se kompletně postaráme my. Vy už jen objevujete a užívejte.</li>
         </ul>
-        
-        <p>Připravte se na dobrodružství, která vás obohatí a přinesou vám nové zážitky a přátelství. Objevujte krásy světa spolu s námi!</p>",
+        <p>Chcete se dozvědět před vaší cestou něco více o vybrané zemi či destinaci? Zkuste náš magazín o cestování: <a href='https://poznavaci.info/'>https://poznavaci.info/</a></p>",
 
         "za-sportem" => "<p>Naše zájezdy za sportem jsou tady pro všechny nadšené sportovní fanoušky, kterým nestačí sportovní atmosféra jen u televize.</p>",
 
