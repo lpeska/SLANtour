@@ -407,10 +407,14 @@ function getOhlasy(int $limit)
             $ohlas["nadpis"],
             $ohlas["kr_popis"],
             $ohlas["foto_url"],
+            $ohlas["zajezd_url"],
+            $ohlas["zajezd_title"],
         );
         // print_r($review);
         $ohlasy[$ohlas["id_ohlasu"]] = $review;
     }
+    
+    //print_r($ohlasy);
     return $ohlasy;
 }
 
@@ -807,13 +811,17 @@ class Review
     public string $title;
     public string $description;
     public string $image;
+    public string $zajezd_url;
+    public string $zajezd_title;
 
-    public function __construct(int $id, string $title, string $description, string $image)
+    public function __construct(int $id, string $title, string $description, string $image, string $zajezd_url, string $zajezd_title)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
         $this->image = $image;
+        $this->zajezd_url = $zajezd_url;
+        $this->zajezd_title = $zajezd_title;
     }
 }
 
