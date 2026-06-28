@@ -2,7 +2,7 @@
 <div class="row">
     <div
         class="col-lg-12 review {% if loop.index is even %} gray {% endif %} {% if loop.index0 == 0 %} first {% endif %}">
-        <a class="box_news" href="/ohlasy">
+        <a class="box_news" href="{{review.zajezd_url}}" alt="{{review.zajezd_title}}" title="{{review.zajezd_title}}">
             <figure><img src="{{ review.image }}" alt=""></figure>
             <h4>{{ review.title }}</h4>
             <p>{{ review.description|raw }}</p>
